@@ -1,0 +1,57 @@
+<!-- widget starts -->
+<div class="row step3 stepper{{widgetStatus?.length}}">
+    <div class="col-sm-12  steps text-center">
+      <span class="cls-bdr"></span>
+      <span *ngFor="let data of widgetStatus;last as last" class="widget cls-tooltip widget{{data.no}}"
+        [ngClass]="data.status == 'Y' ? 'active' : ''">
+        <span class="step-number" *ngIf="data.id != 'approval'">
+          <span *ngIf="data.initial_no">{{data.no}}</span>
+          <em class="icon-36-approved" *ngIf="data.status == 'Y' && data.name !='Approver Rejected'"></em>
+          <em class="icon-32-reject" *ngIf="data.status == 'Y' && data.name ==='Approver Rejected'"></em>
+        </span>
+        <span class="step-round" [ngClass]="{'step-animation': data.warning === 'Y'}" *ngIf="data.id === 'approval'">
+          <em class="icon-36-approved" *ngIf="data.status == 'Y' && data.name !== 'Approver Rejected'"></em>
+          <em class="icon-32-reject"  *ngIf="data.status == 'Y' && data.name ==='Approver Rejected'"></em>
+        </span>
+        <a href="javascript:;" class="cls-apptxt position-relative">
+          {{ data.name | translate}} <em class="icon-16-info" *ngIf="data.id === 'approval'"></em>
+            <ng-container *ngIf="data?.users">
+              <span class="cls-hovertext" [ngClass]="last? 'cls-last-hover' : ''" >
+                <ng-container *ngIf="data.id === 'approval' && data.status === 'N'">
+                  <span class="d-block" *ngFor="let approver of data.users.details">
+                    <span>{{approver.name}}</span>
+                    <span *ngIf="approver.name && approver.email"> | </span>
+                    <span class="cls-a-hover" (click)="showUserInfo(approver.email)" class="cls-a-hover">{{approver.email}}</span>
+                  </span>
+                </ng-container>
+                <span class="d-block text-left" *ngIf="data?.users?.Date  !== 0 && data?.users?.Date  !== '0000-00-00 00:00:00'">
+                  <ng-container *ngIf="data.name === 'Settled' && data?.users?.details?.Date">{{'Settled On' | translate}}  : {{data?.users?.details?.Date  | date: "dd-MMM-YYYY | hh:mm a"}} </ng-container>
+                  <ng-container *ngIf="data.name === 'Created'">{{'Created On' | translate}}  : {{data.users.Date  | date: "dd-MMM-YYYY | hh:mm a"}} </ng-container>
+                  <ng-container *ngIf="data.id === 'approval'">{{'Approved On' | translate}}  : {{data.users.Date  | date: "dd-MMM-YYYY | hh:mm a"}} </ng-container>
+                  <!-- {{data.users.Date  | date: "dd-MMM-YYYY | hh:mm a"}} -->
+                  <span class="d-block" *ngIf="data.id === 'approval' && data.users.email">{{'Approved By' | translate}}  : {{data.users.email}} </span>
+                  <ng-container *ngIf="data.name === 'Approver Rejected' && data?.users?.details?.Date">{{'Rejected On' | translate}}  : {{data?.users?.details?.Date  | date: "dd-MMM-YYYY | hh:mm a"}} </ng-container>
+                </span>
+                <span class="d-block text-left" *ngIf="data.name === 'Created'">
+                  {{'Created By' | translate}}  : {{data?.users?.email}} 
+                </span>
+                <span class="d-block text-left" *ngIf="data.name === 'Approver Rejected'">
+                  {{'Rejected By' | translate}}  : {{data?.users?.details?.email}} 
+                </span>
+                <span class="d-block text-left" *ngIf="data.name === 'Settled' && data.status == 'Y'">
+                  {{'Settled Amount' | translate}} : INR {{data?.users?.details?.amount | number}}
+                </span>
+                <span class="d-block text-left" *ngIf="data.name === 'Settled' && data?.users?.details?.settlement_date  && data.status == 'Y'">
+                  {{'Payment Issued Date' | translate}} : {{data?.users?.details?.settlement_date | date: "dd-MMM-y" }}
+                </span>
+                <span class="d-block text-left" *ngIf="data.name === 'Settled' && data?.users?.details?.email  && data.status == 'N'">
+                  {{'Email' | translate}} : {{data?.users?.details?.email}}
+                </span>
+              </span> 
+          </ng-container>
+        </a>
+      </span>
+    </div>
+  </div>
+  <!-- widget ends -->
+<app-user-info *ngIf="popupVal?.module === 'userSettings'" [userInput]="popupVal?.value" (choosedVal)="popUpInfo($event)"></app-user-info>

@@ -1,0 +1,31 @@
+<!-- Desc : user management filter
+Author : Padma priya -->
+<!-- filter starts -->
+<form [formGroup]="filter" class="row cls-filter-container mb-3">
+    <span class="cls-filter-icon d-none d-sm-block"></span>
+    <div  class="form-group col-sm-2 cls-res-timeperiod">
+        <div class="daterange cls-filter-box" id="filterprofile">
+          <label>{{ "Time Period" | translate }} </label>
+          <input type="text" formControlName="dateInterval" name="filterprofile" placeholder="{{'Select Time Period' | translate}}" class="customrange1 cls-custom-input form-control" readonly />
+          <input type="hidden" formControlName="fromDate" />
+          <input type="hidden" formControlName="toDate" />
+        </div>
+    </div>
+    <div  class="form-group col-sm-2">
+        <label  for="empname">{{'Name' | translate}}</label>
+        <input  type="text" formControlName="name" name="empname" id="empname" placeholder="{{'Enter Employee Name' | translate}}" autocomplete="off" class="cls-custom-input form-control ">
+    </div>
+    <div  class="form-group col-sm-2">
+        <label  for="employeeId">{{'Employee Id' | translate}}</label>
+        <input  type="text" formControlName="employeeId" name="employeeId" id="employeeId" placeholder="{{'Enter Employee Name' | translate}}" autocomplete="off" class="cls-custom-input form-control ">
+    </div>
+    <div  class="form-group col-sm-2">
+        <label  for="role">{{'Role' | translate}}</label>
+        <input  type="text" formControlName="role" name="role" id="role" placeholder="{{'Enter Role' | translate}}" autocomplete="off" class="cls-custom-input form-control ">
+    </div>
+    <div  class="form-group col-sm-4">
+        <button class="btn cls-filter-btn" (click)="applyFilter()">{{'Apply' | translate}}</button>
+        <button class="btn cls-reset-btn" (click)="resetFilter()" >{{'Reset' | translate}}</button>
+    </div>
+</form>
+<!-- filter ends -->

@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="row" *ngIf="form[0]['components']">
+    <div class="col-sm-12">
+      <h1 class="form-heading">{{ form[0]['title'] | translate }}</h1>
+      <dynamic-form [fields]="form" (submit)="submit($event)"></dynamic-form>
+    </div>
+  </div>
+</div>

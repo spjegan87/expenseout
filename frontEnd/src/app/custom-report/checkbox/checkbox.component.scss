@@ -1,0 +1,51 @@
+// *************************************************
+
+//  * Component Name------- checkbox
+//  * HTML & CSS -------------- Naveen.s
+//  * Created date -------------- 26-Feb-2020
+//  * Powered by --------------- Infiniti software solutions
+
+// *************************************************
+@import '../../../assets/scss/variable.scss';
+.cls-group-check{
+    margin: 30px 0px 15px;
+    .cls-head{
+        font-size: 16px;
+        color:$BLACK;
+        font-weight: 600;
+    }
+    .cls-checkall{
+        float: right;
+        color:$BLACK;
+        cursor: pointer;
+        float: right;
+    }
+}
+.icon-41-checkbox-fill{
+    color: $PRIMARYCOLOR;
+}
+.cls-disble{
+    pointer-events: none;
+    em{
+        opacity: 0.6;
+    }
+}
+.cls-icon{
+    margin-right: 10px;
+    background: $WHITE;
+}
+.cls-background{
+    background: $CHECKBOXBG;
+    padding: 20px;
+    border-radius: 5px;
+    .cls-label{
+        font-size: 16px;
+        display: inline-block;
+        padding: 10px 15px 10px;
+        color:$BLACK;
+        cursor: pointer;
+        .icon-3-checkbox-on{
+            color: $PRIMARYCOLOR;
+        }
+    }
+}

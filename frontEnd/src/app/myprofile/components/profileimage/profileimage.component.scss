@@ -1,0 +1,296 @@
+/************************************************************************************
+CSS Description : profile Design
+Author          : Naveen.s
+Created Date    : 14 Sept 2020
+*************************************************************************************/
+@import '../../../../assets/scss/variable.scss';
+//popup animation design Bounce-In Animation
+@keyframes fadeIn-popup {
+  0%{
+    transform: scale(0);
+    transform: scale(0.3) translate3d(0,0,0);
+  }
+  50%{
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+  80%{
+    opacity: 1;
+    transform: scale(0.89);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1) translate3d(0,0,0);
+  }
+}
+//Modal background
+.cls-background{
+  position:fixed;
+  top:0px;
+  left:0px;
+  right:0px;
+  bottom:0px;
+  background:$BLACK;
+  opacity:.5;
+  // pointer-events: none;
+  z-index:999;
+}
+//Modal container
+.cls-popup{
+  animation: .5s fadeIn-popup linear;
+  animation-fill-mode: forwards;
+  transition:.5s;
+  margin: 0px auto;
+  width: 50%;
+  position: fixed;
+  z-index: 1000;
+  background: $WHITE;
+  top: 15%;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  border-radius:8px;
+  .cls-footer{
+    position: absolute;
+      bottom: 0px;
+      left: 0;
+      background: $GRIDBDR;
+      width: 100%;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      margin-top: 8px;
+      padding: 10px;
+  }
+ 
+  .cls-top-close{
+    cursor: pointer;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: $ERROR;
+    display: inline-block;
+    right: -6px;
+    top: -6px;
+    border-radius: 2px;
+    color: $WHITE;
+    font-size: 15px;
+    text-align: center;
+  }
+  .cls-btns{
+    .cls-btn-primary{
+      padding: 7px 12px !important;
+    }
+  }
+  .cls-content{
+    margin-top: 45px;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 350px;
+    // text-align: center;
+    span{
+      font:19px 'ProximaRegular';
+    }
+    .cls-inner-title{
+        display: inline-block;
+        font: 18px "ProximaSemiBold";
+        margin: 0px 0 15px 0;
+    }
+    .nav-tabs{
+      position: relative;
+      border-bottom: 4px solid $MAINBG;
+      li {
+        display: inline !important;
+        // padding: 4px 30px 0px 0px;
+        position: relative;
+        text-transform: capitalize;
+        &.nav-item {
+          .nav-link {
+            &.active{
+              font: 14px 'ProximaRegular';
+              font-weight: 600;
+              border: none;
+              background: $MAINBG;
+            }
+            border-top-left-radius: 0 !important;
+            border-top-right-radius: 0 !important;
+            border: none !important;
+            letter-spacing: 0.3px;
+            font: 14px 'ProximaRegular';
+            color:$BLACK;
+            &:hover{
+              border: none;
+            }
+          }
+        }
+        a {
+          &.active {
+            &:after {
+              content: "";
+              width: 100%;
+              position: absolute;
+              height: 9%;
+              background: $WIDGET;
+              bottom: -3px;
+              left: 0;
+            }
+          }
+        }
+      }
+    }
+    .cls-tab-data{
+      padding: 15px 10px;
+      .cls-static-img{
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+        margin: 11px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .cls-profile-upload{
+      position: relative;
+      height: 200px;
+      .cls-inner-image-upload{
+        width: 100%;
+        height: 100%;
+        .cls-container-img{
+          position: absolute;
+          top: 45%;
+          left: 0%;
+          width: 100%;
+          .cls-or-span{
+            display: inline-block;
+            margin: 0 50px;
+            font: 14px "ProximaRegular";
+          }
+          .cls-drag-drop{
+            font: 15px "ProximaRegular";
+          }
+        }
+        .cls-file-input{
+          width: 100%;
+          position: absolute;
+          opacity: 0;
+          left: 0;
+          top: 0;
+          height: 100% !important;
+      }
+      }
+    }
+    .cls-text-bar{
+      .cls-info-text,.cls-info-text1{
+        font: 13px "ProximaRegular";
+        color: #666;
+      }
+      .cls-diff{
+        display: inline-block;
+        margin: 0 10px;
+        height: 10px;
+        border-right: 2px solid #666;
+      }
+    }
+  }
+  .cls-close{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+  }
+
+}
+//animation design for closeing modal
+.close-ani{
+  display:block;
+  animation: .5s fadeout;
+  animation-fill-mode: forwards;
+  transition:.5s;
+  .cls-background{
+    display: none;
+  }
+}
+@keyframes fadeout {
+  0% {
+    transform: scale(1);
+    transform: scale(1) translate3d(0,0,0);
+  }
+  5%{
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0);
+  transform: scale(0) translate3d(0,0,0);
+  }
+}
+@media (min-width: 481px) and (max-width: 766px){
+  .cls-popup{
+    width: 85%;
+    left: 10px;
+    .cls-content{
+      min-width: unset;
+      .cls-tab-data{
+        overflow-y: scroll;
+        height: 225px;
+      }
+      .cls-tab-upload{
+        height: 225px;
+        .cls-profile-upload{
+          .cls-inner-image-upload{
+            .cls-container-img{
+              top: 27%;
+              .cls-btn-primary{
+                padding: 4%;
+                font-size: 13px;
+                margin-right: 0;
+              }
+              .cls-or-span{
+                margin: 25px 50px;
+              }
+              .cls-drag-drop{
+                display: block;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px){}
+@media only screen and (max-width: 480px) {
+  .cls-popup{
+    width: 85%;
+    left: 10px;
+    .cls-content{
+      min-width: unset;
+      .cls-tab-data{
+        overflow-y: scroll;
+        height: 225px;
+      }
+      .cls-tab-upload{
+        height: 225px;
+        .cls-profile-upload{
+          .cls-inner-image-upload{
+            .cls-container-img{
+              top: 27%;
+              .cls-btn-primary{
+                padding: 4%;
+                font-size: 13px;
+                margin-right: 0;
+              }
+              .cls-or-span{
+                margin: 25px 50px;
+              }
+              .cls-drag-drop{
+                display: block;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

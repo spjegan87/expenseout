@@ -1,0 +1,442 @@
+@import "../../../../assets/scss/variable.scss";
+.cls-disable{
+  pointer-events: none;
+}
+.cls-profile-container{
+  background:$MAINBG;
+  min-height: 600px;
+  margin:-30px;
+  padding: 1px 20px 0px 20px;
+  .cls-back-bar{
+    display: inline-block;
+    width: 100%;
+    padding: 15px 0 5px 0;
+    .cls-title{
+      display: inline-block;
+      font: 20px "ProximaSemiBold";
+    }
+    .cls-back{
+      float: right;
+      color: $PRIMARYCOLOR;
+      cursor: pointer;
+      position: relative;
+      em{
+        font-size:12px;
+        display: inline-block;
+        position: absolute;
+        top: 4px;
+        left: -18%;
+        transition: 1s;
+      }
+      &:hover{
+        border-bottom: 1px solid $PRIMARYCOLOR;
+          em{
+            left: -25%;
+        }
+      }
+    }
+  }
+  .cls-myprofileindex {
+    padding-left: 1em;
+    .cls-profileleft {
+        width: 20%;
+      .cls-profile{
+        width: 90%;
+        .cls-profile-icon{
+          display: inline-block;
+          margin: 5% 25%;
+          width: 100px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center; 
+          font-size: 46px;
+          background: $WHITE;
+          width: 100px;
+          border-radius: 100%;  
+          box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
+          border: 1px solid #f0f0f0;    
+          .cls-first{
+            font-size: 50px;
+            color: $PRIMARYCOLOR;
+            text-transform: capitalize;
+            width: auto;
+            height: 96px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          img{
+            width: 100%;
+          }
+          .cls-actions{
+            position: absolute;
+            padding: 2px 7px;
+            background: $WHITE;
+            border-radius: 5px;
+            bottom: 0;
+            right: -25px;
+            box-shadow: 0 0px 19px 0 rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            .cls-line{
+              display: inline-block;
+              border-bottom: 1px solid $BDRLIGHT;
+              width: 10px;
+              transform: rotate(90deg);
+              vertical-align: middle;
+              margin: 0px 3px;
+            }
+            .cls-hover-tooltip{
+              .cls-tool{
+                top: 27px;
+                width: 135px;
+              }
+            }
+            .cls-edit,.cls-delete{
+              font-size: 16px;
+              vertical-align: middle;
+            }
+            .cls-edit{
+              font-size: 17px;
+            }
+          }
+        }
+        .cls-profile-data{
+          .cls-user-name,.cls-user-phone,.cls-user-mail{
+            display: block;
+            margin-left: 8%;
+          }
+          .cls-user-name{
+            font: 16px "ProximaSemiBold";
+          }
+          .cls-user-phone,.cls-user-mail{
+            font: 13px "ProximaRegular";
+          }
+          .cls-user-phone{
+            .cls-phone{
+              display: inline-block;
+              padding: 3px 5px;
+              background: #f16767;
+              border-radius: 5px;
+              em{
+                color: $WHITE;
+                font-size: 15px;
+                vertical-align: bottom;
+              }
+            }
+          }
+          .cls-user-mail{
+            overflow: hidden;
+            width: 95%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            .cls-mail{
+              display: inline-block;
+              padding: 3px 5px;
+              background: $PRIMARYCOLOR;
+              border-radius: 5px;
+              em{
+                color: $WHITE;
+              }
+            }
+          }
+        }
+        // .cls-profile-type {
+        //   width: 90%;
+        //   margin-top: 2em;
+        
+        //   .cls-customtab {
+        //     display: flex;
+        //     flex-direction: column;
+        //     border: 1px solid #ccc;
+        //     border-radius: 5px;
+        //     li {
+        //       background-color: transparent;
+        //       line-height: 24px;
+        //       cursor: pointer;
+        //       border-top: 1px solid #ccc;
+        //       position: relative;
+        //       &.cls-tabdisable {
+        //         cursor: not-allowed;
+        //         background: $WHITE;
+        //         opacity: 0.2;
+        
+        //         a {
+        //           pointer-events: none;
+        //         }
+        //       }
+        
+        //       a {
+        //         color: #ccc;
+        //         //border: 1px solid #ccc;
+        //         border-radius: 0px;
+        
+        //         &:hover {
+        //           color: $PRIMARYCOLOR;
+        //         }
+        
+        //         &.nav-link {
+        //           padding: 7px 19px;
+        //         }
+        //         span{
+        //           font:12px 'PoppinsLight';
+        //           color:#000;
+        //           .cls-2f-status{
+        //             color:$SUCCESS;
+        //           }
+        //           &.N{
+        //             .cls-2f-status{
+        //               color: $ERROR;
+        //             }
+        //           }
+        //         }
+        //       }
+        
+        //       a.active {
+        //         box-shadow: -3px 2px 8px 0px rgba(95, 90, 90, 0.2);
+        //         color: $BLACK;
+        //         border-left: 2px solid $PRIMARYCOLOR !important;
+        //         // border-right: 1px solid #ccc;
+        //         border-radius: 0px;
+        //         border-top: none;
+        //         padding: 7px 19px;
+        //         width: 100%;
+        //         background: $WHITE;
+        //         // border: 1px solid $WHITE;
+        //         font-weight: 500;
+        //       }
+        //       em{
+        //         transform: rotate(270deg);
+        //         position: absolute;
+        //         right: 7px;
+        //         top: 11px;
+        //         font-size: 12px;
+        //       }
+        //     }
+        //   }
+        // }
+      }
+    }
+    .cls-editprofile{
+      margin-top: 0px;
+      width: 80%;
+      min-height: 100vh;
+      .cls-employee-details,.cls-change-password{
+        box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        background: $WHITE;
+        border-radius: 7px;
+        position: relative;
+        border: 1px solid #e8e3e3;
+        &::before{
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 27px;
+            background: $PRIMARYCOLOR;
+            display: inline-block;
+            left: 0px;
+            top: 22px;
+            border-radius: 0 4px 4px 0;
+          }
+      }
+    }
+  }
+  .logout {
+    line-height: 47px;
+    color: $BLACK;
+    background:$MAINBG;
+    border-radius: 0px 0px 4px 4px;
+    font-size: 18px;
+    &:hover{
+      em{
+        &:after{
+          right:-15px;
+        }
+      }
+    }
+    em {
+      color: $BLACK;
+      margin-right: 20px;
+      font-size: 19px;
+      position: relative;
+      vertical-align: middle;
+      &:after{
+        content: "\e926";
+        transform: rotate(93deg);
+        font: 13px 'icomoon' !important;
+        position: absolute;
+        right: -8px;
+        top: 3px;
+        transition: 0.4s;
+      }
+    }
+  }
+}
+@media (min-width: 481px) and (max-width: 766px){
+  .cls-profile-container{
+    margin: -35px -30px -54px -30px;
+    padding: 1px 20px 20px 20px;
+    .cls-myprofileindex{
+      .cls-profileleft,.cls-editprofile{
+        width: 100%;
+      }
+      .cls-editprofile{
+        #fn-mbl-tab{
+          display: none;
+        }
+      }
+      .cls-profileleft{
+        .cls-profile{
+          .cls-profile-icon{
+            margin: 5% 5%;
+          }
+          .cls-profile-data{
+            .cls-user-name,.cls-user-phone,.cls-user-mail{
+              margin-left: 6%;
+            }
+          }
+          .cls-profile-type{
+              margin: 10% 0 5% 5%;
+              width: 100%;
+                .cls-customtab{
+                  display: flex;
+                  flex-direction: row;
+                  flex-wrap: nowrap;
+                  overflow-x: auto;
+                  height: 46px;
+                  overflow-y: hidden;
+                  .nav-item{
+                    em{
+                      display: none;
+                    }
+                    .nav-link{
+                      white-space: pre;
+                      font-size: 13px;
+                     
+                      &.active{
+                        border-left: 0px !important;
+                      }
+                    }
+                  }
+                }
+          }
+          .cls-mbl-logout{
+            display: block !important;
+            border: 1px solid #ccc;
+            padding: 0px 19px;
+            border-radius: 5px;
+            position: relative;
+            margin-top: 15px;
+            width: 90%;
+            svg{
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+    }
+    .cls-mbl-breadcrumb,.cls-back-bar{
+      display: none;
+    }
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px){
+  .cls-profile-container{
+    .cls-myprofileindex {
+      .cls-profileleft{
+        width: 24%;
+        margin-right: 20px;
+        .cls-profile{
+          .cls-profile-data{
+            .cls-user-phone,.cls-user-mail,.cls-user-name{
+              margin-left: 0;
+            }
+            .cls-user-name{
+              font: 14px "ProximaSemiBold";
+            }
+          } 
+        } 
+        .cls-profile,.cls-profile-type{
+          width:100%;
+        }
+      }
+      .cls-editprofile{
+        width: 72%;
+      }
+    }
+  } 
+}
+@media only screen and (max-width: 480px) {
+  .cls-profile-container{
+    margin: -35px -30px -54px -30px;
+    padding: 1px 20px 20px 20px;
+    .cls-myprofileindex{
+      padding-left: unset;
+      .cls-profileleft,.cls-editprofile{
+        width: 100%;
+      }
+      .cls-editprofile{
+        #fn-mbl-tab{
+          // display: none;
+        }
+      }
+      .cls-employee-detail{
+        bottom: 10px;
+      }
+    
+      .cls-profileleft{
+        .cls-profile{
+          width: 100%;
+          .cls-profile-icon{
+            margin: 0 auto;
+          }
+          .cls-profile-data{
+            text-align: center;
+            .cls-user-name,.cls-user-phone,.cls-user-mail{
+              margin-left: 6%;
+            }
+          }
+          .cls-profile-type{
+              margin: 10px 0px;
+              width: 100%;
+              .cls-customtab{
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                height: 46px;
+                overflow-y: hidden;
+                .nav-item{
+                  em{
+                    display: none;
+                  }
+                  .nav-link{
+                    white-space: pre;
+                    font-size: 13px;
+                    
+                    &.active{
+                      border-left: 0px !important;
+                    }
+                  }
+                }
+              }
+          }
+          .cls-mbl-logout{
+            display: block !important;
+            border: 1px solid #ccc;
+            padding: 0px 19px;
+            text-align: center;
+            margin: 0 15px;
+            width: 90%;
+            border-radius: 5px;
+            position: relative;
+          }
+        }
+      }
+    }
+    .cls-mbl-breadcrumb,.cls-back-bar{
+      display: none;
+    }
+  }
+}

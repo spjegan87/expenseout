@@ -1,0 +1,271 @@
+/************************************************************************************
+CSS Description : report receipt
+Author          : Naveen.s
+Created Date    : 30 October 2020
+*************************************************************************************/
+@import '../../../shared-module/components/reporthistory/reporthistory.component.scss';
+@import '../../../../assets/scss/variable.scss';
+// @import '../../../expense-vault/gallery/gallery.component.scss';
+.cls-history-container{
+    .cls-main-popup{
+        width: 70%;
+        top: 15vh;
+        .cls-popup{
+            max-height: 75vh;
+            .cls-history-data{
+              display: flex;
+              flex-wrap: wrap;
+              padding: 10px;
+                .cls-pdf{
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    text-align: center;
+                    background: $GRIDBDR url('../../../../assets/images/pdf.svg') no-repeat 48% 35%;
+                    justify-content: center;
+                    span{
+                      font: 15px 'ProximaSemibold';
+                      padding: 17px 10px;
+                      position: absolute;
+                      top: 62%;
+                    }
+                }
+                .cls-receipt-list{
+                    width: 200px;
+                    height: 270px;
+                    display: inline-block;
+                    border: 1px solid $BDRLIGHT;
+                    padding: 8px;
+                    position: relative;
+                    cursor: pointer;
+                    background: $MAINBG;
+                    margin: 0 25px 20px 0;
+                    img{
+                        width: 100%;
+                        height: 100%
+                    }
+                    .cls-recipt-icon{
+                        background: $WHITE;
+                        position: absolute;
+                        left: -11px;
+                        top: -10px;
+                        width: 22px;
+                        height: 22px;
+                        border-radius: 5px;
+                        em{
+                            font-size: 22px;
+                        }
+                        .icon-40-checkbox-empty{
+                            color: $BDRLIGHT;
+                        }
+                        .icon-41-checkbox-fill{
+                            color: $PRIMARYCOLOR;
+                        }
+                    }
+                }
+                .cls-saved-image{
+                    width: 200px;
+                    height: 270px;
+                    display: inline-block;
+                    border: 1px solid #ddd6d6;
+                    padding: 5px;
+                    position: relative;
+                    cursor: pointer;
+                    // box-shadow: -1px 0px 7px 4px rgba(197 175 175 / 20%);
+                    border-radius: 3px;
+                    margin: 0 25px 20px 0;
+                    &.cls-scanpdf{
+                      .cls-loader-container{
+                      background: $GRIDBDR;
+                      position: absolute;
+                      top: 0;
+                      }
+                    }
+                    // overflow: hidden;
+                    .cls-recipt-icon{
+                      background: $WHITE;
+                      position: absolute;
+                      left: -11px;
+                      top: -10px;
+                      width: 22px;
+                      height: 22px;
+                      border-radius: 5px;
+                      // box-shadow: 0 0px 14px 0 rgba(0, 0, 0, 0.2);
+                      z-index: 1;
+                      em{
+                          font-size: 22px;
+                      }
+                      .icon-40-checkbox-empty{
+                          color: $BDRLIGHT;
+                      }
+                      .icon-41-checkbox-fill{
+                          color: $PRIMARYCOLOR;
+                      }
+                      &:hover{
+                        box-shadow: 0 0px 14px 0 rgba(0, 0, 0, 0.2);
+                        transform: scale(1.1);
+                      }
+                    }
+                    .cls-image{
+                      width: 100%;
+                      height: 100%;
+                    }
+                    .cls-bottom-icon{
+                      // display: none;
+                      position: absolute;
+                      display: block;
+                      background: #20c997;
+                      width: 100%;
+                      left: 0;
+                      bottom: 0;
+                      padding: 6px;
+                      border-top-left-radius: 10px;
+                      border-top-right-radius: 10px;
+                      span{
+                        font-size: 12px;
+                        color: $WHITE;
+                        margin-right: 9px;
+                      }
+                    }
+                    .cls-bg{
+                        // display: none;
+                        height: 72px;
+                        background: $BTNGRADIENT;
+                        width: 100%;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        border-radius: 0px 0px 16px 18px;
+                        &.cls-policyviolatebg{
+                          background : linear-gradient(to right, #ff0000, #ed4447);
+                          .cls-policy-wave{
+                            em{
+                              color: $WHITE !important;
+                              animation: wave 1s infinite;
+                              -webkit-animation: wave 1s infinite;
+                            }
+                          }
+                        }
+                        @keyframes wave {
+                          0% {
+                            box-shadow: 0 0 0 0px rgb(254, 254, 255);
+                          }
+                        
+                          100% {
+                            box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+                          }
+                        }
+                        .cls-flight-text{
+                          span{
+                            color: $WHITE;
+                            position: absolute;
+                            &:first-child{
+                              left: 10px;
+                              top: 15px;
+                              font: 16px "ProximaSemiBold";
+                            }
+                            &:last-child{
+                              left: 10px;
+                              top: 40px;
+                              font: 13px "ProximaRegular";
+                            }
+                          }
+                        }
+                        .cls-hover-amount{
+                          color: $WHITE;
+                          position: absolute;
+                          right: 10px;
+                          top: 20px;
+                          span{
+                            &:first-child{
+                              margin-right: 5px;
+                              font: 13px "ProximaRegular";
+                            }
+                            &:last-child{
+                              font: 16px "ProximaSemiBold";
+                            }
+                          }
+                        }
+                      }
+                }
+                .cls-nodata-found{
+                  margin-left: 40%;
+                    span{
+                        font: 18px 'ProximaSemibold';
+                        display: block;
+                        margin: 10px 0;
+                        text-align: left;
+                    }
+                }
+            }
+        }
+        .cls-btn{
+            .cls-btn-primary{
+                padding: 7px 20px;
+            }
+        }
+    }
+    //animation design for closeing modal
+.close-ani{
+    display:block;
+    animation: .5s fadeout;
+    animation-fill-mode: forwards;
+    transition:.5s;
+    .cls-background{
+      display: none;
+    }
+  }
+  @keyframes fadeout {
+    0% {
+      transform: scale(1);
+      transform: scale(1) translate3d(0,0,0);
+    }
+    5%{
+      opacity: 0.9;
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(0);
+    transform: scale(0) translate3d(0,0,0);
+    }
+  }
+}
+@media only screen and (max-width: 480px) {
+  .cls-history-container{
+    .cls-main-popup{
+      width: 90%;
+      top: 5vh;
+      .cls-popup{
+        max-height: 87vh;
+        .cls-history-data{
+          .cls-nodata-found{
+            margin-left: 30%;
+          }
+        }
+      }
+      .cls-btn-primary{
+        font-size: 12px;
+      }
+    }
+  }
+}
+@media (min-width: 481px) and (max-width: 766px){
+  .cls-history-container{
+    .cls-main-popup{
+      .cls-popup{
+        .cls-history-data{
+          .cls-nodata-found{
+            margin-left: 40%;
+          }
+        }
+      }
+      .cls-custom-btn.cls-btn-secondary{
+        padding: 6px 10px;
+      }
+      .cls-btn-primary{
+        font-size: 12px;
+        padding: 6px 13px !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<!-- Side Menu -->
+<div class="cls-profile-type">
+    <div class="cls-customtab" *ngFor="let data of tabData; let index = index; let f= first">
+        <span class="cls-menu" id="menu{{index}}" (click)="masterDataCall(index,data)" [ngClass]="{'active': clickedIndex == index,'cls-tabdisable': profileType == 'new','cls-editprofile':profileType == 'edituserprofile' || profileType == 'myprofile'}">
+    <em *ngIf="clickedIndex == index" class="icon-3-dropdownarrow"></em>
+    {{ data?.name }}
+  </span>
+    </div>
+</div>

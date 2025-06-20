@@ -1,0 +1,460 @@
+@import '../report-index/report-index.component.scss';
+@import '../../../../assets/scss/all';
+
+.cls-fieldchange{
+	padding: 0px !important;
+	box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
+	// padding: 16px;
+	background: $WHITE;
+	border-radius: 7px;
+	position: relative;
+	border: 1px solid #e8e3e3;
+	.cls-btn-primary{
+		font-size: 14px !important;
+	}
+	.cls-overflow{
+		overflow: hidden;
+	}
+	.cls-mode-text{
+		font-size: 23px;
+		font-weight: 600;
+		text-transform: capitalize;
+	 }
+	 .cls-container-close{
+		position: absolute;
+		width: 18px;
+		height: 18px;
+		background:$ERROR;
+		display: inline-block;
+		right: -8px;
+		z-index: 1;
+		top: -9px;
+		border-radius: 4px;
+		font-size: 16px;
+		cursor: pointer;
+		padding: 2px 0px 0px 0px;
+		border: 1px solid $WHITE;
+		em{
+		  font-size: 9px;
+		  vertical-align: text-top;
+		  font-weight: 600;
+		  color: $WHITE;
+		}
+		&:hover{
+		  box-shadow:0 2px 10px 0  rgba(0, 0, 0, 0.1);
+		  transform: scale(1.1);
+		}
+	 }
+	.cls-date{
+		.cls-date-icon {
+			top: 34px;
+			right: 10px;
+	  }
+	} 
+	.cls-main{
+		padding: 16px;
+		.cls-travelled-locations{
+			.cls-note{
+				font-size: 14px;
+				display: block;
+				color: #999;
+			}
+		}
+	}
+	.cls-main + .cls-main{
+		border-top: 2px dashed #ccc;
+	}
+	.cls-width50{
+		width: 48%;
+		display: inline-block;
+	}
+	.cls-dropdown-container{
+		position: relative;
+		.icon-3-dropdownarrow{
+			position: absolute;
+			right: 6px;
+			top: 11px;
+			font-size: 10px;
+		}
+		
+	}
+	.cls-milagerate{
+		padding:10px 15px;
+		 background: #eef1f4;
+		 color: #000;
+		 font-size: 13px;
+		 border-radius: 5px;
+		.cls-currencyrate{
+			color: #444;
+			font-size: 14px;
+			display: block;
+			span{
+				font-weight: 600;
+				color: #000;
+				font-size: 17px;
+				word-break: break-all;
+			}
+		}
+	}
+
+	.cls-block{
+		display: block;
+	}
+	.cls-sub-text{
+		font: 17px "ProximaBold";
+		color: #000;
+	}
+	.cls-note{
+		font: 13px "ProximaRegular";
+		display: block;
+		color: #999;
+		margin-top: 5px;
+		em{
+			color: #000;
+		}
+	}
+	.cls-location{
+		padding: 0;
+		margin-top: 30px;
+		.cls-pin, .cls-end{
+			border: 1px solid #007bff;
+			box-shadow: 0 2px 5px 0px #007bff1f;
+			display: inline-block;
+			font: 13px "ProximaSemiBold";
+			color: #007bff;
+			border-radius: 4px;
+			text-align: center;
+			cursor: pointer;
+			display: block;
+			margin: 10px 0px;
+			padding: 8px;   // padding: 9px 12px;
+			line-height: 20px;
+		}
+		.cls-end{
+			color: #ff5454;
+			border-color: #ff5454;
+			box-shadow: unset;
+			display: inline-block;
+			width: 46%;
+			&.cls-disable{
+				cursor: not-allowed;
+				color: #ffc1c1;
+				border-color: #ffc1c1;
+			}
+			&.cls-enable{
+				cursor:pointer;
+			}
+		}
+		.cls-end + .cls-end{
+			margin-left: 19px; //17px
+		}
+	}
+}
+.live-search-list{
+	max-height: 150px;
+	overflow-y: scroll;
+}
+
+//Second half
+.cls-second-trip-info,.cls-second-trip-title{
+    display: block;
+}
+.cls-second-trip-title{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #000;
+}
+.cls-second-trip-info{
+    font-size: 15px;
+    color: #999;
+    margin-bottom: 16px;
+    em{
+        color: #000;
+        font-size: 15px;
+    }
+}
+.cls-second-trip-label{
+	font: 16px "ProximaSemiBold";
+    /* color: #505050; */
+    color: #000;
+    margin-top: 14px;
+}
+
+
+
+//Popup 
+
+.cls-popup-section {
+    position: fixed;
+    bottom: -80%;
+    left: 0;
+    background: #fff;
+    z-index: 15;
+    padding: 25px 17px 25px;
+    border-radius: 40px 40px 0 0;
+    transition: all 1s ease;
+	text-align: center;
+	right: 0;
+	width:100%;
+	&.cls-popupShow {
+		bottom: 0;
+	}
+	.cls-mbl-line{
+        display: inline-block;
+        height: 5px;
+        width: 35px;
+        background: #ccc;
+        border-radius: 10px;
+        position: absolute;
+        left: 45%;
+        top: 13px;
+      }
+	.cls-header,.cls-pin-location-info,.cls-pin-location,.cls-location-btn{
+		display: block;		
+	}
+	.cls-header{
+		color: #000;
+		font: 18px "ProximaSemiBold";
+	}
+	.cls-pin-location-info{
+		font: 14px "ProximaRegular";
+		color:#999;
+	}
+	.cls-pin-location{
+		color: #000;
+		font: 17px "ProximaSemiBold";
+		em{
+			color:#333;
+		}
+	}
+	.cls-location-btn{
+		margin-top: 15px;
+		.cls-yes,.cls-no span{
+			font-size: 14px;
+		}
+		.cls-yes,.cls-no{
+			font-size: 13px;
+			font-weight: unset;
+			border-radius: 4px;
+		}
+		.cls-no{
+			border: 1px solid #1175cb;
+			color: #1175cb;
+			padding: 7px 17p
+			x;
+			margin-right: 8px;
+			&:hover{
+				color:#fff;
+			}
+		}
+		.cls-yes{
+			color:#fff;
+			background: linear-gradient(to right, #146099, #1675bc);
+			border:1px solid #177bc6;
+			padding: 7px 18px;
+		}
+	}
+	.cls-filter{
+		padding: 10px 60px;
+		.cls-filter-label{
+			display: block;
+			text-align: left;
+			font-size: 18px;
+			font-weight: 600;		
+		}
+	}
+}
+
+
+.cls-blur-back{
+	background: url("../../../../assets/images/backdropblur.png");
+	@include fix-position(0, 0, 0, 0);
+	z-index: 13;
+}
+
+// Location Pin drop
+.cls-localty{
+	margin: 20px 0 0;
+	&.cls-diableclose{
+		.cls-close{
+			display: none;
+		}
+	}
+	&.cls-enableclose{
+		.cls-close{
+			display: inline-block;
+		}
+	}
+	.cls-locationpined{
+		position: relative;
+		padding: 8px 0 0px 5px;
+		margin-left: 23px;
+		border-bottom: 1px solid #ccc;
+		margin-top: 15px;
+		font-size: 14px;
+		font-weight: 600;
+		&:before{
+			content: "";
+			position: absolute;
+			width: 9px;
+			height: 9px;
+			background: #0B76C6;
+			border-radius: 25px;
+			box-shadow: 0 0 9px 0 #0b76c6;
+			left: -20px;
+			top: 17px;
+			border: 1px solid #fff;
+		}
+		&:after{
+			content: '';
+			position: absolute;
+			background: #ccc;
+			width: 10px;
+			width: 5px;
+			height: 5px;
+			left: -18px;
+			border-radius: 25px;
+			top: 36px;
+			box-shadow: 0 16px 0px 0px #ccc;
+		}
+		.cls-locname{
+			height: 22px;
+			display: inline-block;
+			white-space: nowrap;
+			overflow: hidden;
+			width: 92%;
+			text-overflow: ellipsis;
+			font-size: 18px;
+			.cls-close
+				{
+					position: absolute;
+					right: 0;
+				    top: 7px;
+					font-size: 8px;
+					padding: 5px 5px 5px 4px;
+					border-radius: 50%;
+					background: red;
+					color: #fff;
+					width: 17px;
+					height: 17px;
+					margin-top: 2px;
+				}
+		}
+		&.cls-firsthalf{
+			&.cls-final{
+				&:before{
+					background: unset;
+					border:1px solid #0B76C6;
+					width: 11px;
+					height: 11px;
+					box-shadow:unset;
+				}
+			}
+		}
+		&.cls-secondhalf{
+			&:before{
+				background: #ffa500;
+				box-shadow: 0 0 9px 0 #ffa500;
+			}
+			&.cls-final{
+				&:before{
+					background: unset;
+					border:1px solid #ffa500;
+					width: 12px;
+					height: 12px;
+					box-shadow:unset;
+				}
+			}
+		}
+		&:last-child{
+			&:after{
+				content: none;
+			}
+		}
+	}
+	
+}
+.cls-disableact{
+	.form-control:disabled, .form-control[readonly]{
+		background: #eef1f4 !important;
+	}
+}
+
+
+.cls-tooltip{
+	&:hover{
+		.cls-hovertext{
+			left: -35px;
+			font-size: 12px;
+			top: 36px;
+		}
+	}
+}
+// Responsive Changes
+@media (min-width: 565px) and (max-width: 766px){
+	.col-sm-6{
+		flex:unset;
+	}
+}
+.odometer-image-upload{
+	position: relative;
+	.cls-odometer-img-start,.cls-odometer-img-end{
+		border: 1px solid #007bff;
+		padding:0px;
+		height: 43px;
+		text-align: center;
+		.cls-label-text{
+			margin-top: 9px;
+			display: inline-block;
+		}
+		.cls-file-input{
+			opacity:0;
+			line-height: 13px;
+			display: inline-block;
+			height: 9px !important;
+		}
+		&.cls-disable{
+			opacity: 0.5;
+		}
+	}
+	.cls-preview-image-start,.cls-preview-image-end{
+		margin-right: 21px;
+		color: #007bff;
+		border-bottom: 1px solid #007bff;
+		vertical-align: top;
+	}
+	.file-name{
+		font-family: "ProximaNova" !important;
+		display: inline-block;
+		width: 38%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: bottom;
+	}
+	.cls-remove-start,.cls-remove-end{
+		border-radius: 2px;
+		position: absolute;
+		font-size: 9px;
+		top: 3px;
+		right: -15px;
+		background: red;
+		color: #fff;
+		padding: 4px 4px 3px 3px;
+		
+	}
+}
+// .cls-odometer-img-end{
+// 	position: relative;
+//     border: 1px solid;
+//     padding: 3px 0px 1px 45px !important;
+//     width: 63%;
+//     left: 60px;
+//     height: 35px;
+//     text-align: center;
+// 	.cls-file-input{
+// 		opacity: 0;
+// 		top: 0px;
+// 		position: absolute;
+// 	}
+// }

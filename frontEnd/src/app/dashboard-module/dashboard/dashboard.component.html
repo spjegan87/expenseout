@@ -1,0 +1,122 @@
+<!-- Desc : User,Approver,Finance
+Author : Naveen.S
+Date : 23-sept-2020 -->
+
+<!-- user Container starts -->
+<div class="cls-user-dashboard">
+    <!-- tab starts -->
+    <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item" [ngClass]="{ 'active': i == activeTab , 'cls-line' : i == 0 }" *ngFor="let item of dashboardData;let i = index;" (click)="toggletab(i,item.id,item.heading)">
+			  <a class="nav-link" id="{{item.id}}-tab" [ngClass]="{ 'active': i == activeTab }" data-toggle="tab" href="#{{item.id}}" role="tab" aria-controls="home"
+				aria-selected="true" [appFontSize]="item.heading | translate">
+				<img src="../../../assets/images/menu/{{item.image}}" alt="{{item.image}}">
+				{{item.heading | translate}}
+			</a>
+			</li>
+		  </ul> -->
+    <!-- <span class="cls-mbl-add d-none" (click)="createReport('report')"><em class="icon-32-reject"></em></span> -->
+    <!-- mobile bottom icon starts-->
+    <div class="cls-bottom-container">
+        <span id="fn-mbl-background" class="cls-mbl-background" (click)="closeMobile()"></span>
+        <span class="cls-overlay-tool"></span>
+        <span class="cls-over-position">
+					<span class="cls-mbl-tool-filter" (click)="showFilter()">
+						<img src="../../../assets/images/filter.svg" alt="filter">
+					</span>
+        <span class="cls-tool-create" (click)="createReport('report')">
+						<em class="icon-32-reject"></em>
+					</span>
+        </span>
+    </div>
+    <span class="cls-mbl-tool-button" (click)="openMobileTool()">
+				<em class="icon-15-list"></em>
+			</span>
+    <!-- mobile bottom icon ends-->
+    <ul class="nav nav-tabs {{tabFlag !== 'User' ? 'cls-border' : '' }}" id="myTab" role="tablist" *ngIf="tabFlag !== 'User'">
+
+        <li class="nav-item" (click)="toggletab('tab1','User')" [ngClass]="{ 'd-block': tabFlag === 'User' || tabFlag === 'Approver' || tabFlag === 'Finance'}">
+            <a class="nav-link" [ngClass]="{'active': subTabFlag === 'User'}" id="tab1" href="#tab1" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">
+                <img src="../../../assets/images/menu/myprofile.svg" alt="myprofile.svg"> {{'User' | translate }}
+            </a>
+        </li>
+        <li class="nav-item" (click)="toggletab('tab2','Approver')" [ngClass]="{ 'd-block':tabFlag === 'Approver' || tabFlag === 'Finance'}">
+            <a class="nav-link" id="tab2" [ngClass]="{'active': subTabFlag === 'Approver'}" href="#tab2" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">
+                <img src="../../../assets/images/menu/Approvals.svg" alt="Approvals.svg">{{'Approver' | translate }}
+            </a>
+        </li>
+        <li class="nav-item" (click)="toggletab('tab3','Finance')" *ngIf="tabFlag != 'Approver'" [ngClass]="{ 'd-block': tabFlag === 'Finance' }">
+            <a class="nav-link" id="tab3" [ngClass]="{'active': subTabFlag === 'Finance'}" href="#tab3" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">
+                <img src="../../../assets/images/menu/Settlements.svg" alt="Settlements.svg">{{'Finance' | translate }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade" *ngFor="let item of dashboardData;let i = index;" [ngClass]="{ 'show active': i == activeTab }" id="{{item.id}}" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row cls-card-container">
+                <div class="col-sm-5 cls-card-box">
+                    <ng-container *ngFor="let tabVal of item.value">
+                        <span class="cls-box-1" [ngClass]="{'cls-cursor' : subTabFlag !== 'User'}" (click)="redirectRoute(tabVal.routerLink,tabVal.tabIndex)" title="{{tabVal.title}}">
+								<span class="cls-icon-box" [ngStyle]="{'background': tabVal.bg_color}">
+									<em class="icon-34-settle" [ngStyle]="{'color': tabVal.color}"></em>
+								</span>
+                        <span class="cls-sub-text">{{tabVal.title | translate}}</span>
+                        <div class="cls-bottom">
+                            <span class="cls-report-count">{{tabVal.count}} {{'Reports' | translate }}</span>
+                            <span class="cls-amount">{{tabVal.currency}} {{tabVal.amount |  number}} <em class="icon-39-arrow"></em></span>
+                        </div>
+                        </span>
+                    </ng-container>
+                </div>
+                <div class="col-sm-8 cls-chart-box">
+                    <span class="cls-create-bar" *ngIf="item.create === 'true'">
+							<span class="cls-dotted-line"></span>
+                    <span class="cls-dotted-line"></span>
+                    <span class="cls-dotted-line"></span>
+                    <span class="cls-dotted-line"></span>
+                    <span class="cls-img-container"></span>
+                    <span class="cls-create-btn">
+								<!-- <span class="cls-icon"></span> -->
+                    <!-- <a href="#" title="{{'Create Expense Report' | translate }}">
+									<span class="cls-plus-icon" (click)="createReport()"><em class="icon-38-dashed-create"></em>{{'Create Expense Report' | translate }}</span>
+								</a> -->
+                    <div class="cls-dropdown-button">
+                        <a href="javascript:;" class="cls-btn-primary cls-custom-btn dropdown-toggle cls-plus-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <em class="icon-11-plus mr-1"></em>{{ 'Create Expense Report' | translate}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="javascript:;" (click)="createReport('report')">{{'Create Manually' | translate}}</a>
+                            <a class="dropdown-item" href="javascript:;" (click)="createReport('vault')">{{'Create with Receipt Scanner' | translate}}</a>
+                        </div>
+                    </div>
+                    </span>
+                    </span>
+                    <span class="cls-chart-bar">
+							<span class="cls-chart-title">{{'Top Spending Categories' | translate }}<em class="icon-16-info"></em></span>
+                    <ng-container *ngIf="!chartLoader">
+                        <ng-container *ngIf="userChartData?.series?.length >=1">
+                            <app-donutchart [chartOptions]="userChartData"></app-donutchart>
+                        </ng-container>
+                        <ng-container *ngIf="userChartData?.series?.length === 0">
+                            <div class="text-center">
+                                <span class="cls-nodata"></span>
+                                <span class="cls-nodata-text">{{'No data Available' | translate}}</span>
+                            </div>
+                        </ng-container>
+                        <!-- <app-donutchart></app-donutchart> -->
+                        <!-- <div class="text-center" *ngIf="userChartData?.series?.length === 0">
+									<span class="cls-nodata"></span>
+									<span class="cls-nodata-text">{{userChartData.message}}</span>
+								</div> -->
+                    </ng-container>
+                    <ng-container *ngIf="chartLoader">
+                        <div class="text-center cls-loadchart">
+                            <img src="../../../assets/images/dashboardloader.svg">
+                        </div>
+                    </ng-container>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- user Container ends -->
+</div>

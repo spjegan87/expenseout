@@ -1,0 +1,410 @@
+<!-- Desc : Expense form 
+Author : Naveen.s
+Date : 17-July-2020 -->
+
+<!-- main container starts -->
+<ng-container *ngIf="imageUploadContainer">
+    <div class="cls-main-container">
+        <!-- <div class="cls-desktop-breadcrumb">
+            <app-breadcrumb [activeBreadcrumb]="breadcrumb"></app-breadcrumb>
+        </div> -->
+        <!-- <h1 class="mt-4">{{'Expense Vault' | translate}} </h1> -->
+        <ng-container *ngIf="!closeWorkFlow">
+            <div class="cls-upload-main mb-4">
+                <div class="row">
+                    <div class="col-sm-5 cls-tabwidth">
+                        <span class="cls-image-upload-box">
+                            <span class="cls-dotted-line"></span>
+                            <span class="cls-dotted-line"></span>
+                            <span class="cls-dotted-line"></span>
+                            <span class="cls-dotted-line"></span>
+                            <span class="cls-sap-icon">
+                                <span [appFontSize]="'Upload Receipt' | translate">{{'Upload Receipt' | translate}}</span>
+                            </span>
+                            <div class="text-right cls-container-upload">
+                                <button class="btn btn-primary cls-upload-button">{{'Choose File' | translate}}</button>
+                                <span class="cls-or-span">{{'(Or)' | translate}}</span>
+                                <span class="cls-drag-drop" [appFontSize]="'Drag and Drop' | translate">
+                                    {{'Drag and Drop' | translate}}
+                                </span>
+                                <div class="cls-upload-text">
+                                    <em class="icon-16-info"></em>
+                                    JPEG, .JPG, .PNG,.PDF upto 2 MB
+                                </div>
+                            </div>
+                            <ng-container *ngIf="!alertModal">
+                                <input type="file" class="cls-file-input"  accept=".jpg,.jpeg,.png,.pdf" (change)="onSelectFile($event)" multiple>
+                            </ng-container>
+                        </span>
+                    </div>
+                    <div class="col-sm-7 cls-info-container">
+                        <span class="cls-info-text"><em class="icon-16-info"></em>
+                            {{'In the Expense Vault, Receipts acknowledging the business travel expenses can be uploaded and stored' | translate}}</span>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="cls-work-flow-cont text-center mb-3">   
+                <span class="cls-work-flow">
+                    <span class="cls-star1"><em class="icon-22-star_2"></em></span>
+                    <span class="cls-work-flow-text">{{'Work Flow' | translate}}</span>
+                    <span class="cls-star2"><em class="icon-21-star_1"></em></span>
+                </span>
+            </div>
+            <div class="cls-instruction-container mb-4">
+                <span class="cls-image-flow">
+                    <span class="cls-img1"></span>
+                    <span class="cls-img2"></span>
+                    <span class="cls-img3"></span>
+                    <span class="cls-line"></span>
+                    <span class="cls-line1"></span>
+                    <span class="cls-line2"></span>
+                    <span class="cls-text1" [appFontSize]="'Upload Receipt' | translate">{{'Upload Receipt' | translate}}</span>
+                    <span class="cls-text2" [appFontSize]="'Scan Receipt' | translate">{{'Scan Receipt' | translate}}</span>
+                    <span class="cls-text3" [appFontSize]="'Add Details' | translate">{{'Add Details' | translate}}</span>
+                    <span class="cls-view-report">
+                        <span [appFontSize]="'View Report' | translate">{{'View Report' | translate}}</span>
+                    </span>
+                    <span class="cls-line-x">
+                        <span class="cls-text-a" [appFontSize]="'Add to Existing (or) New Report' | translate">{{'Add to Existing (or) New Report' | translate}}</span>
+                        <span class="cls-text-b">{{'(or)' | translate}}</span>
+                        <span class="cls-text-c" [appFontSize]="'Save Receipt' | translate">{{'Save Receipt' | translate}}</span>
+                    </span>
+                </span>
+            </div>
+        </ng-container>
+        <!-- next container start -->
+        <ng-container *ngIf="showImageContainer">
+            <div class="row w-100">
+                <div class="col-md-6">
+                    <h1 class="cls-expense-vault-title">{{'Expense Vault' | translate}}</h1>
+                </div>
+                <div class="col-md-6 pr-0">
+                    <div class="cls-button-container text-left" *ngIf="multipleselect">
+                        <div class="cls-opacity text-right" *ngIf="!bulkUpload">
+                            <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="openReport('Create')"><span>{{'Create New Report' | translate}}</span></button>
+                            <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="openReport('Existing')">{{'Add Existing Report' | translate}}</button>
+                        </div>
+                        <span class="cls-mbl-background" *ngIf="createReport" (click)="closeReport('mobile')"></span>
+                        <div class="cls-create-report-container" *ngIf="createReport">
+                            <span class="cls-mbl-line"></span>
+                            <span class="cls-shape" *ngIf="ExistingReport == true"></span>
+                            <span class="cls-shape1" *ngIf ="ExistingReport == false"></span>
+                            <div class="cls-inner-report mt-2">
+                                <span class="cls-top-close text-center" (click)="closeReport()">
+                                    <em class="icon-32-reject"></em>
+                                </span>
+                                <span class="cls-report-title mb-2">{{reportTitle | translate}}</span>
+                                <!-- Add to existing report container starts -->
+                                <ng-container *ngIf="ExistingReport == true">
+                                    <div class="cls-existing-report">
+                                        <ng-container  *ngFor="let data of reportExist.content;let x =index;">
+                                            <span class="cls-reports-strip my-2 mr-2 cls-reportactive{{x}}"  (click)="getReportValue(x)">
+                                                {{data.reportname}}
+                                            </span>
+                                            <!-- <span class="cls-reports-strip my-2 mr-2" (click)="getReportValue(0)">Malaysia Meetups</span> -->
+                                        </ng-container>
+                                        <div class="text-center" *ngIf="reportExist.message.status === 'danger'">
+                                            <span class="cls-nodata"></span>
+                                            <span class="cls-nodata-text">{{'No Report Found' | translate}}</span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <!-- Add to existing report container ends -->
+                                <!-- Create new report container starts -->
+                                <ng-container *ngIf ="ExistingReport == false">
+                                    <form [formGroup]="reportForm" class="row">
+                                        <ng-container *ngFor=" let field of reportFields">
+                                            <div  class="{{field.class}}">
+                                                <label  for="{{field.id}}">{{ field.name | translate}} <span class="cls-mandatory" *ngIf="field.required">*</span></label>
+                                                <ng-container *ngIf="field.type=== 'number'">
+                                                    <input  type="number"  min ="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)"  formControlName="{{field.id}}" name="{{field.name}}"  id="{{field.id}}" placeholder="{{field.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control">
+                                                </ng-container>
+                                                <ng-container *ngIf="field.type=== 'select'">
+                                                  <select formControlName="{{field.id}}" id="{{field.id}}"  name="{{field.id}}"  class="form-control cls-custom-input">
+                                                    <option value="" >{{'Select' | translate}}</option>
+                                                    <ng-container *ngFor="let opt of field.options">
+                                                        <option value="{{opt.id}}" >{{opt.value}}</option>
+                                                      </ng-container>
+                                                  </select>
+                                                </ng-container>
+                                                <ng-container *ngIf="field.type=== 'text'">
+                                                    <input  type="{{field.type}}" formControlName="{{field.id}}" (keypress)="stringValidation($event)" onpaste="return false"  name="{{field.id}}" id="{{field.id}}" placeholder="{{ field.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control " 
+                                                    [ngClass]="{'cls-border-error':(submitted && validation[field.id].errors)}">
+                                                </ng-container>
+                                                <!-- <span class="cls-tool-error fn-errorField" *ngIf="field.id ==='description'">Please Enter Details</span> -->
+                                            </div>
+                                        </ng-container>
+                                        <!-- <div  class="form-group col-sm-5">
+                                            <label  for="reportname">{{'Report Name' | translate}}<span class="cls-mandatory">*</span></label>
+                                            <input  type="text" formControlName="reportname" name="reportname" id="reportname" placeholder="{{'Enter Report Name' | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                                            [ngClass]="{'cls-border-error':(submitted && validation.reportname.errors)}">
+                                        </div>
+                                        <div  class="form-group col-sm-5">
+                                            <label  for="description">{{'Description' | translate}}<span class="cls-mandatory">*</span></label>
+                                            <input class="cls-custom-input form-control"  formControlName="description" name="description" id="description" placeholder="{{'Enter Description' | translate}}" autocomplete="off" 
+                                            [ngClass]="{'cls-border-error':(submitted && validation.description.errors)}">
+                                        </div> -->
+                                    </form>
+                                </ng-container>
+                                <!-- Create new report container ends -->
+                                <div class="mt-2 text-right">
+                                    <span class="cls-desktop-close-btn">
+                                        <button type="button" class="btn cls-btn-secondary  cls-custom-btn" (click)="closeReport()">
+                                            <span>{{'Close' | translate}}</span>
+                                        </button>
+                                    </span>
+                                    <span class="d-none cls-mbl-close-btn">
+                                        <button type="button" class="btn cls-btn-secondary  cls-custom-btn" (click)="closeReport('mobile')">
+                                            <span>{{'Close' | translate}}</span>
+                                        </button>
+                                    </span>
+                                    <button type="button" *ngIf="ExistingReport == true" class="btn cls-btn-primary cls-custom-btn" (click)="saveExpense('existing')">
+                                        <span>{{'Save And Select' | translate}}</span>
+                                    </button>
+                                    <button type="button" *ngIf="ExistingReport == false" class="btn cls-btn-primary cls-custom-btn" (click)="saveExpense('new')">
+                                        <span>{{'Save And Select' | translate}}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cls-desktop-list">
+                <div class="row  cls-inner-upload mt-1">
+                    <div class="col-sm-3 cls-img-cont mb-3">
+                        <span class="cls-inner-image-upload">
+                            <span class="cls-dotted-line"></span>
+                            <span class="cls-dotted-line"></span>
+                            <span class="cls-dotted-line"></span>
+                            <span class="cls-dotted-line"></span>
+                            <span class="cls-recipt-text">
+                                <span>{{'Upload Receipt' | translate}}</span>
+                            </span>
+                            <div class="text-center cls-container-img">
+                                <button class="btn btn-primary cls-upload-button">{{'Choose File' | translate}}</button>
+                                <span class="cls-or-span">{{'(Or)' | translate}}</span>
+                                <span class="cls-drag-drop">{{'Drag and Drop' | translate}}</span>
+                                <div class="cls-upload-text mt-1">
+                                    <em class="icon-16-info"></em>
+                                    JPEG, .JPG, .PNG,.PDF upto 2 MB
+                                </div>
+                            </div>
+                            <ng-container *ngIf="!alertModal">
+                                <input type="file" class="cls-file-input" accept=".jpg,.jpeg,.png,.pdf" (change)="onSelectFile($event)" multiple>
+                            </ng-container>
+                        </span>
+                    </div>
+                    <div class="col-sm-3 mb-3 cls-preview-img cls-img{{j}}" *ngFor='let url of receiptVal; let j = index;'>
+                    <ng-container *ngIf="url.details === undefined">
+                            <span class="cls-inner-image" id="{{url.receiptid}}" [ngClass]="{'p-0 cls-scanpdf' : url.type === 'application/pdf'}">
+                                <!-- <a class="cls-download" (click)="downloadImage(url.tempUrl,url.name,url.type)"><em class="icon-55-download"></em></a> -->
+                                <img class="cls-image" id="cls-scan{{j}}" *ngIf="url.type !== 'application/pdf'" src="{{url.tempUrl}}.{{url.type}}" alt="Receipt{{j}}"  (click)="imagePreview(url.tempUrl,url.type)">
+                                <span class="cls-pdf" *ngIf="url.type === 'application/pdf'" (click)="previewPdf(url.tempUrl)">
+                                    <!-- <img src="../../../assets/images/pdf.svg"/> -->
+                                    <span>{{url.name}}</span>
+                                </span>
+                                <!-- scanning loader starts -->
+                                <div class="cls-loader-container d-none">
+                                <div class="cls-loader">
+                                    <em></em>
+                                    <div>
+                                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                                    <i></i><i></i><i></i>
+                                    </div>
+                                    <span class="cls-bar"></span>
+                                    <span class="cls-loader-text">{{'Scanning progress' | translate}}</span>
+                                </div>  
+                                </div> 
+                                <!-- scanning loader ends -->
+                                <span class="cls-bottom-icon">
+                                    <span class="cls-a-hover" (click)="editVault(undefined,url.tempUrl,url.receiptid,url.type)">
+                                        <!-- <em class="icon-14-edit"></em>
+                                        <span class="cls-tool">{{'Add Details   ' | translate}}</span> -->
+                                        {{'Add Details' | translate}} 
+                                    </span>
+                                    <!-- <em class="cls-dashed">
+                                        |   
+                                    </em> -->
+                                    <span class="cls-scan-icon cls-hover-tooltip " *ngIf="configSetting.auto_scan === 'Yes'"  id="cls-img{{j}}" (click)="showForm(url.tempUrl,j,url.receiptid,url.type)">
+                                        <em class="icon-20-scan"></em>
+                                        <span class="cls-tool">{{'Click To Scan' | translate}}</span>
+                                        <!-- {{'Scan Receipt' | translate}} -->
+                                    </span>
+                                    <span (click)="downloadImage(url.tempUrl,url.name,url.type)" class="cls-download-icon cls-hover-tooltip"  id="cls-img{{j}}">
+                                        <em class="icon-55-download"></em>
+                                        <span class="cls-tool">{{'Click To Download' | translate}}</span>
+                                        <!-- {{'Scan Receipt' | translate}} -->
+                                    </span>
+                                    <span class="cls-delete-icon cls-hover-tooltip" (click)="deleteImage(j,url.receiptid)">
+                                        <em class="icon-5-delete"></em>
+                                        <span class="cls-tool">{{'Click To Delete' | translate}}</span>
+                                    </span>
+                                </span>
+                            </span>
+                    </ng-container>
+                        <!-- saved image container starts -->
+                        <ng-container *ngIf="url.details != undefined">
+                            <span class="cls-saved-image"  [ngClass]="{'p-0' : url.type === 'application/pdf'}">
+                                <span class="cls-recipt-icon" *ngIf="!bulkUpload" (click)="selectReceipt(j)"><em [ngClass]="url.details.checked === 'N'?'icon-40-checkbox-empty':'icon-41-checkbox-fill'"></em></span>
+                                <img class="cls-image" *ngIf="url.type !== 'application/pdf'" src="{{url.tempUrl}}.{{url.type}}" alt="Receipt{{j}}" (click)="imagePreview(url.tempUrl,url.type)">
+                                <span class="cls-pdf" *ngIf="url.type === 'application/pdf'" (click)="previewPdf(url.tempUrl)">
+                                    <span> {{url.name}}</span>
+                                </span>
+                                <span class="cls-bg" [ngClass]="{'cls-policyviolatebg' : url.details.policyDetect === 'Y'}">
+                                    <span class="cls-flight-text">
+                                        <span>{{url.details.category | translate}}</span>
+                                        <span>{{url.details.expenseDate | date: "dd-MMM-y" }}</span>
+                                    </span>
+                                    <span class="cls-hover-amount">
+                                        <span>{{url.details.currency}}</span>
+                                        <span>{{url.details.amount | number}}</span>
+                                        <span class="cls-policy-wave cls-hover-tooltip" *ngIf="url.details.policyDetect === 'Y'">
+                                            <em class="icon-46-policy"></em>
+                                            <span class="cls-tool">{{'Policy Violated' | translate}} 
+                                                <ng-container *ngIf="url.details.policyName !== '' || url.details.policyName !== null">
+                                                    : {{url.details.policyName}}
+                                                </ng-container>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                                <span class="cls-bottom-icon">
+                                    <span>
+                                        {{'Expense Saved' | translate}}
+                                    </span>
+                                    <span class="cls-scan-icon cls-hover-tooltip" (click)="editVault(url.details['expenseId'],url.tempUrl,url.receiptid,url.type)">
+                                        <em class="icon-14-edit"></em>
+                                        <span class="cls-tool">{{'Click To Edit' | translate}}</span>
+                                    </span>
+                                    <span (click)="downloadImage(url.receipt_path,url.receipt_name,url.receipt_type)" class="cls-download-icon cls-hover-tooltip"  id="cls-img{{j}}">
+                                        <em class="icon-55-download"></em>
+                                        <span class="cls-tool">{{'Click To Download' | translate}}</span>
+                                        <!-- {{'Scan Receipt' | translate}} -->
+                                    </span>
+                                    <span class="cls-delete-icon cls-hover-tooltip" (click)="deleteImage(j,url.receiptid)">
+                                        <em class="icon-5-delete"></em>
+                                        <span class="cls-tool">{{'Click To Delete' | translate}}</span>
+                                    </span>
+                                </span>
+                            </span>
+                        </ng-container>
+                        <!-- saved image container ends -->
+                    </div>
+                </div>
+            </div>
+            <div class="cls-mobile-list d-none">
+                <ng-container *ngFor='let url of receiptVal; let j = index;'>
+                    <div class="cls-mbl-strip mb-3 cls-img{{j}}" >
+                        <span class="cls-mbl-img-container" id="{{url.receiptid}}">
+                            <ng-container *ngIf="!bulkUpload">
+                                <span class="cls-recipt-icon" *ngIf="url?.details?.checked" (click)="selectReceipt(j)"><em [ngClass]="url?.details?.checked === 'N'?'icon-40-checkbox-empty':'icon-41-checkbox-fill'"></em></span>
+                            </ng-container>
+                            <img src="{{url.tempUrl}}.{{url.type}}" *ngIf="url.type !== 'application/pdf'" alt="Receipt{{j}}"  (click)="imagePreview(url.tempUrl,url.type)">
+                            <span class="cls-mbl-pdf" *ngIf="url.type === 'application/pdf'" (click)="previewPdf(url.tempUrl)">
+                                <!-- <span>{{url.name}}</span> -->
+                            </span>
+                            <!-- scanning loader starts -->
+                            <div class="cls-loader-container d-none">
+                                <div class="cls-loader">
+                                    <em></em>
+                                    <div>
+                                    <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                                    <i></i><i></i><i></i>
+                                    </div>
+                                    <span class="cls-bar"></span>
+                                    <span class="cls-loader-text">{{'Scanning' | translate}}</span>
+                                </div>  
+                            </div> 
+                            <!-- scanning loader ends -->
+                            <span class="cls-mbl-text" *ngIf="url.details != undefined">
+                                <span class="cls-mbl-text1">{{url.details.category | translate}}</span>
+                                <span class="cls-mbl-text2">{{url.details.expenseDate | date: "dd-MMM-y" }}</span>
+                                <span class="cls-mbl-curr-cont">
+                                    <span class="cls-mbl-currency">{{url.details.currency}}</span>
+                                    <span class="cls-mbl-text3">{{url.details.amount | number}}</span>
+                                </span>
+                            </span>
+                        </span>
+                        <span class="cls-mbl-action-bar">
+                            <span  class="cls-mbl-scan-icon cls-hover-tooltip" *ngIf="configSetting.auto_scan === 'Yes'" (click)="showForm(url.tempUrl,j,url.receiptid,url.type)">
+                                <em class="icon-20-scan"></em>
+                                <span class="cls-tool">{{'Click To Scan' | translate}}</span>
+                            </span>
+                            <ng-container *ngIf="url.details === undefined">
+                                <span  class="cls-mbl-scan-icon cls-hover-tooltip" (click)="editVault(undefined,url.tempUrl,url.receiptid,url.type)">
+                                    <em class="icon-14-edit"></em>
+                                    <span class="cls-tool">{{'Click To Edit' | translate}}</span>
+                                </span>
+                            </ng-container>
+                            <ng-container *ngIf="url.details != undefined">
+                                <span  class="cls-mbl-scan-icon cls-hover-tooltip" (click)="editVault(url.details['expenseId'],url.tempUrl,url.receiptid,url.type)">
+                                    <em class="icon-14-edit"></em>
+                                    <span class="cls-tool">{{'Click To Edit' | translate}}</span>
+                                </span>
+                            </ng-container>
+                            <span  class="cls-mbl-scan-icon cls-hover-tooltip" (click)="deleteImage(j,url.receiptid)">
+                                <em class="icon-5-delete"></em>
+                                <span class="cls-tool">{{'Click To Delete' | translate}}</span>
+                            </span>
+                        </span>
+                        <div class="clear-fix"></div>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+        <!-- next container ends -->
+        <!-- footer starts -->
+        <!-- <div class="row cls-footer-bar" *ngIf="showImageContainer">
+            <div class="col-md-6 cls-recipt-count">2 Vault Selected</div>
+        </div> -->
+        <!-- footer ends -->
+    </div>
+     <!-- mobile header starts-->
+     <div class="cls-mobile-header d-none">
+        <span class="cls-mobile-title">
+            <em class="icon-39-arrow" (click)="redirectHome()"></em>
+            {{'Expense Vault' | translate}}
+        </span>
+        <span class="cls-mobile-icon-section">
+            <span (click)="triggerAction('theme')">
+                <em class="icon-37-theme"></em>
+            </span>
+            <span (click)="triggerAction('notify')">
+                <em data-feather="bell" ></em>
+            </span>
+        </span>
+    </div>
+    <!-- mobile header ends-->
+</ng-container>
+<ng-container *ngIf="scanContainer">
+    <app-expense-form [scanUrl]="scanUrl" [responseData]="responseData" (imageResponse)="getimageResponse($event)" (getValue)="getFormValue($event)"></app-expense-form>
+</ng-container> 
+<ng-container *ngIf="showModal">
+    <app-imagepreview [ImageUrl]="imageUrl" (choosedVal)="closePreview($event)"></app-imagepreview>
+</ng-container>
+<!-- main container ends -->
+
+<!-- alert container start -->
+<ng-container *ngIf="alertModal">
+    <app-alert [userInput]="alertContent" (choosedVal)="imageDelete($event)"></app-alert>
+</ng-container>
+<!-- alert container start -->
+<!-- pdf viewer starts -->
+<div class="modal fade cls-imagegalery" id="fn-pdf"  tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="medicalimages" >
+	<div class="modal-dialog modal-dialog-centered modal-lg cls-documentmodel"  role="document">
+        <span class="cls-top-close text-center">
+            <em class="icon-32-reject"></em>
+        </span>
+		<div class="modal-content">
+			<div class="modal-body cls-body-max">
+                <div class="cls-alignmid">
+                    <embed [src]="pdfPath"class="cls-pdf">
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- pdf viewer ends -->

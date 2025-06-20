@@ -1,0 +1,20 @@
+<!-- Top nav starts -->
+<div class="cls-customtab" *ngIf="!loader">
+    <span class="cls-menu" *ngFor="let data of tabData; let index = index; let f= first" id="menu{{index}}" (click)="masterDataCall(index,data)" [ngClass]="{'active': clickedIndex == index,'cls-line' : index == 0,'cls-mobadvance' : data?.id === 'create_advance' }">
+        <em *ngIf="data?.icon" class="cls-new icon-11-plus mr-1"></em>{{ data?.name }}
+        <span class="cls-expense-count" *ngIf="data?.showcount && tabCount">
+            <ng-container *ngFor="let list of tabCount">
+                <ng-container *ngIf="list?.id == data?.id">
+                    {{ (list?.count <= 9) ? ('0' + list?.count) : list?.count}}
+                </ng-container>
+            </ng-container>
+            <!-- {{ (data?.showcount === 0 || data?.showcount <= 9) ? ('0' + data?.showcount) : data?.showcount}} -->
+            </span>
+    <span class="cls-shape"></span>
+    <span class="cls-shape1"></span>
+    </span>
+</div>
+<!-- Top nav ends -->
+
+<!-- Top nav loader component -->
+<app-topnav-loader *ngIf="loader"></app-topnav-loader>

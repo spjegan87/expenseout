@@ -1,0 +1,102 @@
+<a href="javascript:;" title="{{'Back To List' | translate}}" class="cls-back cls-a-hover mb-2"
+    (click)="redirectList()"><em class="ti-arrow-left"></em> {{'Back To List' | translate}}</a>
+<form [formGroup]="advancePolicyForm" readonly>
+    <div class="cls-advance-container" id="advancePolicyFormContainer">
+        <div class="cls-advance-form row">
+            <div class="w-100 row form-group">
+                <div class="col-sm-4">
+                    <label class="cls-label" for="policyName">{{'Advance Policy Name' | translate}}
+                        <span class="cls-mandatory">*</span>
+                    </label>
+                    <input type="text" formControlName="policyName" (keypress)="stringValidation($event)"
+                         name="policyName" (focusout)='checkProfileName("policy")' id="policyName" autocomplete="off"
+                        placeholder="{{'Enter Advance Policy Name' | translate}}" class="cls-custom-input form-control"
+                        [ngClass]="{'cls-error':(submitted && validation.policyName.errors)}">
+                </div>
+                <div class="form-group col-sm-3 cls-date">
+                    <label for="startDate">{{'Start Date' | translate}}
+                        <span class="cls-mandatory">*</span>
+                    </label>
+                    <input type="text" onkeypress="return false;" class="cls-input datepicker"
+                        [ngClass]="{'cls-error':(submitted && validation.startDate.errors)}" [value]="advancePolicyForm.controls['startDate'].value  | date: 'dd, MMM y'"
+                        (focus)="chooseDate('startDate')" id="startDate" formControlName="startDate" name="startDate"
+                        placeholder="{{'Start Date' | translate}}" autocomplete="off"
+                        class="cls-custom-input form-control">
+                    <em class="fa fa-calendar-o cls-date-icon"></em>
+                </div>
+                <div class="form-group col-sm-3 cls-date">
+                    <label for="endDate">{{'End Date' | translate}}
+                        <span class="cls-mandatory">*</span>
+                    </label>
+                    <input type="text" onkeypress="return false;" class="cls-input datepicker" 
+                        [ngClass]="{'cls-error':(submitted && validation.endDate.errors)}"[value]="advancePolicyForm.controls['endDate'].value  | date: 'dd, MMM y'"  (focus)="chooseDate('endDate')" id="endDate"
+                        formControlName="endDate" name="endDate" placeholder="{{'End Date' | translate}}" autocomplete="off"
+                        class="cls-custom-input form-control">
+                    <em class="fa fa-calendar-o cls-date-icon"></em>
+                </div>
+            </div>
+            <div class="w-100 row form-group cls-center-align">
+                <div  class="col-sm-3 cls-select-width cls-search-select">
+                    <label  for="currency" class="cls-currency"> {{'Currency' | translate}} <em class="icon-16-info" *ngIf="advancePolicyForm.controls['currency'].value !== userCurrency"></em><span class="cls-mandatory">*</span></label>
+                    <span class="cls-hovertip" *ngIf="advancePolicyForm.controls['currency'].value !== userCurrency">
+                        <ng-container *ngIf="exchangeRateVal.asOnDate">
+                            As on {{exchangeRateVal.asOnDate | date: "dd, MMM y"}}<br/>
+                        </ng-container>
+                        1 {{advancePolicyForm.controls['currency'].value}} = {{advancePolicyForm.controls['exchangeRate'].value}} {{userCurrency}}<br/>
+                        <input type="hidden" formControlName="currencyAmount">
+                        <input type="hidden" formControlName="exchangeRate">
+                        <span class="cls-exchangerate">{{'Amount in' | translate}} {{userCurrency}} : {{advancePolicyForm.controls['currencyAmount'].value}}</span>
+                        <!-- <span class="cls-exchangerate">Amount in INR : {{exchangeAmount}}</span> -->
+                    </span>
+                    <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="currency" name="currency" id="currency"
+                        data-toggle="dropdown" (click)="searchDropdown('fn-currency-input')" placeholder="Select Currency"
+                        autocomplete="off" readonly [ngClass]="{'cls-border-error':(submitted && validation.currency.errors)}">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                            id="fn-currency-input" autocomplete="off" (keyup)="filterFunction('fn-currency-input','fn-currency-ul')">
+                            <ul id="fn-currency-ul" class="live-search-list">
+                                <li (click)="setFilterValue('currency','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let cur of currency" id="cur.currency_code" (click)="setFilterValue('currency',cur.currency_code)">
+                                    <a>{{cur.currency_name}} ({{cur.currency_code}})</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <label class="cls-label" for="advanceLimit">{{'Advance Limit' | translate}}
+                        <span class="cls-mandatory">*</span>
+                    </label>
+                    <input type="number" formControlName="advanceLimit" min="1"
+                        onkeypress="return event.keyCode >= 47 && event.keyCode <=58"
+                        oninput="this.value = Math.abs(this.value)" name="advanceLimit" id="advanceLimit"
+                        placeholder="{{'Enter Amount' | translate}}" autocomplete="off"
+                        class="cls-custom-input cls-border form-control col-sm-9" (keyup)="amountCalculate()"
+                        [ngClass]="{'cls-error':(submitted && validation.advanceLimit.errors)}">
+                </div>
+                <div class="col-sm-3 pl-0">
+                    <label for="profileGroupId" class="d-block">{{'Profile Group' | translate}}
+                        <span class="cls-mandatory">*</span>
+                    </label>
+                    <select class="form-control cls-custom-input" (change)='checkProfileName("profile")'
+                        formControlName="profileGroupId" name="profileGroupId" placeholder="All" id="profileGroupId"
+                        [ngClass]="{'cls-error':(submitted && validation.profileGroupId.errors)}">
+                        <option value="">Select</option>
+                        <option *ngFor="let data of profileGroupList" value="{{data.id}}">{{data.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="cls-first-page my-2">
+            <div class="cls-button-box">
+                <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="redirectList()">{{'Cancel' | translate}}</button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn" *ngIf="actionType != 'edit'" (click)="advancePolicyCreate('create')">{{'Create' |  translate}}</button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn" *ngIf="actionType === 'edit'" (click)="advancePolicyCreate('update')">{{'Update'| translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>

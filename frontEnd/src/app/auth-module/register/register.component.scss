@@ -1,0 +1,124 @@
+@import '../login/login.component.scss';
+@import '../../../assets/scss/variable.scss';
+@import '../../../assets/scss/style.scss';
+@import '../../../assets/scss/all';
+/* Desc : Login
+** Author : Padma Priya,Naveen.s
+** Powered by:  Infiniti software solutions
+*/
+.cls-main-cont{
+  // width: 90%;
+  .cls-btn-primary{
+    padding: 10px 25px;
+    width: 100%;
+  }
+}
+.cls-landpage{
+  .cls-right{
+    .cls-center{
+      overflow-y: auto;
+      display: block;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      .cls-search-select{
+        .cls-dropdown-container{
+          em{
+            right: 7%;
+          }
+        } 
+      }
+      .cls-reg-maxwidth{
+        width: 96% !important;
+      }
+      .cls-margin-right{
+        margin-right: 1.5rem;
+      }
+      input{
+        padding: 5px;
+        width: 98%;
+      }
+      .cls-refresh{
+        color: $PRIMARYCOLOR;
+        margin-left: 10px;
+      }
+      .cls-pass{
+        position: relative;
+        em{
+          position: absolute;
+          cursor: pointer;
+          top: 28px;
+          right:18px;
+          font-size: 18px;
+          color: #000;
+        }
+      }
+      .cls-checkbox{
+        color: $PRIMARYCOLOR;
+        cursor: pointer;
+      }
+      .cls-mob-font{
+        font: 13px 'ProximaRegular';
+        vertical-align: text-top;
+      }
+      .cls-terms-conditions,.cls-signin{
+        &:hover{
+          border-bottom: 1px solid $PRIMARYCOLOR;
+        }
+      }
+      .cls-success-box{
+          background: #fff;
+          width: 90%;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 2px 6px 5px #eaeaea;
+        .cls-success-width{
+          height: 100px;
+        }
+        .cls-text-success{
+          font: 24px 'ProximaSemiBold';
+        }
+        .cls-thank-text{
+          margin: 10px 0;
+          font: 16px 'ProximaSemiBold';
+        }
+        .cls-dec{
+          color: #b1afaf;
+        }
+      }
+      .cls-captcha{
+        img{
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 480px) {
+  .cls-main-cont{
+    width: 100%;
+  }
+  .cls-right input, .cls-right button{
+    width: 96% !important;
+    margin-right: 0;
+  }
+  .cls-search-select{
+    .cls-dropdown-container{
+      em{
+        right: 7%;
+      }
+    } 
+  }
+  .cls-landpage{
+    .cls-right{
+      .cls-center{
+        .cls-reg-maxwidth{
+          width: 96%;
+        }
+        .cls-margin-right{
+          margin-right: unset !important;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,201 @@
+@import '../../../shared-module/components/reporthistory/reporthistory.component.scss';
+@import './../../../../assets/scss/variable.scss';
+.cls-history-container{
+    .cls-main-popup{
+        width: 35%;
+        .cls-popup{
+            .lotty-body{
+                width: 100px;
+                display: inline-block;
+                margin-left: 20px;
+            }
+            .cls-wavearrow {
+                span{
+                    position: absolute;
+                    transform: rotate(228deg);
+                    margin-left: -12px;
+                    border-left: 1px solid #000;
+                    // border-bottom: 1px solid #000;
+                    -webkit-animation: waveanim 2s infinite;
+                    animation: waveanim 2s infinite;
+                    opacity: 0;
+                    box-sizing: border-box;
+                    &:nth-of-type(1) {
+                        -webkit-animation-delay: 0s;
+                        animation-delay: 0s;
+                        top: 44px;
+                        left: 37%;
+                        width: 10px;
+                        height: 10px;
+                    }
+                    &:nth-of-type(2) {
+                        top: 42px;
+                        left: 39%;
+                        width: 15px;
+                        height: 16px;
+                        -webkit-animation-delay: .15s;
+                        animation-delay: .15s;
+                    }
+                    &:nth-of-type(3) {
+                        top: 38px;
+                        left: 40%;
+                        width: 25px;
+                        height: 25px;
+                        -webkit-animation-delay: .3s;
+                        animation-delay: .3s;
+                    }
+                }
+            }
+            @-webkit-keyframes waveanim {
+                0% {
+                  opacity: 0;
+                }
+                50% {
+                  opacity: 1;
+                }
+                100% {
+                  opacity: 0;
+                }
+              }
+              @keyframes waveanim {
+                0% {
+                  opacity: 0;
+                }
+                50% {
+                  opacity: 1;
+                }
+                100% {
+                  opacity: 0;
+                }
+              }
+            .cls-header{
+                border-bottom: unset;
+                .cls-top-close{
+                    em{
+                        color: $WHITE;
+                    }
+                }   
+            }
+            .cls-history-data{
+                .expiry-table{
+                    width: 100%;
+                }
+                .expiry-table>tr{
+                    text-align: center;
+                }
+                .expiry-table td,.expiry-table tr{
+                    text-align: left;
+                    padding: 5px 0px;
+                }
+                .cls-history-data-content{
+                    margin: 30px 0px 10px;
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 480px) {
+    .cls-history-container{
+      .cls-main-popup{
+        width: 94%;
+        .cls-popup{
+          width: 100%;
+          .cls-history-data{
+              .cls-txt-strong{
+                display: inline-block;
+              }
+            .cls-nodata{
+              height: 100px !important;
+              background-size: 80px !important;
+            }
+            .cls-inner-list{
+                .cls-alert-img{
+                    width: 80px;
+                    height: 80px;
+                    margin-left: 0px;
+                    background-size: 100% 100%;
+                }
+                .cls-arrow-icon{
+                    left: 32%;
+                }
+                .lotty-body{
+                    margin-left: unset;
+                    width: 90px;
+                }
+                .cls-list-profile{
+                    right: -16px;
+                    top: 25%;
+                    // width: 55%;
+                    .cls-profile{
+                        width: 43px;
+                        height: 43px;
+                        background-size: 100%;
+                    }
+                    .cls-name{
+                        left: 50px;
+                        font: 15px 'ProximaSemiBold';
+                    }
+                    .cls-type{
+                        left: 50px;
+                    }
+                }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-history-container{
+        .cls-main-popup{
+          width: 94%;
+          .cls-popup{
+            width: 100%;
+            .cls-history-data{
+                .cls-txt-strong{
+                    display: inline-block;
+                  }
+              .cls-nodata{
+                height: 100px !important;
+                background-size: 80px !important;
+              }
+              .cls-inner-list{
+                  .cls-alert-img{
+                      width: 80px;
+                      height: 80px;
+                      margin-left: 0px;
+                      background-size: 100% 100%;
+                  }
+                  .cls-arrow-icon{
+                      left: 32%;
+                  }
+                  .cls-list-profile{
+                      right: -10px;
+                      width: 55%;
+                      .cls-profile{
+                          width: 43px;
+                          height: 43px;
+                          background-size: 100%;
+                      }
+                      .cls-name{
+                          left: 50px;
+                          font: 15px 'ProximaSemiBold';
+                      }
+                      .cls-type{
+                          left: 50px;
+                      }
+                  }
+              }
+            }
+          }
+        }
+      }
+}
+@media (min-width: 767px) and (max-width: 1024px){
+    .cls-history-container{
+        .cls-main-popup{
+          width: 85% !important;
+        }
+    }
+}

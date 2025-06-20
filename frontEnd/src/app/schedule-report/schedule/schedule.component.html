@@ -1,0 +1,123 @@
+
+<span class="cls-heading">Scheduled Report</span>
+<!-- <div class="cls-toggle-container" *ngIf="editData?.editValue?.reportAdditionalInfo?.scheduleInfo?.cronInfo">
+    <span class="cls-toggle" *ngFor="let menu of menu; let f = first; let i = index" [ngClass]="{'border-right-0': f && i != 1,'border-left-0': !f && i != 1,'active': i == 1}" (click)="selectTabMenu(menu.key)">{{ menu.name }}</span>
+</div> -->
+<div class="row mb-3">
+    <div class="col-md-6">
+        <!-- <span class="cls-head"></span> -->
+    </div>
+    <div class="col-md-6 text-right">
+        <span class="cls-back" (click)="back()"><em class="icon-10-expand"></em>Back</span>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row cls-bg mb-3">
+        <div class="col-md-12">
+            <!-- <div class="cls-days pull-left">
+                <ng-container >
+                    <span class="cls-label">
+                        Created By
+                        <span class="cls-value">Malaysiasa@infi.com</span>
+                    </span>
+                    <span class="cls-label cls-custom-label">
+                        Created Date & Time
+                        <span class="cls-value">22-Sep-2020 | 11:29 AM</span>
+                    </span>
+                </ng-container>
+            </div>
+            <div class="clearfix"></div> -->
+            <form [formGroup]="scheduleForm">
+                <div class="cls-status text-right">
+                    <span class="cls-inner-head mb-2">Status : </span>
+                    <label class="cls-switches">
+                        <input type="checkbox" name="true" value="true" checked (click)="actionPerform()">
+                        <em class="cls-switch-circle cls-round" [ngClass]="{'fn-switch-active': editData?.editValue?.scheduleStatus === 'Y'}"></em>
+                    </label>
+                </div>
+                <div class="cls-email-box">
+                    <span class="cls-inner-head mb-2">Select Email: </span>
+                    <div class="form-group col-md-12 p-0">
+                        <label class="position-label" for="email">Email<span class="cls-mandatory">*</span></label>
+                        <input class="form-control" type="text" placeholder="Enter Email" id="email" autocomplete="off" formControlName="email"
+                        [ngClass]="{'cls-border-error':(submitted && scheduleForm.controls.email.errors)}">
+                        <span class="cls-add" (click)="addEmail()"><em class="icon-11-plus"></em>Add</span>
+                    </div>
+                </div>
+                <div class="cls-email-container" *ngIf="emailArray.length > 0">
+                    <span class="cls-inner-head d-block mb-2">Selected Email </span>
+                    <span class="cls-email-span" *ngFor="let item of emailArray; let index = index">
+                        {{item}}
+                        <em class="icon-32-reject" (click)="removeEmail(index)"></em>
+                    </span>
+                </div>
+                <div class="cls-daterange">
+                    <span class="cls-title">Frequency (DOW) :</span>
+                    <div class="cls-background">
+                        <span class="cls-label" (click)="selectCheckbox(data.status,index)" *ngFor="let data of daysList;let index = index">
+                            <em class="cls-icon" [ngClass]="{'icon-40-checkbox-empty': data.status == 'N','icon-41-checkbox-fill': data.status == 'Y' || data.default}"></em>{{ data.name }}
+                        </span>
+                    </div>
+                </div>
+                <div class="cls-daterange">
+                    <span class="cls-title">Conditions</span>
+                    <span class="cls-inner-head mb-2">Time : </span>
+                    <div class="row">
+                        <div class="form-group col-md-3" [ngClass]="{'cls-select-error':(submitted && scheduleForm.controls.time.errors)}">
+                            <!-- <input class="form-control" type="text" id="fromDate" onkeypress="return false;" autocomplete="off" formControlName="fromDate"
+                            [ngClass]="{'cls-border-error':(submitted && scheduleForm.controls.fromDate.errors)}"> -->
+                            <label class="position-label" for="fromDate">From<span class="cls-mandatory">*</span></label>
+                            <select class="form-control" name="time" formControlName="time" id="time">
+                                <option *ngFor="let item of timeList" value="{{item.name}}">{{item.name}}</option>
+                            </select>
+                            <!-- <em class="fa fa-clock-o cls-date-icon" ></em> -->
+                        </div>
+                    </div>
+                    <span class="cls-inner-head mb-2">Frequency Date Range (DOW) : </span>
+                    <div class="row">
+                        <div class="cls-date form-group col-md-3">
+                            <label class="position-label" for="fromDate">From<span class="cls-mandatory">*</span></label>
+                            <input class="form-control" type="text" placeholder="Enter From Date" [value]="scheduleForm.controls.fromDate.value  | date: 'dd, MMM y'" id="fromDate" onkeypress="return false;" autocomplete="off" formControlName="fromDate" (focus)="chooseDate('fromDate')"
+                            [ngClass]="{'cls-border-error':(submitted && scheduleForm.controls.fromDate.errors)}">
+                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('fromDate')"></em>
+                        </div>
+                        <div class="cls-date form-group col-md-3">
+                            <label class="position-label" for="toDate">To<span class="cls-mandatory">*</span></label>
+                            <input class="form-control" type="text" placeholder="Enter To Date" [value]="scheduleForm.controls.toDate.value  | date: 'dd, MMM y'" id="toDate" onkeypress="return false;" autocomplete="off" formControlName="toDate" (focus)="chooseDate('toDate')"
+                            [ngClass]="{'cls-border-error':(submitted && scheduleForm.controls.toDate.errors)}">
+                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('toDate')"></em>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="rollForData.length > 0">
+                    <span class="cls-codition-title mb-2">Selected Conditions :</span>
+                    <div class="cls-condition-box">
+                        <div class="my-3" *ngFor="let item of rollForData,let index = index">
+                            <span class="cls-inner-head mb-2">{{item.key}} : </span>
+                            <ng-container *ngIf="!item.value.startDate && !item.value.originCode">
+                                {{item.value}}
+                            </ng-container>
+                            <ng-container *ngIf="item.value.originCode">
+                                <span class="cls-date">From :</span> {{item.value.originCode}}
+                                <span class="cls-date">To : </span> {{item.value.destinationCode}}
+                            </ng-container>
+                            <ng-container *ngIf="item.value.startDate">
+                                <span class="cls-date">Start Date :</span> {{item.value.startDate | date: "dd-MMM-yyyy" }}
+                                <span class="cls-date">End Date : </span> {{item.value.endDate | date: "dd-MMM-yyyy" }}
+                                <span class="cls-check" (click)="clickRollForNext(item.status,index)" >
+                                    <em class="cls-icon" [ngClass]="{'icon-40-checkbox-empty': item.status == 'N','icon-41-checkbox-fill': item.status == 'Y' || item.default}"></em>
+                                    Roll For Next Day
+                                </span>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+            </form>
+            <div class="cls-custom-btn my-2">
+                <!-- <button class="btn cls-submit">Reset</button> -->
+                <button class="btn cls-btn-primary cls-custom-btn ml-3" *ngIf="!editData?.editValue?.reportAdditionalInfo?.scheduleInfo?.cronInfo" (click)="createSchedule()">Create</button>
+                <button class="btn cls-btn-primary cls-custom-btn ml-3" *ngIf="editData?.editValue?.reportAdditionalInfo?.scheduleInfo?.cronInfo" (click)="createSchedule()">Update</button>
+            </div>  
+        </div>  
+    </div>
+</div>

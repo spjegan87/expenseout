@@ -1,0 +1,6 @@
+<select name="sorting" id="sorting" class="cls-input sorting mr-3" (change)="sort($event.target.value)">
+    <option value="Sort By">Sort By</option>
+    <ng-container *ngFor="let sort of listSort.list_header">
+        <option *ngIf="sort.template != 'action'" value="{{sort.name}}"> {{ sort.name }} </option>
+    </ng-container>
+</select>

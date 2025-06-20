@@ -1,0 +1,78 @@
+<!-- <div class= "active cls-show"> -->
+    <div class="cls-fileupload">
+        <!--  (click)="downloadcsv()" -->
+        <a href="javascript:;" title="download sample csv" (click)="downloadSampleFile()">
+          <!-- <em class="icon-66-csv"></em> -->
+          <em data-feather="download">
+          </em>
+          {{'Download Sample File'| translate}}
+          <em class="icon-32-reject cls-close" (click)="closeUpload(false)"></em>
+        </a>
+        <span class="cls-upload text-center mt-3">
+          <span class="cls-rotate"></span>
+          <span class="cls-rotate"></span>
+          <span class="cls-rotate"></span>
+          <span class="cls-rotate"></span>
+          <!-- <span class="cls-format mr-3">
+            <em data-feather="file"></em>{{'Supported format' | translate}}
+          </span> -->
+          <input type="file" id="file" class="custom-file-input" accept=".csv" name="profile"
+            (change)="handleFileInput($event)" />
+            <!-- <input type="file" id="file" class="custom-file-input mt-5" accept=".csv" name="profile"/> -->
+            <button type="button" class="btn cls-custom-btn cls-choose cls-btn-primary">{{'Choose File' | translate}}</button>
+            <span class="m-3 d-block text-center">({{'or' | translate}})</span>
+            <em data-feather="upload-cloud">
+            </em>
+            <span class="m-3 d-block text-center cls-dragmob">
+              {{'Drag & drop your file here' | translate}}
+            </span>
+          <!-- <img src="../../../../assets/images/file-upload.svg" alt="upload file" /> -->
+  
+          <!-- <span class="cls-file"><em class="icon-11-plu"> </em><br />{{'Choose CSV file' | translate}}</span> -->
+        </span>
+        <span class="cls-format d-block mr-3 font-size-14">
+          <em data-feather="file" class="mr-1"></em>{{'Supported format : .csv, .xls, .xlsx' | translate}}
+        </span>
+        <!-- <span class="d-block mt-2"><em class="icon-16-info mr-2"></em>{{'Maximum data limit is 100'| translate}}</span> -->
+        <!-- <span class="d-block mt-4 text-center">{{'(Or) Drag & drop your file here' | translate}}</span> -->
+        <!-- progressbar starts -->
+        <div class="progras-status " [ngClass]="progress === true ? 'd-flex' : 'd-none'">
+          <span class="cls-iconstatus">
+            <em data-feather="file" ></em>
+          </span>
+          <div class="upload-status">
+            <div>
+              <p class="progress-range">{{ range }}</p>
+            </div>
+            <div class="progress" [ngClass]="progress === true ? 'on' : ''">
+              <p class=""><span class="progressbar" id="progressbar"></span></p>
+            </div>
+            <div>
+              <p class="progress-file">{{ fileName | translate }}</p>
+            </div>
+          </div>
+          <em class="icon-32-reject cls-uploadagain" (click)="reUpload()"></em>
+        </div>
+        <!-- progressbar ends -->
+        <!-- upload success message starts-->
+        <div class="progress-success" [ngClass]="progressSuccess === true ? 'd-block' : 'd-none'">
+          <div class="upload-success cls-{{ responseUpload.status }}" (click)="reUpload()">
+            <span class="cls-icon"></span>
+          </div>
+          <div class="success-msg text-center cls-{{ responseUpload.status }}">
+            <p>
+              {{ responseUpload.message | translate }}<br />
+              <span class="progress-file  mt-3 d-block">{{ fileName | translate }}</span>
+            </p>
+          </div>
+          <div class="text-center cls-reupload" *ngIf="responseUpload.status === 'danger'">
+            <button for="file" class="btn cls-custombtn  text-center waves-effect waves-light w-50 position-relative">
+              {{'Upload File'| translate}}
+              <input type="file" id="file" class="custom-file-input" accept=".csv" name="profile"
+                (change)="handleFileInput($event.target.files)" />
+            </button>
+          </div>
+        </div>
+        <!-- upload success message ends-->
+      </div>
+    <!-- </div> -->

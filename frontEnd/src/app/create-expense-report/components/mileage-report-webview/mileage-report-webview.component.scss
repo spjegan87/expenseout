@@ -1,0 +1,171 @@
+@import "../mileage-report-mobile/mileage-report-mobile.component.scss";
+@import "../../../../assets/scss/all";
+@import "../../../shared-module/components/widget/widget.component.scss";
+
+.cls-title{
+    display: block;
+    font: 14px "ProximaSemiBold";
+    padding-bottom: 10px;
+}
+.cls-subvalue{
+    font: 14px 'ProximaRegular';
+    color:#333;
+}
+.cls-value{
+    font:16px 'ProximaBold';
+}
+.cls-title,.cls-value,.cls-odometer-value{
+    color: #000;
+}
+.cls-odometer-value{
+    font:15px "ProximaSemiBold";
+}
+
+.cls-location-widget{
+    border:1px dashed #8d8d8e;
+    background: #f2f5f8;
+    padding: 20px;
+    position: relative;
+    margin-top: 35px;
+    .cls-overlap-text{
+        border: 1px solid #7480a2;
+        padding: 4px 20px 0px 20px;
+        position: absolute;
+        top: -14px;
+        background: #7480a2;
+        border-radius: 30px;
+        color: #fff;
+        font-size: 13px;
+    }
+    .cls-widget-step{
+        margin: 40px 0;
+        .steps{
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            padding-left: 0;
+            align-items: center;
+            width: 100%;
+            .cls-widget-location{
+                // width: 14%;  //200px;
+                // display: inline-block;
+                min-height: 70px;
+                &:before{
+                    position: absolute;
+                    content: "";
+                    width: 88%;                    
+                    left: 0px;     /* left: 7%; */
+                    top: 31px;
+                    border: 1px dashed #E4E5E6;
+                    right: 0;
+                    margin: 0 auto;
+                }            
+                &.cls-end-location{
+                    // float: right;
+                    &:after{
+                        background:red;
+                    }
+                }
+                &.cls-start-location{
+                    &:after{
+                        background: #1880ce;
+                    }
+                }
+                &.cls-start-location,&.cls-end-location{
+                    &:after{
+                        content: "";
+                        display: inline-block;
+                        z-index: 1;
+                        position: absolute;
+                        border-radius: 25px;
+                    }
+                }
+
+                &.cls-start-location,
+                &.cls-end-location{
+                    &:after{
+                        top: 29px;
+                        width: 6px;
+                        height: 6px;
+                        box-shadow: 0px 0px 0px 6px #fff;
+                    }
+                }
+                &.cls-stops{
+                    .cls-stop-circle{
+                        width: 11px;
+                        height: 11px;
+                        border: 1px solid #707070;
+                        background: #fff;
+                        top: 27px;
+                        cursor: pointer;
+                        content: "";
+                        display: inline-block;
+                        z-index: 1;
+                        position: absolute;
+                        border-radius: 25px;
+                        &.cls-tooltip{
+                            &:hover{
+                                border:none;
+                                background: unset;
+                                .cls-hovertext{
+                                    left: -43px;
+                                    top: 35px;
+                                    font: 13px "ProximaRegular";
+                                }    
+                                &::before{
+                                    content: "\e93a";
+                                    font-family: 'icomoon';
+                                    position: relative;
+                                    bottom: 5px;
+                                    right: 0px;
+                                    color: #007bff;
+                                }                               
+                            }
+                        }   
+                    }
+                    .cls-content{
+                        left:25px;
+                    }
+                }
+                .cls-content{ 
+                    font: 14px "ProximaRegular";
+                    display: inline-block;
+                    position: relative;
+                    left: 50px;
+                }
+                .cls-location-name{
+                    position: absolute;
+                    bottom: 0;
+                    display: block;
+                    font: 14px "ProximaSemiBold";                
+                    word-break: break-word;
+                    line-height: 20px;
+                    height: 20px;
+                    width: 18%;
+                    .cls-location-icon{
+                        color: #000;
+                        vertical-align: middle;
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cls-widget-shift-title{
+    display: block;
+    margin: 30px 0 40px;
+    color: #000;
+    font: 15px "ProximaRegular";
+}
+.cls-view-image{
+    height: 100px;
+    width: 100%;
+    // margin-bottom: 25px;
+    cursor: pointer;
+    img{
+        height: 100px;
+        width: 100%;
+    }
+}

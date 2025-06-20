@@ -1,0 +1,15 @@
+<!-- Author Name : Naveen -->
+<div class="cls-modal-container" *ngIf="ImageUrl">
+    <!-- background  -->
+    <span id="fn-background" class="cls-background" (click)="closeModal()"></span>
+    <!-- modal-container -->
+    <div class="cls-popup" [ngClass]="toClose ? 'close-ani' : ''">
+        <span class="cls-top-close text-center"(click)="closeModal()">
+          <em class="icon-32-reject"></em>
+        </span>
+      <!-- modal  body -->
+        <div class="text-center cls-btns cls-zoom"  id="image">
+          <img [src]="ImageUrl" alt="ImageUrl">
+        </div>
+    </div>
+  </div>

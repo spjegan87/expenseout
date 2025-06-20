@@ -1,0 +1,43 @@
+/* Desc : Pending Approal
+** Author : Naveen.s
+** Date : 29-July-2020 */
+@import "../../../assets/scss/variable.scss";
+.cls-main-container{
+    background:$MAINBG;
+    margin: -50px -30px 0px -30px;
+    padding:20px 20px 20px 35px;
+    min-height: 600px;
+    // padding-left: 35px;
+    em{
+        color: $PRIMARYCOLOR;
+      }
+    .cls-main-title{
+        font: 20px "ProximaSemiBold";
+        margin: 15px 0;
+        display: inline-block;
+    }
+  
+}
+// .ti-eye{
+//     color: #000;
+//     font-size: 16px;
+// }
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-main-container{
+        padding: 0px;
+        margin: 0px -30px -55px -30px;
+        .cls-mbl-breadcrumb,.cls-main-title{
+            display: none;
+        }
+    }
+}
+@media (min-width: 767px) and (max-width: 1024px){}
+@media only screen and (max-width: 480px) {
+    .cls-main-container{
+        padding: 0px;
+        margin: 0px -30px -55px -30px;
+        .cls-mbl-breadcrumb,.cls-main-title{
+            display: none;
+        }
+    }
+}

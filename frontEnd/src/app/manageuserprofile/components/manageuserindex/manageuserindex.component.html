@@ -1,0 +1,45 @@
+<!-- Desc : user management
+Author : Padma priya -->
+<div class="cls-main-container">
+    <h1 class="cls-main-title d-inline-block">{{'Manage Profile' | translate}}</h1>
+    <span class="d-inline-block cls-masterdata">
+        <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="redirect('download')">
+            <em class="icon-45-download cls-download-icon mr-1"></em> <span>{{'Export' | translate}}</span>
+    </button>
+    <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="redirect('masterdata')">
+            <em class="icon-11-plus mr-1"></em> <span>{{'Manage Master Data' | translate}}</span>
+    </button>
+    <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="redirect('profile')">
+            <em class="icon-11-plus mr-1"></em> {{'Create Profile' | translate}}
+        </button>
+    </span>
+    <div class="cls-user-filter">
+        <app-common-filter [filterData]="filterDetails" [moduleName]="moduleName" (filterVal)="filterChoosed($event)"></app-common-filter>
+    </div>
+    <!-- filter component -->
+    <!-- <app-profilefilter (filterVal)="reportList($event)"></app-profilefilter> -->
+    <!-- <div class="card">
+        <div class="card-body">
+            <app-data-table [moduleName]="'userSettings'" [filterData]="filterData" [actionName]="'getUserList'" [upload]="uploadDetails"></app-data-table>
+        </div>
+    </div> -->
+    <app-list-loader *ngIf="loader"></app-list-loader>
+    <app-list-index *ngIf="!loader" [listData]="listData" [listModule]="listModule" [listUpdate]="listModule" [upload]="uploadDetails" [filterValue]="filterData" [filterData]="module"></app-list-index>
+
+    <!-- mobile header starts-->
+    <div class="cls-mobile-header d-none">
+        <span class="cls-mobile-title">
+            <em class="icon-39-arrow" (click)="redirectHome()"></em>
+            {{'Manage Profile' | translate}}
+        </span>
+        <span class="cls-mobile-icon-section">
+            <span (click)="triggerAction('theme')">
+                <em class="icon-37-theme"></em>
+            </span>
+        <span (click)="triggerAction('notify')">
+                <em data-feather="bell" ></em>
+            </span>
+        </span>
+    </div>
+    <!-- mobile header ends-->
+</div>

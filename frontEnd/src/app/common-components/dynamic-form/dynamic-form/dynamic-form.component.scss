@@ -1,0 +1,197 @@
+@import "../../../../assets/scss/all";
+.cls-employee-details,
+.cls-change-password {
+    box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    background: $WHITE;
+    border-radius: 7px;
+    position: relative;
+    border: 1px solid #e8e3e3;
+    &::before {
+        content: "";
+        position: absolute;
+        width: 4px;
+        height: 27px;
+        background: $PRIMARYCOLOR;
+        display: inline-block;
+        left: 0px;
+        top: 22px;
+        border-radius: 0 4px 4px 0;
+    }
+    .cls-form-bar,
+    .cls-Approval-bar {
+        .cls-custom-field {
+            position: relative;
+        }
+        .cls-head-title {
+            display: inline-block;
+            font: 20px "ProximaSemiBold";
+            margin: 10px 0 15px 0;
+        }
+        .cls-maxwidth {
+            max-width: 10%;
+        }
+        .cls-mobile-bar {
+            width: 25%;
+            position: relative;
+            .cls-mobile-code {
+                padding: 0 5px;
+                border-top-right-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                cursor: pointer;
+            }
+        }
+        .cls-mobile-no-field {
+            width: 75%;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+        }
+        .cls-sub-title {
+            display: block;
+            margin-bottom: 15px;
+            font: 15px "ProximaSemiBold";
+        }
+        .cls-mob-dropdown {
+            min-width: 65px;
+        }
+        .cls-line {
+            display: inline-block;
+            border-bottom: 1px dashed #ccc;
+            width: 100%;
+        }
+        &.cls-ipdisable {
+            input,
+            .select2 {
+                pointer-events: none;
+            }
+        }
+        .cls-multi-select-field {
+            min-height: 100px;
+            // .cls-approval-select {}
+        }
+        .cls-email-content {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #999;
+            .cls-info {
+                vertical-align: -1px;
+            }
+        }
+        .cls-status-bar {
+            position: absolute;
+            top: 62%;
+            width: 100%;
+            .cls-status {
+                position: relative;
+                display: inline-block;
+                height: 6px;
+                border: 1px solid #ccc;
+                background: #ccc;
+                width: 50%;
+                border-radius: 5px;
+                vertical-align: -30px;
+                display: block;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    display: inline-block;
+                    height: 6px;
+                    border-radius: 5px;
+                    top: -1px;
+                    left: -1px;
+                    transition: width 0.8s;
+                }
+            }
+            .error {
+                &::after {
+                    background: red;
+                    width: 30%;
+                }
+            }
+            .warning {
+                &::after {
+                    background: orange;
+                    width: 70%;
+                }
+            }
+            .success {
+                &::after {
+                    background: green;
+                    width: 101%;
+                }
+            }
+            .cls-status-text {
+                vertical-align: -30px;
+                font-size: 12px;
+                display: block;
+                // margin-left: 5px;
+            }
+        }
+    }
+}
+
+.cls-email {
+    &.cls-error {
+        border: 1px solid $ERROR;
+    }
+}
+
+.cls-ipdisable {
+    input {
+        pointer-events: none;
+    }
+}
+
+.cls-info-text {
+    em {
+        color: $PRIMARYCOLOR;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+    .cls-click {
+        color: $PRIMARYCOLOR;
+        cursor: pointer;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 766px) {
+    .cls-form-bar {
+        .cls-maxwidth {
+            max-width: 50%;
+        }
+    }
+}
+
+@media (min-width: 767px) and (max-width: 1024px) {
+    .cls-form-bar {
+        .col-sm-2,
+        .col-sm-3 {
+            flex: 0 0 40%;
+            max-width: 40%;
+        }
+        .cls-maxwidth {
+            max-width: 22%;
+        }
+        .cls-emailtab {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .cls-form-bar {
+        .cls-maxwidth {
+            max-width: 50%;
+        }
+        .cls-btn-primary {
+            font-size: 12px;
+            padding: 7px 15px;
+        }
+    }
+}
+
+.cls-error {
+    border: 1px solid red;
+}

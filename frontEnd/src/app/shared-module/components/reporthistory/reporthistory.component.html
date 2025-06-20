@@ -1,0 +1,48 @@
+<div class="cls-history-container" *ngIf="historyInput != undefined">
+    <span id="fn-background" class="cls-background" (click)="closeModal(false)"></span>
+    <div class="cls-main-popup" [ngClass]="toClose ? 'close-ani' : ''">
+        <div class="cls-popup">
+            <div class="cls-header">
+                <span class="cls-title text-left">
+                    <ng-container *ngIf="historyInput?.type === 'Report'">
+                        <em class="icon-9-history cls-blk"></em>{{'Report History' | translate}}
+                    </ng-container>
+                    <ng-container *ngIf="historyInput?.type === 'expense'">
+                        <em class="icon-9-history cls-blk"></em>{{'Expense History' | translate}}
+                    </ng-container>
+                    <ng-container *ngIf="historyInput?.type === 'advance'">
+                        <em class="icon-9-history cls-blk"></em>{{'Advance History' | translate}}
+                    </ng-container>
+                </span>
+                <span class="cls-top-close text-center" (click)="closeModal(false)">
+                    <em class="icon-32-reject"></em>
+                </span>
+            </div>
+            <div class="cls-history-data">
+                <div class="cls-modal-inner-bar" *ngFor="let data of historyInput?.data;let i = index;let c = count;">
+                    <span class="cls-circle mr-3">{{i + 1}}
+                        <ng-container *ngIf="i+1 !== c">
+                            <span class="cls-line" [ngClass]="{'cls-hgtset' : data.comments && data.comments !==''}"></span>
+                    </ng-container>
+                    </span>
+                    <span class="cls-text1 mr-4">{{data.name}}</span>
+                    <span class="cls-text2">{{data.statusMessage}}</span>
+                    <span class="cls-date-field" *ngIf="data.date !== ''">
+                        <span class="cls-date">{{data.date | date: "dd-MMM-y" }} </span> |
+                    <span class="cls-time">{{data.date |  date: "h:mm a" }} </span>
+                    </span>
+                    <div class="cls-desc" *ngIf="data.comments && data.comments !==''">
+                        <span>Reason :</span> {{data.comments}}
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="historyInput?.data?.length === 0 || historyInput?.data?.status === 'danger'">
+                    <span class="cls-nodata"></span>
+                    <span class="cls-nodata-text">{{'No Data Found' |translate}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="cls-btn text-right">
+            <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="closeModal(false)">{{'Ok' | translate}}</button>
+        </div>
+    </div>
+</div>

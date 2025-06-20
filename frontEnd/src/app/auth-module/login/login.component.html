@@ -1,0 +1,92 @@
+<!-- <div class="cls-landingloader">
+    <img class="logo" src="../../../assets/images/logo-animation.gif" alt="image">
+</div> -->
+<!-- [ngClass]="{'cls-delay' : !loader}" -->
+<div class="cls-landpage row cls-mobile-landpage">
+    <div class="col-sm-7 p-0">
+        <div class="cls-left ">
+            <div class="cls-center cls-ani-left">
+                <h1 class="cls-txt">
+                    Make your Expense Management an easy, Transparent and a happy process
+                </h1>
+                <div class="row cls-imagebck">
+                    <div class="col-sm-6 cls-ani-1">
+                        <img src="../../../assets/images/menu/Vault.svg" class="cls-vault" alt="Capture Receipts">
+                        <span class="cls-left-text">Capture Receipts</span>
+                    </div>
+                    <div class="col-sm-6 cls-ani-1">
+                        <img src="../../../assets/images/menu/Expenses.svg" alt="Report Your Expense">
+                        <span class="cls-left-text">Report Your Expense</span>
+                    </div>
+                    <div class="col-sm-6 cls-ani-2">
+                        <em class="icon-19-successfully d-block"></em>
+                        <!-- <img src="../../../assets/images/menu/Approvals.svg" alt="Approve in Real Time"> -->
+                        <span class="cls-left-text">Approve in Real Time</span>
+                    </div>
+                    <div class="col-sm-6 cls-ani-2">
+                        <img src="../../../assets/images/menu/Settlements.svg" alt="Settlement by Finance">
+                        <span class="cls-left-text">Settlement by Finance</span>
+                    </div>
+                    <div class="col-sm-6 cls-ani-3">
+                        <img src="../../../assets/images/SaveTime.svg" alt="Save Time & Money" class="cls-save">
+                        <span class="cls-left-text">Save Time & Money</span>
+                    </div>
+                    <div class="col-sm-6 cls-ani-3">
+                        <img src="../../../assets/images/Great-user.svg" alt="Great User Experience">
+                        <span class="cls-left-text">Great User Experience</span>
+                    </div>
+                </div>
+            </div>
+            <!-- <span class="cls-skew"></span> -->
+        </div>
+    </div>
+    <div class="col-sm-5 cls-right cls-ani-right">
+        <div class="cls-center">
+            <div class="cls-bg">
+                <div id="logo">
+                    <span class="cls-logo"></span>
+                    <!-- <img class="logo-light" src="../../../assets/images/expenseout_logo.svg" alt="image"> -->
+                    <h2 class="cls-hello">
+                        Hello, Welcome Back
+                    </h2>
+                </div>
+                <!-- <dynamic-form [fields]="loginForm" (submit)="userLogin($event)"></dynamic-form> -->
+                <form  [formGroup]="signinForm">
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <input  type="email" id="userid" name="userid" formControlName="userid" placeholder="{{'Enter Email Id'}}" autocomplete="off" class="cls-custom-input form-control"
+                            [ngClass]="{'cls-border-error': submitted && formValidation?.userid?.status === 'INVALID'}">
+                        </div>
+                        <div class="col-sm-12 cls-pass">
+                            <em (click)="passwordview()" class="icon-43-view-off"></em>
+                            <input  type="password" formControlName="password" id="password" name="password" placeholder="{{'Enter Password'}}" autocomplete="off" class="cls-custom-input cls-password form-control"
+                            [ngClass]="{'cls-border-error': submitted && formValidation?.password?.status === 'INVALID'}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="cls-remember form-group col-sm-6">
+                            <span (click)="changeRememberStatus()">
+                                <em [ngClass]="signinForm?.controls?.rememberme.value === 'N'?'icon-40-checkbox-empty':'icon-41-checkbox-fill'"></em>
+                                <!-- <em class="icon-41-checkbox-fill" *ngIf="signinForm?.controls?.rememberme.value ==s= 'Y'"></em> -->
+                                Remember me
+                            </span>
+                        </div>
+                        <div class="cls-forget col-sm-6 text-right">
+                            <span (click)="forgotPassword()">Forget Password?</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button class="btn  cls-custom-btn cls-btn-primary d-block w-100 py-2 mb-0" (click)="login()" type="button">
+                                <span>{{'Sign In'}}</span>
+                            </button>
+                        </div>
+                        <div class="col-sm-12 mt-1 text-center">
+                           <!-- <span class="cls-signup-text"> Don’t have an account yet? Click here to </span><span (click)="signUp()" class="cls-signup">Sign Up</span> -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

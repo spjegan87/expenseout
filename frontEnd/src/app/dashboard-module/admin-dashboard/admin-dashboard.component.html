@@ -1,0 +1,237 @@
+<!-- Desc : Admin dashboard
+Author : Naveen.S
+Date : 23-sept-2020 -->
+<!-- admin Container starts -->
+<div class="cls-admin-dashboard" *ngIf="!loader">
+    <!-- <span class="cls-mbl-add d-none" (click)="createReport('report')"><em class="icon-32-reject"></em></span>
+    <span class="cls-mbl-filter-icon d-none" (click)="showFilter()">
+        <img src="../../../assets/images/filterwhitecolor.svg" alt="filter">
+    </span> -->
+    <!-- mobile bottom icon starts-->
+        <div class="cls-bottom-container">
+            <span id="fn-mbl-background" class="cls-mbl-background"  (click)="closeMobile()"></span>
+            <span class="cls-overlay-tool"></span>
+            <span class="cls-over-position">
+                <span class="cls-mbl-tool-filter" (click)="showFilter()">
+                    <img src="../../../assets/images/filter.svg" alt="filter">
+                </span>
+                <span class="cls-tool-create" (click)="createReport('report')">
+                    <em class="icon-32-reject"></em>
+                </span>
+            </span>
+        </div>
+        <span class="cls-mbl-tool-button" (click)="openMobileTool()">
+            <em class="icon-15-list"></em>
+        </span>
+    <!-- mobile bottom icon ends-->
+    <div class="row cls-card-container">
+        <div class="col-sm-5 cls-card-box">
+            <span class="cls-box-1" *ngFor="let tabVal of tabData">
+                <span class="cls-icon-box" [ngStyle]="{'background': tabVal.bg_color}">
+                    <em class="icon-34-settle" [ngStyle]="{'color': tabVal.color}"></em>
+                </span>
+                <span class="cls-amount">{{tabVal.currency}} {{tabVal.amount | amount}} <em class="icon-39-arrow"></em></span>
+                <span class="cls-sub-text">{{tabVal.title | translate}}</span>
+                <!-- <div class="cls-bottom">
+                    <span class="cls-report-count">+{{tabVal.count}}%</span>
+                </div> -->
+            </span>
+            <div class="cls-approvel-report">
+                <span class="cls-chart-title">{{ 'Approval Report' | translate}}</span>
+                <div>
+                    
+                    <ul class="nav nav-tabs"  id="myTab" role="tablist">
+                        <li class="nav-item active"><a data-toggle="tab" href="#expense" class="nav-link active">{{ 'Expense Report Wise' | translate}}</a></li>
+                        <li class="nav-item"><a data-toggle="tab" class="nav-link" href="#advance">{{ 'Advance Report Wise' | translate  }}</a></li>
+                      </ul>
+                      
+                      <div class="tab-content">
+                        <div id="expense" class="fade in tab-pane active show">
+                            <ng-container *ngIf="!chartLoader">
+                                <ng-container *ngIf="userChartData[0].series.length=== 0">
+                                     <ng-container  *ngTemplateOutlet="nodata">
+                                     </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="userChartData[0].series.length >= 1">
+                                    <app-donutchart [chartOptions]="userChartData[0]"></app-donutchart>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="chartLoader">
+                                <div class="text-center cls-loadchart">
+                                    <img src="../../../assets/images/dashboardloader.svg">
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div id="advance" class="tab-pane fade">
+                            <ng-container *ngIf="!chartLoader">
+                                <ng-container *ngIf="userChartData[1].series.length=== 0">
+                                    <ng-container  *ngTemplateOutlet="nodata">
+                                    </ng-container>
+                               </ng-container>
+                               <ng-container *ngIf="userChartData[1].series.length >= 1">
+                                   <app-donutchart [chartOptions]="userChartData[1]"></app-donutchart>
+                               </ng-container>
+                                <!-- <app-donutchart [chartOptions]="userChartData[1]"></app-donutchart> -->
+                            </ng-container>
+                            <ng-container *ngIf="chartLoader">
+                                <div class="text-center">
+                                    <img src="../../../assets/images/dashboardloader.svg">
+                                </div>
+                            </ng-container>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="cls-spending-cat pt-0">
+                <span class="cls-chart-title">{{ 'Top Spending Categories' | translate }}</span>
+                <!-- list starts -->
+                <div class="cls-list-head" *ngIf="topSpendingVar['category']?.data?.length >= 1">
+                    <div class="cls-list-data" *ngFor="let tableHeader of topSpendingVar['category']['headers']">{{tableHeader | translate}}</div>
+                </div>
+                <div class="cls-inner-container">
+                    <ng-container  *ngIf="topSpendingVar['category']?.data?.length >= 1">
+                        <div class="cls-inner-list-head" [ngClass]="{'cls-border-unset' : last}" *ngFor="let tableItems of topSpendingVar['category']['data'][0];let i = index;let last = last">
+                            <ng-container *ngFor="let tableData of tableItems">
+                            <div class="cls-inner-list-data">
+                                <ng-container *ngIf="tableData.type === 'raw'">
+                                    <ng-container *ngIf="tableData.icon">
+                                        <!-- <span class="cls-caticon"> -->
+                                            <em class="{{tableData.icon}} cls-caticon" [ngStyle]="{'color': tableData.color}"></em>
+                                        <!-- </span> -->
+                                    </ng-container>
+                                    {{tableData.value}}
+                                </ng-container>
+                                <ng-container *ngIf="tableData.type === 'amount'">
+                                    <!-- {{tableData.currency}} -->
+                                    {{tableData.value | amount}}
+                                    <!-- {{tableData.value }} -->
+                                </ng-container>
+                            </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="topSpendingVar['category']?.data?.length === 0">
+                        <div class="border-0 cls-tablenodata">
+                            <div class="text-center cls-category">
+                                <span class="cls-nodata"></span>
+                                <span class="cls-nodata-text">{{'No data Available' | translate}}</span>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 cls-chart-box">
+            <!-- <span class="cls-create-bar">
+                <span class="cls-dotted-line"></span>
+                <span class="cls-dotted-line"></span>
+                <span class="cls-dotted-line"></span>
+                <span class="cls-dotted-line"></span>
+                <span class="cls-img-container"></span> -->
+                <!-- <span class="cls-create-btn"> -->
+                    <!-- <a href="#" title="{{ 'Create Expense Report' | translate }}">
+                        <span class="cls-plus-icon" (click)="createReport()"><em class="icon-38-dashed-create"></em>{{ 'Create Expense Report' | translate }}</span>
+                    </a> -->
+                    <!-- <div class="cls-dropdown-button">
+                        <a href="javascript:;" class="cls-btn-primary cls-custom-btn dropdown-toggle cls-plus-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <em class="icon-11-plus mr-1"></em>{{ 'Create Expense Report' | translate}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="javascript:;" (click)="createReport('report')">{{'Create Manually' | translate}}</a>
+                            <a class="dropdown-item" href="javascript:;" (click)="createReport('vault')">{{'Create with Receipt Scanner' | translate}}</a>
+                        </div>
+                    </div> -->
+                <!-- </span> -->
+            <!-- </span> -->
+            <span class="cls-chart-bar">
+                <span class="cls-chart-title">{{ 'Expense By Department' | translate }}</span>
+                <ng-container *ngIf="!chartLoader">
+                    <ng-container *ngIf="barChartData?.series?.length >=1">
+                        <app-barchart [chartOptions]='barChartData'></app-barchart>
+                    </ng-container>
+                    <ng-container *ngIf="barChartData?.series?.length=== 0">
+                        <ng-container  *ngTemplateOutlet="nodata">
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+               <ng-container *ngIf="chartLoader">
+                    <div class="text-center cls-loadchart">
+                        <img src="../../../assets/images/dashboardloader.svg">
+                    </div>
+                </ng-container>
+            </span>
+            <span class="cls-chart-bar" *ngIf="budgetChartData?.series?.length >=1">
+                <span class="cls-chart-title">{{ 'Buget Status' | translate }}</span>
+                <ng-container *ngIf="!chartLoader">
+                    <ng-container *ngIf="budgetChartData?.series?.length >=1">
+                        <app-budget-barchart [chartOptions]='budgetChartData'></app-budget-barchart>
+                    </ng-container>
+                    <ng-container *ngIf="budgetChartData?.series?.length=== 0">
+                        <ng-container  *ngTemplateOutlet="nodata">
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+               <ng-container *ngIf="chartLoader">
+                    <div class="text-center cls-loadchart">
+                        <img src="../../../assets/images/dashboardloader.svg">
+                    </div>
+                </ng-container>
+            </span>
+            <span class="cls-spending-user pt-0">
+                <span class="cls-chart-title">{{ 'Top Spending Users' | translate }}</span>
+                  <!-- list starts -->
+                  <div class="cls-list-head" *ngIf="topSpendingVar['user']?.data?.length >=1">
+                    <div class="cls-list-data" *ngFor="let tableHeader of topSpendingVar['user']['headers']">{{tableHeader | translate}}</div>
+                  </div>
+                <div class="cls-inner-container">
+                    <ng-container  *ngIf="topSpendingVar['user']?.data?.length >=1">
+                        <div class="cls-inner-list-head" [ngClass]="{'cls-border-unset' : last}" *ngFor="let tableItems of topSpendingVar['user']['data'][0];let i = index; let last = last">
+                            <ng-container *ngFor="let tableData of tableItems">
+                                <div class="cls-inner-list-data">
+                                    <ng-container *ngIf="tableData.type === 'raw'">
+                                        <!-- <ng-container *ngIf="tableData.firstName"> -->
+                                            <!-- <span class="cls-caticon"> -->
+                                                <!-- <span class="cls-catname"  data-feather="user"> -->
+                                                    <!-- <em data-feather="user"></em> -->
+                                                    <!-- {{tableData.firstName.charAt(0) | translate }} -->
+                                                <!-- </span> -->
+                                            <!-- </span> -->
+                                        <!-- </ng-container> -->
+                                        {{tableData.value}}
+                                        <ng-container *ngIf="tableData.emailId">
+                                            <br/>
+                                            <span class="cls-email cls-a-hover" (click)="showUserInfo(tableData.emailId)">
+                                                {{tableData.emailId}}
+                                            </span>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="tableData.type === 'amount'">
+                                        {{tableData.currency}}
+                                        {{tableData.value | amount}}
+                                        <!-- {{tableData.value}} -->
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="topSpendingVar['user']?.data?.length == 0">
+                        <div class="border-0 cls-tablenodata">
+                            <div class="text-center cls-users">
+                                <span class="cls-nodata"></span>
+                                <span class="cls-nodata-text">{{'No data Available' | translate}}</span>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </span>
+        </div>
+    </div>
+</div>
+<!-- admin Container ends -->
+<ng-template #nodata>
+    <div class="text-center pt-3">
+        <span class="cls-nodata"></span>
+        <span class="cls-nodata-text">{{'No data Available' | translate}}</span>
+    </div> 
+</ng-template>
+<app-user-info *ngIf="popupVal?.module === 'userSettings'" [userInput]="popupVal?.value" (choosedVal)="popUpInfo($event)"></app-user-info>

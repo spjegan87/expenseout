@@ -1,0 +1,1196 @@
+@import "./variable.scss";
+// Yellow Theme Start
+body.yellow {
+    // Global Styles Start
+    //loader css starts
+    .loader {
+        animation: placeHolder 0.85s linear infinite forwards;
+        background: #eaecef;
+        background: linear-gradient(to right, #eeeeee 10%, #bcbbbb 18%, #eeeeee 33%);
+        background-size: 800px 104px;
+        height: 11px;
+        margin-top: 10px;
+        display: block;
+        border-radius: 7px;
+        &.loader-xs {
+            width: 25%;
+        }
+        &.loader-sm {
+            width: 50%;
+        }
+        &.loader-lg {
+            width: 65%;
+        }
+        &.loader-xl {
+            width: 100%;
+        }
+        &.loader-high {
+            width: 60px;
+        }
+        @keyframes placeHolder {
+            0% {
+                background-position: -468px 0;
+            }
+            100% {
+                background-position: 468px 0;
+            }
+        }
+    }
+    //loader css ends
+    // Button css
+    .cls-custom-btn {
+        // primary button
+        &.cls-btn-primary {
+            background: $BTNGRADIENT;
+            color: $WHITE;
+            &:hover {
+                background: $BTNGRADIENTHOVER !important;
+            }
+        }
+        // secondary button
+        &.cls-btn-secondary {
+            background: $WHITE;
+            color: $PRIMARYCOLOR;
+            border: 1px solid $PRIMARYCOLOR;
+            &::after {
+                background: $PRIMARYCOLOR;
+            }
+            &:hover {
+                color: $WHITE;
+            }
+        }
+    }
+    .cls-policy-wave {
+        color: $ERROR;
+        em {
+            color: $ERROR !important;
+        }
+    }
+    // dashed line hover animation ends
+    .cls-report-reject-btn,
+    .cls-report-approve-btn,
+    .cls-report-send-btn,
+    .cls-report-settle-btn {
+        em {
+            border: 1px solid red;
+            color: red !important;
+        }
+        .cls-report-text {
+            color: red;
+        }
+        &:hover {
+            background: #f7c2c2;
+            em {
+                background: red;
+                color: $WHITE !important;
+            }
+        }
+    }
+    .cls-report-approve-btn,
+    .cls-report-settle-btn {
+        em {
+            border-color: #28c76f !important;
+            color: #28c76f !important;
+        }
+        .cls-report-text {
+            color: #28c76f;
+        }
+        &:hover {
+            background: #c7ffe0;
+            em {
+                background: #28c76f;
+            }
+        }
+    }
+    .cls-report-send-btn {
+        em {
+            border-color: #0081ff !important;
+            color: #0081ff !important;
+        }
+        .cls-report-text {
+            color: #0081ff;
+        }
+        &:hover {
+            background: #daecfd;
+            em {
+                background: #0081ff;
+            }
+        }
+    }
+    // switch starts
+    .cls-switches {
+        .cls-switch-circle {
+            background-color: #ccc;
+        }
+        .cls-switch-circle:before {
+            background-color: $WHITE;
+        }
+        .fn-switch-active,
+        .fn-card-switch-active {
+            background-color: #84bcf9;
+            box-shadow: 0 0 1px #ccc !important;
+            &::before {
+                background-color: $PRIMARYCOLOR;
+            }
+        }
+    }
+    //switch ends
+    //table hover tooltip
+    .cls-hover-tooltip {
+        .cls-tool {
+            color: $WHITE;
+            background: $BLACK;
+        }
+    }
+    //datepicker scss
+    .cls-infi-datepicker {
+        color: $SECONDARYCOLOR;
+        .ui-datepicker-title {
+            color: #2e95c8;
+        }
+        .ui-datepicker-calender tr th {
+            color: $SECONDARYCOLOR;
+        }
+        th {
+            color: $SECONDARYCOLOR !important;
+        }
+        .ui-datepicker td a:hover {
+            background: $ERROR;
+        }
+        .ui-state-default,
+        .ui-widget-content {
+            &:hover {
+                background: $PRIMARYCOLOR;
+                color: $WHITE !important;
+            }
+        }
+        .ui-state-highlight,
+        .ui-widget-content {
+            background: $SECONDARYCOLOR;
+            color: $WHITE !important;
+        }
+        .ui-state-active,
+        .ui-widget-content {
+            background: $SECONDARYCOLOR;
+            color: $WHITE;
+        }
+        td.ui-datepicker-week-end:first-child a {
+            color: $ERROR;
+        }
+    }
+    // Autocomplete dropdown Custom Scss
+    .ui-autocomplete {
+        .ui-menu-item:hover {
+            background: $PRIMARYCOLOR;
+            color: $WHITE;
+        }
+    }
+    // search with select
+    .cls-search-select {
+        .cls-dropdown-container {
+            em {
+                color: $BLACK;
+            }
+            .dropdown-menu {
+                border: 1px solid $BDRLIGHT;
+                .cls-dropdown-input {
+                    border: 1px solid $BDRLIGHT;
+                }
+                .live-search-list {
+                    li:hover {
+                        background: $PRIMARYCOLOR;
+                        color: $WHITE;
+                    }
+                }
+            }
+        }
+    }
+    /********** scroll Design ************/
+     ::-webkit-scrollbar {
+        background: #c2d2e4;
+    }
+    /* Optional: show position indicator in red */
+     ::-webkit-scrollbar-thumb {
+        background: #0f94bf;
+        &:hover {
+            background: #0f94bf;
+        }
+    }
+    /********** scroll Design ************/
+    html,
+    * {
+        scrollbar-color: #0f94bf #c2d2e4;
+    }
+    /********** scroll Design ************/
+    .form-control[readonly] {
+        background: $WHITE;
+    }
+    // search with select for create trip
+    .cls-search-dropdown {
+        .cls-search-inner {
+            color: #888;
+            border: 1px solid $BDRLIGHT;
+        }
+    }
+    .cls-custom-field-width {
+        .dropdown-menu {
+            .live-search-list {
+                li:hover {
+                    background: #0f94bf;
+                    color: $BDRLIGHT;
+                }
+            }
+        }
+    }
+    // search with select for form array
+    .cls-travel-form-elements {
+        .dropdown-menu {
+            .live-search-list {
+                li:hover {
+                    background: #0f94bf;
+                    color: #fff;
+                }
+            }
+        }
+    }
+    .input-group-prepend {
+        .cls-search-inner {
+            background: #e1e1e1;
+        }
+    }
+    .cls-radio {
+        color: #666;
+    }
+    // datepicker
+    .cls-infi-datepicker td.ui-datepicker-week-end:first-child a,
+    .cls-infi-datepicker .ui-state-highlight,
+    .cls-infi-datepicker .ui-widget-content {
+        color: #454545;
+    }
+    .cls-infi-datepicker .ui-state-active,
+    .cls-infi-datepicker .ui-widget-content {
+        background: #0081ff;
+        color: $WHITE;
+    }
+    .ui-datepicker {
+        th {
+            color: #696969;
+        }
+    }
+    .ui-datepicker .ui-datepicker-prev span,
+    .ui-datepicker .ui-datepicker-next span {
+        color: $WHITE;
+    }
+    .ui-autocomplete {
+        .ui-menu-item {
+            &:hover {
+                background: $PRIMARYCOLOR;
+            }
+        }
+    }
+    .dropbtn {
+        background-color: #4caf50;
+        color: $WHITE;
+    }
+    .dropbtn:hover,
+    .dropbtn:focus {
+        background-color: #3e8e41;
+    }
+    #myInput {
+        border-bottom: 1px solid #ddd;
+    }
+    #myInput:focus {
+        outline: 3px solid #ddd;
+    }
+    .dropdown-content {
+        background-color: #f6f6f6;
+    }
+    .dropdown-content a {
+        color: black;
+    }
+    .dropdown a:hover {
+        background-color: #ddd;
+    }
+    tr {
+        &:hover {
+            .dataTables_empty {
+                background-color: $WHITE;
+            }
+        }
+    }
+    .cls-link {
+        color: $PRIMARYCOLOR !important;
+        &:hover {
+            color: $PRIMARYCOLOR;
+        }
+    }
+    // Global Styles End
+    .content-body {
+        background: $YELLOWMAINBACKGROUND !important;
+    }
+    .cls-mbl-add {
+        box-shadow: unset;
+    }
+    .cls-top {
+        a {
+            color: #1f1f1f !important;
+        }
+    }
+    .cls-select {
+        opacity: 0.8;
+        color: #c3c3c3;
+        border: 1px solid #454c66;
+        background: right 50%/15% 20% no-repeat url("../images/icons/icon-3-dropdownarrow.svg") #313852;
+    }
+    //policy list strip color
+    .cls-catdet {
+        color: $PRIMARYCOLOR;
+        background: $YELLOWMAINBACKGROUND;
+        border-color: $YELLOWBORDER;
+        em {
+            color: $BDRLIGHT;
+        }
+    }
+    //breadcrum start
+    .page-navigation {
+        nav {
+            ol {
+                li.breadcrumb-item {
+                    a {
+                        color: $YELLOWTEXTCOLOR !important;
+                    }
+                    a.active {
+                        color: $PRIMARYCOLOR !important;
+                    }
+                    &::before {
+                        color: $YELLOWTEXTCOLOR;
+                    }
+                }
+            }
+        }
+    }
+    .customfilterrange,
+    .customrange {
+        background: $YELLOWBACKGROUND !important;
+        // color: $WHITE;
+    }
+    .daterangepicker.opensright .ranges:before {
+        border-top: 7px solid #3b425c;
+    }
+    .cls-filter-icon {
+        background: #313852;
+    }
+    //breadcrum ends
+    // header icon
+    .header {
+        background: $YELLOWBACKGROUND !important;
+        .header-body {
+            .header-body-right {
+                .navbar-nav {
+                    .nav-item {
+                        .nav-link {
+                            color: $YELLOWTEXTCOLOR !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // language box starts
+    .cls-langactive {
+        a.active {
+            color: $BLACK !important;
+        }
+    }
+    // language box ends
+    //right header icons starts
+    .header-body-right {
+        .navbar-nav {
+            .nav-item {
+                a {
+                    &:hover {
+                        svg.feather,
+                        em {
+                            color: $BLACK !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //right header icon ends
+    // theme open box starts
+    .cls-theme-box {
+        background: $YELLOWBACKGROUND !important;
+        .cls-light-dark {
+            border-color: $YELLOWBORDER !important;
+            .cls-light-img,
+            .cls-dark-img {
+                .cls-text {
+                    color: $YELLOWTEXTCOLOR;
+                }
+            }
+        }
+    }
+    // theme open box starts
+    .cls-popup .cls-footer {
+        background: $YELLOWMAINBACKGROUND !important;
+    }
+    .cls-mobile-navbar {
+        background: $YELLOWBACKGROUND;
+        .cls-circle {
+            background: $YELLOWMAINBACKGROUND !important;
+        }
+        .cls-mobile-ul {
+            li {
+                em,
+                a {
+                    color: $YELLOWTEXTCOLOR !important;
+                }
+                .cls-mobile-myprofile {
+                    background: $YELLOWMAINBACKGROUND !important;
+                }
+            }
+        }
+    }
+    .cls-desc {
+        .cls-mandatory {
+            color: $ERROR !important;
+        }
+        span {
+            color: $YELLOWTEXTCOLOR;
+        }
+    }
+    label {
+        color: $YELLOWTEXTCOLOR;
+    }
+    .form-wrapper {
+        background: $YELLOWBACKGROUND;
+    }
+    //autocomplete
+    .ui-widget.ui-widget-content {
+        background: $YELLOWBACKGROUND;
+        color: $YELLOWTEXTCOLOR;
+        // border-color: $DARKBORDER;
+    }
+    .cls-first {
+        background: $YELLOWBACKGROUND;
+        box-shadow: 0px 0px 6px -2px $WHITE;
+    }
+    .cls-lang {
+        background: $YELLOWBACKGROUND;
+    }
+    .header {
+        div:nth-child(2) {
+            ul.navbar-nav:first-child {
+                background: $YELLOWBACKGROUND;
+                // li a{
+                //   color: $DARKTEXTCOLOR !important;
+                // }
+            }
+        }
+    }
+    // dashboard starts
+    .cls-dashboard-container {
+        background: $YELLOWMAINBACKGROUND;
+        // filter starts
+        .cls-filter-container {
+            .cls-filter-icon {
+                background: $YELLOWTEXTCOLOR;
+            }
+        }
+        // filter ends
+        // user dashboard starts
+        .cls-user-dashboard {
+            .cls-card-container {
+                .cls-card-box {
+                    .cls-box-1 {
+                        background: $YELLOWBACKGROUND !important;
+                        border-color: $YELLOWBORDER !important;
+                        &:hover {
+                            box-shadow: none !important;
+                        }
+                    }
+                }
+                .cls-chart-box {
+                    .cls-chart-bar {
+                        background: $YELLOWBACKGROUND !important;
+                        border-color: $YELLOWBORDER !important;
+                        &:hover {
+                            box-shadow: none !important;
+                        }
+                    }
+                }
+                .cls-create-bar,
+                .cls-mob-create-bar {
+                    border-color: $YELLOWBORDER !important;
+                }
+            }
+            .nav-tabs {
+                border-bottom-color: $YELLOWBORDER !important;
+                li.nav-item {
+                    .nav-link {
+                        color: $YELLOWTEXTCOLOR !important;
+                    }
+                }
+            }
+        }
+        // user dashboard ends
+        //admin dashboard starts
+        .cls-admin-dashboard {
+            .cls-card-container {
+                .cls-chart-title {
+                    background: $YELLOWBACKGROUND !important;
+                }
+                .cls-card-box {
+                    .cls-box-1,
+                    .cls-approvel-report,
+                    .cls-spending-cat,
+                    .cls-mob-create-bar {
+                        background: $YELLOWBACKGROUND !important;
+                        border-color: $YELLOWBORDER !important;
+                        &:hover {
+                            box-shadow: none !important;
+                        }
+                    }
+                    .cls-approvel-report {
+                        .nav-tabs {
+                            border-bottom-color: $YELLOWBORDER !important;
+                            li.nav-item {
+                                .nav-link {
+                                    color: $YELLOWTEXTCOLOR;
+                                    &.active {
+                                        background: $YELLOWMAINBACKGROUND !important;
+                                        color: $YELLOWTEXTCOLOR;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .cls-chart-box {
+                    .cls-create-bar {
+                        border-color: $YELLOWBORDER !important;
+                    }
+                    .cls-chart-bar,
+                    .cls-spending-user {
+                        background: $YELLOWBACKGROUND !important;
+                        border-color: $YELLOWBORDER !important;
+                        &:hover {
+                            box-shadow: none !important;
+                        }
+                    }
+                }
+            }
+            .cls-listheader {
+                background: $YELLOWMAINBACKGROUND !important;
+            }
+        }
+        //admin dashboard ends
+    }
+    // dashboard ends
+    //policy container starts
+    .cls-policy-container {
+        .cls-second-container {
+            .cls-main-dotted {
+                .cls-category-map {
+                    .cls-clone-field {
+                        border-color: $YELLOWBORDER !important;
+                    }
+                }
+                .cls-override-value {
+                    color: $PRIMARYCOLOR;
+                    background: $YELLOWBACKGROUND !important;
+                    border-color: $YELLOWBORDER !important;
+                    em {
+                        color: $BDRLIGHT !important;
+                    }
+                }
+            }
+        }
+        .cls-main-dotted {
+            background: $YELLOWMAINBACKGROUND !important;
+            // border-color: $DARKBORDER !important;
+        }
+        .cls-label,
+        .cls-input-label {
+            color: $YELLOWTEXTCOLOR !important;
+        }
+        .cls-widget {
+            .step3 {
+                .steps {
+                    .widget {
+                        a {
+                            color: $YELLOWTEXTCOLOR !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //policy container ends
+    //alert container starts
+    .cls-alert-container {
+        .cls-popup {
+            background: $YELLOWBACKGROUND !important;
+            textarea {
+                background: $YELLOWBACKGROUND;
+                border-color: $YELLOWBORDER;
+                color: $YELLOWTEXTCOLOR;
+            }
+            .cls-content {
+                .cls-title {
+                    color: $YELLOWTEXTCOLOR !important;
+                }
+                .cls-colorinput {
+                    .cls-inputbox {
+                        background: $YELLOWBACKGROUND !important;
+                        border-color: $YELLOWBORDER !important;
+                    }
+                }
+            }
+        }
+    }
+    //alert container ends
+    //primary button starts
+    .cls-btn-secondary {
+        background: $YELLOWMAINBACKGROUND !important;
+    }
+    //primary button starts
+    //history container ends
+    .cls-history-container {
+        .cls-main-popup {
+            background: $YELLOWBACKGROUND !important;
+            .cls-btn {
+                background: $YELLOWMAINBACKGROUND !important;
+                .cls-currency {
+                    color: $YELLOWTEXTCOLOR !important;
+                }
+            }
+            .cls-popup {
+                .cls-header {
+                    .cls-title {
+                        color: $YELLOWMAINBACKGROUND !important;
+                        em {
+                            color: $PRIMARYCOLOR !important;
+                        }
+                    }
+                }
+                .cls-history-data {
+                    .cls-circle,
+                    .cls-text1 {
+                        background: $YELLOWBACKGROUND !important;
+                    }
+                    .cls-inner-row {
+                        .cls-amount {
+                            color: $YELLOWTEXTCOLOR !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //history container ends
+    //settle form starts
+    .cls-settle-container {
+        background: $YELLOWBACKGROUND;
+        box-shadow: 0px 1px 7px 1px #454c66;
+        &::after {
+            background: $YELLOWBACKGROUND;
+        }
+    }
+    //settle form ends
+    .cls-main-container,
+    .cls-main-box {
+        background: $YELLOWMAINBACKGROUND !important;
+        // filter starts
+        .cls-filter-container {
+            .cls-filter-icon {
+                background: $YELLOWTEXTCOLOR;
+            }
+        }
+        .cls-mbl-filter-icon {
+            box-shadow: unset;
+        }
+        // filter ends
+        //image preview starts
+        .cls-modal-container {
+            .cls-popup {
+                .cls-btns {
+                    background: $YELLOWBACKGROUND;
+                }
+            }
+        }
+        //image preview ends
+        //table starts
+        .cls-table {
+            .cls-view {
+                color: $WHITE !important;
+            }
+            tr {
+                .cls-list-icon {
+                    &:hover {
+                        color: $WHITE;
+                    }
+                }
+                .ti-trash,
+                .icon-32-reject {
+                    color: #ea5455;
+                }
+                .ti-pencil {
+                    color: #aa66cc;
+                }
+                .icon-34-settle,
+                .icon-33-sendforapproval,
+                .icon-36-approved {
+                    color: #28c76f;
+                }
+                .icon-35-callback,
+                .ti-eye {
+                    color: #0081ff;
+                    &:hover {
+                        background: #0081ff;
+                    }
+                }
+            }
+            &:hover {
+                .dataTables_empty {
+                    background-color: $YELLOWBACKGROUND !important;
+                }
+            }
+        }
+        // table ends
+        //tab starts
+        .cls-tab-container {
+            .tab-content>.active {
+                background: $YELLOWBACKGROUND !important;
+                box-shadow: none !important;
+            }
+            .nav-tabs {
+                .nav-item {
+                    .nav-link {
+                        &:hover {
+                            color: $WHITE;
+                            background: none !important;
+                            .cls-shape1 {
+                                background: $YELLOWMAINBACKGROUND !important;
+                            }
+                        }
+                        .cls-shape {
+                            background: $YELLOWMAINBACKGROUND !important;
+                            border-left: 1px solid $BDRLIGHT !important;
+                        }
+                        .cls-shape1 {
+                            background: $YELLOWMAINBACKGROUND !important;
+                        }
+                    }
+                }
+                .nav-link.active {
+                    .cls-shape1 {
+                        background: $YELLOWBACKGROUND !important;
+                    }
+                }
+            }
+        }
+        .cls-advance-box {
+            .cls-inner-adv {
+                background: $YELLOWBACKGROUND;
+            }
+        }
+        //tab ends
+        //search with select starts
+        .cls-search-select {
+            .cls-dropdown-container {
+                em {
+                    color: $YELLOWTEXTCOLOR !important;
+                }
+                .dropdown-menu {
+                    .cls-dropdown-input {
+                        background: $YELLOWBACKGROUND;
+                    }
+                }
+            }
+        }
+        //search with select starts
+        .cls-allowance-box {
+            .cls-allowance-heading,
+            .cls-allowance-curr,
+            .cls-allowance-amt,
+            .cls-allowance-days {
+                color: $YELLOWTEXTCOLOR !important;
+            }
+        }
+        // expense vault starts
+        .cls-mobile-list {
+            .cls-mbl-strip {
+                background: $YELLOWBACKGROUND !important;
+                .cls-mbl-img-container {
+                    background: $YELLOWBACKGROUND;
+                    img {
+                        border-color: $YELLOWBORDER !important;
+                    }
+                }
+            }
+        }
+        .cls-upload-main {
+            .cls-info-container {
+                .cls-info-text {
+                    color: $YELLOWTEXTCOLOR !important;
+                }
+            }
+            .cls-image-upload-box {
+                border-color: $YELLOWBORDER !important;
+            }
+        }
+        .cls-instruction-container {
+            .cls-image-flow {
+                .cls-line,
+                .cls-line1,
+                .cls-line2,
+                .cls-view-report,
+                .cls-line-x {
+                    border-color: $YELLOWBORDER !important;
+                }
+            }
+        }
+        .cls-container-policy {
+            .cls-policy-loader {
+                .cls-loading-stage {
+                    background: $YELLOWMAINBACKGROUND !important;
+                }
+            }
+        }
+        // .cls-inner-upload{
+        //   .cls-preview-img{
+        //     .cls-inner-image{
+        //       .cls-bottom-icon{
+        //         .cls-scan-icon,.cls-delete-icon{
+        //           background: $DARKBACKGROUND !important;
+        //           border-color: $DARKBORDER !important;
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
+        .cls-image-container,
+        .cls-form-container {
+            background: $YELLOWMAINBACKGROUND !important;
+        }
+        .cls-form-container {
+            .cls-clonefield {
+                // background: $DARKBACKGROUND !important;
+                .cls-radio {
+                    color: $YELLOWTEXTCOLOR !important;
+                }
+                .cls-radio-on {
+                    color: $PRIMARYCOLOR !important;
+                }
+                .cls-button-container {
+                    .cls-create-report-container {
+                        background: $YELLOWBACKGROUND !important;
+                        .cls-shape1,
+                        .cls-shape {
+                            background: $YELLOWBACKGROUND !important;
+                        }
+                        .cls-inner-report {
+                            .cls-existing-report {
+                                .cls-reports-strip {
+                                    background: $YELLOWBACKGROUND !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .cls-mbl-footer {
+                background: $YELLOWBACKGROUND !important;
+            }
+        }
+        // expense vault ends
+    }
+    // create report form starts
+    .cls-main-box {
+        .step3 {
+            .steps {
+                .cls-bdr {
+                    background: $YELLOWTEXTCOLOR !important;
+                }
+                .widget {
+                    a {
+                        color: $YELLOWTEXTCOLOR !important;
+                    }
+                    .step-number {
+                        background: $YELLOWTEXTCOLOR !important;
+                    }
+                }
+                .widget.active {
+                    .step-number {
+                        background: $PRIMARYCOLOR !important;
+                    }
+                    a {
+                        color: $PRIMARYCOLOR !important;
+                    }
+                }
+            }
+        }
+        .cls-drop-div {
+            .cls-nofield {
+                background-color: $YELLOWMAINBACKGROUND;
+                .cls-frequent {
+                    .cls-txt {
+                        color: $YELLOWTEXTCOLOR;
+                    }
+                    .cls-drag-box {
+                        background: $YELLOWBACKGROUND;
+                        color: $YELLOWTEXTCOLOR;
+                        border-color: $YELLOWBORDER;
+                    }
+                }
+            }
+            .cls-field {
+                background: $YELLOWBACKGROUND;
+                border-color: $YELLOWBORDER;
+                .cls-clonefield {
+                    .cls-radio-on {
+                        color: $PRIMARYCOLOR;
+                    }
+                    .cls-container-policy {
+                        .cls-policy-loader {
+                            .cls-loading-stage {
+                                background: $YELLOWBACKGROUND !important;
+                            }
+                        }
+                    }
+                }
+                .cls-main {
+                    .cls-add-close-container {
+                        button {
+                            background: $YELLOWMAINBACKGROUND;
+                        }
+                    }
+                }
+            }
+        }
+        // list and grid view starts
+        .cls-card-container {
+            .cls-inner-container {
+                .cls-travel-bar,
+                .cls-amount-details {
+                    background: $YELLOWBACKGROUND !important;
+                    border-color: $YELLOWBORDER !important;
+                }
+                .cls-travel-bar {
+                    .cls-imberse-row {
+                        .cls-moreinfo {
+                            background: $YELLOWBACKGROUND;
+                            color: $YELLOWTEXTCOLOR;
+                            border-color: $YELLOWBORDER;
+                            em {
+                                color: $PRIMARYCOLOR;
+                            }
+                        }
+                    }
+                    // .cls-icon-bar{
+                    //   .cls-icon-section{
+                    //     .cls-edit-icon,.cls-history-icon,.cls-delete-icon{
+                    //       em:hover{
+                    //         background: $DARKTEXTCOLOR;
+                    //       }
+                    //     }
+                    //   }
+                    // }
+                }
+                .cls-amount-details {
+                    .cls-inner-total-amount {
+                        .cls-expense {
+                            color: $YELLOWTEXTCOLOR !important;
+                            .cls-total {
+                                color: $YELLOWTEXTCOLOR !important;
+                            }
+                        }
+                    }
+                    // .cls-total-amount{
+                    //   color: $DARKTEXTCOLOR !important;
+                    // }
+                }
+            }
+        }
+        .cls-list-view {
+            .cls-list-expense {
+                background: $YELLOWBACKGROUND !important;
+                border-color: $YELLOWBACKGROUND !important;
+                .cls-imburs-box {
+                    .cls-moreinfo {
+                        background: $YELLOWBACKGROUND;
+                        color: $YELLOWTEXTCOLOR;
+                        border-color: $YELLOWBORDER;
+                        em {
+                            color: $PRIMARYCOLOR;
+                        }
+                    }
+                }
+            }
+            .cls-total-amount-box {
+                .cls-expense-info {
+                    background: $YELLOWBACKGROUND !important;
+                    border-color: $YELLOWBORDER !important;
+                }
+                // .cls-total-amount{
+                //   color: $DARKTEXTCOLOR !important;
+                // }
+            }
+        }
+        // list and grid view ends
+        // footer starts
+        .cls-footer-bar {
+            background: $YELLOWMAINBACKGROUND !important;
+            box-shadow: 1px 1px 6px #505050;
+            .cls-mode-count-box {
+                background: $YELLOWBACKGROUND;
+            }
+            // .cls-btn-primary{
+            //   background: $DARKBACKGROUND;
+            // }
+        }
+        // footer ends
+    }
+    // create report form ends
+    .cls-advform {
+        background: $YELLOWMAINBACKGROUND !important;
+    }
+    //my profile starts
+    .cls-profile-container {
+        background: $YELLOWMAINBACKGROUND !important;
+        .cls-myprofileindex {
+            .cls-profileleft {
+                .cls-profile {
+                    .cls-profile-icon {
+                        border-color: $YELLOWBORDER !important;
+                        background: $YELLOWBACKGROUND !important;
+                        .cls-first {
+                            background: unset;
+                            box-shadow: unset;
+                        }
+                        .cls-actions {
+                            background: $YELLOWBACKGROUND !important;
+                        }
+                    }
+                    .cls-profile-type {
+                        .cls-customtab {
+                            border-color: $YELLOWBORDER !important;
+                            li {
+                                border-color: $YELLOWBORDER !important;
+                                a.active {
+                                    color: $YELLOWTEXTCOLOR !important;
+                                    background: $YELLOWBACKGROUND !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .cls-employee-details {
+                background: $YELLOWBACKGROUND !important;
+                border-color: $YELLOWBORDER !important;
+            }
+        }
+        .cls-editprofile {
+            .cls-change-password {
+                background: $YELLOWBACKGROUND !important;
+                border-color: $YELLOWBORDER !important;
+            }
+        }
+        .cls-popup {
+            background: $YELLOWBACKGROUND !important;
+            .cls-content {
+                .nav-tabs {
+                    li.nav-item {
+                        .nav-link {
+                            color: $YELLOWTEXTCOLOR !important;
+                            &.active {
+                                background: $YELLOWMAINBACKGROUND !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //my profile ends
+    //header my profile starts
+    .cls-user-profile {
+        border: 1px solid $YELLOWBORDER !important;
+        .cls-name-head {
+            box-shadow: 0px 0px 6px -2px $WHITE;
+        }
+        .cls-logout {
+            border-color: $YELLOWBORDER !important;
+            background: $YELLOWMAINBACKGROUND !important;
+        }
+        .cls-profile {
+            background: $YELLOWMAINBACKGROUND !important;
+        }
+    }
+    //header my profile starts
+    //master data starts
+    .cls-master-container {
+        background: $YELLOWMAINBACKGROUND !important;
+        .cls-family {
+            background: $YELLOWBACKGROUND !important;
+            .cls-list {
+                a {
+                    color: $PRIMARYCOLOR !important;
+                }
+            }
+            .cls-list-inner-heading {
+                background: $YELLOWMAINBACKGROUND !important;
+            }
+        }
+        .nav-tabs {
+            border-color: $YELLOWBORDER !important;
+            .nav-item {
+                border-color: $YELLOWBORDER !important;
+            }
+        }
+    }
+    //master data ends
+    // menu starts
+    .navigation {
+        .navigation-menu-tab {
+            background: $YELLOWBACKGROUND !important;
+        }
+    }
+    //menu ends
+    .cls-filter-btn,
+    .cls-btn-primary {
+        &:hover {
+            box-shadow: 0 7px 8px 0px #1e1f22 !important;
+        }
+    }
+    .dropdown-menu.show {
+        &:before {
+            background: #3b425c;
+        }
+        .cls-arrow {
+            color: #3b425c !important;
+        }
+    }
+    .cls-dark {
+        background: $BDRLIGHT;
+        color: $BLACK !important;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        &:hover {
+            color: #c3c3c3 !important;
+        }
+    }
+    .cls-light {
+        background: none;
+        &:hover {
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+    }
+}
+
+// Yellow Theme Ends

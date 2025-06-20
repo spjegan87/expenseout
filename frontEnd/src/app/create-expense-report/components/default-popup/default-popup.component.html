@@ -1,0 +1,34 @@
+<!-- Author: Logesh -->
+<div class="cls-history-container">
+    <span id="fn-background" class="cls-background" (click)="closeModal(false)"></span>
+    <div class="cls-main-popup" [ngClass]="toClose ? 'close-ani' : ''">
+        <div class="cls-popup">
+            <div class="cls-header">
+                <span class="cls-title text-left">
+                    {{ "Expense Expired" | translate}}
+                </span>
+                <span class="cls-top-close text-center" (click)="closeModal(false)">
+                    <em class="icon-32-reject"></em>
+                </span> 
+            </div>
+            <div class="cls-history-data">
+                   <table class="expiry-table">
+                       <tr>
+                            <th width="30%">Category</th>
+                            <th width="30%">Amount</th>
+                            <th width="30%">Expense Date</th>
+                       </tr>
+                       <tr *ngFor="let item of approvalPopup.value">
+                           <td>{{item.category_name}}</td>
+                           <td>{{item.currency_code}} {{item.amount}}</td>
+                           <td>{{item.expense_date}}</td>
+                       </tr>
+                    </table>
+                    <p class="cls-history-data-content">Above mentioned expenses are expired, You can't submit these expenses!</p>
+            </div>
+        </div>
+        <div class="cls-btn text-right">
+            <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="closeModal(false)">{{'Ok' | translate}}</button>
+        </div>
+    </div>
+</div> 

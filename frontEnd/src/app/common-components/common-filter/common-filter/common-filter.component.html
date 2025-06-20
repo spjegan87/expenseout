@@ -1,0 +1,48 @@
+<!-- Desc : Common filter 
+Author : Ajay Eswaran
+Date : 28-May-2021 -->
+<!-- Filter starts -->
+<form [formGroup]="filter" class="cls-filter-container mb-3">
+    <span id="fn-mbl-background" class="cls-mbl-background" (click)="closeModal()"></span>
+    <div class="cls-mbl-filter">
+        <div class="row cls-overflowscroll m-0">
+            <span class="cls-filter-icon d-none">
+            <span class="cls-icon"></span>
+            </span>
+            <span class="dblock d-none cls-mbl-line"></span>
+            <span class="d-none cls-selectfilter">
+            {{'Select Filter' | translate}}
+        </span>
+            <div class="form-group col-sm-2 cls-search-select" *ngFor="let data of filterData" [ngClass]="{'cls-res-timeperiod' : data.format == 'time'}">
+                <div class="daterange cls-filter-box" id="{{ data.id }}" *ngIf="data.format == 'time'">
+                    <label>{{ data.label | translate }} </label>
+                    <input type="text" id="timeperiod" formControlName="{{ data.form_control }}" name="{{ data.id }}" class="customrange cls-custom-input form-control" placeholder="{{ data.place_holder | translate}}" readonly />
+                    <input type="hidden" formControlName="fromDate" />
+                    <input type="hidden" formControlName="toDate" />
+                </div>
+                <ng-container *ngIf="data.format != 'time'">
+                    <label for="{{ data.id }}" [appFontSize]="data.label | translate">{{data?.label | translate}}</label>
+                    <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow" *ngIf="data?.format == 'dropdown'"></em>
+                        <input type="text" attr.data-toggle="{{data?.format}}" [ngClass]="{'dropdown-toggle':data?.format === 'dropdown'}" (input)="formValidator()" formControlName="{{ data.form_control }}" name="{{ data.id }}" id="{{ data.id }}" placeholder="{{ data.place_holder | translate}}"
+                            autocomplete="off" class="cls-custom-input form-control ">
+                        <!-- Dropdown Data -->
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="{{data.id}}searchInput" autocomplete="off" (keyup)="filterFunction(data?.id+'searchInput',data?.id+'searchfield')">
+                            <ul id="{{data?.id}}searchfield" class="live-search-list">
+                                <li *ngFor="let opt of data?.dropdownData" (click)="setFilterValue(opt?.id,data?.form_control,opt?.text,data?.id)">
+                                    <a>{{opt?.text | translate}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="form-group col-sm-2 mb-1 cls-mobsubmit">
+                <button type="submit" class="btn cls-filter-btn cls-btnservicecall" (click)="applyFilter()">{{'Apply' | translate}}</button>
+                <button type="reset" class="cls-reset-btn" [ngClass]="{'cls-disable': disabled}" (click)="resetFilter()">{{'Reset' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!--Filter Ends -->

@@ -1,0 +1,14 @@
+<ng-container *ngIf="createForm === true">
+  <form [formGroup]="form" validation (ngSubmit)="onSubmit($event)">
+    <ng-container *ngFor="let component of fields[0]['components']">
+      <ng-container formField [field]="component" [formValues]="formValues" [group]="form"></ng-container>
+    </ng-container>
+  </form>
+</ng-container>
+<ng-container *ngIf="fields[0]['module'] !== undefined && this.formValues['content'].length === 0">
+  <div class="content-loader" *ngFor="let n of fields[0]['components']">
+    <span class="loader-sm"></span>
+    <span class="loader-xl"></span>
+  </div>
+</ng-container>
+

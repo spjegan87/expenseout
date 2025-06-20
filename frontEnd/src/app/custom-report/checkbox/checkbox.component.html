@@ -1,0 +1,17 @@
+<!-- *************************************************
+
+ * Component Name------- checkbox
+ * HTML & CSS -------------- Naveen.s
+ * Created date -------------- 26-Feb-2020
+ * Powered by --------------- Infiniti software solutions
+
+************************************************* -->
+<div class="cls-group-check">
+    <span class="cls-head">{{ groupData.head }}</span>
+    <span class="cls-checkall" (click)="selectAll(groupData.status)"><em class="cls-icon" [ngClass]="{'icon-40-checkbox-empty': groupData.status == 'N','icon-41-checkbox-fill' : groupData.status == 'Y'}"></em>Select All</span>
+</div>
+<div class="cls-background">
+    <span class="cls-label" (click)="selectCheckbox(data.status,index)" [ngClass]="{'cls-disble': data.default}" *ngFor="let data of groupData.checkbox;let index = index">
+        <em class="cls-icon" [ngClass]="{'icon-40-checkbox-empty': data.status == 'N','icon-41-checkbox-fill': data.status == 'Y' || data.default}"></em>{{ data.name }}
+    </span>
+</div>

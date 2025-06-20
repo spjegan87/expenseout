@@ -1,0 +1,413 @@
+<!-- *************************************************
+
+ * Component Name------- Report Index
+ * HTML & CSS -------------- Naveen.s
+ * Created date -------------- 26-Feb-2020
+ * Powered by --------------- Infiniti software solutions
+
+************************************************* -->
+<div class="cls-main-container">
+    <form [formGroup]="reportForm">
+        <div class="cls-heading">Create custom report</div>
+        <!-- <div class="cls-heading" *ngIf="editVal">Edit Report ({{headingVal}})</div> -->
+        <!-- <div *ngIf="editVal?.reportAdditionalInfo?.scheduleInfo?.cronInfo">
+            <div class="cls-toggle-container">
+                <span class="cls-toggle" *ngFor="let menu of menu; let f = first; let i = index" [ngClass]="{'border-right-0': f && i != clickedEditIndex,'border-left-0': !f && i != clickedEditIndex,'active': i == clickedEditIndex}" (click)="selectTabMenu(i,menu.key)">{{ menu.name }}</span>
+            </div>
+        </div> -->
+        <div class="cls-create-text mb-2">
+            <span (click)="savedReports()">Saved Reports</span>
+        </div>
+        <div class="row m-0 cls-bg mb-4">
+            <div class="col-md-3 cls-custom-width">
+                <app-side-menu  [menu]="sideMenu" (currentMenu)="getMenu($event)">
+                </app-side-menu>
+            </div>
+            <div class="col-md-9 cls-width">
+                <!-- tab starts -->
+                <ul class="cls-tab">
+                    <li class="cls-menu" *ngFor="let data of tabData; let index = index;" [ngClass]="{'cls-active':  index == clickedIndex,'cls-disable': clickedIndex < 2}" (click)="selectMenu(index)">
+                        <span class="cls-count">{{ index+1 }}</span>{{ data.name }}
+                    </li>
+                </ul>
+                <!-- tab ends -->
+                <div class="cls-inner-content">
+                    <ng-container *ngIf="activeIndex == 0">
+                        <ng-container>
+                            <app-checkbox *ngFor="let data of Fields" [groupData]="data" (finalArray)="getData($event)"></app-checkbox>
+                        </ng-container>
+                    </ng-container>
+                    <div *ngIf="activeIndex == 1">
+                        <app-checkbox  *ngFor="let val of availableCondition" [groupData]="val" (finalArray)="getConditionData($event)"></app-checkbox>
+                    </div>
+                    <ng-container *ngIf="activeIndex == 2">
+                        <span class="cls-header">Selected Fields</span>
+                        <div class="cls-field-list">
+                            <div class="mb-4" *ngFor="let item of finalAvailableField">
+                                <span class="cls-inner-head d-block">{{item.head}}</span>
+                                <span class="cls-text" *ngFor="let val of item.checkbox">
+                                    <ng-container *ngIf="val.status === 'Y'">
+                                        {{val.name}},  
+                                    </ng-container>
+                                </span>
+                            </div>
+                        </div>
+                        <ng-container>
+                            <span class="cls-header">Selected Conditions</span>
+                                <ng-container *ngFor="let item of conditionName">
+                                    <span class="cls-inner-head mb-2">{{item.value}} : </span>
+                                    <div class="row" *ngIf="item.keys === 'dateRangeOfRequests' || item.keys === 'dateRangeOfRequest'">
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="fromDate">From<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="fromDate" onkeypress="return false;" placeholder="Select From Date" autocomplete="off" formControlName="fromDate" (focus)="chooseDate('fromDate')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.fromDate.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('fromDate')"></em>
+                                        </div>
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="toDate">To<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="toDate" onkeypress="return false;" placeholder="Select To Date" autocomplete="off" formControlName="toDate" (focus)="chooseDate('toDate')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.toDate.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('toDate')"></em>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'departureDate'">
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="departureFrom">From<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="departureFrom" onkeypress="return false;" placeholder="Select From Date" autocomplete="off" formControlName="departureFrom" (focus)="chooseDate('departureFrom')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.departureFrom.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('departureFrom')"></em>
+                                        </div>
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="departureTo">To<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="departureTo" onkeypress="return false;" placeholder="Select To Date" autocomplete="off" formControlName="departureTo" (focus)="chooseDate('departureTo')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.departureTo.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('departureTo')"></em>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'agentEmailId'">
+                                        <div class="form-group cls-auto-complete col-md-4">
+                                            <label  for="email">Email Id<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="email" id="email" autocomplete="off" placeholder="Enter Email" formControlName="email" (keypress)="stringValidation($event)"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.email.errors)}">
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'groupCategory'">
+                                        <div class="form-group col-md-4" [ngClass]="{'cls-multiple-error':(submitted && reportForm.controls.groupCategory.errors)}">
+                                            <label class="d-block" for="groupCategory">Group category<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select" multiple  name="groupCategory" id="groupCategory" formControlName="groupCategory">
+                                                <!-- <ng-container *ngFor="let val of fieldData">
+                                                    <option *ngFor="let item of val?.groupCategoryList" value="{{item?.groupCategoryId}}">
+                                                        {{item?.groupCategory}}
+                                                    </option>
+                                                </ng-container> -->
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'sector'">
+                                        <div class="form-group cls-auto-complete col-md-4">
+                                            <label  for="sectorFrom">Origin<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="sectorFrom"  autocomplete="off" placeholder="Enter Origin" formControlName="sectorFrom" (keypress)="stringValidation($event)"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.sectorFrom.errors)}">
+                                        </div>
+                                        <div class="form-group cls-auto-complete col-md-4">
+                                            <label  for="sectorTo">Destination<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="sectorTo" autocomplete="off" placeholder="Enter Destination" formControlName="sectorTo" (keypress)="stringValidation($event)"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.sectorTo.errors)}">
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'statusOfRequest'">
+                                        <div class="form-group col-md-4" [ngClass]="{'cls-multiple-error':(submitted && reportForm.controls.statusOfRequest.errors)}">
+                                            <label class="d-block" for="statusOfRequest">Status<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select" multiple  name="statusOfRequest" id="statusOfRequest" formControlName="statusOfRequest" [ngClass]="{'cls-border-error':(submitted && reportForm.controls.statusOfRequest.errors)}">
+                                                <!-- <ng-container *ngFor="let val of fieldData">
+                                                    <option *ngFor="let item of val?.statusList" value="{{item?.statusId}}">
+                                                        {{item?.statusName}}
+                                                    </option>
+                                                </ng-container> -->
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'pos'">
+                                        <div class="form-group cls-auto-complete col-md-4">
+                                            <label  for="pos">POS<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="pos" autocomplete="off" placeholder="Enter Pos" formControlName="pos" (keypress)="stringValidation($event)"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.pos.errors)}">
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'travelAgency'">
+                                        <div class="form-group cls-auto-complete col-md-4">
+                                            <label  for="travelAgency">Agency Name<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="travelAgency" autocomplete="off" placeholder="Enter Agency Name" formControlName="travelAgency" (keypress)="stringValidation($event)"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.travelAgency.errors)}">
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'userType'">
+                                        <div class="form-group col-md-4">
+                                            <label for="userType">User Type<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select" name="userType" id="userType" placeholder="Enter User Type" formControlName="userType" [ngClass]="{'cls-border-error':(submitted && reportForm.controls.userType.errors)}">
+                                                <!-- <ng-container *ngFor="let val of fieldData">
+                                                    <option *ngFor="let item of val?.userTypeList" value="{{item?.userTypeId}}">
+                                                        {{item?.userType}}
+                                                    </option>
+                                                </ng-container> -->
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'country'">
+                                        <div class="form-group col-md-4">
+                                            <label for="country">Country<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select" name="country" id="country" placeholder="Enter Country" formControlName="country" [ngClass]="{'cls-border-error':(submitted && reportForm.controls.country.errors)}">
+                                                <!-- <ng-container *ngFor="let val of fieldData">
+                                                    <option *ngFor="let item of val?.countryList" value="{{item?.countryCode}}">
+                                                        {{item?.country}}
+                                                    </option>
+                                                </ng-container> -->
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'currency'">
+                                        <div class="form-group col-md-4" [ngClass]="{'cls-select-error':(submitted && reportForm.controls.currency.errors)}">
+                                            <label class="d-block" for="currency">Currency<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select" multiple name="currency" id="currency" formControlName="currency">
+                                                <!-- <ng-container *ngFor="let val of fieldData">
+                                                    <option *ngFor="let item of val?.currencyList" value="{{item?.currencyType}}">
+                                                        {{item?.currencyType}}
+                                                    </option>
+                                                </ng-container> -->
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'agentResponseDate'">
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="agentResponseFrom">From<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="agentResponseFrom" placeholder="Enter From Date"  autocomplete="off" formControlName="agentResponseFrom" onkeypress="return false;" (focus)="chooseDate('agentResponseFrom')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.agentResponseFrom.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('agentResponseFrom')"></em>
+                                        </div>
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="agentResponseTo">To<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="agentResponseTo" autocomplete="off" placeholder="Enter To Date"  formControlName="agentResponseTo" onkeypress="return false;" (focus)="chooseDate('agentResponseTo')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.agentResponseTo.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('agentResponseTo')"></em>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'airlineResponseDate'">
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="airlineResponseFrom">From<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="airlineResponseFrom"  autocomplete="off" placeholder="Enter From Date" formControlName="airlineResponseFrom" onkeypress="return false;" (focus)="chooseDate('airlineResponseFrom')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.airlineResponseFrom.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('airlineResponseFrom')"></em>
+                                        </div>
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="airlineResponseTo">To<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="airlineResponseTo" autocomplete="off" placeholder="Enter To Date" formControlName="airlineResponseTo" onkeypress="return false;" (focus)="chooseDate('airlineResponseTo')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.airlineResponseTo.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('airlineResponseTo')"></em>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'fareExpiryDate'">
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="fareExpiryFrom">From<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="fareExpiryFrom" placeholder="Enter From Date" autocomplete="off" formControlName="fareExpiryFrom" onkeypress="return false;" (focus)="chooseDate('fareExpiryFrom')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.fareExpiryFrom.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('fareExpiryFrom')"></em>
+                                        </div>
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="fareExpiryTo">To<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="fareExpiryTo" placeholder="Enter To Date" autocomplete="off" formControlName="fareExpiryTo" onkeypress="return false;" (focus)="chooseDate('fareExpiryTo')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.fareExpiryTo.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('fareExpiryTo')"></em>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'negotiationApprovedDate'">
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="negotiationApprovedFrom">From<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="negotiationApprovedFrom" placeholder="Enter From Date"  autocomplete="off" formControlName="negotiationApprovedFrom" onkeypress="return false;" (focus)="chooseDate('negotiationApprovedFrom')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.negotiationApprovedFrom.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('negotiationApprovedFrom')"></em>
+                                        </div>
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="negotiationApprovedTo">To<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="negotiationApprovedTo" placeholder="Enter To Date" autocomplete="off" formControlName="negotiationApprovedTo" onkeypress="return false;" (focus)="chooseDate('negotiationApprovedTo')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.negotiationApprovedTo.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('negotiationApprovedTo')"></em>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'negotiationExpiryDate'">
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="negotiationExpiryFrom">From<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="negotiationExpiryFrom" placeholder="Enter From Date" autocomplete="off" formControlName="negotiationExpiryFrom" onkeypress="return false;" (focus)="chooseDate('negotiationExpiryFrom')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.negotiationExpiryFrom.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('negotiationExpiryFrom')"></em>
+                                        </div>
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="negotiationExpiryTo">To<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="negotiationExpiryTo" placeholder="Enter To Date" autocomplete="off" formControlName="negotiationExpiryTo" onkeypress="return false;" (focus)="chooseDate('negotiationExpiryTo')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.negotiationExpiryTo.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('negotiationExpiryTo')"></em>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'negotiationRequestStatus'">
+                                        <div class="form-group col-md-4" [ngClass]="{'cls-select-error':(submitted && reportForm.controls.negotiationRequestStatus.errors)}">
+                                            <label class="d-block" for="negotiationRequestStatus">Status<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select" multiple name="negotiationRequestStatus" id="negotiationRequestStatus" formControlName="negotiationRequestStatus">
+                                                <!-- <ng-container *ngFor="let val of negotiationFieldData">
+                                                    <option *ngFor="let item of val?.statusList" value="{{item?.statusKey}}">
+                                                        {{item?.statusName}}
+                                                    </option>
+                                                </ng-container> -->
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'negotiationRequestedDate'">
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="negotiationRequestedFrom">From<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="negotiationRequestedFrom" placeholder="Enter From Date" autocomplete="off" formControlName="negotiationRequestedFrom" onkeypress="return false;" (focus)="chooseDate('negotiationRequestedFrom')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.negotiationRequestedFrom.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('negotiationRequestedFrom')"></em>
+                                        </div>
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="negotiationRequestedTo">To<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="negotiationRequestedTo" placeholder="Enter To Date" autocomplete="off" formControlName="negotiationRequestedTo" onkeypress="return false;" (focus)="chooseDate('negotiationRequestedTo')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.negotiationRequestedTo.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('negotiationRequestedTo')"></em>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'requestProcessedBy'">
+                                        <div class="form-group cls-auto-complete col-md-4">
+                                            <label  for="requestProcessedBy">Responser Email Id<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="requestProcessedBy" placeholder="Enter Email" autocomplete="off" formControlName="requestProcessedBy" (keypress)="stringValidation($event)"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.requestProcessedBy.errors)}">
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'agencyAccessStatus'">
+                                        <div class="form-group col-md-4">
+                                            <label for="agencyAccessStatus">Agency Access Status<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select"  name="agencyAccessStatus" placeholder="Select Status" id="agencyAccessStatus" formControlName="agencyAccessStatus" [ngClass]="{'cls-border-error':(submitted && reportForm.controls.agencyAccessStatus.errors)}">
+                                                <option value="Y">Yes</option>
+                                                <option value="N">No</option>
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'agencyType'">
+                                        <div class="form-group col-md-4">
+                                            <label for="agencyType">Agency Type<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select" name="agencyType" placeholder="Select Status" id="agencyType" formControlName="agencyType" [ngClass]="{'cls-border-error':(submitted && reportForm.controls.agencyType.errors)}">
+                                                <option value="Y">Yes</option>
+                                                <option value="N">No</option>
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'city'">
+                                        <div class="form-group col-md-4">
+                                            <label for="city">City<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select" name="city" id="city" placeholder="Select Status" formControlName="city" [ngClass]="{'cls-border-error':(submitted && reportForm.controls.city.errors)}">
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'emailVerificationStatus'">
+                                        <div class="form-group col-md-4">
+                                            <label for="emailVerificationStatus">Email Verification Status<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select" name="emailVerificationStatus" placeholder="Enter Email" id="emailVerificationStatus" formControlName="emailVerificationStatus" [ngClass]="{'cls-border-error':(submitted && reportForm.controls.emailVerificationStatus.errors)}">
+                                                <option value="Y">Yes</option>
+                                                <option value="Y">No</option>
+                                            </select>
+                                        </div> 
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'registeredDateRange'">
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="registeredDateFrom">From<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="registeredDateFrom" placeholder="Enter From Date" autocomplete="off" formControlName="registeredDateFrom" onkeypress="return false;" (focus)="chooseDate('registeredDateFrom')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.registeredDateFrom.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('registeredDateFrom')"></em>
+                                        </div>
+                                        <div class="cls-date form-group col-md-4">
+                                            <label  for="registeredDateTo">To<span class="cls-mandatory">*</span></label>
+                                            <input class="form-control" type="text" id="registeredDateTo" placeholder="Enter To Date" autocomplete="off" formControlName="registeredDateTo" onkeypress="return false;" (focus)="chooseDate('registeredDateTo')"
+                                            [ngClass]="{'cls-border-error':(submitted && reportForm.controls.registeredDateTo.errors)}">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('registeredDateTo')"></em>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="item.keys === 'userAccessStatus'">
+                                        <div class="form-group col-md-4">
+                                            <label for="userAccessStatus">User Access Status<span class="cls-mandatory">*</span></label>
+                                            <select class="cls-select" name="userAccessStatus" id="userAccessStatus" formControlName="userAccessStatus" [ngClass]="{'cls-border-error':(submitted && reportForm.controls.userAccessStatus.errors)}">
+                                                <option value="Y">Yes</option>
+                                                <option value="N">No</option>
+                                            </select>
+                                        </div> 
+                                    </div>
+                                </ng-container>
+                                <!-- <ng-container *ngFor="let component of sampleJson">
+                                <span class="cls-inner-head mb-2">{{component.title}} : </span>
+                                    <div class="row">
+                                        <ng-container *ngIf="(component?.type =='date') ">
+                                            <div class="cls-date form-group col-md-4" *ngFor="let item of component.name">
+                                                <input type="text" name="{{item?.name}}" class="form-control" formControlName="{{item?.name}}" id="{{item?.name}}" autocomplete="off"
+                                                [ngClass]="{'cls-border-error':(submitted && reportForm.controls[item?.name].errors)}" (focus)="chooseDate(item?.name)" onkeypress="return false;">
+                                                <label  for="{{item?.name}}">{{item?.name}}<span class="cls-mandatory">*</span></label>
+                                                <em class="fa fa-calendar-o cls-date-icon" ></em>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="(component?.type =='text') ">
+                                            <div class="form-group col-md-4" *ngFor="let item of component.name">
+                                                <input type="text" name="{{item?.name}}" class="form-control" formControlName="{{item?.name}}" id="{{item?.name}}" autocomplete="off"
+                                                [ngClass]="{'cls-border-error':(submitted && reportForm.controls[item?.name].errors)}">
+                                                <label  for="{{item?.name}}">{{item?.name}}<span class="cls-mandatory">*</span></label>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </ng-container> -->
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <div class="text-center my-5">
+                    <ng-container>
+                        <button *ngIf="activeIndex != 2" type="button" class="btn cls-btn-primary cls-custom-btn" (click)="proceed()">Proceed</button>
+                        <button *ngIf="activeIndex == 2" type="button" class="btn cls-btn-primary cls-custom-btn mr-5" (click)="showReport('show')">Show Reports</button>
+                        <button *ngIf="activeIndex == 2" type="button" class="btn cls-btn-primary cls-custom-btn mr-5" (click)="addReportName()" data-toggle="modal" data-target="#exampleModal">Save Reports</button>
+                        <!-- <button *ngIf="activeIndex == 2 && editVal" type="button" class="btn cls-btn-primary cls-custom-btn mr-5"  (click)="showReport('edit')">Update</button> -->
+                    </ng-container>
+                    <!-- <ng-container>
+                        <button class="btn cls-submit" >Update</button>
+                        <button class="btn cls-update" >Reset</button>
+                    </ng-container> -->
+                </div>
+            </div>
+            <!-- <div class="cls-table" *ngIf="activeIndex === 2 && tableShow">
+                <app-data-table [tableData]='tableData' [checkbox]='checkbox'></app-data-table>
+            </div> -->
+        </div>
+        <!-- popup start -->
+        <div class="modal fade cls-modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header cls-modal-header">
+                        <h5 class="modal-title cls-modal-title" id="exampleModalLabel">Save Report</h5>
+                        <button class="close cls-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="reportName" >Report Name<span class="cls-mandatory">*</span></label>
+                            <input type="text" id="reportName" formControlName="reportName" placeholder="Enter Report Name" autocomplete="off" class="form-control" required>
+                        </div>
+                        <!-- <div class="cls-description">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" formControlName="description" id="description" rows="3"></textarea>
+                        </div> -->
+                    </div>
+                    <div class="cls-custom-btn text-center">
+                        <button class="btn cls-btn-primary cls-custom-btn" data-dismiss="modal" (click)="showReport('save')">Save</button>
+                        <!-- <button class="btn cls-submit mr-5" *ngIf="editVal" >Update</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- popup end -->
+    </form>
+</div>

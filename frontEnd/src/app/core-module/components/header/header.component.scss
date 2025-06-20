@@ -1,0 +1,12 @@
+@import '../../../../assets/scss/all';
+.cls-capitalize{
+    text-transform: capitalize;
+}
+.cls-first{
+    border: 1px solid #9b9b9b;
+    border-radius: 50%;
+    padding: 6px 10px;
+    display: inline-block;
+    text-transform: capitalize;
+    background: #f8f8f8;
+}

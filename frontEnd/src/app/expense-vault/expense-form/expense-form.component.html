@@ -1,0 +1,425 @@
+<!-- Desc : Expense form 
+Author : Naveen.s
+Date : 17-July-2020 -->
+
+<!-- main container starts -->
+<form [formGroup]="categoryForm">
+    <div class=" row cls-main-container">
+        <div class="col-sm-4 cls-image-container">
+            <span class="cls-img-box zoom"  id='scanedimg'  *ngIf="scanUrl.type !== 'application/pdf'">
+                <img src="{{scanUrl.path}}.{{scanUrl.type}}" alt="receipt">
+            </span>
+            <ng-container  *ngIf="scanUrl.type === 'application/pdf'">
+                <span class="cls-img-box">
+                    <embed  [src]="url" class="cls-embed" width=100% height=100% />
+                </span>
+            </ng-container>
+        </div>
+        <div class="col-sm-8 cls-form-container">
+            <!-- <div class="cls-mbl-breadcrumb">
+                <app-breadcrumb [activeBreadcrumb]="breadcrumb"></app-breadcrumb>
+            </div> -->
+            <span class="cls-main-title mt-4">{{'Edit Expense' | translate}}</span>
+            <a href="javascript:;" class="cls-link d-inline-block float-right mt-4" (click)="openImageCont()">
+               <em class="ti-arrow-left"></em> {{'Back' | translate}}
+            </a>
+            <div class="row cls-desktop-category">
+                <div class="form-group col-sm-2 cls-category pr-0 mb-0">
+                    <span>{{'Category' | translate}} :</span>
+                </div>
+                <div class="form-group col-sm-3 mb-0 cls-search-select cls-category-input dropdown">
+                    <!-- <select  formControlName="category" (change)=changeCategory($event) id="category" name="category" type="select" class="form-control cls-select">
+                        <option value="{{item.id}}" *ngFor="let item of categoryList">{{item.value}}</option>
+                    </select> -->
+                    <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="category"
+                        name="category" id="category" data-toggle="dropdown" [ngClass]="{'cls-border-error':(submitted && validation.category.errors)}" (click)="searchDropdown('fn-project-input')" placeholder="{{'Select Category' | translate}}"
+                        autocomplete="off" readonly>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                            id="fn-project-input" autocomplete="off" (keyup)="filterFunction('fn-project-input','fn-project-ul')">
+                            <ul id="fn-project-ul" class="live-search-list">
+                                <li (click)="setFilterValue('category','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let item of categoryList" id="item.id" (click)="setFilterValue('category',item.value)">
+                                    <a (click)="changeCategory(item.id)">{{item.value | translate}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-7 text-right pr-0 cls-category-status">
+                    <span class="cls-error" *ngIf="categoryForm.status === 'INVALID'">{{'Incomplete' | translate}}</span>
+                    <span class="cls-complete"  *ngIf="categoryForm.status === 'VALID'">{{'Complete' | translate}}</span>
+                </div>
+            </div>
+            <span class="cls-line"></span>
+            <div class="cls-mbl-container d-none">
+                <div class="form-group cls-mbl-cat cls-search-select cls-category-input dropdown">
+                    <!-- <select  formControlName="category" (change)=changeCategory($event) id="category" name="category" type="select" class="form-control cls-select">
+                        <option value="{{item.id}}" *ngFor="let item of categoryList">{{item.value}}</option>
+                    </select> -->
+                    <label for="category">{{'Category' | translate}}</label>
+                    <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="category"
+                        name="category" id="category" data-toggle="dropdown" [ngClass]="{'cls-border-error':(submitted && validation.category.errors)}" (click)="searchDropdown('fn-project-input')" placeholder="{{'Select Category' | translate}}"
+                        autocomplete="off" readonly>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                            id="fn-project-input" autocomplete="off" (keyup)="filterFunction('fn-project-input','fn-project-ul')">
+                            <ul id="fn-project-ul" class="live-search-list">
+                                <li (click)="setFilterValue('category','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let item of categoryList" id="item.id" (click)="setFilterValue('category',item.value)">
+                                    <a (click)="changeCategory(item.id)">{{item.value | translate}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="cls-mbl-image-container d-none">
+                    <span class="cls-img-box zoom"  id='scanedimg'  *ngIf="scanUrl.type !== 'application/pdf'">
+                        <img src="{{scanUrl.path}}.{{scanUrl.type}}" alt="receipt">
+                    </span>
+                    <ng-container  *ngIf="scanUrl.type === 'application/pdf'">
+                        <span class="cls-img-box">
+                            <embed  [src]="url" class="cls-embed" width=100% height=100% />
+                        </span>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="cls-clonefield">
+                <div class="form-group radio-group mt-3 mb-2">
+                    <label for="reimbursable" class="cls-radio mr-3" [ngClass]="{'cls-radio-on' : categoryForm['controls']['reimbursable'].value === 'Y'}">
+                        <input  formControlName="reimbursable" type="radio" value="Y" id="reimbursable" name="reimbursable" checked>
+                        <!-- <em aria-hidden="true" class="icon-7-radio-on"></em> -->
+                        <em aria-hidden="true" class="icon-7-radio-on" *ngIf="categoryForm['controls']['reimbursable'].value === 'Y'"></em>
+                        <em aria-hidden="true" class="icon-6-radio-off" *ngIf="categoryForm['controls']['reimbursable'].value === 'N'"></em>
+                       {{'Reimbursable' | translate}}
+                    </label>
+                    <label for="Nonreimbursable"  class="cls-radio mr-3" [ngClass]="{'cls-radio-on' : categoryForm['controls']['reimbursable'].value === 'N'}">
+                        <input  formControlName="reimbursable" type="radio" value="N" id="Nonreimbursable" name="reimbursable">
+                        <em aria-hidden="true" class="icon-7-radio-on" *ngIf="categoryForm['controls']['reimbursable'].value === 'N'"></em>
+                        <em aria-hidden="true" class="icon-6-radio-off" *ngIf="categoryForm['controls']['reimbursable'].value === 'Y'"></em>
+                        {{'Non Reimbursable' | translate}}
+                    </label>
+                </div>
+                <div class="row cls-width">
+                <div  class="form-group col-sm-3 cls-date">
+                    <label  for="expensedate">{{'Expense Date' | translate}}<span class="cls-mandatory">*</span></label>
+                    <input  type="text"  onkeypress="return false;" class="cls-input datepicker" (focusout)="dateChangeCurrency()"
+                    (focus)="chooseDate('expensedate')" [value]="categoryForm.controls['expensedate'].value  | date: 'dd, MMM y'" id="expensedate"  formControlName="expensedate" name="expensedate"  placeholder="{{'Expense Date' | translate}}" autocomplete="off" class="cls-custom-input form-control "
+                    [ngClass]="{'cls-border-error':(submitted && validation.expensedate.errors)}" >
+                    <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('expensedate')"></em>
+                </div>
+                <div  class="form-group col-sm-3 cls-maxwidth">
+                    <label  for="merchantname">{{'Merchant Name' | translate}}</label>
+                    <input  type="text" onpaste="return false"  (keypress)="stringValidation($event)" formControlName="merchantname" name="merchantname" id="merchantname" placeholder="{{'Enter Merchant Name' | translate}}" autocomplete="off" class="cls-custom-input form-control "
+                    [ngClass]="{'cls-border-error':(submitted && validation.merchantname.errors)}">
+                </div>
+                <div  class="form-group col-sm-3 cls-search-select" *ngIf="(categoryForm.controls['category'].value) === 'Mileage'  && mileageDetails.length >0">
+                    <label  for="vehicleType">{{ 'Vehicle Type' | translate}} <span class="cls-mandatory">*</span></label>
+                    <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="vehicleType" name="vehicleType" id="vehicleType"
+                        data-toggle="dropdown" (click)="searchDropdown('fn-input-vehicleType')" placeholder="{{'Select vehicleType' | translate}}"
+                        autocomplete="off" readonly >
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                            id="fn-input-vehicleType" autocomplete="off" (keyup)="filterFunction('fn-input-vehicleType','fn-ul-vehicleType')">
+                            <ul id="fn-ul-vehicleType" class="live-search-list">
+                                <li (click)="setFilterValue('vehicleType','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let opt of mileageDetails"  (click)="setFilterValue('vehicleType',opt.vehicleType)">
+                                    <a>{{opt.vehicleType | translate}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="(categoryForm.controls['category'].value) === 'Mileage'" >
+                    <ng-container *ngFor="let val of expense[0]?.components[selectVal]?.components">
+                        <ng-container *ngFor="let mileageDynamic of mileageDetails">
+                            <!-- <h1>{{mileageDynamic.vehicleType}}</h1> -->
+                            <ng-container *ngIf="categoryForm.controls['vehicleType']">
+                            <div  class="form-group col-sm-3 cls-maxwidth cls-search-select cls-auto-complete" *ngIf="mileageDynamic.vehicleType === categoryForm.controls['vehicleType'].value">
+                                <label  for="{{val.name}}">{{val.name | translate}} <span class="cls-mandatory" *ngIf = "val.required === 'true'">*</span></label>
+                                <ng-container *ngIf="val.type=== 'text'">
+                                    <input *ngIf="val.class !== 'col-sm-2 cls-date'" class="cls-input datepicker" type="text"  formControlName="{{val.id}}" name="{{val.name}}"  id="{{val.name}}{{val.category}}" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                                    [ngClass]="{'cls-border-error':(submitted && validation[val.id].errors)}">
+                                    <!-- <input *ngIf="val.class === 'col-sm-2 cls-date'"  type="text"  name="{{val.name}}" formControlName="{{val.id}}" (focus)="chooseDate(val.id,val.category,i)"  id="{{val.id}}{{val.category}}" placeholder="{{'Select' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control " onkeypress="return false;" -->
+                                    <input *ngIf="val.class === 'col-sm-2 cls-date'"  type="text"  name="{{val.name}}" [value]="categoryForm.controls[val.id].value  | date: 'dd, MMM y'" formControlName="{{val.id}}" (focus)="chooseDate(val.id)"  id="{{val.id}}{{val.category}}" placeholder="{{'Select' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control " onkeypress="return false;"
+                                    [ngClass]="{'cls-border-error':(submitted && validation[val.id].errors)}">
+                                    <ng-container *ngIf="val.class === 'col-sm-2 cls-date'">
+                                        <em class="fa fa-calendar-o cls-date-icon" ></em>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="val.type=== 'number'">
+                                    <input  class="cls-input datepicker" (keyup)="distanceChoosed()" type="number"  min ="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)"  formControlName="{{val.id}}" name="{{val.name}}"  id="{{val.name}}{{val.category}}" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && validation[val.id].errors)}">
+                                </ng-container>
+                                <ng-container *ngIf="val.type === 'location'">
+                                    <input class="cls-input" type="text" onpaste="return false" (keypress)="stringValidation($event)"  (focusout)="destinationPolicy(val.id)"  formControlName="{{val.id}}" name="{{val.name}}"  id="{{val.id}}" (keyup)="citySearch(val.id)" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                                    [ngClass]="{'cls-border-error':(submitted && validation[val.id].errors)}">
+                                </ng-container>
+                                <ng-container *ngIf="val.type=== 'select'">
+                                    <div class="cls-dropdown-container">
+                                        <em class="icon-3-dropdownarrow"></em>
+                                        <input class="form-control" type="text"  formControlName="{{val.id}}" name="{{val.name}}" id="{{val.name}}"
+                                        data-toggle="dropdown" (click)="searchDropdown('fn-input-'+val.id)" placeholder="{{'Select ' | translate}}{{val.name | translate}}"
+                                        autocomplete="off" readonly  [ngClass]="{'cls-border-error':(submitted && validation[val.id].errors)}">
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                                            id="fn-input-{{val.id}}" autocomplete="off" (keyup)="filterFunction('fn-input-'+val.id,'fn-ul-'+val.id)">
+                                            <ul id="fn-ul-{{val.id}}" class="live-search-list">
+                                                <li (click)="setFilterValue(val.id,'select')">
+                                                    <a>select</a>
+                                                </li>
+                                                <li *ngFor="let opt of val.options"  (click)="setFilterValue(val.id,opt.value)">
+                                                    <a>{{opt.value | translate}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <div  class="form-group col-sm-3 cls-select-width cls-search-select" [ngClass]="{'cls-noneditable' : (categoryForm.controls['category'].value) === 'Mileage'}">
+                    <label  for="currency" class="cls-currency"> {{'Currency' | translate}} <em class="icon-16-info" *ngIf="categoryForm.controls['currency'].value !== userCurrency"></em><span class="cls-mandatory">*</span></label>
+                    <span class="cls-hovertip" *ngIf="categoryForm.controls['currency'].value !== userCurrency">
+                        <ng-container *ngIf="exchangeRateVal.asOnDate">
+                            As on {{exchangeRateVal.asOnDate | date: "d-MMM-y"}}<br/>
+                        </ng-container>
+                        1 {{categoryForm.controls['currency'].value}} = {{categoryForm.controls['exchangeRate'].value}} {{userCurrency}}<br/>
+                        <input type="hidden" formControlName="currencyAmount">
+                        <input type="hidden" formControlName="exchangeRate">
+                        <span class="cls-exchangerate">{{'Amount in' | translate}} {{userCurrency}} : {{categoryForm.controls['currencyAmount'].value}}</span>
+                        <!-- <span class="cls-exchangerate">Amount in INR : {{exchangeAmount}}</span> -->
+                    </span>
+                    <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="currency" name="currency" id="currency"
+                        data-toggle="dropdown" (click)="searchDropdown('fn-currency-input')" placeholder="Select Currency"
+                        autocomplete="off" readonly [ngClass]="{'cls-border-error':(submitted && validation.currency.errors)}">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                            id="fn-currency-input" autocomplete="off" (keyup)="filterFunction('fn-currency-input','fn-currency-ul')">
+                            <ul id="fn-currency-ul" class="live-search-list">
+                                <li (click)="setFilterValue('currency','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let cur of currency" id="cur.currency_code" (click)="setFilterValue('currency',cur.currency_code)">
+                                    <a>{{cur.currency_name}} ({{cur.currency_code}})</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div  class="form-group col-sm-3 cls-maxwidth cls-mbl-width" [ngClass]="{'cls-noneditable' : (categoryForm.controls['category'].value) === 'Mileage'}">
+                    <label  for="amount">{{'Amount' | translate}}<span class="cls-mandatory">*</span></label>
+                    <input  type="number" (keyup)="amountCalculate()"  formControlName="amount" min ="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)" name="amount" id="amount" placeholder="{{'Enter Amount' | translate}}" autocomplete="off" class="cls-custom-input form-control "
+                     [ngClass]="{'cls-border-error':(submitted && validation.amount.errors)}">
+                </div>
+                <span class="cls-info" *ngIf="(categoryForm.controls['category'].value) === 'Mileage'"><em class="icon-16-info"></em>{{'Amount is Auto Update' | translate}}</span>
+                <span class="cls-dashed-line"></span>   
+                <!-- dynamic field -->
+                <ng-container *ngIf="(categoryForm.controls['category'].value) !== 'Mileage'" >
+                    <ng-container *ngFor="let val of expense[0]?.components[selectVal]?.components">
+                        <div  class="form-group col-sm-3 cls-maxwidth cls-search-select cls-auto-complete">
+                            <label  for="{{val.name}}">{{val.name | translate}} <span class="cls-mandatory" *ngIf = "val.required === 'true'">*</span></label>
+                            <ng-container *ngIf="val.type=== 'text'">
+                                <input *ngIf="val.class !== 'col-sm-2 cls-date'" class="cls-input datepicker" type="text"  formControlName="{{val.id}}" name="{{val.name}}"  id="{{val.name}}{{val.category}}" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                                [ngClass]="{'cls-border-error':(submitted && validation[val.id].errors)}">
+                                <!-- <input *ngIf="val.class === 'col-sm-2 cls-date'"  type="text"  name="{{val.name}}" formControlName="{{val.id}}" (focus)="chooseDate(val.id,val.category,i)"  id="{{val.id}}{{val.category}}" placeholder="{{'Select' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control " onkeypress="return false;" -->
+                                <input *ngIf="val.class === 'col-sm-2 cls-date'"  type="text"  name="{{val.name}}" formControlName="{{val.id}}" [value]="categoryForm.controls[val.id].value  | date: 'dd, MMM y'" (focus)="chooseDate(val.id)"  id="{{val.id}}{{val.category}}" placeholder="{{'Select' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control " onkeypress="return false;"
+                                [ngClass]="{'cls-border-error':(submitted && validation[val.id].errors)}">
+                                <ng-container *ngIf="val.class === 'col-sm-2 cls-date'">
+                                    <em class="fa fa-calendar-o cls-date-icon" ></em>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="val.type=== 'number'">
+                                <input  class="cls-input datepicker" type="number"  min ="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)"  formControlName="{{val.id}}" name="{{val.name}}"  id="{{val.name}}{{val.category}}" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && validation[val.id].errors)}">
+                            </ng-container>
+                            <ng-container *ngIf="val.type === 'location'">
+                                <input class="cls-input" onpaste="return false" type="text" (keypress)="stringValidation($event)" (focusout)="destinationPolicy(val.id)"  formControlName="{{val.id}}" name="{{val.name}}"  id="{{val.id}}" (keyup)="citySearch(val.id)" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                                [ngClass]="{'cls-border-error':(submitted && validation[val.id].errors)}">
+                            </ng-container>
+                            <ng-container *ngIf="val.type=== 'select'">
+                                <div class="cls-dropdown-container">
+                                    <em class="icon-3-dropdownarrow"></em>
+                                    <input class="form-control" type="text"  formControlName="{{val.id}}" name="{{val.name}}" id="{{val.name}}"
+                                    data-toggle="dropdown" (click)="searchDropdown('fn-input-'+val.id)" placeholder="{{'Select category' | translate}}"
+                                    autocomplete="off" readonly  [ngClass]="{'cls-border-error':(submitted && validation[val.id].errors)}">
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                                        id="fn-input-{{val.id}}" autocomplete="off" (keyup)="filterFunction('fn-input-'+val.id,'fn-ul-'+val.id)">
+                                        <ul id="fn-ul-{{val.id}}" class="live-search-list">
+                                            <li (click)="setFilterValue(val.id,'select')">
+                                                <a>select</a>
+                                            </li>
+                                            <li *ngFor="let opt of val.options"  (click)="setFilterValue(val.id,opt.value)">
+                                                <a>{{opt.value | translate}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <div class="form-group cls-container-policy col-sm-4">
+                    <div class="cls-policy-loader">
+                        <div *ngIf="policyLoader" class="cls-loading-stage">
+                            <span class="dot-pulse"></span>
+                            <span class="cls-scan-text">{{'Scanning for Policy Violation...' | translate}}</span>
+                        </div>
+                    </div>
+                    <span class="cls-policy-text" *ngIf="policyShow === 'N'">
+                        <span class="cls-policy-succ">
+                            <em class="icon-36-approved"></em>
+                        </span>
+                        {{'No Policy Violation Detected' | translate}}
+                    </span>
+                    <ng-container *ngIf="policyShow === 'Y'">
+                        <label class="cls-policy-alert-text">
+                            <em class="icon-46-policy cls-policy-alert"></em>
+                            {{'Amount should be less than' | translate}} {{policyData?.policyAmount}}
+                        </label>
+                        <input type="text" class="cls-custom-input form-control" formControlName="reason" id="reason" placeholder="{{'Enter Reason' | translate}}" autocomplete="off"
+                        [ngClass]="{'cls-border-error':(submitted && validation.reason.errors)}">
+                    </ng-container>
+                </div>
+            </div>
+            <div class="cls-button-container text-left mt-2">
+                <span class="cls-opacity">
+                    <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="openReport('Create')"><span>{{'Create New Report' | translate}}</span></button>
+                    <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="openReport('Existing')">{{'Add Existing Report' | translate}}</button>
+                    <span class="cls-save-btn">
+                        <button type="button" class="btn cls-btn-secondary cls-custom-btn cls-btn" (click)="saveExpense('save')"><span>{{'Save' | translate}}</span></button>
+                        <!-- <button type="button" class="btn cls-btn-secondary  cls-custom-btn" (click)="openImageCont()">Back</button> -->
+                    </span>
+                </span>
+                <span class="cls-mbl-background" *ngIf="createReport" (click)="closeReport('mobile')"></span>
+                <div class="cls-create-report-container" *ngIf="createReport">
+                    <span class="cls-mbl-line"></span>
+                    <span class="cls-shape" *ngIf="ExistingReport == true"></span>
+                    <span class="cls-shape1" *ngIf ="ExistingReport == false"></span>
+                    <div class="cls-inner-report mt-2">
+                        <span class="cls-top-close text-center" (click)="closeReport()">
+                            <em class="icon-32-reject"></em>
+                        </span>
+                        <span class="cls-report-title mb-2">{{reportTitle | translate}}</span>
+                        <!-- Add to existing report container starts -->
+                        <ng-container *ngIf="ExistingReport == true">
+                            <div class="cls-existing-report">
+                                <ng-container  *ngFor="let data of reportExist.content;let x =index;">
+                                    <span class="cls-reports-strip my-2 mr-2 cls-reportactive{{x}}"  (click)="getReportValue(x)">
+                                        {{data.reportname}}
+                                    </span>
+                                    <!-- <span class="cls-reports-strip my-2 mr-2" (click)="getReportValue(0)">Malaysia Meetups</span> -->
+                                </ng-container>
+                                <div class="text-center" *ngIf="reportExist.message.status === 'danger'">
+                                    <span class="cls-nodata"></span>
+                                    <span class="cls-nodata-text">{{'No Report Found' | translate}}</span>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <!-- Add to existing report container ends -->
+                        <!-- Create new report container starts -->
+                        <ng-container *ngIf ="ExistingReport == false">
+                            <div class="row">
+                                <ng-container *ngFor=" let field of reportFields">
+                                    <div  class="{{field.class}}">
+                                        <label  for="{{field.id}}">{{ field.name | translate}} <span class="cls-mandatory" *ngIf="field.required">*</span></label>
+                                        <ng-container *ngIf="field.type=== 'number'">
+                                            <input  type="number"  min ="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)"  formControlName="{{field.id}}" name="{{field.name}}"  id="{{field.id}}" placeholder="{{field.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control">
+                                        </ng-container>
+                                        <ng-container *ngIf="field.type=== 'date'">
+                                            <input  type="text" class="cls-input datepicker" [value]="categoryForm.controls[field.id].value  | date: 'dd, MMM y'" id="{{field.id}}" (focus)="chooseDate(field.id)" formControlName="{{field.id}}" name="{{field.id}}"  placeholder="{{ field.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control " onkeypress="return false;">
+                                            <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate(field.id)"></em>
+                                        </ng-container>
+                                        <ng-container *ngIf="field.type=== 'select'">
+                                          <select formControlName="{{field.id}}" id="{{field.id}}"  name="{{field.id}}"  class="form-control cls-custom-input">
+                                            <option value="" >{{'Select' | translate}}</option>
+                                            <ng-container *ngFor="let opt of field.options">
+                                                <option value="{{opt.id}}" >{{opt.value}}</option>
+                                              </ng-container>
+                                          </select>
+                                        </ng-container>
+                                        <ng-container *ngIf="field.type=== 'text'">
+                                            <input  type="{{field.type}}" formControlName="{{field.id}}" (keypress)="stringValidation($event)" onpaste="return false"  name="{{field.id}}" id="{{field.id}}" placeholder="{{ field.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control " >
+                                        </ng-container>
+                                        <!-- <span class="cls-tool-error fn-errorField" *ngIf="field.id ==='description'">Please Enter Details</span> -->
+                                    </div>
+                                </ng-container>
+                                <!-- <div  class="form-group col-sm-4">
+                                    <label  for="reportname">{{'Report Name' | translate}}<span class="cls-mandatory">*</span></label>
+                                    <input  type="text" formControlName="reportname" name="reportname" id="reportname" placeholder="{{'Enter Report Name' | translate}}" autocomplete="off" class="cls-custom-input form-control ">
+                                </div>
+                                <div  class="form-group col-sm-4">
+                                    <label  for="description">{{'Description' | translate}}<span class="cls-mandatory">*</span></label>
+                                    <input class="cls-custom-input form-control"  formControlName="description" name="description" id="description" placeholder="{{'Enter Description' | translate}}" autocomplete="off" >
+                                </div> -->
+                            </div>
+                        </ng-container>
+                        <!-- Create new report container ends -->
+                        <div class="mt-2 text-right">
+                            <span class="cls-desktop-close-btn">
+                                <button type="button" class="btn cls-btn-secondary  cls-custom-btn" (click)="closeReport()">
+                                    <span>{{'Close' | translate}}</span>
+                                </button>
+                            </span>
+                            <span class="d-none cls-mbl-close-btn">
+                                <button type="button" class="btn cls-btn-secondary  cls-custom-btn" (click)="closeReport('mobile')">
+                                    <span>{{'Close' | translate}}</span>
+                                </button>
+                            </span>
+                            <button type="button" *ngIf="ExistingReport == true" class="btn cls-btn-primary cls-custom-btn" (click)="saveExpense('existing')">
+                                <span>{{'Save And Select' | translate}}</span>
+                            </button>
+                            <button type="button" *ngIf="ExistingReport == false" class="btn cls-btn-primary cls-custom-btn" (click)="saveExpense('new')">
+                                <span>{{'Save And Select' | translate}}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+         <div class="text-right cls-mbl-existing d-none">
+                <span class="cls-mbl-btn" (click)="openReport('Existing')">{{'Add Existing Report' | translate}}</span>
+         </div>
+         <div class="cls-mbl-footer d-none">
+            <div class="cls-mbl-foot text-right">
+                <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="openReport('Create')"><span>{{'Create New Report' | translate}}</span></button>
+                <span class="cls-save-btn">
+                    <button type="button" class="btn cls-btn-primary cls-custom-btn cls-btn" (click)="saveExpense('save')"><span>{{'Save' | translate}}</span></button>
+                </span>
+            </div>
+         </div>
+        </div>
+        <!-- mobile header starts-->
+        <div class="cls-mobile-header d-none">
+            <span class="cls-mobile-title">
+                <em class="icon-39-arrow" (click)="openImageCont()"></em>
+                {{'Edit Expense' | translate}}
+            </span>
+            <span class="cls-mobile-icon-section">
+                <span (click)="triggerAction('theme')">
+                    <em class="icon-37-theme"></em>
+                </span>
+                <span (click)="triggerAction('notify')">
+                    <em data-feather="bell" ></em>
+                </span>
+            </span>
+        </div>
+        <!-- mobile header ends-->
+    </div>
+</form>
+<!-- main container ends -->

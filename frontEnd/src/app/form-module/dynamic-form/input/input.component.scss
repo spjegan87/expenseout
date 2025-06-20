@@ -1,0 +1,94 @@
+.cls-password{
+    position: relative;
+    width: 100%;
+}
+.cls-pass{
+  position: relative;
+  // width: 68%;
+}
+em{
+    position: absolute;
+    cursor: pointer;
+    top: 8px;
+    right:18px;
+    font-size: 18px;
+    color: #000;
+    animation: .7s loginicon linear;
+    animation-delay: .7s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+.cls-text{
+    animation: .7s input linear;
+    animation-delay: .3s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+.cls-password{
+    animation: .7s input linear;
+    animation-delay: .4s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    margin: 0;
+}
+@keyframes input {
+    0% {
+        -webkit-transform: translateX(250%);
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: translateX(0%);
+        opacity: 1;
+      }
+  }
+  @keyframes loginicon {
+    0% {
+        -webkit-transform: translateX(450%);
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: translateX(0%);
+        opacity: 1;
+      }
+  }
+@media only screen and (max-width: 480px) {
+  .cls-text,.cls-password{
+    width: 95%;
+    animation: unset !important;
+    opacity: 1 !important;
+  }
+  em{
+    animation: unset !important;
+    right: 10%;
+    opacity: 1 !important;
+  }
+  .cls-pass{
+    width: 100%;
+  }
+}
+@media (min-width: 481px) and (max-width: 766px){
+  .cls-text,.cls-password{
+    width: 95%;
+    animation: unset !important;
+    opacity: 1 !important;
+  }
+  em{
+    animation: unset !important;
+    right: 10%;
+    opacity: 1 !important;
+  }
+  .cls-pass{
+    width: 100%;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px){
+  input{
+    width:100%;
+    em{
+      right: 10%;
+    }
+  }
+  .cls-pass{
+    width: 100%;
+  }
+}

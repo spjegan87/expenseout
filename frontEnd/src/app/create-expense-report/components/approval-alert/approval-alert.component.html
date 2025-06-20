@@ -1,0 +1,55 @@
+<!-- Author: Padma Priya CK -->
+<div class="cls-history-container">
+    <span id="fn-background" class="cls-background" (click)="closeModal(false)"></span>
+    <div class="cls-main-popup" [ngClass]="toClose ? 'close-ani' : ''">
+        <div class="cls-popup">
+            <div class="cls-header">
+                <span class="cls-title text-left">
+                    {{ approvalAlertHead | translate}}
+                </span>
+                <span class="cls-top-close text-center" (click)="closeModal(false)">
+                    <em class="icon-32-reject"></em>
+                </span> 
+            </div>
+            <div class="cls-history-data">
+               <div class="cls-inner-list">
+                    <audio controls class="sr-only">
+                        <source src="../../../../assets/audio/success.mp3" type="audio/mp3">
+                    </audio>
+                   <!-- <em class="icon-19-successfully"></em> -->
+                   <span id="bodymovin" class="lotty-body"></span>
+                    <!-- <span class="cls-alert-img"></span> -->
+                    <span  class="cls-wavearrow">
+                        <!-- <a href="javascript:;" title="send for approval"> -->
+                            <span></span><span></span><span></span>
+                            <!-- Scroll</a> -->
+                      </span>
+                    <!-- <span class="cls-arrow-icon">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <em class="icon-3-dropdownarrow"></em>
+                        <em class="icon-3-dropdownarrow"></em>
+                    </span> -->
+                    <span class="cls-list-profile">
+                        <span class="cls-profile"></span>
+                        <span class="cls-name">Approver</span>
+                        <!-- <em class="icon-16-info"></em> -->
+                        <!-- <span class="cls-name">{{approvalAlertInput.users[0].name}} <em class="icon-16-info"></em></span> -->
+                        <!-- <span class="cls-type">Approver</span> -->
+                    </span>
+               </div>
+               <div class="cls-alert-text mt-2 d-none">
+                    <span class="cls-txt-light">This expense report has been sent to</span>
+                    <ng-container *ngFor="let item of approvalAlertInput.users.details; let last = last;">
+                        <span class="cls-txt-strong">{{item.name}}</span>
+                        <span class="cls-txt-strong">({{item.email}})</span>
+                        <span *ngIf="!last">,</span>
+                    </ng-container>
+                    <span class="cls-txt-light">for {{approvalAlertInput.name}}.</span>
+               </div>
+            </div>
+        </div>
+        <div class="cls-btn text-right">
+            <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="closeModal(false)">{{'Ok' | translate}}</button>
+        </div>
+    </div>
+</div> 

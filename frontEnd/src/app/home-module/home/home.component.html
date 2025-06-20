@@ -1,0 +1,463 @@
+<!-- begin::main -->
+<div class="layout-wrapper">
+  <!-- begin::header -->
+  <div class="header d-print-none">
+    <div class="header-left">
+      <div class="navigation-toggler">
+        <a href="javascript:;" data-action="navigation-toggler">
+          <em class="fa fa-navicon font-size-25 cls-xsfnt18"></em>
+        </a>
+      </div>
+      <div class="header-logo">
+        <a href="index.html" title="ExpenseOut">
+          <ng-container *ngIf="logoPath === '' || logoPath === null">
+            <img class="logo" src="../../assets/images/expenseout_logo.svg" alt="logo" />
+            <img class="logo-light" src="../../assets/images/expenseout_logo.svg" alt="light logo" />
+          </ng-container>
+          <ng-container *ngIf="logoPath !== '' && logoPath !== null">
+            <img class="logo" [attr.src]="logoPath" alt="logo" />
+            <img class="logo-light" [attr.src]="logoPath" alt="light logo" />
+          </ng-container>
+        </a>
+      </div>
+      <a [href]="redirectPath" title="Back to Travel Booking Portal" class="cls-sso-logout"
+        *ngIf="appService.SSODetails !== ''">
+        <em class="cls-sso-icon icon-52-sso"></em>
+        <em class="cls-curve-arrow icon-53-curveArrow"></em>
+        <span class="m-0">
+          {{ "Back to Travel Booking Portal" | translate }}
+        </span>
+      </a>
+    </div>
+    <div class="header-body">
+      <div class="header-body-left d-none d-sm-block">
+        <div class="page-title"></div>
+      </div>
+      <div class="header-body-right">
+        <ul class="navbar-nav">
+          <!-- Admin Type Selection Starts -->
+          <li class="nav-item cls-language-position" *ngIf="userType == 'Corporate Admin'">
+            <ng-container *ngIf="isAdminView === false">
+              <span class="cls-user-admin" (click)="typeOfUser('Admin','admin')">
+                <em class="fa fa-user" aria-hidden="true"></em> Switch to admin view
+              </span>
+              <span class="cls-user-mobile-admin" (click)="typeOfUser('Admin','admin')">
+                <em class="fa fa-retweet" aria-hidden="true"></em> Admin
+              </span>
+            </ng-container>
+            <ng-container *ngIf="isAdminView === true">
+              <span class="cls-user-admin" (click)="typeOfUser('User','user')">
+                <em class="fa fa-users" aria-hidden="true"></em> Switch to user view
+              </span>
+              <span class="cls-user-mobile-admin" (click)="typeOfUser('User','user')">
+                <em class="fa fa-retweet" aria-hidden="true"></em> User
+              </span>
+            </ng-container>
+            <!-- <div class="cls-switch">
+              <label class="switch-label-1" (click)="typeOfUser('Admin','admin')" for="">
+                <span class="switch-span-1">Admin</span>
+              </label>
+              <label class="switch-label-2" (click)="typeOfUser('User','user')" for="">
+                <span class="switch-span-2 cls-text-color">User</span>
+              </label>
+            </div> -->
+            <!-- <a href="javascript:;" title="{{ 'User Type' | translate }}" class="nav-link" data-toggle="dropdown">
+            <span class="cls-text-desktop">{{ adminUserType.user | translate }}</span>   
+              <em class="cls-arrow cls-icon-desktop" data-feather="chevron-down"> </em>
+              <img src="../../../assets/images/myprofile.svg" alt="User" class="cls-user-mobile">
+            </a>
+            <div class="dropdown-menu cls-usertype-mob cls-langactive">  
+              <a href="javascript:;" class="dropdown-item cls-admin" (click)="typeOfUser('Admin','admin')">
+                Admin
+              </a>
+              <a href="javascript:;" class="dropdown-item cls-user" (click)="typeOfUser('User','user')">
+                User
+              </a>
+            </div> -->
+          </li>
+          <!-- Admin Type Selection  Ends -->
+          <li class="nav-item cls-eligibility" *ngIf="eligibilityCreteriaStatus === 'Y' && elgViolate !=='danger' ">
+            <a href="javascript:;" title="My Eligibility" class="nav-link" (click)="openToggle()">
+              <em class="icon-58-eligiblity"></em> <span class="cls-my-eligibility">{{ "My Eligibility" | translate
+                }}</span>
+            </a>
+          </li>
+
+          <li class="nav-item cls-language-position">
+            <a href="javascript:;" title="{{ 'Language' | translate }}" class="nav-link" data-toggle="dropdown">
+              <!-- <img width="18" src="../../assets/media/image/flags/262-united-kingdom.png"
+                        alt="flag"
+                        class="mr-2 rounded" title="United Kingdom"> -->
+              <!-- <span class="mr-2 rounded cls-lang"> {{currentLanguage.code}}</span> -->
+            <span class="cls-lan-desktop">  {{ currentLanguage.language | translate }}</span>
+              <em class="cls-arrow cls-lan-desktop" data-feather="chevron-down"> </em>
+              <span class="cls-lan-mobile"><i class="fa fa-language" aria-hidden="true"></i></span>
+            </a>
+            <div class="dropdown-menu cls-lang-mob cls-langactive">
+              <!-- <em class="cls-arrow" data-feather="chevron-down"></em> -->
+              <a href="javascript:;" class="dropdown-item cls-de" (click)="language('de', 'Tamil')">
+                <!-- <img width="18" src="../../assets/media/image/flags/003-tanzania.png"
+                              class="mr-2 rounded"
+                              alt="flag"> -->
+                <!-- <span class="mr-2 rounded cls-lang">TN</span> -->
+                தமிழ்
+              </a>
+              <a href="javascript:;" class="dropdown-item cls-en" (click)="language('en', 'English')">
+                <!-- <img width="18" src="../../assets/media/image/flags/003-tanzania.png"
+                                 class="mr-2 rounded"
+                                 alt="flag"> -->
+                <!-- <span class="mr-2 rounded cls-lang">EN</span> -->
+                English
+              </a>
+              <a href="javascript:;" class="dropdown-item cls-cn" (click)="language('cn', 'Chinese')">
+                <!-- <img width="18" src="../../assets/media/image/flags/261-china.png"
+                                    class="mr-2 rounded"
+                                    alt="flag"> China cn -->
+                <!-- <span class="mr-2 rounded cls-lang">CN</span> -->
+                中文
+              </a>
+              <a href="javascript:;" class="dropdown-item cls-hi" (click)="language('hi', 'Hindi')">
+                <!-- <img width="18" src="../../assets/media/image/flags/003-tanzania.png"
+                                    class="mr-2 rounded"
+                                    alt="flag"> -->
+                <!-- <span class="mr-2 rounded cls-lang">HI</span> -->
+                हिन्दी
+              </a>
+            </div>
+          </li>
+          <!-- begin::header fullscreen -->
+          <li class="nav-item dropdown">
+            <a href="javascript:;" class="nav-link cls-fullscreen cls-mob-maximize cls-icon-hover"
+              title="{{ 'Fullscreen Mode' | translate }}" data-toggle="fullscreen">
+              <em class="maximize" data-feather="maximize"></em>
+              <em class="minimize" data-feather="minimize"></em>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="javascript:;" title="{{ 'Theme Settings' | translate }}"
+              class="nav-link cls-mob-theme cls-icon-hover" (click)="openTheme()">
+              <em class="icon-37-theme"></em>
+              <!-- <em class="cls-arrow" data-feather="chevron-down">
+                        </em> -->
+            </a>
+          </li>
+          <!-- end::header fullscreen -->
+          <!-- begin::welcome guide -->
+          <!-- <li class="nav-item dropdown">
+            <a href="javascript:;" class="nav-link nav-link-notify cls-mob-notify cls-icon-hover cls-bell-notify dropdown"
+              title="{{ 'Guide' | translate }}" (click)="welcomeGuideFlag()">
+              <em data-feather="help-circle"></em>
+            </a>
+          </li> -->
+          <!-- end::welcome guide -->
+          <!-- begin::header notification dropdown -->
+          <!-- user notification starts -->
+          <ng-container>
+            <li class="nav-item cls-language-position" [ngClass]="{ 'd-none': status === true }">
+              <a href="javascript:;"
+                class="nav-link nav-link-notify cls-mob-notify cls-icon-hover cls-bell-notify dropdown"
+                (click)="openNotification()" title="{{ 'Notifications' | translate }}" data-toggle="dropdown">
+                <em data-feather="bell"></em>
+                <span *ngIf="appService.notification > 0" class="cls-notify-unread">{{ appService.notification }}</span>
+              </a>
+              <div class="dropdown-menu cls-notification-bar" *ngIf="showNotify">
+                <div class="cls-bar-notifi">
+                  <div *ngIf="notification?.content?.count > 0" class="cls-read" (click)="markAsRead()">
+                    {{ "Mark all as Read" | translate }}
+                  </div>
+                  <ng-container *ngIf="notification?.content?.length === 0">
+                    <span class="cls-nodata-empty"> </span>
+                    <span class="text-center d-block">
+                      {{ notification?.message?.message }}
+                    </span>
+                  </ng-container>
+                  <ng-container *ngIf="notification?.content?.notification">
+                    <ng-container *ngFor="
+                        let item of notification?.content?.notification;
+                        let i = index;
+                        let last = last
+                      ">
+                      <div class="cls-usr-bar w-100 m-0" [ngClass]="{ 'cls-bdr': last === true }">
+                        <span class="cls-user-photo">
+                          <em class="icon-19-successfully"></em>
+                        </span>
+                        <span class="cls-notify-content">
+                          <span class="cls-usr-location" [ngClass]="{ 'cls-text-bold': item.status === 'N' }" (click)="
+                              viewReport(
+                                item.details.userRedirect,
+                                item.details.reportDetails,
+                                item.notificationId
+                              )
+                            ">{{ item.content }}</span>
+                          <span class="cls-usr-date" [ngClass]="{ 'cls-text-bold': item.status === 'N' }">
+                            {{
+                            item.date + " " + item.time
+                            | date: " dd-MMM-y | hh:mm a"
+                            }}</span>
+                        </span>
+                      </div>
+                      <!-- <span class="cls-btm-bdr" *ngIf="!last"></span> -->
+                    </ng-container>
+                  </ng-container>
+                  <!-- <div *ngIf="notification.content.length === 0" class="cls-nodata-empty"></div> -->
+                </div>
+              </div>
+            </li>
+          </ng-container>
+          <!-- user notification ends -->
+          <!-- begin::user menu -->
+          <li class="nav-item dropdown d-none d-sm-block cls-profilehover">
+            <a href="javascript:;" class="nav-link cls-user-box" data-toggle="dropdown"
+              title="{{ userName | translate }}">
+              <span class="mr-2 d-sm-inline d-none cls-capitalize">{{
+                userName
+                }}</span>
+              <!-- <figure class="avatar avatar-sm">
+                           <img src="../../../assets/images/default_profile.svg" class="rounded-circle"
+                              alt="avatar"> -->
+              <span class="cls-first">{{ userName.charAt(0) }}</span>
+              <!-- </figure> -->
+            </a>
+            <div class="dropdown-menu cls-user-profile pt-4 text-center">
+              <!-- <span class="cls-user-img">
+                           <img src="../../../assets/images/staticProfileImage/profile_four.svg" alt="profileimage">
+                        </span> -->
+              <span class="cls-name-head">{{ userName.charAt(0) }}</span>
+              <div class="cls-user-name-bar text-center mt-2">
+                <span class="cls-user-name">{{ userName }}</span>
+                <span class="cls-user-type ml-2">
+                  {{ userType }}
+                </span>
+              </div>
+              <div class="cls-user-mail-bar mt-2" *ngIf="emailId !== '' && emailId !== undefined">
+                <div class="mb-2">
+                  <span class="cls-mail">
+                    <em class="fa fa-envelope"></em>
+                  </span>
+                  <span class="cls-user-mail">{{ emailId }}</span>
+                </div>
+                <ng-container *ngIf="lastLoginData">
+                  <span class="cls-lastlogin">last login : </span>
+                  <span class="cls-lastlogin-data">{{lastLoginData | date: "dd-MMM-y | h:mm a"}}</span>
+                </ng-container>
+              </div>
+              <div class="cls-profile text-left my-3" (click)="showProfile()">
+                <span class="cls-inner-prof">
+                  <!-- <em class="icon-16-info"></em>  -->
+                  <img src="../../../assets/images/myprofile.svg" class="cls-myprofile" alt="myprofile" />
+                  {{ "My Profile" | translate }}
+                </span>
+              </div>
+
+              <div class="cls-logout">
+                <a class="logout text-center" href="javascript:;" title="Logout" (click)="logOut()">
+                  <em class="icon-48-circle-line-arrow-right"></em>{{ "Log Out" | translate }}
+                </a>
+                <!-- <span class="cls-lo" (click)="logOut()">
+                              <a href="javascript:;" title="{{ 'Log Out' | translate}}">
+                                 <em data-feather="log-out" ></em>{{ 'Log Out' | translate}}
+                              </a>
+                           </span> -->
+              </div>
+            </div>
+          </li>
+          <!-- end::user menu -->
+        </ul>
+        <!-- begin::mobile header toggler -->
+        <!-- <ul class="navbar-nav d-flex align-items-center">
+                  <li class="nav-item header-toggler">
+                     <a href="javascript:;" class="nav-link">
+                     <em data-feather="arrow-down"></em>
+                     </a>
+                  </li>
+               </ul> -->
+        <!-- end::mobile header toggler -->
+      </div>
+    </div>
+  </div>
+
+  <div class="cls-eligibility-container">
+    <div class="cls-eligibility-wrapper" id="fn-eligibility-wrapper">
+      <div class="cls-eligibility-header">
+        <span class="cls-mbl-line"></span>
+        <span class="cls-eligibility-heading">{{"Allowance Eligibility Creteria" | translate}}</span>
+        <span class="cls-close-theme" (click)="closeToggle()">
+          <em class="icon-32-reject"></em>
+        </span>
+      </div>
+      <div class="col-md-12 d-flex cls-eligibility-tab">
+        <div class="col-md-3 cls-eligibility-menu">
+          <ul class="nav nav-tabs tabs-left sideways">
+            <li class="cls-eligible" *ngFor="let val of eligibilityCreteria[0] | keyvalue;let i = index">
+              <a class="cls-eligible-key{{i}} cls-eligible-a" href="#home0" title="{{val.key}}" data-toggle="tab"
+                (click)="changeLevel(val.key,i)">
+                {{val.key}} <em class="fa fa-caret-right d-none" aria-hidden="true"></em>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-9 tab-content">
+          <div class="tab-pane active" id="home0">
+            <ng-container *ngFor="let val of eligibilityCreteriaValue | keyvalue;let i = index">
+              <span class="cls-inner-heading">{{val.key}}</span>
+              <ul *ngFor="let city of val.value | keyvalue">
+                <li class="cls-cityList" *ngIf="city.value">
+                  <span class="cls-hotel" *ngIf="val.key === 'Hotel'">{{city.key}}</span>
+                  <ng-container *ngIf="val.key === 'cityList'">
+                    <span class="cls-text">
+                      <em class="cls-tick icon-36-approved"></em>{{city.value.city}}
+                    </span>
+                  </ng-container>
+                  <ng-container *ngIf="val.key != 'cityList'">
+                    <em class="cls-tick icon-36-approved"></em> {{ city.value }}
+                  </ng-container>
+                </li>
+              </ul>
+            </ng-container>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <span id="fn-eligibility-background" class="cls-background d-none" (click)="closeToggle()"></span>
+  </div>
+  <div class="cls-theme-container">
+    <div class="cls-theme-box">
+      <div class="cls-theme-head px-3 mt-2">
+        <span class="cls-mbl-line"></span>
+        <span class="cls-theme-heading"><em class="icon-37-theme"></em>
+          {{ "Themes Settings" | translate }}</span>
+        <span class="icon-32-reject cls-close-theme" (click)="closeTheme()"></span>
+      </div>
+      <div class="cls-light-dark">
+        <span class="cls-inner-heading">{{ "Theme" | translate }}</span>
+        <a href="javascript:;" class="dropdown-item cls-light-img" (click)="theme('light')"
+          [ngClass]="{ active: themeColour === 'light' }">
+          <img src="../../../assets/images/light-theme.svg" alt="" />
+          <em class="cls-tick icon-36-approved"></em>
+          <span class="cls-text">{{ "Light" | translate }}</span>
+        </a>
+        <a href="javascript:;" class="dropdown-item cls-dark-img" (click)="theme('dark')"
+          [ngClass]="{ active: themeColour === 'dark' }">
+          <img src="../../../assets/images/dark-theme.svg" alt="" />
+          <em class="cls-tick icon-36-approved"></em>
+          <span class="cls-text">{{ "Dark" | translate }}</span>
+        </a>
+      </div>
+      <div class="cls-menu-bg" *ngIf="themeColour === 'light'">
+        <span class="cls-menu-title">{{"Side Menu bg Color" | translate}}</span>
+        <a href="javascript:;" class="fn-bg-active cls-blue active" (click)="changeMenubg('blue', 'blue')">
+          <em class="cls-tick icon-36-approved"></em>
+        </a>
+        <a href="javascript:;" class="fn-bg-active cls-normal" (click)="changeMenubg('white', 'normal')">
+          <em class="cls-tick icon-36-approved"></em>
+        </a>
+        <a href="javascript:;" class="fn-bg-active cls-lite-dark" (click)="changeMenubg('dark', 'lite-dark')">
+          <em class="cls-tick icon-36-approved"></em>
+        </a>
+      </div>
+      <div class="cls-notify-bar">
+        <span class="cls-notify-title">{{ "Notification" | translate }}</span>
+        <span class="cls-status-switch">
+          <label class="cls-switches">
+            <input type="checkbox" name="showpolicy" (click)="changeStatus()" />
+            <em class="cls-switch-circle cls-round" [ngClass]="{ 'fn-switch-active': status === false }"></em>
+          </label>
+        </span>
+      </div>
+      <!-- <span class="cls-line"></span> -->
+      <!-- <em class="cls-arrow" data-feather="chevron-down"></em> -->
+      <!-- <a href="javascript:;" class="dropdown-item cls-dark" (click)="theme('dark')">{{ 'Dark' | translate}}</a>
+         <a href="javascript:;" class="dropdown-item cls-light" (click)="theme('light')">{{ 'Light' | translate}}</a> -->
+    </div>
+    <span id="fn-theme-background" class="cls-background d-none" (click)="closeTheme()"></span>
+  </div>
+  <!-- end::header -->
+  <div class="content-wrapper">
+    <!-- begin::navigation -->
+    <div class="navigation">
+      <div class="navigation-menu-tab fn-background">
+        <ul>
+          <li *ngFor="let menu of menus; let mI = index" [attr.data-index]="mI">
+            <a href="javascript:;" class="cls-nav-close" data-toggle="tooltip" (click)="closeNavigation()"
+              data-placement="right" title="{{ menu.menu_name | translate }}" [attr.data-nav-target]="'#' + menu.icon"
+              [ngClass]="{ active: activeRoute === menu.action_name }" routerLink="/e83249bd3ba79932e16fb1fb5100dafade9954c2/{{
+                menu.action_name
+              }}">
+              <!-- <em [attr.data-feather]="menu.icon"></em> -->
+              <img src="../../../assets/images/menu/{{ menu.image }}" alt="{{ menu.menu_name | translate }}" />
+              <span class="cls-name">{{ menu.menu_name | translate }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="navigation-menu-body">
+        <div class="navigation-menu-group">
+          <div *ngFor="let menu of menus; let sI = index" [attr.data-index]="sI" [routerLinkActive]="['open']"
+            id="{{ menu.icon }}">
+            <ul>
+              <li class="navigation-divider cls-highlight d-flex align-items-center">
+                <img class="mr-2" src="../../../assets/images/menu/{{ menu.image }}" alt="{{ menu.menu_name }}" />
+                {{ menu.menu_name | translate }}
+              </li>
+              <li *ngFor="let subMenu of menu.submenu.menu; let sII = index" [attr.data-index]="sII">
+                <a href="javascript:;" [routerLinkActive]="['active']" routerLink="/e83249bd3ba79932e16fb1fb5100dafade9954c2/{{
+                    subMenu.action_name
+                  }}">
+                  {{ subMenu.menu_name | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end::navigation -->
+    <div class="content-body">
+      <div class="content" [@fadeAnimation]="getRouterOutletState(o)">
+        <router-outlet #o="outlet"></router-outlet>
+      </div>
+      <!-- <div class="content">
+               <router-outlet></router-outlet>
+           </div> -->
+      <!-- begin::footer -->
+      <!-- <app-footer footerType='home'></app-footer> -->
+      <!-- end::footer -->
+      <ng-container *ngIf="currentURL[2] !='B5241A3978E7463B6D5B40C5F6E1EB65A04FC001'">
+        <div class="cls-mobile-navbar">
+          <ul class="cls-mobile-ul">
+            <li *ngFor="let item of mobileMenu.new; let i = index" class="cls-footmenu{{ i }} cls-mobfoot"
+              [ngClass]="{ active: activeRoute === item.action_name }" (click)="createReport(item.name)"
+              [routerLinkActive]="['active']" routerLink="/e83249bd3ba79932e16fb1fb5100dafade9954c2/{{
+                item?.action_name
+              }}">
+              <em class="{{ item.icon }}"></em>
+              <!-- <span *ngIf="item.profile" class="cls-mobile-myprofile" (click)="showProfile()">{{userName.charAt(0)}}</span> -->
+              <a href="javascript:;" title="{{ item?.name }}">{{ item.name | translate}}</a>
+            </li>
+            <li class="cls-mobfoot" [ngClass]="{
+                active: activeRoute === 'E882526C723449B470AEC88E24B10412341A6881'
+              }">
+              <span class="cls-mobile-myprofile" (click)="showProfile()">{{
+                userName.charAt(0)
+                }}</span>
+              <a href="javascript:;" title="My Profile">{{
+                "My Profile" | translate
+                }}</a>
+            </li>
+          </ul>
+          <span class="cls-circle">
+            <span class="cls-circle1">
+              <input type="file"  accept=".jpg,.jpeg,.png,.pdf" (change)="onSelectFile($event)" 
+                class="cls-opencamera" />
+              <em class="fa fa-camera" aria-hidden="true"></em>
+              <!-- <input type="file" accept="image/*" capture="environment"> -->
+            </span>
+          </span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<app-welcome-guide *ngIf="showGuide" (showGuide)="closeModel($event)"></app-welcome-guide>
+<!-- end::main -->

@@ -1,0 +1,240 @@
+// *************************************************
+
+//  * Component Name------- Report Index
+//  * HTML & CSS -------------- Naveen.s
+//  * Created date -------------- 26-Feb-2020
+//  * Powered by --------------- Infiniti software solutions
+
+// *************************************************
+@import '../../../assets/scss/variable.scss';
+.cls-main-container{
+    input{
+        font-size: 14px;
+    }
+    .icon-3-checkbox-on{
+        color: $PRIMARYCOLOR;
+    }
+    .cls-mandatory{
+        color: $ERROR;
+    }
+.cls-heading{
+    display: block;
+    font: 20px "ProximaSemiBold";
+    text-transform: capitalize;
+}
+.cls-disble{
+    pointer-events: none;
+    em{
+        opacity: 0.6;
+    }
+}
+.cls-toggle-container{
+    .cls-toggle{
+        border-top-left-radius: unset;
+        border-bottom-left-radius: unset;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+}
+.cls-create-text{
+    font-size: 16px;
+    color: $PRIMARYCOLOR;  
+    text-align: right;
+    cursor: pointer;
+    font-weight: 600;
+}
+.cls-save-btn{
+    text-align: right;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: $PRIMARYCOLOR;
+    cursor: pointer;
+}
+.cls-btn-primary{
+    font-size: 18px;
+    padding: 10px 30px;
+}
+.cls-bg{
+    background: $WHITE;
+    border-radius: 5px;
+    min-height:350px;
+    .cls-custom-width{
+        max-width: 20%;
+    }
+    .cls-maxwidth{
+        min-width: 100% !important;
+    }
+    .cls-width{
+        min-width: 80%;
+        .cls-header{
+            font:16px "ProximaSemiBold";
+            margin: 10px 0px;
+            display: block;
+            color: $BLACK;
+        }
+        .cls-inner-head{
+            display: inline-block;
+            color: $BLACK;
+            font:14px "ProximaSemiBold";
+            margin: 5px 0; 
+        }
+        .cls-field-list{
+            background: $CHECKBOXBG;
+            padding: 20px;
+            border-radius: 5px;
+            .cls-text{
+                color: $LIGHTTEXT;
+                font-size: 16px; 
+            }
+        }
+        .cls-inner-content{
+            position: relative;
+        }
+        .cls-submit{
+            background: $PRIMARYCOLOR;
+            color: $WHITE;
+            padding: 0px 25px;
+            font-size: 16px;
+            box-shadow: unset;
+            transition: 0.5s;
+            &:hover{
+                // box-shadow: 0px 4px 10px 1px $BGLIGHTER
+                box-shadow: inset 10em 0 0 0 $WHITE;
+                color: $PRIMARYCOLOR;
+            }
+        }
+        .cls-tab{
+            margin: 10px 0px;
+            border-bottom: 1px solid $BGLIGHTER;
+            .cls-disable{
+                pointer-events: none;
+                opacity: 0.6;
+            }
+            .cls-menu{
+                list-style: none;
+                font-size: 17px;
+                color: $FORMTEXT;
+                padding: 5px 10px;
+                display: inline-block;
+                margin-right: 20px;
+                margin-right: 50px;
+                cursor: pointer;
+                &.cls-active{
+                    opacity: 1;
+                    border-bottom: 2px solid $PRIMARYCOLOR;
+                    color: $BLACK;
+                    pointer-events: auto;
+                    font-size: 17px;
+                    font-weight: 600;
+                    .cls-count{
+                        background: $PRIMARYCOLOR;
+                        color: $WHITE;
+                    }
+                }
+                .cls-count{
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    border: 1px solid;
+                    border-radius: 50%;
+                    text-align: center;
+                    line-height: 18px;
+                    margin-right: 5px;
+                    font-size: 14px;
+                }
+            }
+        }
+        .cls-group-check{
+            margin: 30px 0px 15px;
+            .cls-head{
+                font: 16px;
+                color:$BLACK;
+                font-weight: 600;
+            }
+            .cls-checkall{
+                display: inline-block;
+                color:$BLACK;
+                cursor: pointer;
+                float: right;
+            }
+        }
+        .cls-icon{
+            margin-right: 10px;
+            background: $WHITE;
+        }
+        .cls-background{
+            background: $GRIDBDR;
+            padding: 20px;
+            border-radius: 5px;
+            .cls-label{
+                font-size: 16px;
+                display: inline-block;
+                padding: 10px 15px 10px;
+                color:$BLACK;
+                cursor: pointer;
+            }
+        }
+    }
+    .cls-table{
+        width: 100%;
+        padding: 0px 25px;
+    }
+}
+
+.cls-date{
+    position: relative;
+    .cls-date-icon{
+      position: absolute;
+      right: 22px;
+      top: 60%;
+      color: $PRIMARYCOLOR;
+      cursor: pointer;
+    }
+  }
+
+// popup
+.cls-modal{
+    background: unset;
+    max-height: 100%;
+    .modal-dialog{
+        top: 20%;
+        .modal-content{
+            background: $WHITE;
+            .cls-modal-header{
+                padding: 15px 0px 5px 0px;
+                margin: 0px 15px;
+                .cls-modal-title{
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+                .cls-close{
+                    padding-bottom: 0px;
+                    span{
+                        color:$ERROR;
+                    }
+                    &:focus{
+                        outline: none;
+                    }
+                }
+            }
+            .cls-position{
+                position: relative;
+                padding: 0px 0px 20px;
+            }
+            .cls-description{
+                label{
+                    font-size: 15px;
+                    display: inline-block;
+                }
+                // .form-control{
+                //     background: $WHITE;
+                //     &:focus{
+                //         border-color: $LIGHTGRAY;
+                //         box-shadow: none;
+                //     }
+                // }
+            }
+        }
+    }
+}
+}

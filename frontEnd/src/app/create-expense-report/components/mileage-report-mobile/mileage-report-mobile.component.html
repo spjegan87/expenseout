@@ -1,0 +1,300 @@
+<form [formGroup]="mileageGroup" class="cls-mobileMileage d-none" id="mobileMileage">
+    <div class="cls-fieldchange mb-3">
+        <div class="cls-overflow">
+            <!-- Expence Details starts -->
+            <div class="cls-main ">
+                <span class="cls-container-close text-center" (click)="formClose()">
+					<em class="icon-32-reject"></em>
+				</span>
+                <span class="cls-bg " [ngStyle]="{'background':'rgb(140, 61, 250)'}"></span>
+                <div>
+                    <!-- Title -->
+                    <span class="cls-mode-text">{{'Mileage' | translate}}</span>
+                    <!-- <span class="float-right cls-error">{{'Incomplete' | translate}}</span> -->
+                    <div class="cls-clonefield row m-0" [ngClass]="{'cls-disableact': !finishFirstHalf}">
+                        <div class="form-group radio-group col-sm-6 mt-3 mb-2 px-0">
+                            <label for="reimbursable cls-radio-on" class="cls-radio  mr-3">
+								<input type="radio" value="Y" id="reimbursable" name="reimbursable" checked
+									formControlName="reimbursable">
+								<em aria-hidden="true" class="icon-7-radio-on"></em>
+								{{'Reimbursable' | translate}}
+							</label>
+                            <label for="Nonreimbursable" class="cls-radio mr-3">
+								<input type="radio" value="N" id="Nonreimbursable" name="reimbursable"
+									formControlName="reimbursable">
+								<em aria-hidden="true" class="icon-6-radio-off"></em>
+								{{'Non Reimbursable' | translate}}
+							</label>
+                        </div>
+                        <ng-container *ngIf="!finishTrip">
+                            <div class="form-group col-sm-6 cls-date  px-0">
+                                <label for="expenseDate">{{'Expense Date' | translate}} <span
+										class="cls-mandatory">*</span></label>
+                                <input type="text" class="cls-input datepicker" id="expenseDate" [value]="formValidation.expenseDate.value  | date: 'dd, MMM y'" name="expenseDate" placeholder="{{'Select Expense Date' | translate}}" autocomplete="off" class="cls-custom-input form-control " formControlName="expenseDate" onkeypress="return false;"
+                                    (ngModelChange)="vechileData()" (click)="chooseDate('expenseDate')" [ngClass]="{'cls-border-error':submitted && formValidation.expenseDate.errors }">
+                                <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('expenseDate')"></em>
+                            </div>
+                            <ng-container *ngIf="formValidation?.expenseDate?.value && mileageDetails">
+                                <div class="form-group cls-search-select cls-width50 col-sm-6 mr-2 px-0">
+                                    <label for="vehicle" class="cls-vehicle">{{'Vehicle Type' | translate}}<span
+											class="cls-mandatory">*</span></label>
+                                    <div class="cls-dropdown-container">
+                                        <em class="icon-3-dropdownarrow"></em>
+                                        <input class="form-control" type="text" name="vehicle" id="vehicle" data-toggle="dropdown" (click)="searchDropdown('fn-vehicle-input')" placeholder="{{'Select vehicle' | translate}}" autocomplete="off" formControlName="vechileType" readonly [ngClass]="{'cls-border-error':submitted && formValidation.vechileType.errors }"
+                                            readonly>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-vehicle-input" autocomplete="off" (keyup)="filterFunction('fn-vehicle-input','fn-vehicle-ul')">
+                                            <ul id="fn-vehicle-ul" class="live-search-list">
+                                                <li *ngFor="let vech of mileageDetails;let index = index" id="vech.vechileCode" (click)="setFilterValue('vechileType',vech.vehicleType,index)">
+                                                    <a>{{vech.vehicleType}} ({{vech.mileage}})</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cls-width50 col-sm-6 p-0">
+                                    <div class="cls-milagerate">
+                                        Mileage Rate
+                                        <span class="cls-currencyrate">
+											{{mileageDetails[mileageGroup?.controls?.vechileTypeCode?.value]?.currency}}
+											<span>{{mileageDetails[mileageGroup?.controls?.vechileTypeCode?.value]?.mileageCost}}
+											</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="form-group cls-width50 col-sm-6 mt-2 mr-2 px-0">
+                                <label for="odometerstart">{{'Odometer Start' | translate}} <span class="cls-mandatory">*</span></label>
+                                <input type="text" name="odometerstart" onpaste="return false" id="odometerstart" placeholder="{{'Enter Value' | translate}}" autocomplete="off" class="cls-custom-input form-control" formControlName="odometerstart" (keypress)="numbersOnly($event)" [ngClass]="{'cls-border-error':submitted && formValidation.odometerstart.errors }">
+                            </div>
+                            <div class="form-group cls-search-select cls-width50 col-sm-6 mt-2 px-0">
+                                <label for="purpose" class="cls-purpose">{{'Purpose of Travel' | translate}}
+                                    <span class="cls-mandatory">*</span></label>
+                                <div class="cls-dropdown-container">
+                                    <em class="icon-3-dropdownarrow"></em>
+                                    <input class="form-control" type="text" name="purpose" id="purpose" data-toggle="dropdown" [ngClass]="{'cls-border-error':submitted && formValidation.purpose.errors }" (ngModelChange)="travelPurposeData('purposeCode','firsthalf')" (click)="searchDropdown('fn-purpose-input')"
+                                        placeholder="{{'Select purpose' | translate}}" autocomplete="off" readonly formControlName="purpose">
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-purpose-input" autocomplete="off" (keyup)="filterFunction('fn-purpose-input','fn-purpose-ul')">
+                                        <ul id="fn-purpose-ul" class="live-search-list">
+                                            <li *ngFor="let purpose of travelPurpose" id="{{purpose.id}}" (click)="setFilterValue('purpose',purpose.value,purpose.id)">
+                                                <a class="cls-block" href="javascript:;">{{purpose.value}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container >
+                                <div class="odometer-image-upload">
+                                    <div class="cls-odometer-img-start" [ngClass]="{'cls-border-error':submitted && formValidation.odometerStartImage.errors }">
+                                        <!-- (click)="openFile('start')" -->
+                                        <div class="cls-label-text" >
+                                           <span class="cls-title"> Upload Odometer Start Image </span>
+                                            <input type="file" class="cls-file-input" accept=".jpg,.jpeg,.png,.pdf" id="upload-start" (change)="onSelectFile($event,'start')" > 
+                                        </div>
+                                    </div>
+                                    <span class="cls-preview-image-start d-none" (click)="previewOdometerImage('start')">click to view image</span>
+                                    <span id="cls-filename-start" class="d-none  file-name" >
+                                        <!-- <em class="icon-32-reject"></em> -->
+                                    </span>
+                                    <span class="d-none cls-remove-start icon-32-reject" (click)="deleteIamge('start')">
+                                    </span>
+                                </div>
+                            </ng-container>
+                           
+                            <!-- <ng-container>
+                                <div class="cls-preview-image">
+                                    <span class="cls-previewimg-link" (click)="previewOdometerImage('start')">Click to view odometer start image</span>
+                                </div>
+                            </ng-container> -->
+                            <!-- <ng-container *ngIf="imagePath !=undefined">
+                                {{imagePath}} hiiii
+                                 <img src="{{imagePath}}" alt="odometer image">
+                            </ng-container> -->
+                            <div class="form-group cls-width50 col-sm-6 mt-2 mr-2 px-0" *ngIf="mileageGroup?.controls?.others && mileageGroup?.controls?.purposeCode?.value == 'others' ">
+                                <label for="others">{{'Others' | translate}}  <span class="cls-mandatory">*</span></label>
+                                <input type="text" name="others" onpaste="return false" id="others" placeholder="{{'Enter the Pupose' | translate}}" autocomplete="off" class="cls-custom-input form-control " formControlName="others" [ngClass]="{'cls-border-error':submitted && formValidation.others.errors }">
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <!--First Half Location Pin starts  -->
+            <div class="cls-main" *ngIf="!finishTrip">
+                <div class="cls-travelled-locations">
+                    <span class="cls-sub-text">{{'Locations' | translate}}</span>
+                    <span class="cls-note">
+						<em class="icon-16-info"></em> After Pinning, it will add another location automatically</span>
+                    <!-- Loacation Array first half starts -->
+                    <div class="cls-location-details" formArrayName="firstTripLocations">
+                        <ul class="cls-localty {{FirstTripControl?.length < 3 && !finishFirstHalf ? 'cls-diableclose':'cls-enableclose'}}">
+                            <li class="cls-locationpined cls-firsthalf cls-hover-tooltip " *ngFor="let locations of FirstTripControl; let i = index;let last = last;let length = length" [formGroupName]="i" [ngClass]="{'cls-final': last && i != 0}">
+                                <span class="cls-locname">
+									{{FirstTripControl[i]?.value?.locations}}
+									<em class="cls-close icon-32-reject"
+										(click)="removeLocation('firstTripLocations',i,FirstTripControl[i]?.value?.locations)">
+									</em>
+									<span class="cls-tool">{{FirstTripControl[i]?.value?.locations}}</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+               
+                
+                <div class="cls-location">
+                    <span class="cls-pin" *ngIf="finishFirstHalf" (click)="showLocation('pinLocation')">
+						<em class="icon-59-pin"></em>
+						Pin This Location
+                     </span>
+                     <ng-container *ngIf="endTripFlag && !showSecHalf">
+                        <div class="odometer-image-upload">
+                            <div class="cls-odometer-img-end  {{FirstTripControl?.length < 2 ? 'cls-disable':'cls-enable'}}"  [ngClass]="{'cls-border-error':endTripFlag && formValidation.odometerEndImage.errors }" >
+                                <div class="cls-label-text" >
+                                   <span class="cls-title"> Upload Odometer End Image </span>
+                                    <input type="file" class="cls-file-input" accept=".jpg,.jpeg,.png,.pdf" id="upload-end" (change)="onSelectFile($event,'end')" > 
+                                </div>
+                            </div>
+                            <span class="cls-preview-image-end d-none" (click)="previewOdometerImage('end')">click to view image</span>
+                            <span id="cls-filename-end" class="d-none  file-name" ></span>
+                            <span class="d-none cls-remove-end icon-32-reject" (click)="deleteIamge('end')">
+                            </span>
+                        </div>
+                    </ng-container>
+                    <span class="cls-end {{FirstTripControl?.length < 2 ? 'cls-disable':'cls-enable'}}" (click)="finishHalfTrip('firshHalf')" *ngIf="finishFirstHalf">Finish First Half</span>
+                    
+                    <span class="cls-end {{FirstTripControl?.length < 2 ? 'cls-disable':'cls-enable'}}" (click)="endTrip()" *ngIf="(finishFirstHalf && !showSecHalf) || !showSecHalf && !finishTrip ">End Trip </span>
+                </div>
+            </div>
+            <!-- Location Pin Ends  -->
+            <!-- Second Hald starts -->
+            <ng-container *ngIf="showSecHalf && !finishTrip">
+                <div class="cls-main">
+                    <div class="cls-travelled-locations cls-search-select">
+                        <span class="cls-sub-text">Second Half</span>
+                        <span class="cls-note"><em class="icon-16-info mr-1"></em> Kindly Select Purpose of travel for
+							your
+							second half</span>
+                        <label for="second_trip_purpose" class="cls-second-trip-label">Purpose of Travel
+							<span class="cls-mandatory">*</span>
+						</label>
+                        <div class="cls-dropdown-container">
+                            <em class="icon-3-dropdownarrow"></em>
+                            <input class="form-control" type="text" (ngModelChange)="travelPurposeData('secPurposeCode','sechalf')" formControlName="secPurpose" name="secPurpose" id="secondTrip" data-toggle="dropdown" (click)="searchDropdown('fn-secondTrip-input')" [ngClass]="{'cls-border-error':submitted && formValidation.secPurpose.errors }"
+                                placeholder="Select Purpose" autocomplete="off">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-secondTrip-input" autocomplete="off" (keyup)="filterFunction('fn-secondTrip-input','fn-secondTrip-ul')">
+                                <ul id="fn-secondTrip-ul" class="live-search-list">
+                                    <li *ngFor="let purpose of travelPurpose" id="sec{{purpose?.id}}" (click)="setFilterValue('secPurpose',purpose.value,purpose.id)">
+                                        <a>{{purpose.value}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 mt-2 px-0" *ngIf="mileageGroup?.controls?.secondHalfOthers && mileageGroup?.controls?.secPurposeCode?.value == 'others'">
+                            <label for="secondHalfOthers">{{'Others' | translate}}  <span class="cls-mandatory">*</span></label>
+                            <input type="text" name="secondHalfOthers" [ngClass]="{'cls-border-error':submitted && formValidation.secondHalfOthers.errors }" onpaste="return false" id="secondHalfOthers" placeholder="{{'Enter the Pupose' | translate}}" autocomplete="off" class="cls-custom-input form-control "
+                                formControlName="secondHalfOthers">
+                        </div>
+                    </div>
+                </div>
+                <!--Second Half Location Pin starts  -->
+                <div class="cls-main">
+                    <div class="cls-travelled-locations">
+                        <span class="cls-sub-text">{{'Second Half Locations' | translate}}</span>
+                        <span class="cls-note">
+							<em class="icon-16-info"></em> After Pinning, it will add another location
+							automatically</span>
+                        <!-- Loacation Array first half starts -->
+                        <div class="cls-location-details" formArrayName="secondTripLocations">
+                            <ul class="cls-localty {{secondTripControl?.length < 3 && editAction ? 'cls-diableclose':'cls-enableclose'}}">
+                                <li class="cls-locationpined cls-secondhalf" *ngFor="let locations of secondTripControl; let i = index;let last = last;let length = length" [formGroupName]="i" [ngClass]="{'cls-final': last && i != 0}">
+                                    <span class="cls-locname"> {{secondTripControl[i]?.value?.locations}}
+										<em class="cls-close icon-32-reject"
+											(click)="removeLocation('secondTripLocations',i,secondTripControl[i]?.value?.locations)">
+										</em>
+									</span>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="cls-location">
+                        
+                        <span class="cls-pin" *ngIf="!editAction" (click)="showLocation('secondpinLocation')"> 
+                            <em class="icon-59-pin"></em>Pin This Location 
+                        </span>
+                        <ng-container >
+                            <div class="odometer-image-upload">
+                                <div class="cls-odometer-img-end" [ngClass]="{'cls-border-error':endTripFlag && formValidation.odometerEndImage.errors }">
+                                    <div class="cls-label-text" >
+                                       <span class="cls-title"> Upload Odometer End Image </span>
+                                        <input type="file" class="cls-file-input" accept=".jpg,.jpeg,.png,.pdf" id="upload-end" (change)="onSelectFile($event,'end')" > 
+                                    </div>
+                                </div>
+                                <span class="cls-preview-image-end d-none" (click)="previewOdometerImage('end')">click to view image</span>
+                                <span id="cls-filename-end" class="d-none  file-name" ></span>
+                                <span class="d-none cls-remove-end icon-32-reject" (click)="deleteIamge('end')">
+                                </span>
+                            </div>
+                        </ng-container>
+                        <!-- {{secondTripControl?.length < 2 ? 'cls-disable':'cls-enable'}} -->
+                        <span class="cls-end w-100 " (click)="endTrip()">End Trip  </span>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- Location Pin Ends  -->
+            <!-- Mileage Itinerary starts -->
+           
+            <div class="cls-main px-0" *ngIf="finishTrip && !editAction && itinearyData !=undefined">
+                <app-mileage-itinerary-mobile [editact]="editAction" [saveFlag]="saveFlag" [itinearyInfo]="itinearyData" (editstatus)="edit($event)">
+                </app-mileage-itinerary-mobile>
+            </div>
+            <!-- Save starts -->
+            <div class="cls-main">
+                <button type="button" class="btn cls-custom-btn cls-btn-primary" [ngClass]="{'d-none':saveFlag?.edited == false}" (click)="insertlocationData('save')">
+					{{'Save'|translate}}
+				</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="cls-popup-show">
+        <span [ngClass]="{'cls-blur-back': visible}" (click)="clickOutside()"></span>
+        <div class="cls-popup-section" [ngClass]="{'cls-popupShow': visible}">
+            <span class="cls-mbl-line"></span>
+            <span class="cls-header mb-2">{{popupData?.title}}</span>
+            <span class="cls-pin-location-info">{{popupData?.content}}</span>
+            <span class="cls-pin-location mt-3" *ngIf="popupData?.sub_content">
+				<em class="icon-59-pin mr-2" *ngIf="popupData?.sub_content || popupData?.icon"></em>
+				{{popupData?.sub_content}}
+			</span>
+            <!-- [ngClass]="{'cls-odometer-img':filter.type=='file'}" -->
+            <div class="cls-filter" [ngClass]="{'cls-odometer-img-end':filter.type=='file'}" *ngFor="let filter of popupData?.filter">
+                <label for="{{filter?.id}}" class="cls-filter-label">{{filter?.label}}
+					<span class="cls-mandatory" *ngIf="filter?.required">*</span> </label>
+                <input class="form-control cls-custom-input {{filter.class}}" type="{{filter?.type}}" 
+                name="{{filter?.id}}" id="{{filter?.id}}" formControlName="{{filter?.id}}" placeholder="{{filter?.placeholder}}" autocomplete="off" (keypress)="numbersOnly($event)"
+                 [ngClass]="{'cls-border-error':submitted && formValidation[filter?.id]?.errors }" (eventData)="myFunction($event)">
+            </div>
+            <span class="cls-location-btn">
+				<ng-container *ngFor="let actions of popupData?.action">
+					<button type="button" class="btn cls-custom-btn {{actions?.class}}"
+						(click)="popupAction(actions?.actionName,popupData?.purpose)">
+						<span>{{actions?.name}}</span>
+            </button>
+            </ng-container>
+            </span>
+        </div>
+    </div>
+</form>
+<ng-container *ngIf="showModal">
+    <app-imagepreview [ImageUrl]="imageUrl" (choosedVal)="closePreview($event)"></app-imagepreview>
+</ng-container>
+<ng-container *ngIf="imageFlag">
+    <app-alert  [userInput]="imageContent" (choosedVal)="imageDelete($event)"></app-alert>                            
+</ng-container>

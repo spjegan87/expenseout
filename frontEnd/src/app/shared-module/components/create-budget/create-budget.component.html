@@ -1,0 +1,366 @@
+<!-- Desc : create Budget
+Author : Logesh
+Date : 06-Jan-2022 -->
+<a href="javascript:;" title="{{'Back To List' | translate}}" class="cls-back cls-a-hover mb-2"
+    (click)="redirectList()"><em class="ti-arrow-left"></em> {{'Back To List' | translate}}</a>
+<form [formGroup]="budgetForm" readonly>
+    <div class="cls-budget-container" id="budgetFormContainer">
+        <div class="cls-budget-form row">
+            <div class="w-100 row form-group">
+                <div class="col-sm-4">
+                    <label class="cls-label" for="budgetName">{{'Budget Name' | translate}}
+                        <span class="cls-mandatory">*</span> :
+                    </label>
+                    <input type="text" formControlName="budgetName" (keypress)="stringValidation($event)"
+                        (focusout)='checkExisting("budgetName")' name="budgetName" id="budgetName"
+                        placeholder="{{'Enter Budget Name' | translate}}" class="cls-custom-input form-control"
+                        [ngClass]="{'cls-error':(submitted && validation.budgetName.errors)}">
+                </div>
+                <div class="col-sm-4">
+                    <label class="cls-label" for="budgetAmount">{{'Budget Amount' | translate}}
+                        <span class="cls-mandatory">*</span> :
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-btn cls-currency-bar col-sm-3 pr-0 pl-0">
+                            <input class="form-control" type="text" formControlName="currency"
+                                name="currency" id="currency" placeholder="{{userCurrency}}" autocomplete="off" readonly
+                                [ngClass]="{'cls-error':(submitted && validation.currency.errors)}">
+                        </span>
+                        <input type="number" formControlName="budgetAmount" min="1"
+                            onkeypress="return event.keyCode >= 47 && event.keyCode <=58"
+                            oninput="this.value = Math.abs(this.value)" name="budgetAmount" id="budgetAmount"
+                            placeholder="{{'Enter Amount' | translate}}" autocomplete="off"
+                            class="cls-custom-input cls-border form-control col-sm-9"
+                            [ngClass]="{'cls-error':(submitted && validation.budgetAmount.errors)}">
+                    </div>
+                    <span class="cls-info-text">
+                        <em class="icon-16-info"></em>
+                        {{'Amount set for total budget period' | translate}}
+                    </span>
+                </div>
+                <div class="col-sm-4 form-group" *ngIf="divisionFlag.indexOf('profileGroup') > -1" [ngClass]="{'cls-disablecriteria' : dropdownArray?.profileGroup?.length === 0}">
+                        <label class="cls-label">{{'Profile Group' | translate}} 
+                        <span class="cls-mandatory">*</span>:</label>
+
+                        <select class="cls-select cls-profileGroup form-control" formControlName="profileGroup" 
+                            placeholder="Select the profileGroup" id="profileGroup" (change)='checkExisting("profileGroup")'
+                            [ngClass]="{'cls-error':(submitted && validation.profileGroup.errors)}">
+                            <option value="">Select the profile group!</option>
+                            <option *ngFor="let data of dropdownArray?.profileGroup" value="{{data.id}}">
+                                {{data.text}}</option>
+                        </select>
+                        <span class="cls-nolength" *ngIf="dropdownArray?.profileGroup == undefined">
+                            <em class="icon-16-info"></em>No master data for designation
+                        </span>
+                </div>
+            </div>
+            <div class="w-100 row form-group cls-center-align">
+                <div class="form-group col-sm-3 cls-date">
+                    <label for="startDate">{{'Start Date' | translate}}
+                        <span class="cls-mandatory">*</span>
+                    </label>
+                    <input type="text" onkeypress="return false;" class="cls-input datepicker"
+                        [ngClass]="{'cls-error':(submitted && validation.startDate.errors)}"
+                        (focus)="chooseDate('startDate')" [value]="budgetForm.controls.startDate.value  | date: 'dd, MMM y'" id="startDate" formControlName="startDate" name="startDate"
+                        placeholder="{{'Start Date' | translate}}" autocomplete="off"
+                        class="cls-custom-input form-control">
+                    <em class="fa fa-calendar-o cls-date-icon"></em>
+                </div>
+                <div class="radio-group form-group col-sm-3" *ngIf="!showEdit">
+                    <span class="cls-label">{{'Date or Period' | translate}}:
+                    </span>
+                    <label class="cls-switches" (click)="changeStatus('dateOrPeriod')">
+                        <input type="lever" formControlName="autoRenewal" name="autoRenewal">
+                        <em class="cls-switch-circle cls-round"
+                            [ngClass]="{'fn-switch-active' : budgetForm.controls['endDate'].disabled}"></em>
+                    </label>
+                </div>
+                <div class="col-sm-3 form-group" *ngIf="endDateFlag">
+                    <label for="budgetPeriod" class="d-block">{{'Budget Period' | translate}}
+                        <span class="cls-mandatory">*</span>
+                    </label>
+                    <select class="form-control cls-custom-input" formControlName="budgetPeriod" name="budgetPeriod"
+                        placeholder="All" id="budgetPeriod"
+                        [ngClass]="{'cls-error':(submitted && validation.budgetPeriod.errors)}">
+                        <option value="">Select</option>
+                        <option *ngFor="let data of multiSelectArray.budgetPeriod | keyvalue" value="{{data.key}}">
+                            {{data.value}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-3 cls-date" *ngIf="!endDateFlag">
+                    <label for="endDate">{{'End Date' | translate}}
+                        <span class="cls-mandatory">*</span>
+                    </label>
+                    <input type="text" onkeypress="return false;" class="cls-input datepicker" 
+                        [ngClass]="{'cls-error':(submitted && validation.endDate.errors)}" [value]="budgetForm.controls.endDate.value  | date: 'dd, MMM y'"  (focus)="chooseDate('endDate')" id="endDate"
+                        formControlName="endDate" name="endDate" placeholder="{{'End Date' | translate}}" autocomplete="off"
+                        class="cls-custom-input form-control">
+                    <em class="fa fa-calendar-o cls-date-icon"></em>
+                </div>
+                <div class="radio-group form-group col-sm-3"
+                    title="A new budget will be created after this budget period expiried" *ngIf="endDateFlag">
+                    <span class="cls-label">{{'Auto Renewal' | translate}}:
+                    </span>
+                    <label class="cls-switches" (click)="changeStatus('autoRenewal')">
+                        <input type="lever" formControlName="autoRenewal" name="autoRenewal">
+                        <em class="cls-switch-circle cls-round"
+                            [ngClass]="{'fn-switch-active' : budgetForm.controls['autoRenewal'].value === 'Y' ||  budgetForm.controls['autoRenewal'].value === true }"></em>
+                    </label>
+                </div>
+            </div>
+            <div class="w-100 row form-group">
+                <div class="form-group input-group col-sm-6"
+                    title="A notification mail to the selected addresses, when balance amount reaching this percent">
+                    <span class="cls-label">{{'Budget Alert Percentage' | translate}}: </span>
+                    <input type="number" formControlName="budgetAlertPercent" min="1" max="99"
+                        onkeypress="return event.keyCode >= 47 && event.keyCode <=58"
+                        oninput="this.value = Math.abs(this.value)" name="budgetAlertPercent" id="budgetAlertPercent"
+                        placeholder="{{'0 to 100' | translate}}" autocomplete="off"
+                        class="form-control d-inline col-sm-4">
+                    <div class="cls-info-text">
+                        <em class="icon-16-info"></em>
+                        {{'A alert mail triggered when the balance amount reaches this percent!' | translate}}
+                    </div>
+                </div>
+                <div class="radio-group form-group col-sm-6">
+                    <span class="cls-label">{{'Expense Settlement Restriction' | translate}} : </span>
+                    <label class="cls-switches" (click)="changeStatus('settleRestrict')">
+                        <input type="lever" formControlName="settleRestrict" name="settleRestrict">
+                        <em class="cls-switch-circle cls-round"
+                            [ngClass]="{'fn-switch-active' : budgetForm.controls['settleRestrict'].value === 'Y' ||  budgetForm.controls['settleRestrict'].value === true }"></em>
+                    </label>
+                    <div class="cls-info-text">
+                        <em class="icon-16-info"></em>
+                        {{'Settlement will be restricted when total budget amount utilised!' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group w-100">
+                <div class="col-sm-3 pr-0">
+                    <span class="cls-label">{{'Mail address for alert' | translate}} :
+                    </span>
+                </div>
+                <div class="col-sm-9 cls-search-select"
+                    [ngClass]="{'cls-disablecriteria' : dropdownArray?.mailTrigger?.length === 0}" >
+                    <select class="col-sm-9 cls-select cls-mailTrigger form-control" multiple="multiple"
+                        placeholder="All" id="mailTrigger">
+                        <option *ngFor="let data of dropdownArray?.mailTrigger" value="{{data.id}}">{{data.text+' - (
+                            '+data.id+' )'}}
+                        </option>
+                    </select>
+                    <span class="cls-nolength" *ngIf="dropdownArray?.mailTrigger?.length === 0">
+                        <em class="icon-16-info"></em>No master data for email id.
+                    </span>
+                    <label class="cls-sellall" *ngIf="dropdownArray?.mailTrigger?.length >= 1 && !showEdit">
+                        <input type="checkbox" id="ip-mailTrigger" (click)="selectAll('mailTrigger')">Select All
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="cls-first-page">
+
+            <!-- <div class="cls-main-dotted">
+                <span class="cls-strip">{{'Select Criteria' | translate}}</span>
+                <div class="row form-group">
+                    <div class="col-sm-2 pr-0">
+                        <span class="cls-label">{{'Choose the divisions' | translate}}
+                            <span class="cls-mandatory">*</span>:
+                        </span>
+                    </div>
+                    <div class="col-sm-10 cls-search-select"
+                        [ngClass]="{'cls-disablecriteria' : multiSelectArray?.divisions?.length === 0}">
+                        <select class="col-sm-9 cls-select cls-divisions form-control" multiple="multiple"
+                            placeholder="divisions" id="divisions" >
+                            <option *ngFor="let data of multiSelectArray?.divisions" value="{{data.id}}">{{data.text}}
+                            </option>
+                        </select>
+                        <label class="cls-sellall" *ngIf="multiSelectArray?.divisions?.length >= 1 && !showEdit">
+                            <input type="checkbox" id="ip-divisions" (click)="divisionSelectAll()">Select All
+                        </label>
+                    </div>
+                </div>
+                <div id="cls-budget-criteria">
+                    <div class="row w-100 m-0" *ngIf="divisionFlag.indexOf('profileGroup') > -1">
+                        <div class="form-group col-sm-2 pr-0">
+                            <span class="cls-label">{{'Profile Group' | translate}} :</span>
+                        </div>
+                        <div class="form-group col-sm-10 cls-search-select"
+                            [ngClass]="{'cls-disablecriteria' : dropdownArray?.profileGroup?.length === 0}">
+                            <select class="col-sm-9 cls-select cls-profileGroup form-control" multiple="multiple"
+                                placeholder="All" id="profileGroup">
+                                <option *ngFor="let data of dropdownArray?.profileGroup" value="{{data.id}}">
+                                    {{data.text}}</option>
+                            </select>
+                            <span class="cls-nolength" *ngIf="dropdownArray?.profileGroup == undefined">
+                                <em class="icon-16-info"></em>No master data for designation
+                            </span>
+                            <label class="cls-sellall" *ngIf="dropdownArray?.profileGroup?.length >= 1 && !showEdit">
+                                <input type="checkbox" id="ip-profileGroup" (click)="selectAll('profileGroup')">Select
+                                All
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row w-100 m-0" *ngIf="divisionFlag.indexOf('allUsers') > -1">
+                        <div class="form-group col-sm-2 pr-0">
+                            <span class="cls-label">{{'Users' | translate}} :</span>
+                        </div>
+                        <div class="form-group col-sm-10 cls-search-select"
+                            [ngClass]="{'cls-disablecriteria' : dropdownArray?.allUsers?.length === 0}">
+                            <select class="col-sm-9 cls-select cls-allUsers form-control" multiple="multiple"
+                                placeholder="All" id="allUsers">
+                                <option *ngFor="let data of dropdownArray?.allUsers" value="{{data.id}}">
+                                    {{data.text}}
+                                </option>
+                            </select>
+                            <span class="cls-nolength" *ngIf="dropdownArray?.allUsers == undefined">
+                                <em class="icon-16-info"></em>No master data for designation
+                            </span>
+                            <label class="cls-sellall" *ngIf="dropdownArray?.allUsers?.length >= 1 && !showEdit">
+                                <input type="checkbox" id="ip-allUsers" (click)="selectAll('allUsers')">Select All
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row w-100 m-0" *ngIf="divisionFlag.indexOf('branchCode') > -1">
+                        <div class="form-group col-sm-2 pr-0">
+                            <span class="cls-label">{{'Branch Name' | translate}} :</span>
+                        </div>
+                        <div class="form-group col-sm-10 cls-search-select"
+                            [ngClass]="{'cls-disablecriteria' : dropdownArray?.branchCode?.length === 0}">
+                            <select class="col-sm-9 cls-select cls-branchCode form-control" multiple="multiple"
+                                placeholder="All" id="branchCode">
+                                <option *ngFor="let data of dropdownArray?.branchCode" value="{{data.id}}">
+                                    {{data.text}}
+                                </option>
+                            </select>
+                            <span class="cls-nolength" *ngIf="dropdownArray?.branchCode  == undefined">
+                                <em class="icon-16-info"></em>No master data for designation
+                            </span>
+                            <label class="cls-sellall" *ngIf="dropdownArray?.branchCode?.length >= 1 && !showEdit">
+                                <input type="checkbox" id="ip-branchCode" (click)="selectAll('branchCode')">Select
+                                All
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row w-100 m-0" *ngIf="divisionFlag.indexOf('designationCode') > -1">
+                        <div class="form-group col-sm-2 pr-0">
+                            <span class="cls-label">{{'Designation Name' | translate}} :</span>
+                        </div>
+                        <div class="form-group col-sm-10 cls-search-select"
+                            [ngClass]="{'cls-disablecriteria' : dropdownArray?.designationCode?.length === 0}">
+                            <select class="col-sm-9 cls-select cls-designationCode form-control" multiple="multiple"
+                                placeholder="All" id="designationCode">
+                                <option *ngFor="let data of dropdownArray?.designationCode" value="{{data.id}}">
+                                    {{data.text}}</option>
+                            </select>
+                            <span class="cls-nolength" *ngIf="dropdownArray?.designationCode  == undefined">
+                                <em class="icon-16-info"></em>No master data for designation
+                            </span>
+                            <label class="cls-sellall" *ngIf="dropdownArray?.designationCode?.length >= 1 && !showEdit">
+                                <input type="checkbox" id="ip-designationCode"
+                                    (click)="selectAll('designationCode')">Select
+                                All
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row w-100 m-0" *ngIf="divisionFlag.indexOf('departmentCode') > -1">
+                        <div class="form-group col-sm-2 pr-0">
+                            <span class="cls-label">{{'Department Name' | translate}} :</span>
+                        </div>
+                        <div class="form-group col-sm-10 cls-search-select"
+                            [ngClass]="{'cls-disablecriteria' : dropdownArray?.departmentCode?.length === 0}">
+                            <select class="col-sm-9 cls-select cls-departmentCode form-control" multiple="multiple"
+                                placeholder="All" id="departmentCode">
+                                <option *ngFor="let data of dropdownArray?.departmentCode" value="{{data.id}}">
+                                    {{data.text}}</option>
+                            </select>
+                            <span class="cls-nolength" *ngIf="dropdownArray?.departmentCode  == undefined">
+                                <em class="icon-16-info"></em>No master data for department
+                            </span>
+                            <label class="cls-sellall" *ngIf="dropdownArray?.departmentCode?.length >= 1 && !showEdit">
+                                <input type="checkbox" id="ip-departmentCode"
+                                    (click)="selectAll('departmentCode')">Select
+                                All
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row w-100 m-0" *ngIf="divisionFlag.indexOf('gradeCode') > -1">
+                        <div class="form-group col-sm-2">
+                            <span class="cls-label">{{'Grade Name' | translate}} :</span>
+                        </div>
+                        <div class="form-group col-sm-10 cls-search-select"
+                            [ngClass]="{'cls-disablecriteria' : dropdownArray?.gradeCode?.length === 0}">
+                            <select class="col-sm-9 cls-select cls-gradeCode form-control " multiple="multiple"
+                                placeholder="All" id="gradeCode">
+                                <option *ngFor="let data of dropdownArray?.gradeCode" value="{{data.id}}">
+                                    {{data.text}}
+                                </option>
+                            </select>
+                            <span class="cls-nolength" *ngIf="dropdownArray?.gradeCode  == undefined">
+                                <em class="icon-16-info"></em>No master data for grade
+                            </span>
+                            <label class="cls-sellall" *ngIf="dropdownArray?.gradeCode?.length >= 1 && !showEdit">
+                                <input type="checkbox" id="ip-gradeCode" (click)="selectAll('gradeCode')">Select All
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row w-100 m-0" *ngIf="divisionFlag.indexOf('costCenterCode') > -1">
+                        <div class="form-group col-sm-2 pr-0">
+                            <span class="cls-label">{{'Cost Centre Name' | translate}} :</span>
+                        </div>
+                        <div class="form-group col-sm-10 cls-search-select"
+                            [ngClass]="{'cls-disablecriteria' : dropdownArray?.costCenterCode?.length === 0}">
+                            <select class="col-sm-9 cls-select cls-costCenterCode form-control " placeholder="All"
+                                multiple="multiple" id="costCenterCode">
+                                <option *ngFor="let data of dropdownArray?.costCenterCode" value="{{data.id}}">
+                                    {{data.text}}</option>
+                            </select>
+                            <span class="cls-nolength" *ngIf="dropdownArray?.costCenterCode  == undefined">
+                                <em class="icon-16-info"></em>No master data for costCenter
+                            </span>
+                            <label class="cls-sellall" *ngIf="dropdownArray?.costCenterCode?.length >= 1 && !showEdit">
+                                <input type="checkbox" id="ip-costCenterCode"
+                                    (click)="selectAll('costCenterCode')">Select
+                                All
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row w-100 m-0" *ngIf="divisionFlag.indexOf('profitCenterCode') > -1">
+                        <div class="form-group col-sm-2 pr-0">
+                            <span class="cls-label">{{'Profit Centre Name' | translate}} :</span>
+                        </div>
+                        <div class="form-group col-sm-10 cls-search-select"
+                            [ngClass]="{'cls-disablecriteria' : dropdownArray?.profitCenterCode?.length === 0 }">
+                            <select class="col-sm-9 cls-select cls-profitCenterCode form-control " placeholder="All"
+                                multiple="multiple" id="profitCenterCode">
+                                <option *ngFor="let data of dropdownArray?.profitCenterCode" value="{{data.id}}">
+                                    {{data.text}}</option>
+                            </select>
+                            <span class="cls-nolength" *ngIf="dropdownArray?.profitCenterCode == undefined">
+                                <em class="icon-16-info"></em>No master data for profitCenter
+                            </span>
+                            <label class="cls-sellall"
+                                *ngIf="dropdownArray?.profitCenterCode?.length >= 1 && !showEdit">
+                                <input type="checkbox" id="ip-profitCenterCode"
+                                    (click)="selectAll('profitCenterCode')">Select All
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+
+            <div class="cls-button-box">
+                <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="redirectList()">{{'Cancel' |
+                    translate}}</button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn"
+                    *ngIf="editBudgetVal['budget'] == undefined || editBudgetVal['type'] == 'clone' && !showEdit"
+                    (click)="budgetCreate('create')">{{'Create' |
+                    translate}}</button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn"
+                    *ngIf="editBudgetVal['budget'] != undefined && editBudgetVal['type'] == 'edit'"
+                    (click)="budgetCreate('update')">{{'Update' |
+                    translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>

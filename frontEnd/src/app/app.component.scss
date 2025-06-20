@@ -1,0 +1,41 @@
+@import '../assets/scss/all';
+.cls-top{
+    position: fixed;
+    right: 20px;
+    bottom: 30px;
+    background: $WHITE;
+    border-radius: 3px;
+    box-shadow: 0px 0px 6px -2px #929292;
+    cursor: pointer;
+    display: none;
+    padding: 5px 7px;
+    z-index: 1;
+    em{
+      vertical-align: middle;
+    }
+    &.shown{
+        display: inline-block;
+    }
+}
+.cls-cookie{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 20px 0px 20px 100px;
+  z-index: 998;
+  font-size: 17px;
+  color: #fff;
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+  opacity: 0.9;
+  background: #11619d;
+  a{
+    color: #fff !important;
+    border-bottom: 1px solid #fff;
+  }
+  button{
+    background: none;
+    border: 1px solid #fff;
+    margin-left: 20px;
+  }
+}

@@ -1,0 +1,242 @@
+<button id="fn-print-section" [useExistingCss]="true" printSectionId="print-section"
+    printTitle="{{TravelExpenseStatement}}" ngxPrint>print</button>
+<div id="print-section">
+    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr class="cls-main-cont">
+            <td width="40%" style="padding:15px;">
+                <img class="cls-logo" src='../../../../assets/images/expenseout_logo.svg'>
+            </td>
+            <td width="60%" style="padding:15px;">
+                <span class="cls-main-title">{{getOverallReportDetails?.header}}</span>
+            </td>
+        </tr>
+    </table>
+    <span class="d-block p-3">
+        <!-- employee and report details start -->
+        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <span class="cls-title">Employee details</span>
+                        <table cellspacing="0" cellpadding="0" border="0" width="90%">
+                            <tbody class="cls-full-border">
+                                <tr class="cls-border" height="45">
+                                    <td class="cls-box-text" style="padding:10px;">Code</td>
+                                    <td class="cls-colon" style="padding:10px;"> : </td>
+                                    <td class="cls-name" style="padding:10px;">
+                                        {{getOverallReportDetails?.employeeDetails?.employeeNumber}}</td>
+                                </tr>
+                                <tr class="cls-border" height="45">
+                                    <td class="cls-box-text" style="padding:10px;">Name</td>
+                                    <td class="cls-colon" style="padding:10px;"> : </td>
+                                    <td class="cls-name cls-bold-text" style="padding:10px;">
+                                        {{getOverallReportDetails?.employeeDetails?.employeeName}}</td>
+                                </tr>
+                                <tr class="cls-last-border" height="45">
+                                    <td class="cls-box-text" style="padding:10px;">Designation</td>
+                                    <td class="cls-colon" style="padding:10px;"> : </td>
+                                    <td class="cls-name" style="padding:10px;">
+                                        {{getOverallReportDetails?.employeeDetails?.designation}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <span class="cls-title">Report details</span>
+                        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tbody class="cls-full-border">
+                                <tr class="cls-border" height="45">
+                                    <td class="cls-box-text" style="padding:10px;">Report Name</td>
+                                    <td class="cls-colon" style="padding:10px;"> : </td>
+                                    <td class="cls-name" style="padding:10px;">
+                                        {{getOverallReportDetails?.reportDetails?.reportName}}</td>
+                                </tr>
+                                <tr class="cls-border" height="45">
+                                    <td class="cls-box-text" style="padding:10px;">Description</td>
+                                    <td class="cls-colon" style="padding:10px;"> : </td>
+                                    <td class="cls-name" style="padding:10px;">
+                                        {{getOverallReportDetails?.reportDetails?.purpose}}</td>
+                                </tr>
+                                <tr class="cls-border" height="45">
+                                    <td class="cls-box-text" style="padding:10px;">Created Date</td>
+                                    <td class="cls-colon" style="padding:10px;"> : </td>
+                                    <td class="cls-name" style="padding:10px;">
+                                        {{getOverallReportDetails?.reportDetails?.createdOn | date: "dd-MMM-YYYY"}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- employee and report details end -->
+        <!-- expense details start -->
+        <div *ngFor="let expense of getOverallReportDetails?.expenseDetails | keyvalue;let i = index; let last = last;">
+            <span class="cls-title">{{expense.key}}</span>
+            <table class="cls-full-border" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <thead>
+                    <tr class="cls-travel-box">
+                        <td width="10%" class="cls-travel-in">S.No</td>
+                        <td width="70%" class="cls-travel-in">Expense details</td>
+                        <td width="20%" class="cls-travel-in">Amount</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let innerVal of expense.value | keyvalue">
+                        <ng-container *ngFor="let val of innerVal.value;let k = index;let lastIn = last">
+                            <tr>
+                                <td class="cls-border-right" width="10%" style="padding:15px;">{{k+1}} .</td>
+                                <td class="cls-border-right" width="70%" style="padding:15px;">
+                                    <div class="mb-3">
+                                        <span class="cls-bold-text">{{val.expenseDate | date: "dd-MMM-YYYY"}}</span>
+                                        <span class="cls-span-text">({{val.categoryName}})</span>
+                                    </div>
+                                    <div>
+                                        <ng-container *ngFor="let valueA of val| keyvalue">
+                                            <ng-container *ngIf="valueA.key === 'customData'">
+                                                <ng-container
+                                                    *ngFor="let cus of valueA.value | keyvalue ;let lastCus = last">
+                                                    <span class="cls-width">{{cus.key }} :
+                                                        <ng-container *ngIf="cus.value != '' && cus.value !== 'null'">
+                                                            {{ cus.value}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="cus.value === '' || cus.value === 'null'">
+                                                            --
+                                                        </ng-container>
+                                                    </span>
+                                                    <span class="cls-line" *ngIf="!lastCus"></span>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                </td>
+                                <td width="20%" style="padding:15px;">
+                                    <span class="cls-bold-text d-block">{{val.currency}} {{val.amount}}</span>
+                                    <span class="cls-currency"
+                                        *ngIf="val.currencyConversion != ''">{{val.currencyConversion}}</span>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <tr class="cls-travel-box">
+                            <td width="10%" class="cls-travel-in"> </td>
+                            <td width="70%" class="cls-travel-in">Sub total</td>
+                            <td width="20%" class="cls-travel-in">{{categoryAmountSum(innerVal.value)}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <!-- expense details end -->
+        <!-- advance details start -->
+        <div *ngIf="!isArray(getOverallReportDetails?.advanceDetails)">
+            <table class="cls-full-border" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <span class="cls-title">Advance Details</span>
+                <thead>
+                    <tr class="cls-travel-box">
+                        <td width="10%" class="cls-travel-in">S.No</td>
+                        <td width="70%" class="cls-travel-in">Description</td>
+                        <td width="20%" class="cls-travel-in">Amount</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container
+                        *ngFor="let advance of getOverallReportDetails?.advanceDetails | keyvalue;let i = index; let last = last;">
+                        <tr>
+                            <td width="10%" style="padding:15px;" class="cls-span-text">{{i+1}} .</td>
+                            <td width="70%" style="padding:15px;" class="cls-span-text">{{advance.key}}</td>
+                            <td width="20%" style="padding:15px;" class="cls-bold-text">
+                                {{getOverallReportDetails?.currencyCode}} {{advance.value}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <!-- advance details ends -->
+        <!-- approval details starts -->
+        <div *ngIf="getOverallReportDetails?.approvalDetails.length > 0">
+            <span class="cls-title">Approval Details</span>
+            <table class="cls-full-border" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <thead>
+                    <tr class="cls-travel-box">
+                        <td width="10%" class="cls-travel-in">S.No</td>
+                        <td width="70%" class="cls-travel-in">Approved By</td>
+                        <td width="20%" class="cls-travel-in">Approved Date</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container
+                        *ngFor="let approval of getOverallReportDetails?.approvalDetails;let i = index; let last = last;">
+                        <tr>
+                            <td width="10%" style="padding:15px;" class="cls-span-text">{{i+1}} .</td>
+                            <td width="70%" style="padding:15px;" class="cls-span-text">{{approval.user_name}}</td>
+                            <td width="70%" style="padding:15px;" class="cls-span-text">
+                                {{approval.approved_datetime | date: "dd-MMM-YYYY"}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <!-- approval details ends -->
+        <!-- settlement details starts -->
+        <div *ngIf="getOverallReportDetails?.settlementDetails.length > 0">
+            <span class="cls-title">Settlement Details</span>
+            <table class="cls-full-border" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <thead>
+                    <tr class="cls-travel-box">
+                        <td width="30%" class="cls-travel-in">Settled by</td>
+                        <td width="20%" class="cls-travel-in">Settled On</td>
+                        <td width="20%" class="cls-travel-in">Settled amount</td>
+                        <td width="20%" class="cls-travel-in">Mode of payment</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container
+                        *ngFor="let settle of getOverallReportDetails?.settlementDetails;let i = index; let last = last;">
+                        <td width="30%" style="padding:15px;" class="cls-span-text">{{settle.user_name}}</td>
+                        <td width="20%" style="padding:15px;" class="cls-span-text">
+                            {{settle.approved_datetime | date: "dd-MMM-YYYY"}}</td>
+                        <td width="20%" style="padding:15px;" class="cls-span-text">
+                            {{getOverallReportDetails?.currencyCode}} {{settle.amount}}</td>
+                        <td width="20%" style="padding:15px;" class="cls-bold-text">{{settle.payment_mode}}</td>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <!-- settlement details ends -->
+        <!-- Report Summary starts -->
+        <div>
+            <span class="cls-title">Report Summary</span>
+            <table class="cls-full-border" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tbody>
+                    <tr>
+                        <td width="50%" class="cls-dashed-border cls-semibold-text">Total Expense Amount</td>
+                        <td width="50%" class="cls-dashed-border cls-semibold-text" align="right">
+                            {{getOverallReportDetails?.reportSummary?.currencyType}}
+                            {{getOverallReportDetails?.reportSummary?.totalExpenseAmount}}</td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="padding:15px;">Advance Amount</td>
+                        <td width="50%" style="padding:15px;" align="right">
+                            <span class="cls-red-color">(-) </span>
+                            <span class="cls-span-text"> {{getOverallReportDetails?.reportSummary?.currencyType}}
+                                {{getOverallReportDetails?.reportSummary?.advanceAmount}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="padding:15px;">Non-Reimbursable Amount</td>
+                        <td width="50%" style="padding:15px;" align="right">
+                            {{getOverallReportDetails?.reportSummary?.currencyType}}
+                            {{getOverallReportDetails?.reportSummary?.nonReimbursableAmount}}</td>
+                    </tr>
+                    <tr class="cls-travel-box">
+                        <td width="50%" style="padding:15px;" class="cls-semibold-text">Total Reimbursed Amount</td>
+                        <td width="50%" style="padding:15px;" class="cls-semibold-text" align="right">
+                            {{getOverallReportDetails?.reportSummary?.currencyType}}
+                            {{getOverallReportDetails?.reportSummary?.reimbursableAmount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Report Summary ends -->
+    </span>
+</div>

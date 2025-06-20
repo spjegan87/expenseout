@@ -1,0 +1,190 @@
+/************************************************************************************
+CSS Description : manual reimbursement
+Author          : Naveen.s
+Created Date    : 2 october 2020
+*************************************************************************************/
+@import '../../../shared-module/components/reporthistory/reporthistory.component.scss';
+@import '../../../../assets/scss/variable.scss';
+.cls-history-container{
+    .cls-disable{
+        pointer-events: none;
+        opacity: 0.3;
+    }
+    .cls-mandatory{
+        color:$ERROR;
+    }
+    .cls-error{
+        color:$ERROR;
+        display:  block !important;
+    }
+    .cls-main-popup{
+        .cls-popup{
+            .cls-history-data{
+                .cls-manual-container,.cls-action-container{
+                    .cls-text{
+                        max-width: 46%;
+                        font: 16px 'ProximaSemiBold';
+                    }
+                    .cls-amount{
+                        max-width: 54%;
+                        font: 16px 'ProximaSemiBold';
+                        color:$ERROR;
+                    }
+                }
+                .cls-action-container{
+                    .cls-action{
+                        max-width: 54%;
+                        .cls-radio{
+                            color:$BLACK;
+                                .cls-radio-text{
+                                    font: 14px 'ProximaRegular';
+                                    color: $BDRLIGHT;
+                                }
+                                input{
+                                    width: 100%;
+                                    cursor: pointer;
+                                }
+                            }
+                            .cls-radio-on{
+                                em{
+                                    color: $PRIMARYCOLOR;
+                                }
+                            }
+                    }
+                }
+            }
+            .cls-date{
+                input{
+                    width: 85%;
+                }
+                .cls-date-icon{
+                    color: #918d8d;
+                    opacity: 0.7;
+                    position: absolute;
+                    right: 60px;
+                    bottom: 11px;
+                    font-size:14px;
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 480px) {
+    .cls-main-popup{
+        width: 100% !important;
+        background: $WHITE !important;
+        top: unset !important;
+        bottom: 0;
+        left: 0 !important;background: unset;
+        right: unset !important;
+        position: fixed !important;
+        z-index: 1000;
+        width: 100%;
+        border-radius: 30px 30px 5px 5px !important;
+        padding: 25px 20px 15px 20px;
+        animation: 0.4s slidein linear !important;
+        .cls-popup{
+            padding: 15px 0 0 0 !important;
+            overflow-y: unset !important;
+            max-height: unset !important;
+            .cls-date{
+                .cls-date-icon{
+                    right: 75px !important;
+                }
+            }
+        }
+        .cls-header{
+            display: none;
+        }
+        .cls-btn{
+            background: unset !important;
+            padding: unset !important;
+            border-radius: unset !important;
+        }
+        .cls-mbl-line{
+            display: inline-block;
+            height: 5px;
+            width: 35px;
+            background: #ccc;
+            border-radius: 10px;
+            position: absolute;
+            left: 45%;
+            top: 13px;
+          }
+          .cls-selectfilter{
+            font: 18px 'ProximaSemiBold';
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .cls-alert-icon{
+            .cls-btns{
+                .cls-header{
+                    display: none;
+                }
+            }
+        }
+    }
+    .close-ani{
+        animation: 0.4s slideout linear !important;
+    }
+}
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-main-popup{
+        width: 100% !important;
+        background: $WHITE !important;
+        top: unset !important;
+        bottom: 0;
+        left: 0 !important;background: unset;
+        right: unset !important;
+        position: fixed !important;
+        z-index: 1000;
+        width: 100%;
+        border-radius: 30px 30px 5px 5px !important;
+        padding: 25px 20px 15px 20px;
+        animation: 0.4s slidein linear !important;
+        .cls-popup{
+            padding: 15px 0 0 0 !important;
+            overflow-y: unset !important;
+            max-height: unset !important;
+            .cls-date{
+                .cls-date-icon{
+                    right: 75px !important;
+                }
+            }
+        }
+        .cls-header{
+            display: none;
+        }
+        .cls-btn{
+            background: unset !important;
+            padding: unset !important;
+            border-radius: unset !important;
+        }
+        .cls-mbl-line{
+            display: inline-block;
+            height: 5px;
+            width: 35px;
+            background: #ccc;
+            border-radius: 10px;
+            position: absolute;
+            left: 45%;
+            top: 13px;
+          }
+          .cls-selectfilter{
+            font: 18px 'ProximaSemiBold';
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .cls-alert-icon{
+            .cls-btns{
+                .cls-header{
+                    display: none;
+                }
+            }
+        }
+    }
+    .close-ani{
+        animation: 0.4s slideout linear !important;
+    }
+}
+@media (min-width: 767px) and (max-width: 1024px){}

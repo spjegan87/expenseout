@@ -1,0 +1,1064 @@
+<!-- Author : Padma Priya,Naveen -->
+<form class="row cls-report" [formGroup]="category">
+    <div class="col-sm-12 cls-main-box pt-1">
+        <app-breadcrumb [activeBreadcrumb]="breadcrumb"></app-breadcrumb>
+        <div class="row w-100 mt-4">
+            <div class="col-md-6">
+                <h1>{{'Create Your Expense Report' | translate}} </h1>
+            </div>
+            <div class="col-md-6 text-right">
+                <ng-container *ngIf="selectedVal && sheetDownload === 'Y'">
+                    <span class="cls-download mr-2" (click)="downloadReport()"><em
+                        class="icon-55-download"></em>{{downloadName}}</span>
+                </ng-container>
+                <ng-container *ngIf="selectedVal && defaultReportSheet === 'Y'">
+                    <span class="cls-download" (click)="downloadOverallReport()">
+                        <span id="fn-loaging-btn" role="status" aria-hidden="true"></span>
+                        <em id="fn-download-icon" class="icon-55-download"></em> {{defaultDownloadName}}
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+        <app-widget [widgetStatus]="widget"></app-widget>
+        <!-- create report starts -->
+        <div class="cls-create-trip-form row">
+            <ng-container *ngFor=" let field of reportFields">
+                <div class="{{field.class}} cls-reportfields">
+                    <ng-container *ngIf="field.type=== 'number'">
+                        <label for="{{field.id}}">{{ field.name | translate}} <span class="cls-mandatory"
+                            *ngIf="field.required">*</span></label>
+                        <input type="number" min="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)" formControlName="{{field.id}}" name="{{field.name}}" id="{{field.id}}" placeholder="{{field.placeholder | translate}}" autocomplete="off"
+                            class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && getFormValidation(field.id))}">
+                    </ng-container>
+                    <ng-container *ngIf="field.type=== 'select' && allowanceField !== 'Yes'">
+                        <label for="{{field.id}}">{{ field.name | translate}} <span class="cls-mandatory"
+                            *ngIf="field.required">*</span></label>
+                        <select formControlName="{{field.id}}" id="{{field.id}}" [attr.disabled]="isDisableTraveltype ? true : null" [ngClass]="{'cls-border-error':(submitted && getFormValidation(field.id)) }" name="{{field.id}}" class="form-control cls-custom-input">
+                            <option value="">{{'Select' | translate}}</option>
+                            <ng-container *ngFor="let opt of field.options">
+                                <option value="{{opt.id}}">{{opt.value}}</option>
+                            </ng-container>
+                        </select>
+                    </ng-container>
+                    <ng-container *ngIf="field.type=== 'text'">
+                        <label for="{{field.id}}">{{ field.name | translate}} <span class="cls-mandatory"
+                            *ngIf="field.required">*</span></label>
+                        <input type="{{field.type}}" (blur)="checkReportName(field.id)" formControlName="{{field.id}}" (keypress)="stringValidation($event)" onpaste="return false" name="{{field.id}}" id="{{field.id}}" placeholder="{{field.placeholder | translate}}" autocomplete="off"
+                            class="cls-custom-input form-control " [ngClass]="{'cls-border-error':(submitted && getFormValidation(field.id)) }">
+                    </ng-container>
+                    <ng-container *ngIf="field.type === 'date'">
+                        <label for="{{field.id}}">{{ field.name | translate}} <span class="cls-mandatory"
+                            *ngIf="field.required">*</span></label>
+                        <input type="text" class="cls-input datepicker" [value]="category.controls[field.id].value  | date: 'dd, MMM y'" id="{{field.id}}" (focus)="chooseDate(field.id,'',null)" formControlName="{{field.id}}" name="{{field.id}}" placeholder="{{ field.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control "
+                            onkeypress="return false;" [ngClass]="{'cls-border-error':(submitted && getFormValidation(field.id)) }">
+                        <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate(field.id,'',null)"></em>
+                    </ng-container>
+                    <span class="cls-tool-error fn-errorField" *ngIf="field.id ==='description'">{{'Please Enter
+                        Details' | translate}}</span>
+                </div>
+            </ng-container>
+            <div class="col-sm-12 text-right cls-backto">
+                <a href="javascript:;" title="{{'Back To List' | translate}}" class="cls-back cls-a-hover mb-2" *ngIf="approvalFlag === 'approver'" (click)="redirectList('backapprover')"><em
+                        class="ti-arrow-left"></em> {{'Back To List' | translate}}</a>
+                <a href="javascript:;" title="{{'Back To List' | translate}}" class="cls-back cls-a-hover mb-2" *ngIf="approvalFlag === 'user'" (click)="redirectList('report')"><em
+                        class="ti-arrow-left"></em>{{'Back To List' | translate}}</a>
+                <a href="javascript:;" title="{{'Back To List' | translate}}" class="cls-back cls-a-hover mb-2" *ngIf="approvalFlag === ''" (click)="redirectList('report')"><em class="ti-arrow-left"></em>{{'Back
+                    To List' | translate}}</a>
+                <a href="javascript:;" title="{{'Back To List' | translate}}" class="cls-back cls-a-hover mb-2" *ngIf="approvalFlag === 'finance'" (click)="redirectList('backfinance')"><em
+                        class="ti-arrow-left"></em>{{'Back To List' | translate}}</a>
+            </div>
+        </div>
+        <!-- drop area starts -->
+        <div class="cls-drop-div position-relative cls-expcat">
+            <!-- drag and drop -->
+            <div class="cls-nofield">
+                <h2>{{'Select Expense Category' | translate}}</h2>
+                <select class="col-sm-8 cls-select form-control" id="cls-chooseExp" (change)="catSelectNot()">
+                    <option>{{'Select Expense Category' | translate}}</option>
+                    <ng-container *ngIf="expense[0]?.parentcategory">
+                        <optgroup label="{{val.key}}" id="{{val.key | removeWhiteSpace}}"
+                            *ngFor="let val of expense[0].parentcategory  | keyvalue;let i = index">
+                            <!-- {{val.key | removeWhiteSpace}} -->
+                            <option value="{{option.id}}" *ngFor="let option of expense[0].parentcategory[val.key]">
+                                <em class="{{option.icon}} cls-iconalign" [ngStyle]="{'color':option.color}"></em>
+                                {{option.name | translate}}
+                            </option>
+                        </optgroup>
+                    </ng-container>
+                </select>
+                <div class="cls-frequent">
+                    <span class="cls-txt">{{'Frequently used categories' | translate}} : </span>
+                    <ng-container *ngFor="let val of frequentlyUsedArr">
+                        <span class="cls-drag-box" id="{{val.id}}" (click)="selected(val.id)">
+                            <span class="cls-bg" [style.background]="val.color">
+                            </span>
+                        <em class="cls-iconalign {{val.icon}}" [style.color]="val.color"></em> {{ val.id | translate}}
+                        </span>
+                    </ng-container>
+                    <!-- <span class="cls-drag-box" id="Air" (click)="selected('Air')">
+                        <span class="cls-bg" style="background: rgb(239, 95, 167);">
+                        </span>
+                        <em class="cls-iconalign icon-31-air" style="color: rgb(239, 95, 167);"></em>
+                        {{ 'Air' | translate}}
+                    </span>
+                    <span class="cls-drag-box" id="Train" (click)="selected('Train')">
+                        <span class="cls-bg" style="background: rgb(230, 33, 33);">
+                        </span>
+                        <em class="cls-iconalign icon-27-train" style="color: rgb(230, 33, 33);">
+                        </em> {{ 'Train' | translate}}
+                    </span>
+                    <span class="cls-drag-box" id="Bus" (click)="selected('Bus')">
+                        <span class="cls-bg" style="background: rgb(59, 26, 105);">
+                        </span>
+                        <em class="cls-iconalign icon-30-bus" style="color: rgb(59, 26, 105);">
+                        </em> {{ 'Bus' | translate}}
+                    </span>
+                    <span class="cls-drag-box" id="Hotel" (click)="selected('Hotel')">
+                        <span class="cls-bg" style="background: rgb(113, 122, 145);">
+                        </span>
+                        <em class="cls-iconalign icon-28-hotel" style="color: rgb(113, 122, 145);"></em> {{ 'Hotel' |
+                        translate}}
+                    </span>
+                    <span class="cls-drag-box" id="Mileage" (click)="selected('Mileage')">
+                        <span class="cls-bg" style="background: rgb(113, 122, 145);">
+                        </span>
+                        <em class="cls-iconalign icon-24-mileage" style="color: rgb(113, 122, 145);"></em> {{ 'Mileage'
+                        | translate}}
+                    </span>
+                    <span class="cls-drag-box" id="Taxi" (click)="selected('Taxi')">
+                        <span class="cls-bg" style="background: rgb(32, 171, 183);"></span>
+                        <em class="cls-iconalign icon-26-taxi" style="color: rgb(32, 171, 183);"></em> {{ 'Taxi' |
+                        translate}}
+                    </span> -->
+                </div>
+                <div *ngIf="!bulkUpload" class="cls-vault-recipt cls-a-hover" (click)="openReportRecipt('',null,'saved')">{{'Select Expense From Vault' | translate}}</div>
+                <div class="clearfix"></div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="cls-nocatchoosed text-center my-5" *ngIf="!selectedVal">
+                <img src="../../../../assets/images/NoCategoryAvailable.svg" class="mr-2" alt="No Category" />
+            </div>
+            <!-- </ul> -->
+            <div id="btnContainer" class="text-right mb-3  d-none d-sm-block" *ngIf="selectedVal">
+                <button class="btn p-0 cls-depth-view cls-hover-tooltip" (click)="viewType('depth')">
+                    <em class="icon-57-depth" [ngClass]="{'cls-active' : gridview === 'depth'}"></em>
+                    <span class="cls-tool">{{"Depth View" | translate}}</span>
+                </button>
+                <button class="btn pr-0 cls-list-view cls-hover-tooltip" (click)="viewType('list')">
+                    <em class="icon-15-list" [ngClass]="{'cls-active' : gridview === 'list'}"></em>
+                    <span class="cls-tool">{{'List View' | translate}}</span>
+                </button>
+                <button class="btn cls-grid-view cls-hover-tooltip" (click)="viewType('grid')">
+                    <em class="icon-13-gride" [ngClass]="{'cls-active' : gridview === 'grid'}"></em>
+                    <span class="cls-tool">{{"Grid View" | translate}}</span>
+                </button>
+            </div>
+            <div class="cls-field d-none mb-3">
+                <ng-container *ngFor="let dataVal of expense[0]?.components;let j=index;">
+                    <div formArrayName="{{dataVal?.id}}" id="{{dataVal?.id}}{{i}}" class="cls-main d-none cls-{{dataVal?.id}} cls-arraybg" *ngFor="let data of category?.get(dataVal?.id)?.controls; let i=index">
+                        <ng-container *ngIf="(editResponse | json) == '{}' || !(editResponse[dataVal.id])">
+                            <span class="cls-container-close text-center" (click)="formClose(dataVal.id,dataVal.color,'save',dataVal.icon)">
+                                <em class="icon-32-reject"></em>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf="editResponse[dataVal.id]">
+                            <span class="cls-container-close text-center" (click)="formClose(dataVal.id,dataVal.color,'update',dataVal.icon)">
+                                <em class="icon-32-reject"></em>
+                            </span>
+                        </ng-container>
+                        <span class="cls-bg" [ngStyle]="{'background':dataVal.color}"></span>
+                        <div formGroupName="{{ i }}" [ngClass]="{ 'cls-bdrtop pt-2' : i !== 0}">
+                            <ng-container *ngIf="i===0">
+                                <span class="cls-expand-icon" *ngIf="expandOpen" (click)="expandClass(dataVal.id)">
+                                    <em class="icon-18-collapse"></em>
+                                </span>
+                                <span class="cls-mode-text">{{dataVal.category | translate}}
+                                    <ng-container *ngIf="dataVal.parentCategory !==null">
+                                        ({{dataVal.parentCategory | translate}})
+                                    </ng-container>
+                                </span>
+                            </ng-container>
+                            <ng-container *ngIf="dataVal.id !== 'Allowance'">
+                                <span class="float-right cls-error" *ngIf="category.get(dataVal.id)['controls'][i].status === 'INVALID' || (((policyData[dataVal.id][i]?.receiptMandatory === 'Y') &&  (receiptVal[dataVal.id][i]?.length === 0)))">{{'Incomplete'
+                                    | translate}}</span>
+                                <span class="float-right cls-complete" *ngIf="category.get(dataVal.id)['controls'][i].status === 'VALID' && (((policyData[dataVal.id][i]?.receiptMandatory === 'Y') &&  (receiptVal[dataVal.id][i]?.length >=1)) || policyData[dataVal.id][i]?.receiptMandatory === 'N')">{{'Complete'
+                                    | translate}}</span>
+                            </ng-container>
+                            <ng-container *ngIf="dataVal.id === 'Allowance'">
+                                <span class="float-right cls-error" *ngIf="category.get(dataVal.id)['controls'][i].status === 'INVALID'">{{'Incomplete'
+                                    | translate}}</span>
+                                <span class="float-right cls-complete" *ngIf="category.get(dataVal.id)['controls'][i].status === 'VALID'">{{'Complete' |
+                                    translate}}</span>
+                            </ng-container>
+                            <div class="cls-clonefield" *ngIf="dataVal.id !== 'Allowance' && dataVal.id !== 'Mileage'">
+                                <div class="form-group radio-group mt-3 mb-2">
+                                    <label for="reimbursable{{dataVal.id}}{{i}}" class="cls-radio  mr-3" [ngClass]="{'cls-radio-on' : category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'Y'}">
+                                        <input formControlName="reimbursable" type="radio" value="Y"
+                                            id="reimbursable{{dataVal.id}}{{i}}" name="reimbursable" checked>
+                                        <em aria-hidden="true" class="icon-7-radio-on"
+                                            *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'Y'"></em>
+                                        <em aria-hidden="true" class="icon-6-radio-off"
+                                            *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'N'"></em>
+                                        {{'Reimbursable' | translate}}
+                                    </label>
+                                    <label for="Nonreimbursable{{dataVal.id}}{{i}}" class="cls-radio mr-3" [ngClass]="{'cls-radio-on' : category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'N'}">
+                                        <input formControlName="reimbursable" type="radio" value="N"
+                                            id="Nonreimbursable{{dataVal.id}}{{i}}" name="reimbursable">
+                                        <em aria-hidden="true" class="icon-7-radio-on"
+                                            *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'N'"></em>
+                                        <em aria-hidden="true" class="icon-6-radio-off"
+                                            *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'Y'"></em>
+                                        {{'Non Reimbursable' | translate}}
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-2 cls-date">
+                                        <label for="expensedate{{dataVal.id}}{{i}}">{{'Expense Date' | translate}} <span
+                                                class="cls-mandatory">*</span></label>
+                                        <input type="text" class="cls-input datepicker" id="expensedate{{dataVal.id}}{{i}}" (focusout)="dateChangeCurrency(dataVal.id,i,dataVal.category,'expensedate')" (focus)="chooseDate('expensedate',dataVal.id,i)" formControlName="expensedate" name="expensedate"
+                                            placeholder="{{'Select Expense Date' | translate}}" autocomplete="off" class="cls-custom-input form-control" [value]="category.get(dataVal.id)['controls'][i]['controls']['expensedate'].value  | date: 'dd, MMM y'" onkeypress="return false;" [ngClass]="{'cls-border-error':(submitted && getValidation('expensedate',dataVal.id,i)) }">
+                                        <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('expensedate',dataVal.id,i)"></em>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label for="merchantname">{{'Merchant Name' | translate}} </label>
+                                        <input type="text" formControlName="merchantname" name="merchantname" onpaste="return false" (keypress)="stringValidation($event)" id="merchantname{{dataVal.id}}{{i}}" placeholder="{{'Enter Merchant Name' | translate}}" autocomplete="off" class="cls-custom-input form-control ">
+                                    </div>
+                                    <div class="form-group col-sm-2 cls-search-select" [ngClass]="{'cls-noneditable' : dataVal.id === 'Mileage'}">
+                                        <label for="currency" class="cls-currency"> {{'Currency' | translate}}
+                                            <em class="icon-16-info pl-1"
+                                                *ngIf="category.get(dataVal.id)['controls'][i].controls['currency'].value !== userCurrency"></em>
+                                            <span class="cls-mandatory">*</span></label>
+                                        <span class="cls-hovertip" *ngIf="category.get(dataVal.id)['controls'][i].controls['currency'].value !== userCurrency">
+                                            <ng-container *ngIf="exchangeRateVal.asOnDate">
+                                                As on {{exchangeRateVal.asOnDate | date: "dd, MMM y"}}<br />
+                                            </ng-container>
+                                            1 {{category.get(dataVal.id)['controls'][i].controls['currency'].value}} =
+                                            {{category.get(dataVal.id)['controls'][i].controls['exchangeRate'].value}}
+                                            {{userCurrency}}<br />
+                                            <input type="hidden" formControlName="currencyAmount">
+                                            <input type="hidden" formControlName="exchangeRate">
+                                            <span class="cls-exchangerate">{{'Amount in' | translate}} {{userCurrency}}
+                                                :
+                                                {{category.get(dataVal.id)['controls'][i].controls['currencyAmount'].value}}</span>
+                                        <!-- <span class="cls-exchangerate">Amount in INR : {{exchangeAmount}}</span> -->
+                                        </span>
+                                        <div class="cls-dropdown-container">
+                                            <em class="icon-3-dropdownarrow"></em>
+                                            <input class="form-control" type="text" formControlName="currency" name="currency" id="currency{{dataVal.id}}{{i}}" data-toggle="dropdown" (click)="searchDropdown('fn-currency-input'+dataVal.id+i)" placeholder="{{'Select Currency' | translate}}" autocomplete="off"
+                                                readonly [ngClass]="{'cls-border-error':(submitted && getValidation('currency',dataVal.id,i)) }">
+                                            <!-- <em class="icon-3-dropdownarrow"></em> -->
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-currency-input{{dataVal.id}}{{i}}" autocomplete="off" (keyup)="filterFunction('fn-currency-input'+dataVal.id+i,'fn-currency-ul'+dataVal.id+i)">
+                                                <ul id="fn-currency-ul{{dataVal.id}}{{i}}" class="live-search-list">
+                                                    <li (click)="setFilterSelectValue(dataVal.id,i,'currency')">
+                                                        <a>select</a>
+                                                    </li>
+                                                    <li *ngFor="let cur of currency" id="cur.currency_code" (click)="setFilterValue(category,dataVal.id,'currency',i,cur.currency_code,dataVal.category,i,cur?.name)">
+                                                        <a>{{cur.currency_name}} ({{cur.currency_code}})</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-2" [ngClass]="{'cls-noneditable' : dataVal.id === 'Mileage'}">
+                                        <label for="amount">{{'Amount' | translate}} <span
+                                                class="cls-mandatory">*</span></label>
+                                        <input type="number" (keyup)="amountCalculate(category.controls[dataVal.id]['controls'][i]['controls']['amount'].value,dataVal.id,i,dataVal.category)" min="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)" formControlName="amount"
+                                            name="amount" id="amount{{dataVal.id}}{{i}}" placeholder="{{'Enter Amount'| translate}}" autocomplete="off" class="cls-custom-input form-control " [ngClass]="{'cls-border-error':(submitted && getValidation('amount',dataVal.id,i)) }">
+                                    </div>
+                                    <!-- <span>{{policyData[dataVal.id][i]}}</span> -->
+                                    <!-- {{policyData[dataVal.id][i].length}} -->
+                                    <div class="form-group cls-container-policy col-sm-4" *ngIf="policyData[dataVal.id][i]">
+                                        <div class="cls-policy-loader">
+                                            <div *ngIf="policyLoader" class="cls-loading-stage">
+                                                <span class="dot-pulse"></span>
+                                                <span class="cls-scan-text">{{'Scanning for Policy Violation...' |
+                                                    translate}}</span>
+                                            </div>
+                                        </div>
+                                        <span class="cls-policy-text" *ngIf="policyData[dataVal.id][i].policyDetect === 'N'">
+                                            <span class="cls-policy-succ">
+                                                <em class="icon-36-approved"></em>
+                                            </span> {{'No Policy Violation Detected' | translate}}
+                                        </span>
+                                        <ng-container *ngIf="policyData[dataVal.id][i].policyDetect === 'Y'">
+                                            <label class="cls-policy-alert-text">
+                                                <em class="icon-46-policy cls-policy-alert"></em>
+                                                {{'Amount should be less than' | translate}}
+                                                {{policyData[dataVal.id][i].policyAmount}}
+                                            </label>
+                                            <input type="text" class="cls-custom-input form-control" formControlName="reason" autocomplete="off" [ngClass]="{'cls-border-error':(submitted && getValidation('reason',dataVal.id,i)) }" id="reason{{dataVal.id}}{{i}}" placeholder="{{'Enter Reason' | translate}}">
+                                        </ng-container>
+                                    </div>
+                                    <span class="cls-bdrdynamic col-sm-11 ml-3 my-3" *ngIf="expense[0].components[j].components"></span>
+                                    <!-- dynamic field -->
+                                    <ng-container *ngIf="dataVal.id !== 'Mileage'">
+                                        <ng-container *ngFor="let val of expense[0].components[j].components">
+                                            <div class="form-group {{val.class}} cls-search-select">
+                                                <label for="{{val.name}}">{{val.name | translate}} <span
+                                                        class="cls-mandatory"
+                                                        *ngIf="val.required === 'true'">*</span></label>
+                                                <ng-container *ngIf="val.type === 'location'">
+                                                    <input class="cls-input" type="text" onpaste="return false" (keypress)="stringValidation($event)" (click)="destinationPolicy(dataVal.id,i,dataVal.category,val.id)" formControlName="{{val.id}}" name="{{val.name}}" id="{{val.name}}{{dataVal.id}}{{i}}"
+                                                        (keyup)="citySearch(val.id,dataVal.id,i,val.name,'')" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }">
+                                                </ng-container>
+                                                <ng-container *ngIf="val.type=== 'text'">
+                                                    <input *ngIf="val.class !== 'col-sm-2 cls-date'" class="cls-input datepicker" type="text" formControlName="{{val.id}}" name="{{val.name}}" id="{{val.id}}{{dataVal.id}}{{i}}" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off"
+                                                        class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }">
+                                                    <input *ngIf="val.class === 'col-sm-2 cls-date'" type="text" [value]="category.get(dataVal.id)['controls'][i]['controls'][val.id].value  | date: 'dd, MMM y'" name="{{val.name}}" formControlName="{{val.id}}" (focus)="chooseDate(val.id,dataVal.id,i)" (focusout)="dateChangeCurrency(dataVal.id,i,dataVal.category,val.id)" id="{{val.id}}{{dataVal.id}}{{i}}"
+                                                        placeholder="{{'Select' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control " onkeypress="return false;" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }">
+                                                    <ng-container *ngIf="val.class === 'col-sm-2 cls-date'">
+                                                        <!-- <em data-feather="calendar" class="cls-date-icon" ></em>  -->
+                                                        <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate(val.id,dataVal.id,i)"></em>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="val.type=== 'number'">
+                                                    <input class="cls-input datepicker" type="number" min="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)" formControlName="{{val.id}}" name="{{val.name}}" id="{{val.name}}{{dataVal.id}}{{i}}" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}"
+                                                        autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }">
+                                                </ng-container>
+                                                <ng-container *ngIf="val.type=== 'select'">
+                                                    <div class="cls-dropdown-container">
+                                                        <em class="icon-3-dropdownarrow"></em>
+                                                        <input class="form-control" type="text" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }" formControlName="{{val.id}}" name="{{val.name}}" id="{{val.id}}" data-toggle="dropdown" (click)="searchDropdown('fn-input'+val.id+i)"
+                                                            placeholder="{{Select | translate}} {{val.name | translate}}" autocomplete="off" readonly>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-input{{val.id}}{{i}}" autocomplete="off" (keyup)="filterFunction('fn-input'+val.id+i,'fn-ul'+val.id+i)">
+                                                            <ul id="fn-ul{{val.id}}{{i}}" class="live-search-list">
+                                                                <li (click)="setFilterSelectValue(dataVal.id,i,val.id)">
+                                                                    <a>select</a>
+                                                                </li>
+                                                                <li *ngFor="let opt of val.options" (click)="setFilterValue(category,dataVal.id,val.id,i,opt.value,dataVal.category,i,opt?.name)">                                                                        
+                                                                    <a>{{opt.value | translate}}</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                    <div class="col-sm-12 cls-file-upload-container">
+                                        <div class="row">
+                                            <div class="col-sm-6 cls-attach">
+                                                <label for="Attachments Receipt(s)"><em class="icon-2-attach"></em>
+                                                    <ng-container *ngIf="receiptVal[dataVal.id][i]?.length >= 1">
+                                                        {{receiptVal[dataVal.id][i].length}}
+                                                    </ng-container>
+                                                    {{'Attachment Receipt(s)' | translate}}
+                                                    <ng-container *ngIf="policyData[dataVal.id][i]?.receiptMandatory === 'Y'">
+                                                        <span class="cls-mandatory">*</span>
+                                                    </ng-container>
+                                                </label>
+                                                <span class="cls-file-upload" [ngClass]="{'cls-border-error':(submitted && getValidation('upload',dataVal.id,i)) }">
+                                                    <span class="cls-dotted-line"></span>
+                                                <span class="cls-dotted-line"></span>
+                                                <span class="cls-dotted-line"></span>
+                                                <span class="cls-dotted-line"></span>
+                                                <button class="btn btn-primary cls-upload-button">{{'Choose File' |
+                                                        translate}}</button>
+                                                <span class="cls-or-span">{{'(Or)' | translate}}</span>
+                                                <span class="cls-drag-drop">{{'Drag and Drop' | translate}}</span>
+                                                <span class="cls-line"></span>
+                                                <span class="cls-recipt cls-a-hover" (click)="openReportRecipt(dataVal.id,i,'unsaved')">{{'Select
+                                                        from Receipt Vault' | translate}}</span>
+                                                <ng-container *ngIf="!imageFlag">
+                                                    <input type="file" class="cls-file-input" accept=".jpg,.jpeg,.png,.pdf" formControlName="upload" id="upload{{dataVal.id}}{{i}}" (change)="onSelectFile($event,dataVal.id,i)" multiple>
+                                                </ng-container>
+                                                </span>
+                                                <div class="cls-upload-text">
+                                                    <em class="icon-16-info"></em> JPEG, .JPG, .PNG,.PDF upto 2 MB
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 d-flex">
+                                                <ng-container *ngFor='let url of receiptVal[dataVal.id][i]; let j = index;'>
+                                                    <span class="cls-image" [ngClass]="{'w-100' : url.type === 'application/pdf'}">
+                                                        <span class="cls-image-close text-center" id="{{url.receiptId}}"
+                                                            (click)="onItemDeleted(dataVal.id,i,j,url.receiptId)">
+                                                            <em class="icon-32-reject"></em>
+                                                        </span>
+                                                        <img src="{{url.path}}.{{url.type}}" *ngIf="url.type !== 'application/pdf'" alt="Receipt{{j}}" (click)="imagePreview(url.path,url.type)">
+                                                        <span class="cls-pdf" *ngIf="url.type === 'application/pdf'" (click)="previewPdf(url.path)">
+                                                                <span> {{url.name}}</span>
+                                                        </span>
+                                                        <span (click)="downloadImage(url.path,url.name,url.type)" class="cls-recipt-download-icon"  id="cls-img{{j}}">
+                                                            <em class="icon-55-download"></em>
+                                                        </span>
+                                                    </span>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- mileage starts -->
+                            <div class="cls-clonefield" *ngIf="dataVal.id == 'Mileage'">
+                                <div class="form-group radio-group mt-3 mb-2">
+                                    <label for="reimbursable{{dataVal.id}}{{i}}" class="cls-radio  mr-3" [ngClass]="{'cls-radio-on' : category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'Y'}">
+                                        <input formControlName="reimbursable" type="radio" value="Y"
+                                            id="reimbursable{{dataVal.id}}{{i}}" name="reimbursable" checked>
+                                        <em aria-hidden="true" class="icon-7-radio-on"
+                                            *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'Y'"></em>
+                                        <em aria-hidden="true" class="icon-6-radio-off"
+                                            *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'N'"></em>
+                                        {{'Reimbursable' | translate}}
+                                    </label>
+                                    <label for="Nonreimbursable{{dataVal.id}}{{i}}" class="cls-radio mr-3" [ngClass]="{'cls-radio-on' : category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'N'}">
+                                        <input formControlName="reimbursable" type="radio" value="N"
+                                            id="Nonreimbursable{{dataVal.id}}{{i}}" name="reimbursable">
+                                        <em aria-hidden="true" class="icon-7-radio-on"
+                                            *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'N'"></em>
+                                        <em aria-hidden="true" class="icon-6-radio-off"
+                                            *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'Y'"></em>
+                                        {{'Non Reimbursable' | translate}}
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-2 cls-date">
+                                        <label for="expensedate{{dataVal.id}}{{i}}">{{'Expense Date' | translate}} <span
+                                                class="cls-mandatory">*</span></label>
+                                        <input type="text" class="cls-input datepicker" [value]="category.get(dataVal.id)['controls'][i]['controls']['expensedate'].value  | date: 'dd, MMM y'" id="expensedate{{dataVal.id}}{{i}}" (focusout)="dateChangeCurrency(dataVal.id,i,dataVal.category,'expensedate')" (focus)="chooseDate('expensedate',dataVal.id,i)" formControlName="expensedate" name="expensedate"
+                                            placeholder="{{'Select Expense Date' | translate}}" autocomplete="off" class="cls-custom-input form-control " onkeypress="return false;" [ngClass]="{'cls-border-error':(submitted && getValidation('expensedate',dataVal.id,i)) }">
+                                        <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('expensedate',dataVal.id,i)"></em>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label for="merchantname">{{'Merchant Name' | translate}} </label>
+                                        <input type="text" formControlName="merchantname" name="merchantname" onpaste="return false" (keypress)="stringValidation($event)" id="merchantname{{dataVal.id}}{{i}}" placeholder="{{'Enter Merchant Name' | translate}}" autocomplete="off" class="cls-custom-input form-control ">
+                                    </div>
+                                    <div class="form-group col-sm-2 cls-search-select" *ngIf="dataVal.id === 'Mileage' && category.get('Mileage')['controls'][i]['controls']['vehicleType']  && mileageDetails.length >0">
+                                        <label for="vehicleType">{{ 'Vehicle Type' | translate}} <span
+                                                class="cls-mandatory">*</span></label>
+                                        <div class="cls-dropdown-container">
+                                            <em class="icon-3-dropdownarrow"></em>
+                                            <input class="form-control" type="text" [ngClass]="{'cls-border-error':(submitted && getValidation('vehicleType',dataVal.id,i)) }" formControlName="vehicleType" name="vehicleType" id="vehicleType{{i}}" data-toggle="dropdown" (click)="searchDropdown('fn-input'+dataVal.id+i)"
+                                                placeholder="{{Select | translate}} {{'Vehicle Type' | translate}}" autocomplete="off" readonly>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-input{{dataVal.id}}{{i}}" autocomplete="off" (keyup)="filterFunction('fn-input'+dataVal.id+i,'fn-ul'+dataVal.id+i)">
+                                                <ul id="fn-ul{{dataVal.id}}{{i}}" class="live-search-list">
+                                                    <li (click)="setFilterSelectValue(dataVal.id,i,'vehicleType')">
+                                                        <a>select</a>
+                                                    </li>
+                                                    <li *ngFor="let opt of mileageDetails" (click)="setFilterValue(category,dataVal.id,'vehicleType',i,opt.vehicleType,dataVal.category,i,opt?.name)">
+                                                        <a>{{opt.vehicleType | translate}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="dataVal.id === 'Mileage'">
+                                        <ng-container *ngFor="let val of expense[0].components[j].components">
+                                            <ng-container *ngFor="let mileageDynamic of mileageDetails">
+                                                <ng-container *ngIf="category.get('Mileage')['controls'][i].controls['vehicleType']">
+                                                    <div class="form-group {{val.class}} radio-group cls-search-select" *ngIf="mileageDynamic.vehicleType === category.get('Mileage')['controls'][i].controls['vehicleType'].value && val.type !== 'number'">
+                                                        <ng-container *ngIf="val.type === 'location'">
+                                                            <label for="{{val.name}}">{{val.name | translate}} <span
+                                                                class="cls-mandatory"
+                                                                *ngIf="val.required === 'true'">*</span></label>
+                                                            <input class="cls-input" type="text" onpaste="return false" (keypress)="stringValidation($event)" (click)="destinationPolicy(dataVal.id,i,dataVal.category,val.id)" formControlName="{{val.id}}" name="{{val.name}}" id="{{val.name}}{{dataVal.id}}{{i}}"
+                                                                (keyup)="citySearch(val.id,dataVal.id,i,val.name,'')" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="val.type=== 'text'">
+                                                            <label for="{{val.name}}">{{val.name | translate}} <span
+                                                                class="cls-mandatory"
+                                                                *ngIf="val.required === 'true'">*</span></label>
+                                                            <input *ngIf="val.class !== 'col-sm-2 cls-date'" class="cls-input datepicker" [value]="category.get(dataVal.id)['controls'][i]['controls'][val.id].value  | date: 'dd, MMM y'" type="text" formControlName="{{val.id}}" name="{{val.name}}" id="{{val.id}}{{dataVal.id}}{{i}}" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off"
+                                                                class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }">
+                                                            <input *ngIf="val.class === 'col-sm-2 cls-date'" [value]="category.get(dataVal.id)['controls'][i]['controls'][val.id].value  | date: 'dd, MMM y'" type="text" name="{{val.name}}" formControlName="{{val.id}}" (focus)="chooseDate(val.id,dataVal.id,i)" id="{{val.id}}{{dataVal.id}}{{i}}" placeholder="{{'Select' | translate}} {{val.placeholder | translate}}"
+                                                                autocomplete="off" class="cls-custom-input form-control " onkeypress="return false;" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }">
+                                                            <ng-container *ngIf="val.class === 'col-sm-2 cls-date'">
+                                                                <!-- <em data-feather="calendar" class="cls-date-icon" ></em>  -->
+                                                                <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate(val.id,dataVal.id,i)"></em>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="val.type=== 'select'">
+                                                            <label for="{{val.name}}">{{val.name | translate}} <span
+                                                                class="cls-mandatory"
+                                                                *ngIf="val.required === 'true'">*</span></label>
+                                                            <div class="cls-dropdown-container">
+                                                                <em class="icon-3-dropdownarrow"></em>
+                                                                <input class="form-control" type="text" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }" formControlName="{{val.id}}" name="{{val.name}}" id="{{val.id}}" data-toggle="dropdown" (click)="searchDropdown('fn-input'+dataVal.id+i)"
+                                                                    placeholder="{{Select | translate}} {{val.name | translate}}" autocomplete="off" readonly>
+                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                    <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-input{{dataVal.id}}{{i}}" autocomplete="off" (keyup)="filterFunction('fn-input'+dataVal.id+i,'fn-ul'+dataVal.id+i)">
+                                                                    <ul id="fn-ul{{dataVal.id}}{{i}}" class="live-search-list">
+                                                                        <li (click)="setFilterSelectValue(dataVal.id,i,val.id)">
+                                                                            <a>select</a>
+                                                                        </li>
+                                                                        <li *ngFor="let opt of val.options" (click)="setFilterValue(category,dataVal.id,val.id,i,opt.value,dataVal.category,i,opt?.name)">
+                                                                            <a>{{opt.value | translate}}</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="val.type === 'view'">
+                                                            <label for="{{val.name}}">{{val.name | translate}}</label>
+                                                            <span class="cls-mile-view">{{category.get('Mileage')['controls'][i].controls['mileagePerUnit'].value}}/{{mileKm}}</span>
+                                                            <input type="text" formControlName="{{val.id}}" name="{{val.name}}" id="{{val.id}}{{dataVal.id}}{{i}}" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control cls-mile-km" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }">
+                                                        </ng-container>
+                                                        <ng-container *ngIf="val.type === 'radio'">
+                                                            <label for="{{val.name}}">{{val.name | translate}} <span class="cls-mandatory" *ngIf="val.required === 'true'">*</span></label>
+                                                            <!-- <div>
+                                                                <ng-container *ngFor="let opt of val.options;let mileIndex = index">
+                                                                    <label for="{{opt.id}}{{dataVal.id}}{{i}}" class="cls-radio  mr-3" (click)="changeMileCalculateBy(dataVal.id,i,val.id,mileIndex)"
+                                                                    >
+                                                                    <input formControlName="{{val.id}}" type="radio" 
+                                                                        id="{{opt.id}}{{dataVal.id}}{{i}}" name="{{val.id}}">
+                                                                    <em aria-hidden="true" class="icon-7-radio-on"
+                                                                        *ngIf="category.get(dataVal.id)['controls'][i]['controls'][val.id].value === 'Y'"></em>
+                                                                    <em aria-hidden="true" class="icon-6-radio-off"
+                                                                        *ngIf="category.get(dataVal.id)['controls'][i]['controls'][val.id].value === 'N'"></em>
+                                                                    {{opt.value | translate}}
+                                                                </label>
+                                                                </ng-container>
+                                                            </div> -->
+                                                            <div>
+                                                                <label for="DistanceTravelled{{dataVal.id}}{{i}}" class="cls-radio  mr-3" (click)="changeMileCalculateBy(dataVal.id,i,val.id,0)" [ngClass]="{'cls-radio-on' : category.get(dataVal.id)['controls'][i]['controls'][val.id].value === 'Y'}">
+                                                                    <input formControlName="{{val.id}}" type="radio" value="Y"
+                                                                        id="DistanceTravelled{{dataVal.id}}{{i}}" name="{{val.id}}" checked>
+                                                                    <em aria-hidden="true" class="icon-7-radio-on"
+                                                                        *ngIf="category.get(dataVal.id)['controls'][i]['controls'][val.id].value === 'Y'"></em>
+                                                                    <em aria-hidden="true" class="icon-6-radio-off"
+                                                                        *ngIf="category.get(dataVal.id)['controls'][i]['controls'][val.id].value === 'N'"></em>
+                                                                    {{'Distance Travelled' | translate}}
+                                                                </label>
+                                                                <label for="OdometerReading{{dataVal.id}}{{i}}" class="cls-radio mr-3" (click)="changeMileCalculateBy(dataVal.id,i,val.id,1)" [ngClass]="{'cls-radio-on' : category.get(dataVal.id)['controls'][i]['controls'][val.id].value === 'N'}">
+                                                                    <input formControlName="{{val.id}}" type="radio" value="N"
+                                                                        id="OdometerReading{{dataVal.id}}{{i}}" name="{{val.id}}">
+                                                                    <em aria-hidden="true" class="icon-7-radio-on"
+                                                                        *ngIf="category.get(dataVal.id)['controls'][i]['controls'][val.id].value === 'N'"></em>
+                                                                    <em aria-hidden="true" class="icon-6-radio-off"
+                                                                        *ngIf="category.get(dataVal.id)['controls'][i]['controls'][val.id].value === 'Y'"></em>
+                                                                    {{'Odometer Reading' | translate}}
+                                                                </label>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+                                                    <ng-container *ngIf="mileageDynamic.vehicleType === category.get('Mileage')['controls'][i].controls['vehicleType'].value && val.type === 'number'">
+                                                        <!-- <ng-container *ngIf="val.type=== 'number'"> -->
+                                                        <div class="form-group {{val.class}}" [ngClass]="{'cls-disable-field' : category.get('Mileage')['controls'][i].controls['calculatedThrough'].value != 'Y'}" *ngIf=" val.id === 'mileageDistance'">
+                                                            <label for="{{val.name}}">{{val.name | translate}} <span
+                                                                    class="cls-mandatory"
+                                                                    *ngIf="val.required === 'true'">*</span></label>
+                                                            <input class="cls-input datepicker" (keyup)="distanceChoosed(dataVal.id,i,dataVal.category)" (focusout)="checkMileage(val.id,i)" type="number" min="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)" formControlName="{{val.id}}"
+                                                                name="{{val.name}}" id="{{val.id}}{{dataVal.id}}{{i}}" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) ,'cls-disable' : category.get('Mileage')['controls'][i].controls['calculatedThrough'].value != 'Y'}">
+                                                        </div>
+                                                        <div class="form-group {{val.class}}" *ngIf="category.get('Mileage')['controls'][i].controls['calculatedThrough'].value != 'Y' && val.id !== 'mileageDistance'">
+                                                            <label for="{{val.name}}">{{val.name | translate}} <span
+                                                                    class="cls-mandatory"
+                                                                    *ngIf="val.required === 'true'">*</span></label>
+                                                            <input class="cls-input datepicker" (focusout)="checkMileage(val.id,i)" (keyup)="distanceChoosed(dataVal.id,i,dataVal.category)" type="number" min="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)" formControlName="{{val.id}}"
+                                                                name="{{val.name}}" id="{{val.id}}{{dataVal.id}}{{i}}" placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }">
+                                                        </div>
+                                                        <!-- </ng-container> -->
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                    <div class="form-group col-sm-2 cls-search-select" [ngClass]="{'cls-noneditable' : dataVal.id === 'Mileage'}">
+                                        <label for="currency" class="cls-currency"> {{'Currency' | translate}}
+                                            <em class="icon-16-info pl-1"
+                                                *ngIf="category.get(dataVal.id)['controls'][i].controls['currency'].value !== userCurrency"></em>
+                                            <span class="cls-mandatory">*</span></label>
+                                        <span class="cls-hovertip" *ngIf="category.get(dataVal.id)['controls'][i].controls['currency'].value !== userCurrency">
+                                            <ng-container *ngIf="exchangeRateVal.asOnDate">
+                                                As on {{exchangeRateVal.asOnDate | date: "d, MMM y"}}<br />
+                                            </ng-container>
+                                            1 {{category.get(dataVal.id)['controls'][i].controls['currency'].value}} =
+                                            {{category.get(dataVal.id)['controls'][i].controls['exchangeRate'].value}}
+                                            {{userCurrency}}<br />
+                                            <input type="hidden" formControlName="currencyAmount">
+                                            <input type="hidden" formControlName="exchangeRate">
+                                            <span class="cls-exchangerate">{{'Amount in' | translate}} {{userCurrency}}
+                                                :
+                                                {{category.get(dataVal.id)['controls'][i].controls['currencyAmount'].value}}</span>
+                                        <!-- <span class="cls-exchangerate">Amount in INR : {{exchangeAmount}}</span> -->
+                                        </span>
+                                        <div class="cls-dropdown-container">
+                                            <em class="icon-3-dropdownarrow"></em>
+                                            <input class="form-control" type="text" formControlName="currency" name="currency" id="currency" data-toggle="dropdown" (click)="searchDropdown('fn-currency-input'+dataVal.id+i)" placeholder="{{'Select Currency' | translate}}" autocomplete="off" readonly
+                                                [ngClass]="{'cls-border-error':(submitted && getValidation('currency',dataVal.id,i)) }">
+                                            <!-- <em class="icon-3-dropdownarrow"></em> -->
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-currency-input{{dataVal.id}}{{i}}" autocomplete="off" (keyup)="filterFunction('fn-currency-input'+dataVal.id+i,'fn-currency-ul'+dataVal.id+i)">
+                                                <ul id="fn-currency-ul{{dataVal.id}}{{i}}" class="live-search-list">
+                                                    <li (click)="setFilterSelectValue(dataVal.id,i,'currency')">
+                                                        <a>select</a>
+                                                    </li>
+                                                    <li *ngFor="let cur of currency" id="cur.currency_code" (click)="setFilterValue(category,dataVal.id,'currency',i,cur.currency_code,dataVal.category,i,cur?.name)">
+                                                        <a>{{cur.currency_name}} ({{cur.currency_code}})</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-2 cls-disable-field" [ngClass]="{'cls-noneditable' : dataVal.id === 'Mileage'}">
+                                        <label for="amount">{{'Amount' | translate}} <span
+                                                class="cls-mandatory">*</span></label>
+                                        <input type="number" (keyup)="amountCalculate(category.controls[dataVal.id]['controls'][i]['controls']['amount'].value,dataVal.id,i,dataVal.category)" min="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)" formControlName="amount"
+                                            name="amount" id="amount" placeholder="{{'Enter Amount'| translate}}" autocomplete="off" class="cls-custom-input form-control " [ngClass]="{'cls-border-error':(submitted && getValidation('amount',dataVal.id,i)) }">
+                                        <span class="cls-info" *ngIf="dataVal.id === 'Mileage'"><em
+                                                class="icon-16-info"></em>{{'Amount will be auto updated' | translate}}</span>
+                                    </div>
+                                    <div class="col-sm-12 cls-file-upload-container">
+                                        <div class="row">
+                                            <div class="col-sm-6 cls-attach">
+                                                <label for="Attachments Receipt(s)"><em class="icon-2-attach"></em>
+                                                    <ng-container *ngIf="receiptVal[dataVal.id][i]?.length >= 1">
+                                                        {{receiptVal[dataVal.id][i].length}}
+                                                    </ng-container>
+                                                    {{'Attachment Receipt(s)' | translate}}
+                                                    <ng-container *ngIf="policyData[dataVal.id][i]?.receiptMandatory === 'Y'">
+                                                        <span class="cls-mandatory">*</span>
+                                                    </ng-container>
+                                                </label>
+                                                <span class="cls-file-upload" [ngClass]="{'cls-border-error':(submitted && getValidation('upload',dataVal.id,i)) }">
+                                                    <span class="cls-dotted-line"></span>
+                                                <span class="cls-dotted-line"></span>
+                                                <span class="cls-dotted-line"></span>
+                                                <span class="cls-dotted-line"></span>
+                                                <button class="btn btn-primary cls-upload-button">{{'Choose File' |
+                                                        translate}}</button>
+                                                <span class="cls-or-span">{{'(Or)' | translate}}</span>
+                                                <span class="cls-drag-drop">{{'Drag and Drop' | translate}}</span>
+                                                <span class="cls-line"></span>
+                                                <span class="cls-recipt cls-a-hover" (click)="openReportRecipt(dataVal.id,i,'unsaved')">{{'Select
+                                                        from Receipt Vault' | translate}}</span>
+                                                <ng-container *ngIf="!imageFlag">
+                                                    <input type="file" class="cls-file-input" accept=".jpg,.jpeg,.png,.pdf" formControlName="upload" id="upload{{dataVal.id}}{{i}}" (change)="onSelectFile($event,dataVal.id,i)" multiple>
+                                                </ng-container>
+                                                </span>
+                                                <div class="cls-upload-text">
+                                                    <em class="icon-16-info"></em> JPEG, .JPG, .PNG,.PDF upto 2 MB
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 d-flex">
+                                                <ng-container *ngFor='let url of receiptVal[dataVal.id][i]; let j = index;'>
+                                                    <span class="cls-image" [ngClass]="{'w-100' : url.type === 'application/pdf'}">
+                                                        <span class="cls-image-close text-center" id="{{url.receiptId}}"
+                                                            (click)="onItemDeleted(dataVal.id,i,j,url.receiptId)">
+                                                            <em class="icon-32-reject"></em>
+                                                        </span>
+                                                    <img src="{{url.path}}.{{url.type}}" *ngIf="url.type !== 'application/pdf'" alt="Receipt{{j}}" (click)="imagePreview(url.path,url.type)">
+                                                    <span class="cls-pdf" *ngIf="url.type === 'application/pdf'" (click)="previewPdf(url.path)">
+                                                            <span> {{url.name}}</span>
+                                                    </span>
+                                                    <span (click)="downloadImage(url.path,url.name,url.type)" class="cls-recipt-download-icon"  id="cls-img{{j}}">
+                                                        <em class="icon-55-download"></em>
+                                                    </span>
+                                                    </span>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- mileage ends -->
+                            <div class="cls-clonefield" *ngIf="dataVal.id === 'Allowance'">
+                                <div class="form-group radio-group mt-3 mb-2" [ngClass]="{'cls-hidden' : this.allowanceClaimType != 'Y'}">
+                                    <label for="hourlyBasis{{i}}" class="cls-radio  mr-3" [ngClass]="{'cls-radio-on' : category.get('Allowance')['controls'][i]['controls']['claimType'].value === 'hours'}">
+                                        <input formControlName="claimType" type="radio" value="hours"
+                                            id="hourlyBasis{{i}}" name="claimType" (click)="allowanceFields('hours',i)">
+                                        <em aria-hidden="true" class="icon-7-radio-on"
+                                            *ngIf="category.get('Allowance')['controls'][i]['controls']['claimType'].value === 'hours'"></em>
+                                        <em aria-hidden="true" class="icon-6-radio-off"
+                                            *ngIf="category.get('Allowance')['controls'][i]['controls']['claimType'].value === 'days'"></em>
+                                        {{'Hourly Basis' | translate}}
+                                    </label>
+                                    <label for="daysBasis{{i}}" class="cls-radio mr-3" [ngClass]="{'cls-radio-on' : category.get('Allowance')['controls'][i]['controls']['claimType'].value === 'days'}">
+                                        <input formControlName="claimType" type="radio" value="days" id="daysBasis{{i}}"
+                                            name="claimType" (click)="allowanceFields('days',i)" checked>
+                                        <em aria-hidden="true" class="icon-7-radio-on"
+                                            *ngIf="category.get('Allowance')['controls'][i]['controls']['claimType'].value === 'days'"></em>
+                                        <em aria-hidden="true" class="icon-6-radio-off"
+                                            *ngIf="category.get('Allowance')['controls'][i]['controls']['claimType'].value === 'hours'"></em>
+                                        {{'Days Basis' | translate}}
+                                    </label>
+                                </div>
+                                <div class="row cls-allowance">
+                                    <div class="form-group col-sm-2 cls-date" *ngIf="category.get('Allowance')['controls'][i]['controls']['claimType'].value === 'days'">
+                                        <label for="allowanceFrom">{{'From Date' | translate}}<span
+                                                class="cls-mandatory">*</span></label>
+                                        <input type="text" onkeypress="return false;" class="cls-input datepicker" [value]="category.get(dataVal.id)['controls'][i]['controls']['allowanceFrom'].value  | date: 'dd, MMM y'" (focusout)="daysCount(i)" (focus)="chooseDate('allowanceFrom',dataVal.id,i)" id="allowanceFrom{{dataVal.id}}{{i}}" formControlName="allowanceFrom" name="allowanceFrom" placeholder="{{'From Date' | translate}}"
+                                            autocomplete="off" class="cls-custom-input form-control">
+                                        <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('allowanceFrom',dataVal.id,i)"></em>
+                                        <span class="cls-allowance-box">
+                                            <span class="cls-allowance-days">{{'No of Days ' | translate}} : </span>
+                                        <!-- <span class="cls-allowance-amt" > {{daysCountVar[i]}} {{'Days' | translate}}</span> -->
+                                        <span class="cls-allowance-amt ml-2" *ngIf="category.get('Allowance')['controls'][i]['controls']['daysCountVar']">
+                                                {{category.get('Allowance')['controls'][i]['controls']['daysCountVar'].value}}</span>
+                                        </span>
+                                    </div>
+                                    <div class="form-group col-sm-2 cls-date" *ngIf="category.get('Allowance')['controls'][i]['controls']['claimType'].value === 'days'">
+                                        <label for="allowanceTo">{{'To Date' | translate}} <span
+                                                class="cls-mandatory">*</span></label>
+                                        <input type="text" class="cls-input datepicker" [value]="category.get(dataVal.id)['controls'][i]['controls']['allowanceTo'].value  | date: 'dd, MMM y'" id="allowanceTo{{dataVal.id}}{{i}}" (focusout)="daysCount(i)" (focus)="chooseDate('allowanceTo',dataVal.id,i)" formControlName="allowanceTo" name="allowanceTo" placeholder="{{'To Date' | translate}}" autocomplete="off"
+                                            class="cls-custom-input form-control" onkeypress="return false;">
+                                        <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('allowanceTo',dataVal.id,i)"></em>
+                                    </div>
+                                    <div class="form-group col-sm-2 cls-date" *ngIf="category.get('Allowance')['controls'][i]['controls']['claimType'].value === 'hours'">
+                                        <label for="expensedate">{{'Expense Date' | translate}} <span
+                                                class="cls-mandatory">*</span></label>
+                                        <input type="text" class="cls-input datepicker" [value]="category.get(dataVal.id)['controls'][i]['controls']['expensedate'].value  | date: 'dd, MMM y'" id="expensedate{{dataVal.id}}{{i}}" (focus)="chooseDate('expensedate',dataVal.id,i)" formControlName="expensedate" name="expensedate" placeholder="{{'Expense Date' | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                                            onkeypress="return false;">
+                                        <em class="fa fa-calendar-o cls-date-icon" (click)="chooseDate('expensedate',dataVal.id,i)"></em>
+                                    </div>
+
+                                    <div class="form-group col-sm-2">
+                                        <label for="allowanceDesc">{{'Description' | translate}}</label>
+                                        <input type="text" class="cls-input datepicker" id="allowanceDesc{{dataVal.id}}{{i}}" formControlName="allowanceDesc" name="allowanceTo" placeholder="{{'Description' | translate}}" autocomplete="off"
+                                            class="cls-custom-input form-control">
+                                    </div>
+                                    <ng-container *ngFor="let val of expense[0].components[j].components">
+                                        <div class="form-group {{val.class}} cls-search-select">
+                                            <label for="{{val.name}}">{{val.name | translate}}<span
+                                                    class="cls-mandatory"
+                                                    *ngIf="val.required === 'true'">*</span></label>
+                                            <ng-container *ngIf="val.type === 'location'">
+                                                <input class="cls-input" type="text" onpaste="return false" (keypress)="stringValidation($event)" (click)="destinationPolicy(dataVal.id,i,dataVal.category,val.id)" formControlName="{{val.id}}" name="{{val.name}}" id="{{val.name}}{{dataVal.id}}{{i}}" (keyup)="citySearch(val.id,dataVal.id,i,val.name,'')"
+                                                    placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(checkAllowance && allowancerateDrop[i].length === 0) }">
+                                                <ng-container *ngIf="checkAllowance && allowancerateDrop[i]?.length === 0">
+                                                    <span class="cls-allowanceinfo">
+                                                        <em class="icon-16-info"></em>{{'Allowance not available' |
+                                                        translate}}
+                                                    </span>
+                                                </ng-container>
+                                            </ng-container>
+                                            <ng-container *ngIf="val.type=== 'select'">
+                                                <div class="cls-dropdown-container">
+                                                    <em class="icon-3-dropdownarrow"></em>
+                                                    <input class="form-control" type="text" [ngClass]="{'cls-border-error':(submitted && getValidation(val.id,dataVal.id,i)) }" formControlName="{{val.id}}" name="{{val.name}}" id="{{val.id}}" data-toggle="dropdown" (click)="searchDropdown('fn-input'+val.id+i)"
+                                                        placeholder="{{Select | translate}} {{val.name | translate}}" autocomplete="off" readonly>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-input{{val.id}}{{i}}" autocomplete="off" (keyup)="filterFunction('fn-input'+val.id+i,'fn-ul'+val.id+i)">
+                                                        <ul id="fn-ul{{val.id}}{{i}}" class="live-search-list">
+                                                            <li (click)="setFilterSelectValue(dataVal.id,i,val.id)">
+                                                                <a>select</a>
+                                                            </li>
+                                                            <li *ngFor="let opt of val.options" (click)="setFilterValue(category,dataVal.id,val.id,i,opt.value,dataVal.category,i,opt?.name)">
+                                                                <a (click)="destinationPolicy(dataVal.id,i,dataVal.category,val.id)">{{opt.value
+                                                                    | translate}}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </ng-container>
+                                    <div class="form-group col-sm-2" *ngIf="category.get('Allowance')['controls'][i]['controls']['claimType'].value === 'hours'">
+                                        <label for="noOfHours">{{'No of Hours' | translate}} <span
+                                                class="cls-mandatory">*</span></label>
+                                        <input class="cls-input datepicker" (keyup)="calculateAllowance(i)" type="number" min="1" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)" formControlName="noOfHours" name="noOfHours" id="noOfHours{{i}}" placeholder="{{'Enter' | translate}} {{'No of Hours' | translate}}"
+                                            autocomplete="off" class="cls-custom-input form-control">
+                                    </div>
+                                    <div class="form-group col-sm-3 cls-search-select">
+                                        <label for="allowanceRate">{{ 'Allowance Rate' | translate}} <span
+                                                class="cls-mandatory">*</span></label>
+                                        <div class="cls-dropdown-container">
+                                            <em class="icon-3-dropdownarrow"></em>
+                                            <input class="form-control" type="text" formControlName="allowanceRate" name="allowanceRate" id="allowanceRate" data-toggle="dropdown" (click)="searchDropdown('fn-input-allowanceRate')" placeholder="{{'Select Allowance Rate' | translate}}" autocomplete="off"
+                                                readonly>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-input-allowanceRate" autocomplete="off" (keyup)="filterFunction('fn-input-allowanceRate','fn-ul-allowanceRate')">
+                                                <ul id="fn-ul-allowanceRate" class="live-search-list" *ngIf="allowancerateDrop[i]?.length >= 1">
+                                                    <li (click)="setFilterSelectValue(dataVal.id,i,'allowanceRate')">
+                                                        <a>select</a>
+                                                    </li>
+                                                    <li *ngFor="let data of allowancerateDrop[i];let drop = index" (click)="setFilterValue(category,dataVal.id,'allowanceRate',i,data.displayValue,dataVal.category,drop,data?.name)">
+                                                        <a>{{data.displayValue}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-12 cls-allowance-info" *ngIf="sixtyDate">
+                                        <em class="icon-16-info mr-1 cls-allowance-info-icon"></em>If the travel period exceeds <span class="cls-days-count" [ngClass]="{'d-none':(tripStart <= resultDate && tripEnd > resultDate) || (tripStart > resultDate)}">60
+                                            days, </span>
+                                        <span class="cls-days-count" *ngIf="(tripStart <= resultDate && tripEnd > resultDate) || (tripStart > resultDate)">{{result_date}}
+                                            , </span> then 50% of the total flat rate allowance amount can be claimed by the employee
+                                    </div>
+                                </div> -->
+                                <div class="row mt-3">
+                                    <div class="form-group col-sm-2 cls-allowance-box">
+                                        <span class="cls-allowance-heading">{{'Total Amount' | translate}}</span>
+                                        <span class="cls-allowance-curr">{{userCurrency}}</span>
+                                        <span class="cls-allowance-amt">{{category?.get('Allowance')['controls'][i]['controls']['amount']?.value
+                                            | number}}</span>
+                                        <!-- <input type="number" formControlName = "amount" name="amount" id="amount" placeholder="{{' Amount'| translate}}" autocomplete="off" class="cls-custom-input form-control cls-allowance-amt"> -->
+                                    </div>
+                                </div>
+                                <div class="cls-bdrtop py-2"></div>
+                                <div class="col-sm-12 cls-file-upload-container">
+                                    <div class="row">
+                                        <div class="col-sm-6 cls-attach pl-0">
+                                            <label for="Attachments Receipt(s)"><em class="icon-2-attach"></em>
+                                                <ng-container *ngIf="receiptVal[dataVal.id][i]?.length >= 1">
+                                                    {{receiptVal[dataVal.id][i].length}}
+                                                </ng-container>
+                                                {{'Attachment Receipt(s)' | translate}}
+                                                <ng-container *ngIf="policyData[dataVal.id][i]?.receiptMandatory === 'Y'">
+                                                    <span class="cls-mandatory">*</span>
+                                                </ng-container>
+                                            </label>
+                                            <span class="cls-file-upload" [ngClass]="{'cls-border-error':(submitted && getValidation('upload',dataVal.id,i)) }">
+                                                <span class="cls-dotted-line"></span>
+                                            <span class="cls-dotted-line"></span>
+                                            <span class="cls-dotted-line"></span>
+                                            <span class="cls-dotted-line"></span>
+                                            <button class="btn btn-primary cls-upload-button">{{'Choose File' |
+                                                    translate}}</button>
+                                            <span class="cls-or-span">{{'(Or)' | translate}}</span>
+                                            <span class="cls-drag-drop">{{'Drag and Drop' | translate}}</span>
+                                            <span class="cls-line"></span>
+                                            <span class="cls-recipt cls-a-hover" (click)="openReportRecipt(dataVal.id,i,'unsaved')">{{'Select from
+                                                    Receipt Vault' | translate}}</span>
+                                            <input type="file" class="cls-file-input" accept=".jpg,.jpeg,.png,.pdf" formControlName="upload" id="upload{{dataVal.id}}{{i}}" (change)="onSelectFile($event,dataVal.id,i)" multiple>
+                                            </span>
+                                            <div class="cls-upload-text">
+                                                <em class="icon-16-info"></em> JPEG, .JPG, .PNG,.PDF upto 2 MB
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 d-flex">
+                                            <ng-container *ngFor='let url of receiptVal[dataVal.id][i]; let j = index;'>
+                                                <span class="cls-image" [ngClass]="{'w-100' : url.type === 'application/pdf'}">
+                                                    <span class="cls-image-close text-center" id="{{url.receiptId}}"
+                                                        (click)="onItemDeleted(dataVal.id,i,j,url.receiptId)">
+                                                        <em class="icon-32-reject"></em>
+                                                    </span>
+                                                <img src="{{url.path}}.{{url.type}}" *ngIf="url.type !== 'application/pdf'" alt="Receipt{{j}}" (click)="imagePreview(url.path,url.type)">
+                                                <span class="cls-pdf" *ngIf="url.type === 'application/pdf'" (click)="previewPdf(url.path)">
+                                                        <span> {{url.name}}</span>
+                                                </span>
+                                                <span (click)="downloadImage(url.path,url.name,url.type)" class="cls-recipt-download-icon"  id="cls-img{{j}}">
+                                                    <em class="icon-55-download"></em>
+                                                </span>
+                                                </span>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- disclaimer starts -->
+                        <div *ngIf="expense[0].parentcategory.Meal[0].disclaimer?.length>0 && dataVal.id === 'Meal'" [ngStyle]="{'color': expense[0].parentcategory.Meal[0].disclaimer_color}">
+                            <p class="cls-disclaimer-notice">Notice</p>
+                            <div class="cls-disclaimer-content">
+                                <em class="icon-16-info mr-1 cls-allowance-info-icon" [ngStyle]="{'color': expense[0].parentcategory.Meal[0].disclaimer_color}" ></em>
+                                {{expense[0].parentcategory.Meal[0].disclaimer}}
+                            </div>
+                        </div>
+                        <div *ngIf="expense[0].parentcategory.Mileage[0].disclaimer?.length>0 && dataVal.id === 'Mileage'" [ngStyle]="{'color': expense[0].parentcategory.Mileage[0].disclaimer_color}">
+                            <p class="cls-disclaimer-notice">Notice</p>
+                            <div class="cls-disclaimer-content">
+                                <em class="icon-16-info mr-1 cls-allowance-info-icon" [ngStyle]="{'color': expense[0].parentcategory.Mileage[0].disclaimer_color}" ></em>
+                                {{expense[0].parentcategory.Mileage[0].disclaimer}}
+                            </div>
+                        </div>
+                        <!-- disclaimer ends -->
+                        <div class="row mt-4 cls-foot-btn" [ngClass]="{'d-none': gridlistJson.edited === false}">
+                            <div class="col-sm-8 cls-mbl-width">
+                                <div *ngIf="((category.get(dataVal.id)['controls'].length)-1) === i">
+                                    <button class="btn  cls-custom-btn cls-btn-primary cls-tabbtn cls-btnservicecall" [ngClass]="{'cls-disable-field':(personalDistance >= actualTotalKm) || (odometerEnd <= odometerStart)}" (click)="createExpense(dataVal.category,dataVal.id)" type="button">
+                                        <ng-container *ngIf="editResponse[dataVal.id]">
+                                            {{'Update' | translate}}
+                                        </ng-container>
+                                        <ng-container *ngIf="(editResponse | json) == '{}' || !(editResponse[dataVal.id])">
+                                            {{'Save' | translate}}
+                                        </ng-container>
+                                    </button>
+                                    <span>
+                                        <a href="javascript:;" class="cls-link cls-a-hover"
+                                            (click)="resetCategory(dataVal.id)">{{'Reset All' | translate}}</a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 cls-mbl-width1 text-right">
+                                <div class="cls-add-close-container">
+                                    <span class="cls-reset">
+                                        <a href="javascript:;" class="cls-link cls-a-hover"
+                                            (click)="resetCategoryItem(dataVal.id,i)">{{'Reset' | translate}}</a>
+                                    </span>
+                                    <button *ngIf="i > 0" class="btn btn-danger cls-close mr-2" (click)="removeCategory(dataVal.id,i,dataVal.color,dataVal.icon)">
+                                        <em class="icon-12-minus"></em><span>{{'Remove' | translate}}</span>
+                                    </button>
+                                    <button class="btn btn-primary cls-add mr-2" id='addExpense{{dataVal.id}}{{i}}' *ngIf="((category.get(dataVal.id)['controls'].length)-1) === i" (click)="categoryPushVal(dataVal.id,i+1,j)">
+                                        <em class="icon-11-plus"></em><span>{{'Add' | translate}}</span>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+            <!-- Mobile mileage report flow starts -->
+            <app-mileage-report-mobile *ngIf="deviceFlag" [dynamicData]="reportFields" [saveFlag]="gridlistJson" (gridlistJson)="mileageData($event)" [editInfo]="mileageEditData" [mileageReportData]="gridlistJson" [formValue]="category">
+            </app-mileage-report-mobile>
+            <!-- Mobile mileage report flow ends -->
+            <!-- Web view starts -->
+            <app-mileage-report-webview *ngIf="!deviceFlag && mileagrInterface && editViewWeb" [mileageWebData]="editResponse"  (flagChet)="itineraryClose($event)">
+            </app-mileage-report-webview>
+            <!-- Web view ends -->
+        </div>
+        <!-- drop area ends -->
+        <!-- create report ends -->
+        <!-- expense mode starts -->
+        <ng-container *ngIf="selectedVal && (gridlistJson | json) != '{}'">
+            <app-grid-list [gridview]="gridview" [depthViewData]="depthViewData" [gridlistData]="gridlistJson" (selectedval)="emptyCategory($event)" (editFlag)="editService($event)"></app-grid-list>
+        </ng-container>
+        <div class="row cls-footer-bar" *ngIf="selectedVal && (gridlistJson | json) != '{}'">
+            <div class="cls-mob-count-box col-sm-4 p-0">
+                <!-- <ng-container *ngIf="gridlistJson.categoryList.length >= 1"> -->
+                <span *ngIf="gridlistJson?.categoryList?.length > 3" class="cls-left-scroll" (click)="scrollExpenceType('left')"><em class="fa fa-caret-left" aria-hidden="true"></em></span>
+                <div class="cls-expense-type-container" id="fn-expense-type-container">
+                    <ng-container *ngFor="let sel of gridlistJson.categoryList;let index = index;">
+                        <span class="cls-desktop-type d-inline-block">
+                            <span class="cls-mode-count-box mr-3">{{sel.modetype | translate}}
+                                <span class="cls-top-mark">{{sel.modeCount}}</span>
+                        </span>
+                        </span>
+                    </ng-container>
+                </div>
+                <span *ngIf="gridlistJson?.categoryList?.length > 3" class="cls-right-scroll" (click)="scrollExpenceType('right')"><em class="fa fa-caret-right" aria-hidden="true"></em></span>
+                <!-- <ng-container *ngFor="let sel of gridlistJson.categoryList;let index = index">
+                        <span *ngIf="index > 3">
+                            {{sel.modetype | translate}}
+                        </span>
+                     </ng-container> -->
+                <!-- </ng-container> -->
+            </div>
+
+            <div class="col-sm-8 cls-mob-btn-box text-right " *ngIf="approvalFlag === ''">
+                <span class="cls-report-history mr-3" (click)="history()">
+                    <em class="icon-9-history"></em>{{'Report History' | translate}}
+                </span>
+                <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="showAdvanceAdjustment(true)" *ngIf="advanceAdjustmentBtn == true">
+                    <span>{{'Advance Adjustment' | translate}} </span>
+                    <span *ngIf="advanceAdjustmentCount !== null"> ({{advanceAdjustmentCount}})</span>
+                </button>
+                <!-- <button type="button" *ngIf="gridlistJson.edited === false" class="btn cls-btn-secondary cls-custom-btn" (click)="redirectList('report')"><span>{{'Back to List' | translate}}</span></button>                 -->
+                <ng-container *ngIf="gridlistJson.edited === true">
+                    <button type="button" class="btn cls-btn-secondary cls-custom-btn" *ngIf="showButton" (click)="redirectList('save')"><span>{{'Save' | translate}}</span></button>
+                    <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="redirectList('approval')">{{'Send For Approval' | translate}}</button>
+                    <!-- <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="redirectList('callback')">Call Back</button> -->
+                </ng-container>
+            </div>
+            <div class="col-sm-8 cls-mob-btn-box text-right pr-4" *ngIf="approvalFlag !== ''">
+                <!-- <ng-container *ngIf="approvalFlag !== ''">                     -->
+                <span class="cls-report-history mr-3" (click)="history()">
+                    <em class="icon-9-history"></em>{{'Report History' | translate}}
+                </span>
+                <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="showAdvanceAdjustment(true)" *ngIf="advanceAdjustmentBtn == true">
+                    <span>{{'Advance Adjustment' | translate}} </span>
+                    <span *ngIf="advanceAdjustmentCount !== null"> ({{advanceAdjustmentCount}})</span>
+                </button>
+                <ng-container *ngIf="approvalFlag === 'user'">
+                    <ng-container *ngIf="gridlistJson.edited === false">
+                        <!-- <button type="button"  class="btn cls-btn-secondary cls-custom-btn" (click)="redirectList('report')"><span>{{'Back to List' | translate}}</span></button> -->
+                        <button type="button" class="btn cls-btn-primary cls-custom-btn" *ngIf="gridlistJson?.buttonActions?.length >= 1 &&  gridlistJson?.status !== 'Approved'" (click)="redirectList('callback')">{{'Call Back' | translate}}</button>
+                    </ng-container>
+                    <ng-container *ngIf="gridlistJson.edited === true">
+                        <button type="button" *ngIf="showButton" class="btn cls-btn-secondary cls-custom-btn" (click)="redirectList('save')"><span>{{'Save' | translate}}</span></button>
+                        <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="redirectList('approval')">{{'Send For Approval' | translate}}</button>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="approvalFlag === 'finance'">
+                    <!-- <button type="button"  class="btn cls-btn-secondary cls-custom-btn"  (click)="redirectList('backfinance')"><span>{{'Back to List' | translate}}</span></button> -->
+                    <ng-container *ngIf="gridlistJson?.buttonActions?.length !== 0 && tabHistory < 3">
+                        <!-- <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="redirectList('settlereject')"><span>{{'Reject' | translate}}</span></button> 
+                            <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="redirectList('settlesendback')"><span>{{'Send Back' | translate}}</span></button>  -->
+                        <!-- <button type="button" class="btn cls-btn-primary cls-custom-btn cls-mob-20" (click)="redirectList('settle')">{{'Settle' | translate}}</button>  -->
+                        <span class="cls-report-reject-btn" (click)="redirectList('settlereject')">
+                            <em class="icon-32-reject"></em>
+                            <span class="cls-report-text">{{'Reject' | translate}}</span>
+                        </span>
+                        <span class="cls-report-send-btn" (click)="redirectList('settlesendback')">
+                            <em class="icon-35-callback"></em>
+                            <span class="cls-report-text">{{'Send Back' | translate}}</span>
+                        </span>
+                        <span class="cls-report-settle-btn" (click)="redirectList('settle')">
+                            <em class="icon-34-settle"></em>
+                            <span class="cls-report-text">{{'Settle' | translate}}</span>
+                        </span>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="approvalFlag === 'approver'">
+                    <!-- <button type="button"  class="btn cls-btn-secondary cls-custom-btn" (click)="redirectList('backapprover')"><span>{{'Back to List' | translate}}</span></button> -->
+                    <ng-container *ngIf="gridlistJson?.buttonActions?.length  > 1 && tabHistory < 3">
+                        <!-- <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="redirectList('reject')"><span>{{'Reject' | translate}}</span></button>  
+                            <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="redirectList('sendback')"><span>{{'Send Back' | translate}}</span></button> 
+                            <button type="button" class="btn cls-btn-primary cls-custom-btn cls-mob-20" (click)="redirectList('approvedReport')">{{'Approve' | translate}}</button>   -->
+                        <span class="cls-report-reject-btn" (click)="redirectList('reject')">
+                            <em class="icon-32-reject"></em>
+                            <span class="cls-report-text">{{'Reject' | translate}}</span>
+                        </span>
+                        <span class="cls-report-send-btn" (click)="redirectList('sendback')">
+                            <em class="icon-35-callback"></em>
+                            <span class="cls-report-text">{{'Send Back' | translate}}</span>
+                        </span>
+                        <span class="cls-report-approve-btn" (click)="redirectList('approvedReport')">
+                            <em class="icon-36-approved"></em>
+                            <span class="cls-report-text">{{'Approve' | translate}}</span>
+                        </span>
+                    </ng-container>
+                </ng-container>
+                <!-- </ng-container> -->
+            </div>
+        </div>
+        <!-- expense mode ends -->
+        <!-- mobile header starts-->
+        <div class="cls-mobile-header d-none">
+            <span class="cls-mobile-title">
+                <em class="icon-39-arrow" (click)="redirectList('report')"></em>
+                {{'Create Report' | translate}}
+            </span>
+            <span class="cls-mobile-icon-section">
+                <span (click)="triggerAction('theme')">
+                    <em class="icon-37-theme"></em>
+                </span>
+            <span (click)="triggerAction('notify')">
+                    <em data-feather="bell"></em>
+                </span>
+            </span>
+        </div>
+        <!-- mobile header ends-->
+    </div>
+</form>
+<ng-container *ngIf="showModal">
+    <app-imagepreview [ImageUrl]="imageUrl" (choosedVal)="closePreview($event)"></app-imagepreview>
+</ng-container>
+<app-alert *ngIf="imageFlag" [userInput]="imageContent" (choosedVal)="imageDelete($event)"></app-alert>
+<app-alert *ngIf="alertShow" [userInput]="alertContent" (choosedVal)="alertAction($event)"></app-alert>
+<app-alert *ngIf="resetShow" [userInput]="resetContent" (choosedVal)="resetAction($event)"></app-alert>
+<app-alert *ngIf="confirmation" [userInput]="confirmationContent" (choosedVal)="confirmAction($event)"></app-alert>
+<app-alert *ngIf="showAlert" [userInput]="dataForAlert" (choosedVal)="closeAlert()"></app-alert>
+<app-settleform *ngIf="settleform" [amount]="settleAmount" (settleFormVal)="settleReport($event)"></app-settleform>
+<app-reporthistory *ngIf="historyFlag" (closePopup)="historyClose($event)" [historyInput]="historyInput">
+</app-reporthistory>
+<app-advance-adjustment *ngIf="advanceAdjustmentFlag" [ReportData]="advanceReportData" [tableData]="advanceAdjustment" (closePopup)="showAdvanceAdjustment($event)"></app-advance-adjustment>
+<app-manual-reimbursement *ngIf="manualReimbursedFlag" [manualInput]="manualInput" (manualFormVal)="settleReport($event)"></app-manual-reimbursement>
+<app-report-recipt *ngIf="reportRecipt" [reportReciptList]="reportReciptListInput" (closePopup)="closeReportRecipt($event)"></app-report-recipt>
+<app-approval-alert *ngIf="approvalAlert" [approvalAlertHead]="approvalAlertHead" [approvalAlertInput]="approvalAlertInput" (choosedVal)="approvalAlertAction($event)"></app-approval-alert>
+<app-default-popup *ngIf="approvalPopupFlag" [approvalPopup]="approvalPopup" (choosedVal)="defaultPopup($event)"></app-default-popup>
+<div class="cls-hide">
+    <app-travel-statement *ngIf="travelStatement" [getOverallReportDetails]="getOverallReportDetails"></app-travel-statement>
+</div>
+<!-- pdf viewer starts -->
+<div class="modal fade cls-imagegalery" id="fn-pdf" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="medicalimages">
+    <div class="modal-dialog modal-dialog-centered modal-lg cls-documentmodel" role="document">
+        <span class="cls-top-close text-center" (click)="closepdf()">
+            <em class="icon-32-reject"></em>
+        </span>
+        <div class="modal-content">
+            <div class="modal-body cls-body-max">
+                <div class="cls-alignmid">
+                    <embed [src]="pdfPath" *ngIf="pdfPath" class="cls-pdf">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- pdf viewer ends -->

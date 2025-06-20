@@ -1,0 +1,347 @@
+<!-- <p>create-policy works!</p> -->
+<!-- Desc : create policy
+Author : Naveen.s
+Date : 05-Nov-2020 -->
+<a href="javascript:;" title="{{'Back To List' | translate}}" class="cls-back cls-a-hover mb-2"
+    (click)="redirectList()"><em class="ti-arrow-left"></em> {{'Back To List' | translate}}</a>
+<form [formGroup]="policyForm">
+    <!-- main container starts -->
+    <div class="cls-policy-container">
+        <!-- widget starts -->
+        <div class="cls-widget">
+            <app-widget class="cls-policy-widget" [widgetStatus]="widget"></app-widget>
+        </div>
+        <!-- widget ends -->
+        <div class="cls-policy-form row">
+            <div class="form-group col-sm-4">
+                <label for="policyName">{{'Policy Name' | translate}}
+                    <span class="cls-mandatory">*</span>
+                </label>
+                <input type="text" formControlName="policyName" (keypress)="stringValidation($event)"
+                    (focusout)='checkProfileName("policy")' name="policyName" id="policyName"
+                    placeholder="{{'Enter Policy Name' | translate}}" autocomplete="off"
+                    class="cls-custom-input form-control "
+                    [ngClass]="{'cls-error':(submitted && validation.policyName.errors)}">
+            </div>
+            <div class="form-group col-sm-3 cls-date">
+                <label for="startDate">{{'Start Date' | translate}}
+                    <span class="cls-mandatory">*</span>
+                </label>
+                <input type="text" onkeypress="return false;" class="cls-input datepicker"
+                    [ngClass]="{'cls-error':(submitted && validation.startDate.errors)}"
+                    (focus)="chooseDate('startDate')" [value]="policyForm.controls.startDate.value  | date: 'dd, MMM y'" id="startDate" formControlName="startDate" name="startDate"
+                    placeholder="{{'Start Date' | translate}}" autocomplete="off" class="cls-custom-input form-control">
+                <em class="fa fa-calendar-o cls-date-icon"></em>
+            </div>
+            <div class="form-group col-sm-3 cls-date">
+                <label for="endDate">{{'End Date' | translate}}
+                    <span class="cls-mandatory">*</span>
+                </label>
+                <input type="text" onkeypress="return false;" class="cls-input datepicker"
+                    [ngClass]="{'cls-error':(submitted && validation.endDate.errors)}" [value]="policyForm.controls.endDate.value  | date: 'dd, MMM y'" (focus)="chooseDate('endDate')"
+                    id="endDate" formControlName="endDate" name="endDate" placeholder="{{'End Date' | translate}}"
+                    autocomplete="off" class="cls-custom-input form-control">
+                <em class="fa fa-calendar-o cls-date-icon"></em>
+            </div>
+        </div>
+        <!-- page 1 starts -->
+        <div class="cls-first-container d-none" [ngClass]="{'d-block': firstPage === true}">
+            <div class="form-group col-sm-3 pl-0">
+                <label for="profileGroupId" class="d-block">{{'Profile Group' | translate}}
+                    <span class="cls-mandatory">*</span>
+                </label>
+                <select class="form-control cls-custom-input" (change)='checkProfileName("profile")'
+                    formControlName="profileGroupId" name="profileGroupId" placeholder="All" id="profileGroupId"
+                    [ngClass]="{'cls-error':(submitted && validation.profileGroupId.errors)}">
+                    <option value="">Select</option>
+                    <option *ngFor="let data of profileGroupList" value="{{data.id}}">{{data.name}}</option>
+                </select>
+            </div>
+            <div class="cls-button-box">
+                <!-- <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="previousPage('first')"><span>{{'Cancel' | translate}}</span></button> -->
+                <button type="button" class="btn cls-btn-secondary cls-custom-btn"
+                    (click)="redirectList()"><span>{{'Cancel' | translate}}</span></button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="pageChange('first')">{{'Next'
+                    | translate}}</button>
+            </div>
+        </div>
+        <!-- page 1 ends -->
+        <!-- page 2 starts -->
+        <div class="cls-second-container d-none" [ngClass]="{'d-block': secondPage === true}">
+            <div class="cls-main-dotted">
+                <span class="cls-strip">{{'Criteria’s Mapped' | translate}}</span>
+                <div class="cls-category-map">
+                    <div class="row w-100 mx-0">
+                        <div class="form-group ml-3">
+                            <span class="cls-label">{{'Amount Limited' | translate}} <span
+                                    class="cls-mandatory">*</span> :</span>
+                        </div>
+                        <div class="form-group col-sm-4 cls-search-select cls-amountmob">
+                            <div class="input-group">
+                                <span class="input-group-btn cls-currency-bar">
+                                    <input class="form-control cls-select" type="text" formControlName="currency"
+                                        name="currency" id="currency" placeholder="{{userCurrency}}" autocomplete="off"
+                                        readonly [ngClass]="{'cls-error':(submitted && validation.currency.errors)}">
+                                </span>
+                                <input type="number" (focusout)="setCategoryAmount('overall')"
+                                    formControlName="overallAmount" min="1"
+                                    onkeypress="return event.keyCode >= 47 && event.keyCode <=58"
+                                    oninput="this.value = Math.abs(this.value)" name="overallAmount" id="overallAmount"
+                                    placeholder="{{'Enter Amount' | translate}}" autocomplete="off"
+                                    class="cls-custom-input cls-border form-control "
+                                    [ngClass]="{'cls-error':(submitted && validation.overallAmount.errors)}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="cls-info-text">
+                                <em class="icon-16-info"></em>
+                                {{'Amount limit is applicable for all categories excluding override amount for specific
+                                categories' | translate}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group radio-group col-sm-4">
+                        <span class="cls-label">{{'Receipt Mandatory' | translate}} <span class="cls-mandatory"> *
+                            </span> : </span>
+                        <label class="cls-switches" (click)="changeStatus('','overall')">
+                            <input type="lever" formControlName="receiptMandatory" name="receiptMandatory">
+                            <em class="cls-switch-circle cls-round"
+                                [ngClass]="{'fn-switch-active' : policyForm.controls['receiptMandatory'].value === 'Y' ||  policyForm.controls['receiptMandatory'].value === true }"></em>
+                        </label>
+                    </div>
+                    <span class="cls-line mb-2"></span>
+                    <div class="row w-100 m-0">
+                        <div class="form-group col-sm-2 pr-0 ">
+                            <span class="cls-label">{{'Categories to be Mapped' | translate}} : </span>
+                        </div>
+                        <div class="form-group col-sm-10 cls-catid">
+                            <select class="col-sm-8 cls-select cls-multiple form-control "
+                                formControlName="chooseCategory" placeholder="All" multiple="multiple"
+                                id="cls-chooseExp">
+                                <!-- <option selected=>{{'Select Categories' | translate}}</option> -->
+                                <ng-container *ngIf="expense[0]?.parentcategory">
+                                    <ng-container
+                                        *ngFor="let val of expense[0].parentcategory  | keyvalue;let i = index">
+                                        <optgroup label="{{val.key}}" *ngIf="val.key!='Allowance'">
+                                            <option value="{{option.id}}"
+                                                *ngFor="let option of expense[0].parentcategory[val.key]">
+                                                <em class="{{option.icon}} cls-iconalign"
+                                                    [ngStyle]="{'color':option.color}"></em>
+                                                {{option.name | translate}}
+                                            </option>
+                                        </optgroup>
+                                    </ng-container>
+                                </ng-container>
+                            </select>
+                            <span class="cls-info-text">
+                                <em class="icon-16-info"></em>
+                                {{'Select the categories for which an amount could be override' | translate}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="cls-clone-field" *ngIf="choosedCriteria.length >= 1">
+                        <ng-container *ngFor="let data of choosedCriteria; let last = last;">
+                            <ng-container *ngIf="policyForm.controls[data]">
+                                <div class="row w-100 m-0 {{data}}" formGroupName="{{data}}">
+                                    <div class="form-group col-sm-2 pr-0">
+                                        <span class="cls-label cls-center-label">{{ data | translate}} <span
+                                                class="cls-mandatory">*</span> : </span>
+                                    </div>
+                                    <div class="form-group col-sm-2 cls-amountmob">
+                                        <span class="cls-input-label">{{'Override Amount' | translate}}</span>
+                                        <input type="number" (focusout)="setCategoryAmount('category')"
+                                            formControlName="amount" min="1" onkeydown="return event.keyCode !== 69"
+                                            oninput="this.value = Math.abs(this.value)" name="amount" id="amount"
+                                            placeholder="{{'Enter Amount' | translate}}" autocomplete="off"
+                                            class="cls-custom-input form-control"
+                                            [ngClass]="{'cls-error':(submitted && validation[data]['controls'].amount.errors)}">
+                                        <span class="cls-amount-hotel" *ngIf="data === 'Hotel'"
+                                            (click)="changeStatus(data,'Hotel')">
+                                            <em class="icon-40-checkbox-empty"
+                                                *ngIf="policyForm.controls[data]?.value['hotelPerDayViolation'] === 'N'"></em>
+                                            <em class="icon-41-checkbox-fill"
+                                                *ngIf="policyForm.controls[data]?.value['hotelPerDayViolation'] === 'Y'"></em>
+                                            <span class="">Amount per day</span>
+                                        </span>
+                                        <!-- [ngClass]="{'cls-error':(submitted && validation[data].controls.amount.errors)}"  -->
+                                    </div>
+                                    <div class="form-group col-sm-2 pr-0 cls-receiptmobile">
+                                        <span class="cls-label">{{'Receipt Mandatory' | translate}} <span
+                                                class="cls-mandatory">*</span></span>
+                                        <label class="cls-switches" (click)="changeStatus(data,'categories')">
+                                            <input type="checkbox" formControlName="receipt" name="receipt">
+                                            <em class="cls-switch-circle cls-round"
+                                                [ngClass]="{'fn-switch-active' : policyForm.controls[data]?.value['receipt'] === 'Y' ||  policyForm.controls[data]?.value['receipt'] === true }"></em>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3 text-left">
+                                        <span class="cls-override cls-a-hover" (click)="openOverride(data)">{{'Override
+                                            with City Groups' | translate}}</span>
+                                        <!-- <span class="cls-override-value" *ngIf="overrideCityVal[data]"> -->
+                                        <ng-container *ngIf="overrideCityVal[data]">
+                                            <span class="cls-override-value" *ngFor="let item of overrideCityVal[data]">
+                                                <span class="cls-text cls-hover-tooltip">{{item?.cityGroupName}}
+                                                    <em class="icon-16-info"></em>
+                                                    <span class="cls-tool">{{'Amount' | translate}} -
+                                                        {{item?.cityAmount}}</span>
+                                                </span>
+                                                <!-- <span class="cls-text">{{item?.cityAmount}}</span> -->
+                                            </span>
+                                        </ng-container>
+                                        <!-- <em class="icon-32-reject"></em> -->
+                                        <!-- </span> -->
+                                    </div>
+                                    <div class="col-sm-3 text-left" *ngIf="addRuleShowing">
+                                        <span class="cls-override cls-a-hover" (click)="openAddRule(data)">{{'+Add Rule'
+                                            | translate}}</span>
+                                        <ng-container *ngIf="addRuleUserDate[data]">
+                                            <span class="cls-override-value"
+                                                *ngIf="addRuleUserDate[data].approval.status == 'checked'">
+                                                <span class="cls-text cls-hover-tooltip">Auto approve
+                                                    <em class="icon-16-info"></em>
+                                                </span>
+                                            </span>
+                                            <span class="cls-override-value"
+                                                *ngIf="addRuleUserDate[data].rejection.status == 'autoBlock'">
+                                                <span class="cls-text cls-hover-tooltip"> Block
+                                                    <em class="icon-16-info"></em>
+                                                </span>
+                                            </span>
+                                            <span class="cls-override-value"
+                                                *ngIf="addRuleUserDate[data].rejection.status == 'autoReject'">
+                                                <span class="cls-text cls-hover-tooltip"> Auto Reject
+                                                    <em class="icon-16-info"></em>
+                                                </span>
+                                            </span>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <span *ngIf="!last" class="cls-line mb-2"></span>
+                        </ng-container>
+                    </div>
+                    <div class="row w-100 mx-0 mt-4">
+                    </div>
+                </div>
+            </div>
+            <div class="cls-button-box">
+                <button type="button" class="btn cls-btn-secondary cls-custom-btn"
+                    (click)="previousPage('second')"><span>{{'Back' | translate}}</span></button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="pageChange('second')">{{'Next'
+                    | translate}}</button>
+            </div>
+        </div>
+        <!-- page 2 ends -->
+        <!-- page 3 starts -->
+        <div class="cls-third-container d-none" [ngClass]="{'d-block': thirdPage === true}">
+            <div class="cls-main-dotted">
+                <span class="cls-strip">{{'Select Mileage' | translate}}</span>
+                <div formArrayName="mileageDetails">
+                    <ng-container
+                        *ngFor="let data of policyForm.get('mileageDetails')['controls']; let i=index; let last = last">
+                        <div class="cls-milage-box" formGroupName="{{i}}">
+                            <span></span>
+                            <div class="row w-100 m-0">
+                                <div class="form-group cls-mile-width col-sm-2 pr-0">
+                                    <span class="cls-label">{{'Mileage Type' | translate}} <span
+                                            class="cls-mandatory">*</span> : </span>
+                                </div>
+                                <div class="form-group radio-group col-sm-3 cls-mobwidth">
+                                    <label for="KM" class="cls-radio mr-3"
+                                        [ngClass]="{'cls-radio-on' : policyForm.get('mileageDetails')['controls'][i]['controls']['mileage'].value === 'KM'}">
+                                        <input formControlName="mileage" type="radio" value="KM" id="KM{{i}}"
+                                            name="mileage">
+                                        <em aria-hidden="true" class="icon-7-radio-on"
+                                            *ngIf="policyForm.get('mileageDetails')['controls'][i]['controls']['mileage'].value === 'KM'"></em>
+                                        <em aria-hidden="true" class="icon-6-radio-off"
+                                            *ngIf="policyForm.get('mileageDetails')['controls'][i]['controls']['mileage'].value === 'mile'"></em>
+                                        {{'KM' | translate}}
+                                    </label>
+                                    <label for="mile" class="cls-radio  mr-3"
+                                        [ngClass]="{'cls-radio-on' : policyForm.get('mileageDetails')['controls'][i]['controls']['mileage'].value === 'mile'}">
+                                        <input formControlName="mileage" type="radio" value="mile" id="mile{{i}}"
+                                            name="mileage">
+                                        <em aria-hidden="true" class="icon-7-radio-on"
+                                            *ngIf="policyForm.get('mileageDetails')['controls'][i]['controls']['mileage'].value === 'mile'"></em>
+                                        <em aria-hidden="true" class="icon-6-radio-off"
+                                            *ngIf="policyForm.get('mileageDetails')['controls'][i]['controls']['mileage'].value === 'KM'"></em>
+                                        {{'Mile' | translate}}
+                                    </label>
+                                </div>
+                                <div class="cls-add-close-container">
+                                    <button class="btn btn-danger cls-close mr-2" *ngIf="i !== 0"
+                                        (click)="actionControl('remove',i)">
+                                        <em class="icon-12-minus"></em><span>{{'Remove' | translate}}</span>
+                                    </button>
+                                    <button class="btn btn-primary cls-add mr-2" (click)="actionControl('add',i)">
+                                        <em class="icon-11-plus"></em><span>{{'Add' | translate}}</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row w-100 m-0">
+                                <div class="form-group col-sm-4">
+                                    <label for="vehicleType">{{'Vehicle Type' | translate}} <span
+                                            class="cls-mandatory">*</span> </label>
+                                    <input type="text" (keypress)="stringValidation($event)"
+                                        formControlName="vehicleType" name="vehicleType" id="vehicleType"
+                                        placeholder="{{'Enter Vehicle Type' | translate}}" autocomplete="off"
+                                        class="cls-custom-input form-control "
+                                        [ngClass]="{'cls-error':(submitted && mileageValidation[i]['controls'].vehicleType.errors)}">
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label for="mileageCost"
+                                        class="text-capitalize">{{policyForm.get('mileageDetails')['controls'][i]['controls']['mileage'].value
+                                        | translate}}{{' Cost' | translate}} <span class="cls-mandatory">*</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-btn cls-currency-bar">
+                                            <input class="form-control cls-select" type="text"
+                                                formControlName="currency" name="currency" id="currency"
+                                                placeholder="{{userCurrency}}" autocomplete="off" readonly
+                                                [ngClass]="{'cls-error':(submitted && mileageValidation[i]['controls'].currency.errors)}">
+                                        </div>
+                                        <input type="number" (focusout)="setCategoryAmount('milage')"
+                                            formControlName="mileageCost" min="1"
+                                            name="mileageCost"
+                                            id="mileageCost" placeholder="{{'Enter Amount' | translate}}"
+                                            autocomplete="off" class="cls-custom-input cls-border form-control "
+                                            [ngClass]="{'cls-error':(submitted && mileageValidation[i]['controls'].mileageCost.errors)}">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label for="maxMileage" class="text-capitalize">{{'Max ' | translate
+                                        }}{{policyForm.get('mileageDetails')['controls'][i]['controls']['mileage'].value
+                                        | translate}}{{' Allowed' | translate}}</label>
+                                    <input type="number" formControlName="maxMileage" name="maxMileage" id="maxMileage"
+                                        placeholder="{{'Enter Max Mileage' | translate}}" autocomplete="off"
+                                        class="cls-custom-input form-control " min="1"
+                                        onkeypress="return event.keyCode >= 47 && event.keyCode <=58"
+                                        oninput="this.value = Math.abs(this.value)"
+                                        [ngClass]="{'cls-error':(submitted && mileageValidation[i]['controls'].maxMileage.errors)}">
+                                </div>
+                            </div>
+                            <span *ngIf="!last" class="cls-line mb-2"></span>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+            <div class="cls-button-box">
+                <button type="button" class="btn cls-btn-secondary cls-custom-btn"
+                    (click)="previousPage('third')"><span>{{'Back' | translate}}</span></button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn"
+                    *ngIf="actionType != 'edit'"
+                    (click)="pageChange('third')">{{'Create' | translate}}</button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn"
+                    *ngIf="actionType === 'edit'" (click)="updatePolicy()">{{'Update'
+                    | translate}}</button>
+            </div>
+        </div>
+        <!-- page 3 ends -->
+    </div>
+    <!-- main container ends -->
+</form>
+<!-- <app-alert *ngIf="alertShow" [userInput]="alertContent" (choosedVal)="alertAction($event)"></app-alert> -->
+<app-override-amount *ngIf="overrideAmount" [userInput]="overrideAlertVal" (choosedVal)="overrideVal($event)">
+</app-override-amount>
+<app-add-rule *ngIf="addRule" [userInputAddRule]="addRuleAlertVal" (selectedVal)="addRuleVal($event)"></app-add-rule>

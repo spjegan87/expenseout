@@ -1,0 +1,45 @@
+@import'../../../../assets/scss/variable.scss';
+// breadcrumb starts
+.page-navigation {
+  margin-left: -1em;
+  margin-top:30px;
+
+  nav {
+    background: none;
+    box-shadow: none;
+    height: unset;
+    line-height: 0px;
+    ol {
+      background: transparent;
+      box-shadow: none;
+      margin-bottom: 9px;
+      display: flex;
+      align-items: flex-end;
+      line-height: 1px;
+      li {
+        &.breadcrumb-item{
+          font-size: 16px;
+          color: $BLACK;
+          &:before{
+            margin-right: 5px;
+          }
+        }
+        a {
+          font-size: 13px;
+          color: #666; 
+          &.active {
+          color: #005aaa;
+           margin-left: -5px;
+          pointer-events: none;
+           
+          }
+        }
+      }
+    }
+  }
+  .breadcrumb-item+.breadcrumb-item::before{
+    color:#999;
+    font-size: 9px;
+  }
+}
+// breadcrumb ends

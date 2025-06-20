@@ -1,0 +1,81 @@
+// Desc : override amount
+// Author : Naveen.s
+@import '../createcategory/createcategory.component.scss';
+.cls-alert-container{
+    .cls-popup{
+        .cls-content{
+            padding: 15px;
+            margin-left: unset;
+            margin-right: unset;
+            margin-top: unset;
+            .cls-btns{
+                height: 170px;
+                overflow-y: scroll;
+                .cls-error{
+                    border-color: $ERROR;
+                }
+                .cls-currency-bar{
+                    width: 30%;
+                    .cls-dropdown-container{
+                        position: relative;
+                        em{
+                            position: absolute;
+                            font-size: 8px;
+                            color: #999;
+                            right: 6px;
+                            top: 12px;
+                        }
+                        .dropdown-menu{
+                            width: 160px !important;
+                        }
+                        li{
+                            padding: 7px 6px 0px 10px;
+                            cursor: pointer;
+                        }
+                    }
+                    .cls-select{
+                        padding: 0 5px;
+                        border-top-right-radius: 0 !important;
+                        border-bottom-right-radius: 0 !important;
+                    }
+                }
+                .cls-search-select {
+                    .cls-dropdown-container {
+                        em {
+                            right: -2px;
+                            top: 3px;
+                        }
+                    }
+                }
+                .cls-border{
+                    border-top-left-radius: 0 !important;
+                    border-bottom-left-radius: 0 !important;
+                }
+                .cls-currency-border{
+                    border-top-right-radius: 0 !important;
+                    border-bottom-right-radius: 0 !important;
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 480px) {
+    .cls-popup{
+        .cls-alert-icon{
+            padding: 0;
+            .cls-header{
+                display: none;
+            }
+        }
+    }
+}
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-popup{
+        .cls-alert-icon{
+            padding: 0;
+            .cls-header{
+                display: none;
+            }
+        }
+    }
+}

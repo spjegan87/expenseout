@@ -1,0 +1,65 @@
+@import '../advancealert/advancealert.component.scss';
+@import '../../../../assets/scss/all';
+.cls-popup {
+    .cls-content {
+        span {
+            font: 14px "ProximaRegular";
+            line-height: 30px;
+            display: inline-block;
+            &.cls-w40 {
+                width: 40%;
+            }
+            &.cls-w10 {
+                width: 10%;
+            }
+            &.cls-w50 {
+                width: 50%;
+            }
+        }
+        .cls-mobmaxhgt {
+            max-height: 250px;
+            overflow-y: scroll;
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .cls-alert-container {
+        .cls-popup {
+            .cls-content {
+                .cls-mobmaxhgt {
+                    overflow-y: auto;
+                    max-height: 40vh;
+                }
+                span {
+                    &.cls-head {
+                        margin-bottom: 10px !important;
+                        padding-bottom: 10px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    .cls-alert-container {
+        .cls-popup {
+            .cls-content {
+                span {
+                    &.cls-head {
+                        margin-bottom: 10px !important;
+                        padding-bottom: 10px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:$mobile-min) and (max-width:$mobile-max) {
+    .cls-popup {
+        width: 72%;
+        margin: 0 8px;
+    }
+}

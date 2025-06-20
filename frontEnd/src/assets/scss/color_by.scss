@@ -1,0 +1,898 @@
+// Yellow Theme Start
+
+body.black {
+	table,thead,tbody{
+		color: rgb(255, 255, 255);
+	}
+	.content-body {
+		background: $BLACKMAINBACKGROUND !important;
+	}
+	.cls-mbl-add {
+		box-shadow: unset;
+	}
+	.cls-top {
+		a {
+			color: #1f1f1f !important;
+		}
+	}
+	.cls-select {
+		opacity: 0.8;
+		color: #c3c3c3;
+		border: 1px solid rgb(69, 76, 102);
+		background: right 50%/15% 20% no-repeat url('../images/icons/icon-3-dropdownarrow.svg') #313852;
+	}
+	//policy list strip color
+	.cls-catdet{
+		color:$PRIMARYCOLOR;	
+		background: $BLACKMAINBACKGROUND;
+		border-color: $WHITE;
+		em{
+			color: $BDRLIGHT;
+		}
+	}
+	//breadcrum start
+	.page-navigation {
+		nav {
+			ol {
+				li.breadcrumb-item {
+					a {
+						color: $WHITE !important;
+					}
+					a.active {
+						color: $PRIMARYCOLOR !important;
+					}
+					&::before {
+						color: $WHITE;
+					}
+				}
+			}
+		}
+	}
+	.cls-custom-input{
+		background: black;
+		color: $WHITE;
+	}
+	.customfilterrange,
+	.customrange {
+		background: $BLACKBACKGROUND !important;
+		color: $WHITE;
+	}
+	.daterangepicker.opensright .ranges:before {
+		border-top: 7px solid #3b425c;
+	}
+	.cls-filter-icon {
+		background: #313852;
+		color: $WHITE !important;
+	}
+	//breadcrum ends
+	// header icon
+	.header {
+		background: $BLACKBACKGROUND !important;
+		.header-body {
+			.header-body-right {
+				.navbar-nav {
+					.nav-item {
+						.nav-link {
+							color: $WHITE !important;
+						}
+					}
+				}
+			}
+		}
+	}
+	// language box starts
+	.cls-langactive {
+		a.active {
+			color: $BLACK !important;
+		}
+	}
+	// language box ends
+	//right header icons starts
+	.header-body-right {
+		.navbar-nav {
+			.nav-item {
+				a {
+					&:hover {
+						svg.feather,
+						em {
+							color: $BLACK !important;
+						}
+					}
+				}
+			}
+		}
+	}
+	//right header icon ends
+	// theme open box starts
+	.cls-theme-box {
+		background: $BLACKBACKGROUND !important;
+		.cls-light-dark {
+			border-color: $WHITE !important;
+			.cls-light-img,
+			.cls-dark-img {
+				.cls-text {
+					color: $WHITE;
+				}
+			}
+		}
+	}
+	// theme open box starts
+	.cls-popup .cls-footer {
+		background: $BLACKMAINBACKGROUND !important;
+	}
+	.cls-mobile-navbar {
+		background: $BLACKBACKGROUND;
+		.cls-circle {
+			background: $BLACKMAINBACKGROUND !important;
+		}
+		.cls-mobile-ul {
+			li {
+				em,
+				a {
+					color: $WHITE !important;
+				}
+				.cls-mobile-myprofile{
+					background: $BLACKMAINBACKGROUND !important;
+				}
+			}
+		}
+	}
+	.cls-desc {
+		.cls-mandatory{
+			color: $ERROR !important;
+		}
+		span {
+			color: $WHITE;
+		}
+	}
+	label {
+		color: $WHITE;
+	}
+	.form-wrapper {
+		background: $BLACKBACKGROUND;
+	}
+	//autocomplete
+	.ui-widget.ui-widget-content {
+		background: $BLACKBACKGROUND;
+		color: $WHITE;
+		// border-color: $DARKBORDER;
+	}
+	.cls-first {
+		background: $BLACKBACKGROUND;
+		box-shadow: 0px 0px 6px -2px $WHITE;
+	}
+	.cls-lang {
+		background: $BLACKBACKGROUND;
+	}
+	.header {
+		div:nth-child(2) {
+			ul.navbar-nav:first-child {
+				background: $BLACKBACKGROUND;
+				// li a{
+				//   color: $DARKTEXTCOLOR !important;
+				// }
+			}
+		}
+	}
+	// dashboard starts
+	.cls-dashboard-container {
+		background: $BLACKMAINBACKGROUND;
+		color: rgb(255, 255, 255);
+		// filter starts
+		.cls-filter-container {
+			.cls-filter-icon {
+				background: $WHITE;
+				color: $WHITE !important;
+			}
+		}
+		// filter ends
+		// user dashboard starts
+		.cls-user-dashboard {
+			.cls-card-container {
+				.cls-card-box {
+					.cls-box-1 {
+						background: $BLACKBACKGROUND !important;
+						border-color: $WHITE !important;
+						&:hover {
+							box-shadow: none !important;
+						}
+					}
+				}
+				.cls-chart-box {
+					.cls-chart-bar {
+						background: $BLACKBACKGROUND !important;
+						border-color: $WHITE !important;
+						&:hover {
+							box-shadow: none !important;
+						}
+					}
+				}
+				.cls-create-bar,
+				.cls-mob-create-bar {
+					border-color: $WHITE !important;
+				}
+			}
+			.nav-tabs {
+				border-bottom-color: $WHITE !important;
+				li.nav-item {
+					.nav-link {
+						color: $WHITE !important;
+					}
+				}
+			}
+		}
+		// user dashboard ends
+		//admin dashboard starts
+		.cls-admin-dashboard {
+			.cls-card-container {
+				.cls-chart-title{
+					background: $BLACKBACKGROUND !important;
+					color: rgb(250, 250, 250);
+				}
+				.cls-card-box {
+					.cls-box-1,
+					.cls-approvel-report,
+					.cls-spending-cat,
+					.cls-mob-create-bar {
+						background: $BLACKBACKGROUND !important;
+						border-color: $WHITE !important;
+						&:hover {
+							box-shadow: none !important;
+						}
+					}
+					.cls-approvel-report {
+						.nav-tabs {
+							border-bottom-color: $WHITE !important;
+							li.nav-item {
+								.nav-link {
+									color: $WHITE;
+									&.active {
+										background: $BLACKMAINBACKGROUND !important;
+										color: $WHITE;
+									}
+								}
+							}
+						}
+					}
+			
+				}
+				.cls-chart-box {
+					.cls-create-bar {
+						border-color: $WHITE !important;
+					}
+					.cls-chart-bar,
+					.cls-spending-user {
+						background: $BLACKBACKGROUND !important;
+						border-color: $WHITE !important;
+						&:hover {
+							box-shadow: none !important;
+						}
+					}
+				}
+			}
+		
+			.cls-listheader{
+				background: $BLACKMAINBACKGROUND !important;
+			}
+		}
+		//admin dashboard ends
+	}
+	// dashboard ends
+	//policy container starts
+	.cls-policy-container {
+		.cls-second-container {
+			.cls-main-dotted {
+				.cls-category-map {
+					.cls-clone-field {
+						border-color: $WHITE !important;
+					}
+				}
+				.cls-override-value{
+					color:$PRIMARYCOLOR;	
+					background: $BLACKBACKGROUND !important;
+					border-color: $WHITE !important;
+					em{
+						color: $BDRLIGHT !important;
+					}
+				}
+			}
+		}
+		.cls-main-dotted {
+			background: $BLACKMAINBACKGROUND !important;
+			// border-color: $DARKBORDER !important;
+		}
+		.cls-label,.cls-input-label{
+			color: $WHITE !important;
+		}
+		.cls-widget {
+			.step3 {
+				.steps {
+					.widget {
+						a {
+							color: $WHITE !important;
+						}
+					}
+				}
+			}
+		}
+	}
+	//policy container ends
+	//alert container starts
+	.cls-alert-container {
+		.cls-popup {
+			background: $BLACKBACKGROUND !important;
+			textarea {
+				background: $BLACKBACKGROUND;
+				border-color: $WHITE;
+				color: $WHITE
+			}
+			.cls-content{
+				.cls-title{
+					color: $WHITE !important;
+				}
+				.cls-colorinput{
+					.cls-inputbox{
+						background: $BLACKBACKGROUND !important;
+						border-color: $WHITE !important;
+					}
+				}
+			}
+		}
+	}
+	//alert container ends
+	//primary button starts
+	.cls-btn-secondary {
+		background: $BLACKMAINBACKGROUND !important;
+	}
+	//primary button starts
+	//history container ends
+	.cls-history-container {
+		.cls-main-popup {
+			background: $BLACKBACKGROUND !important;
+			.cls-btn{
+				background: $BLACKMAINBACKGROUND !important;
+				.cls-currency{
+					color: $WHITE !important;
+				}
+			}
+			.cls-popup {
+				.cls-header {
+					.cls-title {
+						color: $BLACKMAINBACKGROUND !important;
+						em {
+							color: $PRIMARYCOLOR !important;
+						}
+					}
+				}
+				.cls-history-data {
+					.cls-circle,
+					.cls-text1 {
+						background: $BLACKBACKGROUND !important;
+					}
+					.cls-inner-row{
+						.cls-amount{
+							color: $WHITE !important;
+						}	
+					}
+				}
+			}
+		}
+	}
+	//history container ends
+	//settle form starts
+	.cls-settle-container {
+		background: $BLACKBACKGROUND;
+		box-shadow: 0px 1px 7px 1px #454c66;
+		&::after {
+			background: $BLACKBACKGROUND;
+		}
+	}
+	//settle form ends
+	.cls-main-container,
+	.cls-main-box {
+		background: $BLACKMAINBACKGROUND !important;
+		// filter starts
+		.cls-filter-container {
+			.cls-filter-icon {
+				background: $WHITE;
+				color: $WHITE !important;
+			}
+		}
+		.cls-mbl-filter-icon{
+			box-shadow: unset;
+		}
+		// filter ends
+		//image preview starts
+		.cls-modal-container {
+			.cls-popup {
+				.cls-btns {
+					background: $BLACKBACKGROUND;
+				}
+			}
+		}
+		//image preview ends
+		//table starts
+		.cls-table {
+			.cls-view {
+				color: $WHITE !important;
+			}
+			tr {
+				.cls-list-icon {
+					&:hover {
+						color: $WHITE;
+					}
+				}
+				.ti-trash,
+				.icon-32-reject {
+					color: rgb(255, 255, 255);
+				}
+				.ti-pencil {
+					color: rgb(255, 255, 255);
+				}
+				.icon-34-settle,
+				.icon-33-sendforapproval,
+				.icon-36-approved {
+					color: rgb(255, 255, 0);
+				}
+				.icon-35-callback,
+				.ti-eye {
+					color: rgb(255, 255, 0);
+					&:hover {
+						background: rgb(255, 255, 0);
+					}
+				}
+			}
+			&:hover {
+				.dataTables_empty {
+					background-color: $BLACKBACKGROUND !important;
+				}
+			}
+		}
+		// table ends
+		//tab starts
+		.cls-tab-container {
+			.tab-content>.active {
+				background: $BLACKBACKGROUND !important;
+				box-shadow: none !important;
+			}
+			.nav-tabs {
+				.nav-item {
+					.nav-link {
+					color: rgb(255, 255, 255);
+							background: rgb(0, 0, 0);
+					
+						&:hover {
+							color: $WHITE;
+							background: none !important;
+							.cls-shape1 {
+								background: $BLACKMAINBACKGROUND !important;
+							}
+						}
+						.cls-shape {
+							background: $BLACKMAINBACKGROUND !important;
+							border-left: 1px solid $BDRLIGHT !important;
+						}
+						.cls-shape1 {
+							background: $BLACKMAINBACKGROUND!important;
+						}
+					}
+				}
+				.nav-link.active {
+					.cls-shape1 {
+						background: $BLACKBACKGROUND !important;
+					}
+				}
+			}
+		}
+		.cls-advance-box {
+			.cls-inner-adv {
+				background: $BLACKBACKGROUND;
+			}
+		}
+		//tab ends
+		//search with select starts
+		.cls-search-select {
+			.cls-dropdown-container {
+				em {
+					color: $WHITE !important;
+				}
+				.dropdown-menu {
+					.cls-dropdown-input {
+						background: $BLACKBACKGROUND;
+					}
+				}
+			}
+		}
+		//search with select starts
+		.cls-allowance-box{
+			.cls-allowance-heading,.cls-allowance-curr,.cls-allowance-amt,.cls-allowance-days{
+				color: $WHITE !important;
+			}
+		}
+		// expense vault starts
+		.cls-mobile-list {
+			.cls-mbl-strip {
+				background: $BLACKBACKGROUND !important;
+				.cls-mbl-img-container {
+					background: $BLACKBACKGROUND;
+					img {
+						border-color: $WHITE !important;
+					}
+				}
+			}
+		}
+		.cls-upload-main {
+			.cls-info-container {
+				.cls-info-text {
+					color: $WHITE !important;
+				}
+			}
+			.cls-image-upload-box {
+				border-color: $WHITE!important;
+			}
+		}
+		.cls-instruction-container {
+			.cls-image-flow {
+				.cls-line,
+				.cls-line1,
+				.cls-line2,
+				.cls-view-report,
+				.cls-line-x {
+					border-color: $WHITE !important;
+				}
+			}
+		}
+		.cls-container-policy{
+			.cls-policy-loader{
+				.cls-loading-stage {
+					background: $BLACKMAINBACKGROUND !important;
+				}
+			}
+		}
+		// .cls-inner-upload{
+		//   .cls-preview-img{
+		//     .cls-inner-image{
+		//       .cls-bottom-icon{
+		//         .cls-scan-icon,.cls-delete-icon{
+		//           background: $DARKBACKGROUND !important;
+		//           border-color: $DARKBORDER !important;
+		//         }
+		//       }
+		//     }
+		//   }
+		// }
+		.cls-image-container,
+		.cls-form-container {
+			background: $BLACKMAINBACKGROUND !important;
+		}
+		.cls-form-container {
+			.cls-clonefield {
+				// background: $DARKBACKGROUND !important;
+				.cls-radio {
+					color: $WHITE !important;
+				}
+				.cls-radio-on {
+					color: $PRIMARYCOLOR !important;
+				}
+				.cls-button-container {
+					.cls-create-report-container {
+						background: $BLACKBACKGROUND !important;
+						.cls-shape1,
+						.cls-shape {
+							background: $BLACKBACKGROUND!important;
+						}
+						.cls-inner-report {
+							.cls-existing-report {
+								.cls-reports-strip {
+									background: $BLACKBACKGROUND !important;
+								}
+							}
+						}
+					}
+				}
+			}
+			.cls-mbl-footer {
+				background: $BLACKBACKGROUND !important;
+			}
+		}
+		// expense vault ends
+	}
+	// create report form starts
+	.cls-main-box {
+		.step3 {
+			.steps {
+				.cls-bdr {
+					background: $WHITE !important;
+				}
+				.widget {
+					a {
+						color: $WHITE !important;
+					}
+					.step-number {
+						background: $WHITE !important;
+					}
+				}
+				.widget.active {
+					.step-number {
+						background: $PRIMARYCOLOR !important;
+					}
+					a {
+						color: $PRIMARYCOLOR !important;
+					}
+				}
+			}
+		}
+		.cls-drop-div {
+			.cls-nofield {
+				background-color: $BLACKMAINBACKGROUND;
+				.cls-frequent {
+					.cls-txt {
+						color: $WHITE;
+					}
+					.cls-drag-box {
+						background: $BLACKBACKGROUND;
+						color: $WHITE;
+						border-color: $WHITE;
+					}
+				}
+			}
+			.cls-field {
+				background: $BLACKBACKGROUND;
+				border-color: $WHITE;
+				.cls-clonefield {
+					.cls-radio-on {
+						color: $PRIMARYCOLOR;
+					}
+					.cls-container-policy{
+						.cls-policy-loader{
+							.cls-loading-stage {
+								background: $BLACKBACKGROUND !important;
+							}
+						}
+					}
+				}
+				.cls-main {
+					.cls-add-close-container {
+						button {
+							background: $BLACKMAINBACKGROUND;
+						}
+					}
+				}
+			}
+		}
+		// list and grid view starts
+		.cls-card-container {
+			.cls-inner-container {
+				.cls-travel-bar,
+				.cls-amount-details {
+					background: $BLACKBACKGROUND !important;
+					border-color: $WHITE !important;
+				}
+				.cls-travel-bar {
+					.cls-imberse-row {
+						.cls-moreinfo {
+							background: $BLACKBACKGROUND;
+							color: $WHITE;
+							border-color: $WHITE;
+							em {
+								color: $PRIMARYCOLOR;
+							}
+						}
+					}
+					// .cls-icon-bar{
+					//   .cls-icon-section{
+					//     .cls-edit-icon,.cls-history-icon,.cls-delete-icon{
+					//       em:hover{
+					//         background: $DARKTEXTCOLOR;
+					//       }
+					//     }
+					//   }
+					// }
+				}
+				.cls-amount-details {
+					.cls-inner-total-amount {
+						.cls-expense {
+							color: $WHITE !important;
+							.cls-total {
+								color: $WHITE !important;
+							}
+						}
+					}
+					// .cls-total-amount{
+					//   color: $DARKTEXTCOLOR !important;
+					// }
+				}
+			}
+		}
+		.cls-list-view {
+			.cls-list-expense {
+				background: $BLACKBACKGROUND !important;
+				border-color: $BLACKBACKGROUND !important;
+				.cls-imburs-box {
+					.cls-moreinfo {
+						background: $BLACKBACKGROUND;
+						color: $WHITE;
+						border-color: $WHITE;
+						em {
+							color: $PRIMARYCOLOR;
+						}
+					}
+				}
+			}
+			.cls-total-amount-box {
+				.cls-expense-info {
+					background: $BLACKBACKGROUND !important;
+					border-color: $WHITE !important;
+				}
+				// .cls-total-amount{
+				//   color: $DARKTEXTCOLOR !important;
+				// }
+			}
+		}
+		// list and grid view ends
+		// footer starts
+		.cls-footer-bar {
+			background: $BLACKMAINBACKGROUND !important;
+			box-shadow: 1px 1px 6px #505050;
+			.cls-mode-count-box {
+				background: $BLACKBACKGROUND;
+			}
+			// .cls-btn-primary{
+			//   background: $DARKBACKGROUND;
+			// }
+		}
+		// footer ends
+	}
+	// create report form ends
+	.cls-advform {
+		background: $BLACKMAINBACKGROUND !important;
+	}
+	//my profile starts
+	.cls-profile-container {
+		background: $BLACKMAINBACKGROUND !important;
+		.cls-myprofileindex {
+			.cls-profileleft {
+				.cls-profile {
+					.cls-profile-icon {
+						border-color: $WHITE !important;
+						background: $BLACKBACKGROUND !important;
+						color: rgb(255, 255, 0);
+						.cls-first {
+							background: unset;
+							box-shadow: unset;
+						}
+						.cls-actions {
+							background: $BLACKBACKGROUND !important;
+						}
+					}
+					.cls-profile-type {
+						.cls-customtab {
+							border-color: $WHITE !important;
+							li {
+								border-color: $WHITE !important;
+								a.active {
+									color: $WHITE !important;
+									background: $BLACKBACKGROUND !important;
+								}
+							}
+						}
+					}
+				}
+			}
+			.cls-employee-details {
+				background: $BLACKBACKGROUND !important;
+				border-color: $WHITE !important;
+			}
+		}
+		.cls-editprofile {
+			.cls-change-password {
+				background: $BLACKBACKGROUND !important;
+				border-color: $WHITE !important;
+			}
+		}
+		.cls-popup {
+			background: $BLACKBACKGROUND !important;
+			.cls-content {
+				.nav-tabs {
+					li.nav-item {
+						.nav-link {
+							color: $WHITE !important;
+							&.active {
+								background: $BLACKMAINBACKGROUND !important;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	//my profile ends
+	//header my profile starts
+	.cls-user-profile {
+		border: 1px solid $WHITE !important;
+		.cls-name-head {
+			box-shadow: 0px 0px 6px -2px $WHITE;
+		}
+		.cls-logout {
+			border-color: $WHITE !important;
+			background: $BLACKMAINBACKGROUND !important;
+		}
+		.cls-profile {
+			background: $BLACKMAINBACKGROUND !important;
+		}
+	}
+	//header my profile starts
+	//master data starts
+	.cls-master-container {
+		background: $BLACKMAINBACKGROUND !important;
+		.cls-family {
+			background: $BLACKBACKGROUND !important;
+			.cls-list {
+				a {
+					color: $PRIMARYCOLOR !important;
+				}
+			}
+			.cls-list-inner-heading {
+				background: $BLACKMAINBACKGROUND !important;
+			}
+		}
+		.nav-tabs {
+			border-color: $WHITE !important;
+			.nav-item {
+				border-color: $WHITE !important;
+			}
+		}
+	}
+	//master data ends
+	// menu starts
+	.navigation {
+		.navigation-menu-tab {
+			background: $BLACKBACKGROUND !important;
+		}
+	}
+	//menu ends
+
+	.card,
+.app-block .app-content .app-action,
+.chat-block {
+
+  background-color: rgb(0, 0, 0);
+
+  box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
+}
+// Button css
+.cls-custom-btn {
+	// primary button
+	&.cls-btn-primary {
+		background: linear-gradient(to right, #fffb29, #ffc107);
+		color: $BLACK;
+		&:hover {
+			background: $BTNGRADIENTHOVER !important;
+				}
+	}
+	// secondary button
+	&.cls-btn-secondary {
+		background: $WHITE;
+		color: $PRIMARYCOLOR;
+		border: 1px solid $PRIMARYCOLOR;
+		&::after {
+			// position: absolute;
+			// content: "";
+			// top: 0;
+			// left: 0;
+			// width: 0;
+			// height: 100%;
+			background: $PRIMARYCOLOR;
+		}
+		&:hover {
+			color: $WHITE;
+			// em {
+			// 	z-index: 1;
+			// }
+		}
+
+	}
+}
+}
+
+// Yellow Theme Ends

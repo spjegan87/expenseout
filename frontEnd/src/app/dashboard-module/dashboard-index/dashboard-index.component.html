@@ -1,0 +1,28 @@
+<!-- Desc : Dashboard Index
+Author : Naveen.S
+Date : 23-sept-2020 -->
+
+<!-- Main Container starts -->
+<div class="cls-dashboard-container">
+    <!-- breadcrum starts -->
+    <!-- <div class="cls-mbl-breadcrumb">
+        <app-breadcrumb [activeBreadcrumb]="breadcrumb"></app-breadcrumb>
+    </div> -->
+    <!-- breadcrum ends -->
+    <h1 class="cls-main-title mt-4">{{'Dashboard' | translate}}</h1>
+    <!-- filter starts -->
+    <app-common-filter [filterData]="filterDetails" (filterVal)="filterChoosed($event)" [moduleName]="module"></app-common-filter>
+    <!-- <app-dashboard-filter (filterVal)="filterChoosed($event)"></app-dashboard-filter> -->
+    <!-- filter ends -->
+    <!-- user tab starts -->
+    <ng-container *ngIf="userTabFlag">
+        <app-dashboard [dashboardData]="dashboardData" [filterData]="filterData" (TabValue)="getTabValue($event)" (reportCreate)="getreportCreate($event)"></app-dashboard>
+    </ng-container>
+    <!-- user tab ends -->
+    <!-- admin tab starts -->
+    <ng-container *ngIf="!userTabFlag">
+        <app-admin-dashboard [filterData]="filterData" (reportCreate)="getreportCreate($event)" (emitModule)="getModule($event)"></app-admin-dashboard>
+    </ng-container>
+    <!-- admin tab ends -->
+</div>
+<!-- Main Container ends -->

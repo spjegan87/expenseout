@@ -1,0 +1,42 @@
+<!-- main container starts -->
+<div class="cls-master-container">
+    <!-- breadcrumb starts -->
+    <div class="cls-mbl-breadcrumb">
+        <app-breadcrumb [activeBreadcrumb]="breadcrumb"></app-breadcrumb>
+    </div>
+    <!-- breadcrumb ends -->
+    <h1 class="cls-main-title">{{ "Master Data" | translate }}</h1>
+    <a href="javascript:;" title="{{ 'Back To List' | translate }}" class="cls-back cls-a-hover d-inline-block float-right" (click)="backtoList()">
+        <em class="ti-arrow-left"></em> {{ "Back To List" | translate }}
+    </a>
+    <!-- tab starts -->
+    <div class="row cls-master-data">
+        <div class="cls-master-type d-inline-block">
+            <!-- <div class="cls-profile-type">
+        <ul role="tablist" class="nav nav-tabs cls-customtab">
+          <ng-container *ngFor="let data of tabData; let i = index">
+            <li
+              class="nav-item"
+              [ngClass]="{ 'border-0': i === 0 }"
+              (click)="masterDataCall(data.actionName, i)"
+            >
+              <a
+                data-toggle="tab"
+                href="#{{ data.id }}"
+                title="{{ data.name }}"
+                class="nav-link {{ data.class }}"
+                >{{ data.name | translate }}</a
+              >
+            </li>
+          </ng-container>
+        </ul>
+      </div> -->
+            <app-side-tab [tabData]="tabData" (emitTab)="tabEvent($event)" [type]="tabType"></app-side-tab>
+        </div>
+        <div class="cls-editprofile d-inline-block">
+            <!-- [tabValue]="tabValue" -->
+            <app-list-loader *ngIf="loader"></app-list-loader>
+            <app-list-index *ngIf="!loader" [listData]="listData" [tabData]="tabData" [tabIndex]="clickedIndex" [masterModule]="masterModule" [listUpdate]="ListActionUpdate" [listModule]="listModule"></app-list-index>
+        </div>
+    </div>
+</div>

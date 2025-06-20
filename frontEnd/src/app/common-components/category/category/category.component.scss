@@ -1,0 +1,17 @@
+@import "../../../../assets/scss/all";
+.cls-active {
+    color: $PRIMARYCOLOR;
+}
+
+.cls-back {
+    bottom: 5px; // 45px;
+    em {
+        top: 6px; // top: 4px;
+        left: -11%; // left: -18%;
+    }
+    &:hover {
+        em {
+            left: -15% // -25%;
+        }
+    }
+}

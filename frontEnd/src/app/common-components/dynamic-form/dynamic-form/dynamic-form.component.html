@@ -1,0 +1,112 @@
+<!-- Form Starts -->
+<form [formGroup]="dynamicTabForm" autocomplete="off" class="">
+    <ng-container *ngFor="let data of form?.data;let index=index">
+        <div class="" id="fn-mbl-tab" *ngIf="data?.status == 'Y'">
+            <div id="{{data?.id}}" class="container tab-pane active">
+                <ng-container *ngFor="let fields of data[data?.id];let i=index;let f=first">
+                    <!-- *ngIf="clickedIndex == index" -->
+                    <div class="cls-employee-details cls-employee-detail">
+                        <div class="cls-form-bar" [ngClass]="{'cls-Approval-bar':data?.multiple}">
+                            <span class="cls-head-title">{{fields?.title}}</span>
+                            <ng-container *ngFor="let header of fields?.header">
+                                <ng-container *ngFor="let body of fields?.body">
+                                    <span class="cls-sub-title" *ngIf="header?.header_name" [ngClass]="{'my-2':header?.template == 'other_details'}">{{header?.header_name}}</span>
+                                    <div class="row mb-2">
+                                        <ng-container *ngFor="let field of body[header['template']];let fieldIndex=index">
+                                            <div class="form-group cls-custom-field {{field?.class}}" [ngClass]="{'cls-search-select':field?.format == 'dropdown','cls-multi-select-field':data?.multiple,'cls-noneditable': !field?.edit }" *ngIf="!field?.mob_code">
+                                                <label for="{{field?.id}}" *ngIf="!data?.multiple">{{field?.label}} <span
+                                                    class="mandatory" *ngIf="field?.required">*</span></label>
+                                                <label for="{{field?.id}}{{fieldIndex}}" *ngIf="data?.multiple">{{field?.label}} {{fieldIndex + 1}}<span
+                                                        class="mandatory" *ngIf="field?.required">*</span></label>
+                                                <div [ngClass]="{'cls-dropdown-container':field?.format == 'dropdown'}" *ngIf="!data?.multiple">
+                                                    <em class="icon-3-dropdownarrow" *ngIf="field?.format == 'dropdown'"></em>
+                                                    <!-- Input type -->
+                                                    <input type="{{field?.type}}" class="cls-custom-input form-control" id="{{field?.id}}" name="{{field?.id}}" formControlName="{{field?.id}}" placeholder="{{field?.placeholder}}" autocomplete="off" [ngClass]="{'cls-border-error':(submitted && field?.required && formValidation[field?.id].errors),'dropdown-toggle':field?.format === 'dropdown','d-none':field?.id == '','cls-error':(error && formValidation[field?.id]?.errors)}"
+                                                        attr.data-toggle="{{field?.format}}" [readonly]="field?.format == 'dropdown'" onpaste="return false" (keyup)="passwordStrength()" (keypress)="inputValidation($event,field)">
+                                                    <span class="cls-email-content" *ngIf="field?.format == 'email'"><em class="icon-16-info mr-1"></em>Use special characters ' @ ' , ' . ' are allowed.
+                                                        </span>
+                                                    <!-- Dropdown Data -->
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="field?.format == 'dropdown'">
+                                                        <input type="text" class="cls-dropdown-input" placeholder="{{'Search'}}.." id="{{field?.id}}searchInput" autocomplete="off" (keyup)="filterFunction(field?.id+'searchInput',field?.id+'searchfield')">
+                                                        <ul id="{{field?.id}}searchfield" class="live-search-list">
+                                                            <li (click)="setFilterSelectValue(field)">
+                                                                <a>select</a>
+                                                            </li>
+                                                            <li *ngFor="let opt of field?.dropdownData" (click)="setFilterValue(opt?.id,opt?.text,field?.id,field?.form_id)">
+                                                                <a>{{opt?.text}}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <!-- Select box Multiple dropdown -->
+                                                <ng-select2 *ngIf="data?.multiple" [data]="field?.dropdownData" id="{{field?.id}}" formControlName="{{field?.id}}" class="form-control 
+                                                    cls-approval-select cls-select" [options]="options" required placeholder="{{fields?.placeholder}}" [ngClass]="{'cls-border-error':(submitted && field?.required && formValidation[field?.id].errors)}">
+                                                </ng-select2>
+                                                <!-- {{field?.new_validation_id}} {{field?.confirm_validation_id}} {{field?.passwordStatus}} -->
+                                                <ng-container *ngIf="field?.passwordStatus && formValidation[field?.new_validation_id] != undefined  && formValidation[field?.new_validation_id].value !== ''">
+                                                    <span class="cls-status-bar">
+                                                        <span class="cls-status {{className}}"></span>
+                                                    <span class="cls-status-text" *ngIf="className === 'error'">{{'Weak Password' | translate}}</span>
+                                                    <span class="cls-status-text" *ngIf="className === 'warning'">{{ 'Medium Password'  | translate}}</span>
+                                                    <span class="cls-status-text" *ngIf="className === 'success'">{{'Strong Password' | translate}}</span>
+                                                    </span>
+                                                </ng-container>
+                                            </div>
+                                            <!-- Mobile Number Field -->
+                                            <div class="form-group {{field?.class}}" [ngClass]="{'cls-search-select':field?.format_type == 'dropdown'}" *ngIf="field?.mob_code">
+                                                <label for="{{field?.id}}">{{field?.label}} <span
+                                                    class="mandatory" *ngIf="field?.required">*</span>
+                                                </label>
+                                                <div class="input-group cls-dropdown-container">
+                                                    <div class="input-group-btn cls-mobile-bar">
+                                                        <em class="icon-3-dropdownarrow" *ngIf="field?.format_type == 'dropdown'"></em>
+                                                        <input type="{{field?.type}}" id="{{field?.id}}" attr.data-toggle="{{field?.format_type}}" name="{{field?.id}}" formControlName="{{field?.id}}" class="form-control cls-mobile-code" placeholder="{{field?.placeholder}}" [readonly]="field?.format_type == 'dropdown'"
+                                                            (click)="searchDropdown(field?.id + 'searchInput')" [ngClass]="{'cls-border-error':(submitted && field?.required && formValidation[field?.id].errors),'dropdown-toggle':field?.format_type == 'dropdown'}"
+                                                        />
+                                                        <!-- Dropdown Data -->
+                                                        <div class="dropdown-menu cls-mob-dropdown" aria-labelledby="dropdownMenuButton">
+                                                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search'}}.." id="{{field?.id}}searchInput" autocomplete="off" (keyup)="filterFunction(field?.id+'searchInput',field?.id+'searchfield')">
+                                                            <ul id="{{field?.id}}searchfield" class="live-search-list">
+                                                                <li *ngFor="let opt of field?.dropdownData" (click)="setFilterValue(opt?.id,opt?.text,field?.id,field?.form_id)">
+                                                                    <a>{{opt?.text}}</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <input type="{{field?.type}}" id="{{field?.parent_id}}" (keypress)="inputValidation($event,field?.validation)" onKeyPress="if(this.value.length==15) return false;" name="{{field?.parent_id}}" maxlength="{{field?.max}}" minlength="{{field?.min}}" formControlName="{{field?.parent_id}}"
+                                                        class="form-control cls-mobile-no-field" placeholder="{{field?.placeholder1}}" onpaste="return false" [ngClass]="{'cls-border-error':(submitted && field?.required && formValidation[field?.parent_id].errors)}"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                    <span class="cls-line mb-2" *ngIf="header?.template == 'approval_details' || header?.template == 'old_password'"></span>
+                                </ng-container>
+                            </ng-container>
+                            <div class="my-3">
+                                <ng-container *ngFor="let btn of data?.action">
+                                    <button type="button" class="btn cls-custom-btn" id="backbutton" [ngClass]="{'cls-btn-secondary':btn?.action == 'back'}" *ngIf="btn?.action == 'back'" (click)="submitAction(btn,data?.index)">
+                                        <span>{{btn?.name}}</span>                                   
+                                    </button>
+                                    <button type="submit" class="btn cls-custom-btn" id="changetabbutton" [ngClass]="{'cls-btn-primary': btn?.action != 'back'}" *ngIf="btn?.action != 'back' && btn?.action != 'update' && type == 'new'" (click)="submitAction(btn,data?.index)">
+                                        {{btn?.name}}
+                                    </button>
+                                    <button type="submit" class="btn cls-custom-btn" id="updatebutton" [ngClass]="{'cls-btn-primary': btn?.action != 'back'}" *ngIf="btn?.action != 'back' && (type == 'edituserprofile' || (type == 'myprofile' && btn?.action == 'update'))" (click)="updatetAction(btn,data)">
+                                        Update
+                                    </button>
+                                    <!-- <button type="submit" *ngIf="(btn?.action != 'back' && updateValue != undefined) || type == 'myprofile'" class="btn cls-custom-btn" id="changetabbutton" [ngClass]="{'cls-btn-secondary':btn?.action == 'back','cls-btn-primary': btn?.action != 'back'}" (click)="submitAction(btn,data?.index)">
+                                        Update
+                                    </button> -->
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <!-- <button class="btn  cls-custom-btn cls-btn-secondary" type="button"  *ngIf="formType !== 'myprofile' && formType !== 'new'" (click)="backtoList()"><span>{{'Back to List'}}</span></button>
+        <button class="btn  cls-custom-btn cls-btn-primary" type="button"  *ngIf="formType === 'new'" (click)="addApprover('next')">{{'Next'}}</button>
+        <button class="btn  cls-custom-btn cls-btn-primary" type="button"  *ngIf="formType !== 'new'" (click)="addApprover('update')">{{'Update'}}</button> -->
+    </ng-container>
+</form>
+<!-- Form Ends -->

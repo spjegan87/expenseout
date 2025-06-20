@@ -1,0 +1,66 @@
+/************************************************************************************
+CSS Description :User Management
+Author          : Padma Priya CK
+Powered by       : Infiniti software solutions
+*************************************************************************************/
+
+@import '../../../../assets/scss/all';
+@import "../../../data-table/data-table/data-table.component.scss";
+.cls-main-container {
+    background: $MAINBG;
+    margin: -50px -20px 0px -30px;
+    padding: 20px 20px 20px 35px;
+    min-height: 91vh;
+    .cls-masterdata {
+        float: right;
+        margin: 15px 0;
+        button {
+            padding: 7px;
+            &.cls-btn-secondary {
+                font-size: 13px;
+            }
+            &.cls-btn-primary {
+                font-size: 14px;
+                .cls-download-icon {
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+    .cls-main-title {
+        font: 20px "ProximaSemiBold";
+        margin: 15px 0;
+        display: inline-block;
+    }
+}
+
+.card {
+    width: 99%;
+}
+
+@media only screen and (max-width:480px) {
+    .cls-main-container {
+        padding: 30px 20px 20px 20px;
+        margin: -50px -30px -55px -35px; //margin: -50px -30px -55px -30px;
+        .cls-mbl-breadcrumb,
+        .cls-main-title {
+            display: none !important;
+        }
+        .cls-masterdata {
+            margin: 0 0 10px 0;
+            .cls-custom-btn {
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+
+@media (min-width: 481px) and (max-width: 766px) {}
+
+@media (min-width: 767px) and (max-width: 1024px) {}
+
+@media screen and (min-width:$mobile-min) and (max-width:$mobile-max) {
+    .cls-main-container {
+        padding: 0;
+    }
+}

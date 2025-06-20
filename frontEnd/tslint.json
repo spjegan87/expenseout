@@ -1,0 +1,116 @@
+{
+  "extends": "tslint:recommended",
+  "rulesDirectory": [
+    "codelyzer"
+  ],
+  "rules": {
+    "array-type": false,
+    "arrow-parens": false,
+    "deprecation": {
+      "severity": "warn"
+    },
+    "import-blacklist": [
+      true,
+      "rxjs/Rx"
+    ],
+    "interface-name": true,
+    "max-classes-per-file": true,
+    "max-line-length": [
+      true,
+      140
+    ],
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "static-field",
+          "instance-field",
+          "static-method",
+          "instance-method"
+        ]
+      }
+    ],
+    "no-consecutive-blank-lines": true,
+    "no-console": [
+      true,
+      "log",
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
+    "no-empty": true,
+    "no-inferrable-types": [
+      false,
+      "ignore-params"
+    ],
+    "no-shadowed-variable": false,
+    "no-non-null-assertion": true,
+    "no-redundant-jsdoc": true,
+    "no-switch-case-fall-through": true,
+    "no-use-before-declare": true,
+    "no-var-requires": true,
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "trailing-comma": true,
+    "no-output-on-prefix": true,
+    "use-input-property-decorator": true,
+    "use-output-property-decorator": true,
+    "use-host-property-decorator": true,
+    "no-input-rename": true,
+    "no-output-rename": true,
+    "use-life-cycle-interface": true,
+    "use-pipe-transform-interface": true,
+    "component-class-suffix": true,
+    "directive-class-suffix": true,
+    "no-for-in": true,
+    "no-empty-interface": true,
+    "only-arrow-functions": true,
+    "ban-comma-operator": true,
+    "ban": true,
+    "curly": true,
+    "forin": true,
+    "no-debugger": true,
+    "no-duplicate-imports": true,
+    "no-duplicate-super": true,
+    "no-duplicate-variable": true,
+    "no-duplicate-switch-case": true,
+    "no-unused-expression": true,
+    "switch-default": true,
+    "no-unnecessary-class": false,
+    "unnecessary-constructor": true,
+    "max-file-line-count": [true, 200],
+    "encoding": true,
+    "completed-docs": true,
+    "unnecessary-else": true,
+    "align": true,
+    "eofline": true,
+    "import-spacing": true,
+    "indent": true,
+    "jsdoc-format": true,
+    "linebreak-style": false,
+    "no-irregular-whitespace": true,
+    "no-trailing-whitespace": true,
+    "whitespace": true,
+    "semicolon": [true, "always"],
+    "member-access": true,
+    "typedef": [
+      true,
+      "call-signature",
+      "property-declaration",
+      "parameter",
+      "variable-declaration"
+    ],
+    "typedef-whitespace": true,
+    "no-any": true
+  }
+}

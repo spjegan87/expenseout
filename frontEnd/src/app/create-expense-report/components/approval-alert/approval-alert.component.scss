@@ -1,0 +1,282 @@
+/************************************************************************************
+CSS Description : Approval Alert
+Author          : Padma Priya CK
+Powered by : Infiniti software solutions
+*************************************************************************************/
+@import '../../../shared-module/components/reporthistory/reporthistory.component.scss';
+@import './../../../../assets/scss/variable.scss';
+.cls-history-container{
+    .cls-main-popup{
+        width: 35%;
+        .cls-popup{
+            .lotty-body{
+                width: 100px;
+                display: inline-block;
+                margin-left: 20px;
+            }
+            .cls-wavearrow {
+                span{
+                    position: absolute;
+                    transform: rotate(228deg);
+                    margin-left: -12px;
+                    border-left: 1px solid #000;
+                    border-bottom: 1px solid #000;
+                    -webkit-animation: waveanim 2s infinite;
+                    animation: waveanim 2s infinite;
+                    opacity: 0;
+                    box-sizing: border-box;
+                    &:nth-of-type(1) {
+                        -webkit-animation-delay: 0s;
+                        animation-delay: 0s;
+                        top: 44px;
+                        left: 37%;
+                        width: 10px;
+                        height: 10px;
+                    }
+                    &:nth-of-type(2) {
+                        top: 42px;
+                        left: 39%;
+                        width: 15px;
+                        height: 16px;
+                        -webkit-animation-delay: .15s;
+                        animation-delay: .15s;
+                    }
+                    &:nth-of-type(3) {
+                        top: 38px;
+                        left: 40%;
+                        width: 25px;
+                        height: 25px;
+                        -webkit-animation-delay: .3s;
+                        animation-delay: .3s;
+                    }
+                }
+            }
+            @-webkit-keyframes waveanim {
+                0% {
+                  opacity: 0;
+                }
+                50% {
+                  opacity: 1;
+                }
+                100% {
+                  opacity: 0;
+                }
+              }
+              @keyframes waveanim {
+                0% {
+                  opacity: 0;
+                }
+                50% {
+                  opacity: 1;
+                }
+                100% {
+                  opacity: 0;
+                }
+              }
+            .cls-header{
+                border-bottom: unset;
+                .cls-top-close{
+                    em{
+                        color: $WHITE;
+                    }
+                }
+            }
+            .cls-history-data{
+                .cls-inner-list{
+                    position: relative;
+                    .cls-alert-img{
+                        background: url(../../../../assets/images/Requested_Successfully.svg) 0% 0% no-repeat;
+                        display: inline-block;
+                        width: 100px;
+                        height: 110px;
+                        margin-left: 20px;
+                        background-size: 90% 90%;
+                    }
+                    .cls-arrow-icon{
+                        display: inline-block;
+                        position: absolute;
+                        top: 35%;
+                        left: 35%;
+                        em{
+                            transform: rotate(270deg);
+                            display: inline-block;
+                            position: absolute;
+                            &:nth-child(1){
+                                font-size: 10px;
+                                color: #ccc;
+                                left: 0px;
+                                top: 0px
+                            }
+                            &:nth-child(2){
+                                font-size: 12px;
+                                color: #666;
+                                left: 10px;
+                                top: -1px;
+                            }
+                            &:nth-child(3){
+                                font-size: 14px;
+                                color: $BLACK;
+                                left: 20px;
+                                top: -2px;
+                            }
+                        }
+                    }
+                    .cls-list-profile{
+                        display: inline-block;
+                        position: absolute;
+                        right: 0;
+                        top: 20%;
+                        width: 50%;
+                        .cls-profile{
+                            // background: url(../../../../assets/images/staticProfileImage/profile_four.svg) 0% 0% no-repeat;
+                            display: inline-block;
+                            width: 60px;
+                            height: 60px;
+                            background-size: 55px;
+                        }
+                        .cls-name{
+                            color: $BLACK;
+                            font: 16px 'ProximaSemiBold';
+                            position: absolute;
+                            top: 16px;
+                            left: 60px;
+                            em{
+                              font-size: 14px;
+                              cursor: pointer;
+                              vertical-align: middle;
+                              margin-left: 2px;
+                            }
+                        }
+                        .cls-type{
+                            color: #666;
+                            font: 14px 'ProximaRegular';
+                            position: absolute;
+                            top: 30px;
+                            left: 60px;
+                        }
+                    }
+                }
+                .cls-alert-text{
+                    text-align: center;
+                    .cls-txt-light{
+                        font: 16px 'ProximaRegular';
+                        margin-left: 5px;
+                        // letter-spacing: 0.3px;
+                    }
+                    .cls-txt-strong{
+                        font: 16px 'ProximaSemiBold';
+                        color: $BLACK;
+                        margin-left: 5px;
+                        display: inline-block;
+                        // letter-spacing: 0.3px;
+                    }
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 480px) {
+    .cls-history-container{
+      .cls-main-popup{
+        width: 94%;
+        .cls-popup{
+          width: 100%;
+          .cls-history-data{
+              .cls-txt-strong{
+                display: inline-block;
+              }
+            .cls-nodata{
+              height: 100px !important;
+              background-size: 80px !important;
+            }
+            .cls-inner-list{
+                .cls-alert-img{
+                    width: 80px;
+                    height: 80px;
+                    margin-left: 0px;
+                    background-size: 100% 100%;
+                }
+                .cls-arrow-icon{
+                    left: 32%;
+                }
+                .lotty-body{
+                    margin-left: unset;
+                    width: 90px;
+                }
+                .cls-list-profile{
+                    right: -16px;
+                    top: 25%;
+                    // width: 55%;
+                    .cls-profile{
+                        width: 43px;
+                        height: 43px;
+                        background-size: 100%;
+                    }
+                    .cls-name{
+                        left: 50px;
+                        font: 15px 'ProximaSemiBold';
+                    }
+                    .cls-type{
+                        left: 50px;
+                    }
+                }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-history-container{
+        .cls-main-popup{
+          width: 94%;
+          .cls-popup{
+            width: 100%;
+            .cls-history-data{
+                .cls-txt-strong{
+                    display: inline-block;
+                  }
+              .cls-nodata{
+                height: 100px !important;
+                background-size: 80px !important;
+              }
+              .cls-inner-list{
+                  .cls-alert-img{
+                      width: 80px;
+                      height: 80px;
+                      margin-left: 0px;
+                      background-size: 100% 100%;
+                  }
+                  .cls-arrow-icon{
+                      left: 32%;
+                  }
+                  .cls-list-profile{
+                      right: -10px;
+                      width: 55%;
+                      .cls-profile{
+                          width: 43px;
+                          height: 43px;
+                          background-size: 100%;
+                      }
+                      .cls-name{
+                          left: 50px;
+                          font: 15px 'ProximaSemiBold';
+                      }
+                      .cls-type{
+                          left: 50px;
+                      }
+                  }
+              }
+            }
+          }
+        }
+      }
+}
+@media (min-width: 767px) and (max-width: 1024px){
+    .cls-history-container{
+        .cls-main-popup{
+          width: 85% !important;
+        }
+    }
+}

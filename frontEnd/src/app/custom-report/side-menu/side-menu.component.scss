@@ -1,0 +1,48 @@
+
+// *************************************************
+
+// * Component Name------- side menu
+// * HTML & CSS -------------- Naveen.s
+// * Created date -------------- 26-Feb-2020
+// * Powered by --------------- Infiniti software solutions
+
+// *************************************************
+@import '../../../assets/scss/variable.scss';
+.cls-nav{
+    position: relative;
+    .cls-custom-icon{
+        font-size: 23px;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+    .icon-91-flight{
+        font-size: 16px;
+        margin: 0px 0 0px -4px;
+    }
+    .cls-icon{
+        background-color: $PRIMARYCOLOR;
+        padding: 28px 2px;
+        position: absolute;
+        left: -15px;
+        top: 0px;
+        border-radius: 5px 0px 0px 5px;
+    }
+    .cls-menu{
+        padding: 15px 10px;
+        display: inline-block;
+        font-size: 16px;
+        color: $FORMTEXT;
+        cursor: pointer;
+        text-decoration: none;
+        &.active{
+            color: $BLACK;
+            font-size: 16px ;
+            position: relative;
+            font-weight: 600;
+        }
+        
+    }
+    &.cls-bdr{
+        border-top: 1px solid $BGLIGHTER;
+     }
+}

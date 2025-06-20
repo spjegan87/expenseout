@@ -1,0 +1,23 @@
+@import "../../../assets/scss/all";
+.cls-input {
+    // width: 16%;
+    border: 1px solid #e1e1e1;
+    font: 13px 'ProximaRegular';
+    color: #6c7781;
+    letter-spacing: .3px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden!important;
+    display: inline-block;
+    padding: 5px; //padding:0px 3px;
+    padding-right: 20px !important;
+}
+
+@media screen and (min-width:$mobile-min) and (max-width:$mobile-max) {
+    .cls-input {
+        margin-right: 0px !important;
+        padding-right: 5px !important;
+        width: 100%;
+    }
+}

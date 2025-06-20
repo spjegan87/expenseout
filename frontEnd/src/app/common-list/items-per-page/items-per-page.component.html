@@ -1,0 +1,11 @@
+<!-- Name : Meenakshi Sundaram .R
+    Date : 25-06-2021
+    Desc : Slice items per page Compoennt -->
+<div class="cls-item-perpage">
+    <label class="cls-label">Show
+        <select class="cls-custom-select custom-select custom-select-sm form-control form-control-sm"  (change)="selectItem($event.target.value)">
+            <option value="{{item}}" *ngFor="let item of items" [selected]="item==defaultItem">{{item}}</option>
+        </select>
+        entries
+    </label>
+</div>

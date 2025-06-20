@@ -1,0 +1,274 @@
+@import "../../../../assets/scss/variable.scss";
+.cls-advance-report-container{
+  &.cls-disable{
+    input,select{
+      pointer-events: none;
+    }
+  }
+  .cls-search-select{
+    max-width: 15%;
+    .cls-dropdown-container{
+      em{
+        font-size: 7px;
+      }
+    }
+  }
+    input,select{
+        font-size: 12px;
+        height:30px !important;
+        border-radius: 5px;
+      }
+      label{
+        .cls-mandatory{
+          color:$ERROR;
+        }
+      }
+      em{
+        color: $PRIMARYCOLOR;
+        font-size: 10px;
+      }
+    // background: #fff;
+    // padding:20px;
+    // position: absolute;
+    // z-index: 1;
+    // width: 50%;
+    // right:40px;
+    // box-shadow: -1px 1px 7px 0px #ccc;
+    border-radius: 8px;
+    // .cls-top-close{
+    //     position: absolute;
+    //     width: 16px;
+    //     height: 16px;
+    //     background: $ERROR;
+    //     display: inline-block;
+    //     right: -7px;
+    //     z-index: 1;
+    //     top: -9px;
+    //     border-radius: 4px;
+    //     color: $WHITE;
+    //     cursor: pointer;
+    //     padding: 1px 0px 0px 0px;
+    //     border: 1px solid $WHITE;
+    //     em{
+    //       font-size: 9px;
+    //       vertical-align: text-top;
+    //       font-weight: 600;
+    //     }
+    // }
+  
+    .cls-existing-report{
+        .cls-reports-strip{
+        border: 1px solid $BDRLIGHT;
+        display: inline-block;
+        padding: 2px 10px;
+        border-radius: 27px;
+        background:$MAINBG;
+        cursor: pointer;
+        }
+    }
+    // &::after{
+    //     content: '';
+    //     width: 15px;
+    //     height: 15px;
+    //     -webkit-transform: rotate(45deg);
+    //     transform: rotate(45deg);
+    //     position: absolute;
+    //     border-left: 1px solid rgba(179, 179, 179, 0.2);
+    //     border-top: 1px solid rgba(173, 173, 173, 0.2);
+    //     top: -9px;
+    //     right: 19%;
+    //     background: #fff;
+    // }
+}
+.cls-currency{
+  ~.cls-hovertip{
+    display: none;
+    background: $BLACK;
+    color:$WHITE;
+    position: absolute;
+    z-index: 1;
+    width: max-content;
+    left: 15px;
+    top: 28px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 12px;
+    &:after{
+      content: "";
+      position: absolute;
+      border-top: 10px solid rgba(0, 0, 0, 0.8);
+      border-right: 10px solid transparent;
+      border-left: 10px solid transparent;
+      position: absolute;
+      left: 54px;
+    transform: rotate(180deg);
+    top: -7px;
+    }
+    span{
+      color:$WHITE;
+      font-size: 12px;
+    }
+  }
+  &:hover{
+    ~.cls-hovertip{
+      display: inline-block;
+    }
+  }
+}
+@media only screen and (max-width: 480px) {
+  .cls-advance-report-container{
+    .cls-mbl-container{
+      margin-bottom: unset !important;
+    }
+    .cls-search-select{
+      max-width: 100%;
+    }
+    .cls-custom-btn.cls-btn-primary{
+      padding: 6px 10px;
+      font-size: 12px;
+      margin-right: unset;
+    }
+    .cls-custom-btn.cls-btn-secondary{
+      padding: 6px 7px;
+      font-size: 12px;
+      margin-right: 8px;
+    }
+  } 
+}
+@media (min-width: 481px) and (max-width: 766px){
+  .cls-advance-report-container{
+    .cls-search-select{
+      max-width: 100%;
+    }
+  }
+}
+// @media only screen and (max-width: 480px) {
+//  .cls-maxwidt50{
+//   max-width: 100% !important;
+//  }
+// //  .cls-mob-20{
+// //    margin-top: 20px;
+// //  }
+//  .cls-advance-report-container{
+//    display: none;
+//   .cls-mbl-line{
+//     display: inline-block !important;
+//     height: 5px;
+//     width: 35px;
+//     background: #ccc;
+//     border-radius: 10px;
+//     position: absolute;
+//     left: 45%;
+//     top: 13px;
+//   }
+//   .cls-mbl-title{
+//     font: 17px 'ProximaSemiBold';
+//     letter-spacing: 1px;
+//     text-align: center;
+//     display: block !important;
+//     margin: 2% 0 6% 8%;
+//   }
+//   .cls-mbl-background{
+//     position:fixed;
+//     top:0px;
+//     left:0px;
+//     right:0px;
+//     bottom:0px;
+//     background:$BLACK;
+//     opacity:.5;
+//     z-index:1000;
+//   }
+//   .cls-mbl-container{
+//     display: unset;
+//     background: $WHITE;
+//     position: fixed;
+//     bottom: -16px;
+//     width: 100%;
+//     left: 0;
+//     padding: 25px 15px;
+//     left: 15px;
+//     z-index: 1001;
+//     width: 100%;
+//     border-radius: 30px 30px 5px 5px;
+//     animation: 0.4s slidein linear;
+//     margin-bottom: 0 !important;
+//     .cls-mbl-btn{
+//       text-align: right;
+//     }
+//   }
+//   .cls-close-ani{
+//       animation: 0.4s slideout linear !important;
+//   }
+//  }
+// }
+
+// @media (min-width: 481px) and (max-width: 766px){
+//   .cls-maxwidt50{
+//     max-width: 100% !important;
+//    }
+//   //  .cls-mob-20{
+//   //    margin-top: 20px;
+//   //  }
+//    .cls-advance-report-container{
+//      display: none;
+//     .cls-mbl-line{
+//       display: inline-block !important;
+//       height: 5px;
+//       width: 35px;
+//       background: #ccc;
+//       border-radius: 10px;
+//       position: absolute;
+//       left: 45%;
+//       top: 13px;
+//     }
+//     .cls-mbl-title{
+//       font: 17px 'ProximaSemiBold';
+//       letter-spacing: 1px;
+//       text-align: center;
+//       display: block !important;
+//       margin: 2% 0 6% 8%;
+//     }
+//     .cls-mbl-background{
+//       position:fixed;
+//       top:0px;
+//       left:0px;
+//       right:0px;
+//       bottom:0px;
+//       background:$BLACK;
+//       opacity:.5;
+//       z-index:1000;
+//     }
+//     .cls-mbl-container{
+//       display: unset;
+//       background: $WHITE;
+//       position: fixed;
+//       bottom: -16px;
+//       width: 100%;
+//       left: 0;
+//       padding: 25px 15px;
+//       left: 15px;
+//       z-index: 1001;
+//       width: 100%;
+//       border-radius: 30px 30px 5px 5px;
+//       animation: 0.4s slidein linear;
+//       margin-bottom: 0 !important;
+//       .cls-mbl-btn{
+//         text-align: right;
+//       }
+//       div{
+//         max-width: 100%;
+//       }
+//     }
+//     .cls-close-ani{
+//         animation: 0.4s slideout linear !important;
+//     }
+//    }
+// }
+@media (min-width: 767px) and (max-width: 1024px){
+  .cls-maxwidt50{
+    max-width: 100% !important;
+   }
+   .cls-mbl-container{
+     margin-bottom: unset !important;
+   }
+}

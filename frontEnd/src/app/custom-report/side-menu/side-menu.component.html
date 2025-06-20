@@ -1,0 +1,15 @@
+<!-- *************************************************
+
+ * Component Name------- Report Index
+ * HTML & CSS -------------- Naveen.s
+ * Created date -------------- 26-Feb-2020
+ * Powered by --------------- Infiniti software solutions
+
+************************************************* -->
+<div class="cls-nav" [ngClass]="{'cls-bdr': !f}" *ngFor="let data of menu; let index = index; let f= first">
+    <span class="cls-icon" *ngIf="clickedIndex == index"></span>
+    <em *ngIf="data?.icon_class != ''" class="{{data?.icon_class}} cls-custom-icon"></em>
+    <span class="cls-menu" (click)="selectMenu(index,data.key,data.name)" [ngClass]="{'active': clickedIndex == index}">
+        {{ data.name }}
+    </span>
+</div>

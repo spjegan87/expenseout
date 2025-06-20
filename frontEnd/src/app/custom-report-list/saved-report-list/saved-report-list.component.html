@@ -1,0 +1,23 @@
+<!-- *************************************************
+
+ * Component Name------- saved report list
+ * HTML & CSS -------------- Naveen.s
+ * Created date -------------- 26-Feb-2021
+ * Powered by --------------- Infiniti software solutions
+
+************************************************* -->
+<div class="cls-main-container">
+    <div class="cls-heading">Saved Reports</div>
+    <div class="cls-create-text mb-3">
+        <button class="btn cls-btn-primary cls-custom-btn" (click)="createReport()">Create Report</button>
+    </div>
+    <div class="row cls-bg mb-4 m-0">
+        <div class="col-md-3 cls-custom-width">
+            <app-side-menu  [menu]="sideMenu" (listReport)="listReportData($event)">
+            </app-side-menu>
+        </div>
+        <div class="col-md-9 cls-width">
+            <app-list></app-list>
+        </div>
+    </div>
+</div>

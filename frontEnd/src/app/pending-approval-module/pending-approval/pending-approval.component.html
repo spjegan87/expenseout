@@ -1,0 +1,34 @@
+<!-- main container starts -->
+<div class="cls-main-container">
+    <!-- breadcrumb starts -->
+    <!-- <div class="cls-mbl-breadcrumb">
+        <app-breadcrumb [activeBreadcrumb]="breadcrumb"></app-breadcrumb>
+    </div> -->
+    <span class="cls-mbl-filter-icon d-none" (click)="showFilter()">
+        <img src="../../../assets/images/filterwhitecolor.svg" alt="filter">
+    </span>
+    <!-- breadcrumb ends -->
+    <h1 class="cls-main-title mt-4">{{'Pending Approvals' | translate}}</h1>
+    <ng-container *ngIf="topNavData.length > 0">
+        <app-tab [moduleName]="'pendingApprovalList'" [actionName]="'pendingApprovalTabs'" [filterDetails]="filterDetails" (reportHistory)="history($event)" [topNavData]="topNavData" (requestData)="getRequestData($event)"></app-tab>
+    </ng-container>
+    <!-- <app-tab [moduleName]="'pendingApprovalList'" [actionName]="'pendingApprovalTabs'" (reportHistory)="history($event)"></app-tab> -->
+    <!-- mobile header starts-->
+    <div class="cls-mobile-header d-none">
+        <span class="cls-mobile-title">
+            <em class="icon-39-arrow" (click)="redirectHome()"></em>
+            {{'Pending Approvals' | translate}}
+        </span>
+        <span class="cls-mobile-icon-section">
+            <span (click)="triggerAction('theme')">
+                <em class="icon-37-theme"></em>
+            </span>
+        <span (click)="triggerAction('notify')">
+                <em data-feather="bell" ></em>
+            </span>
+        </span>
+    </div>
+    <!-- mobile header ends-->
+</div>
+<!-- main container ends -->
+<app-reporthistory *ngIf="historyFlag" (closePopup)="historyClose($event)" [historyInput]="historyInput"></app-reporthistory>

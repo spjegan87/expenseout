@@ -1,0 +1,65 @@
+<form [formGroup]="settleForm" class="cls-settle-container">
+    <span class="cls-mbl-background" (click)="confirmAction(false,'mobile')"></span>
+    <div class="cls-mbl-settleform">
+        <span class="cls-top-close text-center" (click)="confirmAction(false)">
+            <em class="icon-32-reject"></em>
+        </span>
+        <span class="cls-mbl-line d-none"></span>
+        <div class="cls-amount-box mb-2">
+            <span class="cls-amount-title">{{'Claim Amount' | translate}}</span>
+             <span class="cls-amount">{{amount.currencyType}} 
+                <input  type="number" max="{{amount.reimbursableAmount}}" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)" class="cls-custom-input form-control w-25 d-inline-block"  id="claimAmount" formControlName="claimAmount" 
+                name="claimAmount"  placeholder="{{'Amount' | translate}}" autocomplete="off" [ngClass]="{'cls-border-error':(submitted && validation.claimAmount.errors),'cls-disable' : !edit}">
+                <!-- <em class="icon-14-edit" (click)="editAmount()"></em> -->
+            </span>
+        </div>
+        <div class="row">
+            <ng-container *ngFor="let field of fieldJson">
+                <div  class="{{field.class}}">
+                    <label  for="amount">{{ field.name | translate}} <span class="cls-mandatory" *ngIf="field.required">*</span></label>
+                    <ng-container *ngIf="field.type !== 'select'">
+                        <ng-container *ngIf="field.date">
+                            <input  type="{{field.type}}" onkeypress="return false;" [value]="settleForm.controls[field.id].value  | date: 'dd, MMM y'" (focus)="chooseDate(field.id)" class="cls-input datepicker" id="{{field.id}}" formControlName="{{field.id}}" name="{{field.id}}"  placeholder="{{ field.placeholder | translate}}" 
+                            autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && validation[field.id].errors)}">
+                            <em class="fa fa-calendar-o cls-date-icon" ></em>
+                           </ng-container> 
+                    </ng-container>
+                   <ng-container *ngIf="field.type === 'select'">
+                    <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="{{field.id}}" name="{{field.id}}" id="{{field.id}}"
+                        data-toggle="dropdown"  placeholder="{{field.placeholder}}" (click)="searchDropdown(field.id)"
+                        autocomplete="off" readonly [ngClass]="{'cls-border-error':(submitted && validation[field.id].errors)}">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                            id='fn-{{field.id}}-input' autocomplete="off" (keyup)="filterFunction('fn-'+field?.id+'-input','fn-'+field?.id+'-ul')">
+                            <ul id="fn-{{field.id}}-ul" class="live-search-list">
+                                <li (click)="setFilterValue(field.id,'select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let pay of field.options" id="pay.id" (click)="setFilterValue(field.id,pay.value)">
+                                    <a>{{pay.value | translate}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                   </ng-container>   
+                   <ng-container *ngIf="field.type === 'number'">
+                        <input  class="cls-input datepicker" type="number"  min ="1" onkeydown="return event.keyCode !== 69" 
+                        oninput="this.value = Math.abs(this.value)"  formControlName="{{field.id}}" name="{{field.name}}"  id="{{field.id}}" placeholder="{{field.placeholder | translate}}" 
+                        autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && validation[field.id].errors)}">
+                   </ng-container>  
+                   <ng-container *ngIf="field.type === 'text'">
+                        <input *ngIf="!field.date" class="cls-input" type="text"  formControlName="{{field.id}}" name="{{field.id}}"  id="{{field.id}}" placeholder="{{field.placeholder | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                        [ngClass]="{'cls-border-error':(submitted && validation[field.id].errors)}">
+                   </ng-container>
+                </div>
+            </ng-container>
+        </div>
+        <div class="mt-2 cls-mbl-btn">
+            <button type="button" class="btn cls-btn-secondary  cls-custom-btn" (click)="confirmAction(false)"><span>{{'Cancel' | translate}}</span></button>
+            <button type="button" class="btn cls-btn-primary  cls-custom-btn cls-btnservicecall" (click)="settleAmount()">{{'Confirm' | translate}}</button>
+        </div>
+    </div>
+</form>
+<app-alert *ngIf="confirmation" [userInput]="confirmationContent" (choosedVal)="confirmAction($event)"></app-alert>

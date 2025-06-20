@@ -1,0 +1,89 @@
+@import "../../../assets/scss/all";
+@import "../../data-table/data-table/data-table.component.scss";
+.card {
+    border-radius: 0 5px 5px 5px;
+    &.cls-settings-table-container {
+        max-width: 970px;
+        &:before {
+            content: "";
+            position: absolute;
+            width: 4px;
+            height: 27px;
+            background: #007bff;
+            display: inline-block;
+            left: 0;
+            top: 22px;
+            border-radius: 0 4px 4px 0;
+        }
+        .card-body {
+            padding: 10px 16px; //16px;
+        }
+    }
+    .card-body {
+        .cls-list-container {
+            .cls-item-perpage-row {
+                display: flex;
+                justify-content: space-between;
+            }
+            .cls-search-field {
+                float: right;
+                display: flex;
+            }
+            &.cls-settings-table {
+                position: relative;
+                .cls-inner-title {
+                    font: 18px "ProximaSemiBold";
+                    margin-bottom: 12px;
+                    display: inline-block;
+                }
+                .cls-uploadtxt {
+                    display: block;
+                    float: right;
+                    font-size: 14px;
+                    color: $PRIMARYCOLOR;
+                    cursor: pointer;
+                    // padding-top: 5px;
+                    // margin: 5px 0;
+                    svg {
+                        margin-right: 4px;
+                        vertical-align: text-bottom;
+                    }
+                }
+                .cls-add-list {
+                    // margin: 10px 0;
+                    em {
+                        vertical-align: text-top;
+                    }
+                    em,
+                    a {
+                        color: $PRIMARYCOLOR;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:$mobile-min) and (max-width:$mobile-max) {
+    .card {
+        width: 100%;
+        /* padding: 0; */
+        background: unset;
+        border: unset;
+        box-shadow: unset;
+        &.cls-settings-table-container {
+            &:before {
+                content: unset;
+            }
+        }
+        .cls-list-container {
+            .cls-mobile-view-search {
+                margin-left: 0px !important;
+                margin-bottom: 10px;
+                .cls-search-field {
+                    float: unset;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+<!-- Category -->
+<div class="radio-group mb-3">
+    <span class="cls-radio mr-3" [ngClass]="{'cls-active':user.status == 'Y'}" *ngFor="let user of category;let index = index" (click)="clickusertype(user.id,user.userBased)">
+        <em [ngClass]="{'icon-7-radio-on':user.status == 'Y','icon-6-radio-off':user.status == 'N'}"></em>
+        {{ user.name}}
+    </span>
+    <!-- {{backToBack}} -->
+    <a href="javascript:;" class="cls-back" *ngIf="backToBack" (click)="backTo()"> <em class="ti-arrow-left"></em> Back To Employee Wise List</a>
+</div>

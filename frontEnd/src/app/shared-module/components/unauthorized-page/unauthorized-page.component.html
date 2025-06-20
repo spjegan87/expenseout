@@ -1,0 +1,24 @@
+<!-- unauthorisation-error -->
+<div class="cls-unauthorisation text-center">
+    <!-- <img *ngIf="!sessionExpired" src="/assets/images/unauthorisation-error.svg" alt="unauthorisation User"
+      title="unauthorisation user" class="mt-5"> -->
+    <img src="/assets/images/session-expired.svg" alt="Session expired !!!" title="Session expired !!!"
+      class="cls-session mb-4">
+    <!-- unauthorisation message -->
+    <!-- <div class="cls-title mt-4 mb-2" *ngIf="!sessionExpired">{{'No Authorisation Found'|translate}}</div> -->
+    <div class="cls-title mt-4 mb-2">{{'Sorry, Time-out!!!'|translate}}</div>
+    <!-- <ng-container *ngIf="!sessionExpired">
+      <div>{{'This page is not Publically available.'|translate}}</div>
+      <div>{{'To access it please login first'| translate}}</div>
+    </ng-container> -->
+    <div class="mb-3">
+      <div class="cls-param">{{'Your session in the portal got expired. Request you to login again.'|translate}}</div>
+    </div>
+    <div class="text-center ">
+      <button type="button" (click)="login()" class="btn cls-custombtn text-center my-3  waves-effect waves-light">
+        <span class="continue-btn">{{'Log in'|translate}}
+          <em class="icon-7-line-arrow"></em>
+        </span>
+      </button>
+    </div>
+  </div>

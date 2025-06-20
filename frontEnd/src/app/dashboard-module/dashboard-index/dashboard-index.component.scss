@@ -1,0 +1,42 @@
+// Desc : dashboard index
+// Author : Naveen.S
+// Date : 23-sept-2020
+@import'../../../assets/scss/variable.scss';
+
+// dashboard container starts
+.cls-dashboard-container{
+    background:$MAINBG;
+    margin: -35px -30px -30px -30px;
+    padding: 1px 30px 15px 30px;
+    .cls-main-title{
+        font: 20px "ProximaSemiBold";
+        margin: 15px 0;
+        display: inline-block;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .cls-dashboard-container{
+        padding: 15px 20px 15px 20px;
+        margin: -35px -30px -55px -30px;
+        .cls-mbl-breadcrumb{
+            display: none;
+        }
+        .cls-main-title{
+            margin-top: 0 !important;
+        }
+    }
+}
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-dashboard-container{
+        padding: 15px 20px 15px 20px;
+        margin: -35px -30px -55px -30px;
+        .cls-mbl-breadcrumb{
+            display: none;
+        }
+        .cls-main-title{
+            margin-top: 0 !important;
+        }
+    }
+}
+@media (min-width: 767px) and (max-width: 1024px){}
+// dashboard container ends

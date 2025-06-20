@@ -1,0 +1,78 @@
+<!-- Desc : filter 
+Author : Naveen.s
+Date : 25-July-2020 -->
+<!-- filter starts -->
+<form [formGroup]="filter" class=" cls-filter-container mb-3">
+    <span id="fn-mbl-background" class="cls-mbl-background" (click)="closeModal()"></span>
+    <div class=" row cls-mbl-filter">
+        <span class="cls-filter-icon d-none">
+            <span class="cls-icon"></span>
+        </span>
+        <span class="dblock d-none cls-mbl-line"></span>
+        <span class="d-none cls-selectfilter">
+            {{'Select Filter' | translate}}
+        </span>
+        <div  class="form-group col-sm-2 cls-res-timeperiod">
+            <div class="daterange cls-filter-box" id="daterange">
+            <label>{{ "Time Period" | translate }} </label>
+            <input type="text" formControlName="dateInterval" name="daterange" class="customrange cls-custom-input form-control" placeholder="{{'Select Time Period' | translate}}" readonly />
+            <input type="hidden" formControlName="fromDate" />
+            <input type="hidden" formControlName="toDate" />
+            </div>
+        </div>
+        <ng-container  *ngIf="currentPage !== 'advance'">
+            <div  class="form-group col-sm-2">
+                <label  for="reportname" [appFontSize]="'Report Name' | translate">{{'Report Name' | translate}}</label>
+                <input  type="text" formControlName="searchReport" name="reportname" id="reportname" placeholder="{{'Enter Report Name' | translate}}" autocomplete="off" class="cls-custom-input form-control ">
+            </div>
+            <div  class="form-group col-sm-2" *ngIf="currentPage !== 'user'">
+                <label  for="employeeName" [appFontSize]="'Employee Name' | translate">{{'Employee Name' | translate}}</label>
+                <input  type="text" formControlName="employeeName" name="employeeName" id="employeeName" placeholder="{{'Enter Employee Name' | translate}}" autocomplete="off" class="cls-custom-input form-control ">
+            </div>
+            <div  class="form-group col-sm-2">
+                <label  for="reportid" [appFontSize]="'Report Id' | translate">{{'Report Id' | translate}}</label>
+                <input  type="text" formControlName="reportId" name="reportid" id="reportid" placeholder="{{'Report Id' | translate}}" autocomplete="off" class="cls-custom-input form-control ">
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="additinalfields">
+            <div class="form-group {{val.class}} cls-search-select" *ngFor="let val of additinalfields.field">
+                <label for="{{val.name}}">{{val.name | translate}} </label>
+                <ng-container *ngIf="val.type=== 'text'">
+                    <input  class="cls-input datepicker" type="text"
+                        formControlName="{{val.id}}" name="{{val.name}}" id="{{val.id}}"
+                        placeholder="{{'Enter' | translate}} {{val.placeholder | translate}}"
+                        autocomplete="off" class="cls-custom-input form-control">
+                </ng-container>
+                <ng-container *ngIf="val.type=== 'select'">
+                    <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"
+                            formControlName="{{val.id}}" name="{{val.name}}"
+                            id="{{val.id}}" data-toggle="dropdown"
+                            (click)="searchDropdown('fn-input'+val.id)"
+                            placeholder="{{'Select' | translate}} {{val.name | translate}}"
+                            autocomplete="off" readonly>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input"
+                                placeholder="{{'Search' | translate}}.."
+                                id="fn-input{{val.id}}" autocomplete="off"
+                                (keyup)="filterFunction('fn-input'+val.id,'fn-ul'+val.id)">
+                            <ul id="fn-ul{{val.id}}" class="live-search-list">
+                                <li *ngFor="let opt of val.options"
+                                    (click)="setFilterValue(val.id,opt.value)">
+                                    <a>{{opt.value | translate}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+
+        <div  class="form-group col-sm-2 mb-1 cls-mobsubmit">
+            <button class="btn cls-filter-btn cls-btnservicecall" (click)="applyFilter()">{{'Apply' | translate}}</button>
+            <a class="cls-reset-btn" [ngClass]="{'cls-disable': validationFlag == true}"  (click)="resetFilter()" >{{'Reset' | translate}}</a>
+        </div>
+    </div>
+</form>

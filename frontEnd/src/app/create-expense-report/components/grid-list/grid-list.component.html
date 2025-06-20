@@ -1,0 +1,594 @@
+
+<!-- Author: Naveen -->
+<!-- grid view starts -->
+<ng-container *ngIf="gridview === 'grid'">
+    <div class="row cls-card-container">
+        <!-- types of mode starts -->
+        <div class="cls-inner-container cls-grid  cls-{{data.id}}" *ngFor="let data of gridlistData?.categoryList;let i = index;">
+            <span class="cls-morecount" *ngIf="data.modeCount >1"></span>
+            <div class="cls-travel-bar" (click)="viewItem(data.modetype,data.id,'edit',data.modeCount,$event)">
+                <div class="row cls-inner-bar">
+                    <span class="cls-bg" [ngStyle]="{'background':data.color}"></span>
+                    <div class="col-sm-1 cls-mobexpand">
+                        <span class="cls-open-icon" (click)="toggleBar(data.modetype,data.id,'edit',data.modeCount,$event)">
+                            <em class="icon-17-expand"></em>
+                        </span>
+                    </div>
+                    <div class="col-sm-6 cls-mode-title cls-mob-mode text-capitalize" data-toggle="popover-hover" data-placement="bottom" [attr.data-content]="data.modetype">{{data.modetype | translate}}</div>
+                    <div class="col-sm-4  pl-0 cls-amount-bar text-right cls-mob-amount">
+                        <span class="cls-currency-type">{{data.currencyType}}</span>
+                        <!-- <span class="cls-currency-type">INR</span> -->
+                        <span class="cls-mode-amount">{{data.amount | amount}}</span>
+                        <span class="cls-policy-wave cls-hover-tooltip" *ngIf="data.policyDetect === 'Y'">
+                            <em class="icon-46-policy"></em>
+                            <span class="cls-tool">{{'Policy Violated' | translate}} : {{data.list[0].policyName}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="cls-imberse-row mt-1" *ngIf="data.modeCount === 1">
+                    <span class="cls-{{gridlistData.categoryList[i].list[0].reimbursable}}">{{gridlistData.categoryList[i].list[0].reimbursable | translate}}</span>
+                    <span class="cls-border-right"></span>
+                    <span class="">{{gridlistData.categoryList[i].list[0].date | date: "dd, MMM y"}}</span>
+                </div>
+                <div class="cls-imberse-row mt-2" *ngIf="data.modeCount >1">
+                    <ng-container *ngFor="let mode of gridlistData.categoryList[i].list;let m = index">
+                        <span *ngIf="m <= 2" class="cls-moreinfo" [ngClass]="{'ml-2' : m!==0 , 'cls-violated' : mode.policyName}">{{data.modetype  | slice:0:1 }} - {{m+1}}
+                            <em class="icon-16-info"></em>
+                            <span class="cls-hovertip">
+                                <span class="cls-{{mode.reimbursable}}">{{mode.reimbursable}}</span>
+                                <span class="cls-border-right"></span>
+                                <span class="">{{mode.date | date: "dd, MMM y"}}</span>
+                                <span class="d-block">{{mode.currencyType}} {{mode.amount | amount}}</span>
+                                <span class="d-block" *ngIf="mode.policyName">{{'Policy Violated' | translate}}  :  {{mode.policyName}}</span>
+                            </span>
+                        </span>
+                    </ng-container>
+                    <!-- <span class="">{{data.date | date: "dd, MMM y"}}</span> -->
+                    <span *ngIf="gridlistData.categoryList[i].list.length >= 4" class="cls-moreInfo cls-more{{i}}"  (click)="openCategory(i)">More</span>
+                    <em class="icon-32-reject cls-close{{i}} d-none" (click)="removeCategory(i)"></em>
+                    <span class="cls-remaining cls-close{{i}} d-none pb-1" >
+                        <span class="cls-maxhgt">
+                          <ng-container *ngFor="let mode of gridlistData.categoryList[i].list;let m = index">
+                            <span *ngIf="m > 2" class="cls-moreinfo" [ngClass]="{'ml-2' : m!==0 , 'cls-violated' : mode.policyName}">{{data.modetype  | slice:0:1 }} - {{m+1}}
+                                <em class="icon-16-info"></em>
+                                <span class="cls-hovertip">
+                                    <span class="cls-{{mode.reimbursable}}">{{mode.reimbursable}}</span>
+                                    <span class="cls-border-right"></span>
+                                    <span class="">{{mode.date | date: "dd, MMM y"}}</span>
+                                    <span class="d-block">{{mode.currencyType}} {{mode.amount | amount}}</span>
+                                    <span class="d-block" *ngIf="mode.policyName">{{'Policy Violated' | translate}}  :  {{mode.policyName}}</span>
+                                </span>
+                            </span>
+                          </ng-container>
+                        </span>
+                                                            
+                      </span>
+                </div>
+                <div class="row cls-icon-bar">
+                    <div class="col-sm-6 cls-expense-bar">
+                        <span class="cls-attachment-section"> <em class="icon-2-attach"></em> {{data.attachmentCount}}</span>
+                        <span class="cls-border-right"></span>
+                        <span class="cls-expense-count">{{data.modeCount}} {{'Expense' | translate}}</span>
+                    </div>
+                    <div class="col-sm-6 cls-icon-section text-right pr-1">
+                        <!-- <span class="cls-edit-icon">AA</span> -->
+                        <span class="cls-edit-icon cls-hover-tooltip" [ngClass]="{'cls-opacityedit' : gridlistData.edited === false}" (click)="toggleBar(data.modetype,data.id,'edit',data.modeCount,$event)">
+                            <em class="icon-14-edit"></em>
+                            <span class="cls-tool">{{'Click To Edit' | translate}}</span>
+                        </span>
+                        <span class="cls-history-icon cls-hover-tooltip" (click)="history(data.categoryId,$event)">
+                            <em class="icon-9-history"></em>
+                            <span class="cls-tool">{{'Click To View History' | translate}}</span>
+                        </span>
+                        <span class="cls-delete-icon cls-hover-tooltip" [ngClass]="{'cls-opacityedit' : gridlistData.edited === false}" (click)="delete(data.modetype,data.id,$event)">
+                            <em class="icon-5-delete"></em>
+                            <span class="cls-tool">{{'Click To Delete' | translate}}</span>
+                        </span>
+                        <ng-container *ngIf="data.modetype != 'Mileage' && data.view != 'mobile'">
+                            <span class="cls-add-icon cls-hover-tooltip" [ngClass]="{'cls-opacityedit' : gridlistData.edited === false}" (click)="toggleBar(data.modetype,data.id,'add',data.modeCount,$event)">
+                                <em class="icon-11-plus"></em>
+                                <span class="cls-tool">{{'Click To Add' | translate}}</span>
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- total amount box starts -->
+         <!-- total amount box starts -->
+         <div class="cls-inner-container cls-responsetotal" *ngIf="gridlistData?.totalValue">
+                <div class="cls-amount-details">
+                    <div class="cls-inner-total-amount">
+                        <div class="cls-info-box text-right">
+                            <em class="icon-16-info cls-info-icon"></em>
+                            <span class="cls-overlay">
+                                {{'To do advance adjustment,click on advance amount button' | translate}}
+                            </span>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="cls-expense">
+                            <span class="cls-total"> {{'Total Expense Amount' | translate}} </span>
+                            <span class="text-right cls-totalamt">
+                                <span class="cls-expense-inr">  {{gridlistData.totalValue.currencyType}} </span>
+                                <span class="cls-final-amount">{{gridlistData.totalValue.totalExpenseAmount | amount}}</span>
+                            </span>
+                        </div>
+                        <div class="cls-expense" *ngIf="gridlistData.totalValue.advanceAmount !== ''">
+                            <span class="cls-total"> {{'Advance Amount' | translate}} </span>
+                            <span class="text-right cls-totalamt">
+                                <span class="cls-font-bold">(-)</span>
+                                <span class="cls-expense-inr">  {{gridlistData.totalValue.currencyType}} </span>
+                                <span class="cls-final-amount">{{gridlistData.totalValue.advanceAmount | amount}}</span>
+                            </span>
+                        </div>
+                        <div class="cls-expense">
+                            <span class="cls-total">{{'Non-Reimbursable Amount' | translate}} </span>                            
+                            <span class="text-right cls-totalamt">
+                                <span class="cls-font-bold">(-)</span>
+                                <span class="cls-expense-inr">  {{gridlistData.totalValue.currencyType}} </span>
+                                <span class="cls-final-amount">{{gridlistData.totalValue.nonReimbursableAmount | amount}}  </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="cls-total-amount">
+                        <span class="cls-total">
+                            <ng-container *ngIf="gridlistData.status === 'Settled'">
+                                {{'Total Reimbursed Amount' | translate}}
+                            </ng-container> 
+                            <ng-container *ngIf="gridlistData.status !== 'Settled'">
+                                {{'Total Reimbursable Amount' | translate}}
+                            </ng-container>  
+                        </span>
+                        <span class="text-right  cls-totalamt">
+                            <span class="cls-expense-cur ml-0">{{gridlistData.totalValue.currencyType}} </span>
+                            <span class="cls-final-amount"> {{gridlistData.totalValue.reimbursableAmount | amount}}</span>
+                        </span>
+                    </div>
+                </div>
+         </div>
+         <!-- total amount box starts -->
+    </div> 
+</ng-container>
+<!-- grid view ends -->
+<!-- list view starts -->
+<ng-container *ngIf="gridview  === 'list'">
+    <div class="cls-list-view d-none d-sm-block" >
+        <div class="cls-list-expense cls-{{data.id}}" *ngFor="let data of gridlistData?.categoryList;let i = index;" (click)="viewItem(data.modetype,data.id,'edit',data.modeCount,$event)">
+            <span class="cls-bg" [ngStyle]="{'background':data.color}"></span>
+            <span class="cls-open-icon" (click)="toggleBar(data.modetype,data.id,'edit',data.modeCount,$event)">
+                <em class="icon-17-expand "></em>
+            </span>
+            <span class="cls-expense-text text-capitalize" data-toggle="popover-hover" data-placement="bottom" [attr.data-content]="data.modetype">{{data.modetype | translate}} 
+                <!-- <ng-container *ngIf="data.parentcategory !== null">
+                    ({{data.parentcategory | translate}})
+                </ng-container> -->
+            </span>
+            <ng-container  *ngIf="data.modeCount > 1">
+                <span class="cls-imburs-box">
+                    <ng-container *ngFor="let mode of gridlistData.categoryList[i].list;let m = index">
+                        <span *ngIf="m <= 1" class="cls-moreinfo" [ngClass]="{'ml-2' : m!==0 , 'cls-violated' : mode.policyName}">{{data.modetype  | slice:0:1 }} - {{m+1}}
+                            <em class="icon-16-info"></em>
+                            <span class="cls-hovertip">
+                                <span class="cls-{{mode.reimbursable}}">{{mode.reimbursable}}</span>
+                                <span class="cls-border-right"></span>
+                                <span class="">{{mode.date | date: "dd, MMM y"}}</span>
+                                <span class="d-block">{{mode.currencyType}} {{mode.amount | amount}}</span>
+                                <span class="d-block" *ngIf="mode.policyName">Policy Violated  :  {{mode.policyName}}</span>
+                            </span>
+                        </span>
+                    </ng-container>
+                    <span class="cls-moreInfo cls-more{{i}}" *ngIf="gridlistData.categoryList[i].list.length >= 3" (click)="openCategory(i)">More</span>
+                    <em class="icon-32-reject cls-close{{i}} d-none" (click)="removeCategory(i)"></em>
+                    <span class="cls-remaining cls-close{{i}} d-none pb-1" >
+                        <span class="cls-maxhgt">
+                          <ng-container *ngFor="let mode of gridlistData.categoryList[i].list;let m = index">
+                            <span *ngIf="m > 1" class="cls-moreinfo" [ngClass]="{'ml-2' : m!==0 , 'cls-violated' : mode.policyName}">{{data.modetype  | slice:0:1 }} - {{m+1}}
+                                <em class="icon-16-info"></em>
+                                <span class="cls-hovertip">
+                                    <span class="cls-{{mode.reimbursable}}">{{mode.reimbursable}}</span>
+                                    <span class="cls-border-right"></span>
+                                    <span class="">{{mode.date | date: "dd, MMM y"}}</span>
+                                    <span class="d-block">{{mode.currencyType}} {{mode.amount | amount}}</span>
+                                    <span class="d-block" *ngIf="mode.policyName">{{'Policy Violated' | translate}}  :  {{mode.policyName}}</span>
+                                </span>
+                            </span>
+                          </ng-container>
+                        </span>                            
+                      </span>
+                </span>
+            </ng-container>
+            <ng-container  *ngIf="data.modeCount === 1">
+                <span class="cls-imburs-box">
+                    <span class="cls-{{gridlistData.categoryList[i].list[0].reimbursable}}">{{gridlistData.categoryList[i].list[0].reimbursable | translate}}</span>
+                    <span class="cls-border-right"></span>
+                    <span class="">{{gridlistData.categoryList[i].list[0].date |  date: "dd, MMM y"}}</span>
+                </span>
+            </ng-container>
+            <span class="cls-attachment-box">
+                <span class="cls-attachment-section"> <em class="icon-2-attach"></em>{{data.attachmentCount}}</span>
+                <span class="cls-border-right"></span>
+                <span class="cls-expense-count">{{data.modeCount}} {{'Expense' | translate}}</span>
+            </span>
+            <span class="cls-list-amount">
+                <span class="cls-policy-wave cls-hover-tooltip mr-2" *ngIf="data.policyDetect === 'Y'">
+                    <em class="icon-46-policy"></em>
+                    <span class="cls-tool">{{'Policy Violated' | translate}}  : {{data.list[0].policyName}}</span>
+                </span>
+                <span class="cls-currency-type">INR</span>
+                <span class="cls-mode-amount">{{data.amount | amount}}</span>
+                <!-- <span class="cls-policy-wave cls-hover-tooltip ml-2" *ngIf="data.policyDetect === 'Y'">
+                    <em class="icon-46-policy"></em>
+                    <span class="cls-tool">Policy Violated  : {{data.list[0].policyName}}</span>
+                </span> -->
+            </span>
+            
+            <span class="cls-list-icon">
+                <span class="cls-edit-icon cls-hover-tooltip" [ngClass]="{'cls-opacityedit' : gridlistData.edited === false}" (click)="toggleBar(data.modetype,data.id,'edit',data.modeCount,$event)">
+                    <span class="cls-tool">{{'Click To Edit' | translate}}</span>
+                    <em class="icon-14-edit"></em>
+                </span>
+                <span class="cls-history-icon  cls-hover-tooltip" (click)="history(data.categoryId,$event)">
+                    <em class="icon-9-history"></em>
+                    <span class="cls-tool">{{'Click To View History' | translate}}</span>
+                </span> 
+                <span class="cls-delete-icon cls-hover-tooltip"[ngClass]="{'cls-opacityedit' : gridlistData.edited === false}" (click)="delete(data.modetype,data.id,$event)">
+                    <span class="cls-tool">{{'Click To Delete' | translate}}</span>
+                    <em class="icon-5-delete"></em>
+                </span>
+                <ng-container *ngIf="data.modetype != 'Mileage' && data.view != 'mobile'">
+                    <span class="cls-add-icon cls-hover-tooltip" [ngClass]="{'cls-opacityedit' : gridlistData.edited === false}" (click)="toggleBar(data.modetype,data.id,'add',data.modeCount,$event)">
+                        <em class="icon-11-plus"></em>
+                        <span class="cls-tool">{{'Click To Add' | translate}}</span>
+                    </span>
+                </ng-container>
+            </span>
+        </div>
+        <div class="cls-total-amount-box mb-3"  *ngIf="gridlistData?.totalValue">
+            <!-- total amount starts -->
+            <div class="cls-expense-info">
+                <div class="row">
+                    <div class="col-sm-6 cls-info-text">
+                        <span class="cls-help-text pl-3">
+                            <em class="icon-16-info"></em> 
+                            {{'To do advance adjustment,click on advance amount button' | translate}}
+                        </span>
+                    </div>
+                    <div class="col-sm-6 cls-amount-details">
+                        <div class="cls-expense">
+                            <span class="cls-listtotal"> {{'Total Expense Amount' | translate}} </span>
+                            <span class="text-right cls-listalign">
+                                <span class="cls-expense-inr"> {{gridlistData.totalValue.currencyType}} </span>
+                                <span
+                                    class="cls-final-amount">{{gridlistData.totalValue.totalExpenseAmount | amount}}
+                                </span>
+                            </span>
+                        </div>
+                        <div class="cls-expense" *ngIf="gridlistData.totalValue.advanceAmount !== ''">
+                            <span  class="cls-listtotal">{{'Advance Amount' | translate}} </span>
+                            <span class="text-right cls-listalign">
+                                <span class="cls-font-bold mr-0">(-)</span>
+                                <span class="cls-curr"> {{gridlistData.totalValue.currencyType}} </span>
+                                <span class="cls-final-amount">{{gridlistData.totalValue.advanceAmount | amount}}</span>
+                            </span>
+                                <!-- <span class="cls-category-icon">
+                                    <em class="icon-14-checked"></em>
+                                </span> -->
+                        </div>
+                        <div class="cls-expense">
+                            <span  class="cls-listtotal"> {{'Non-Reimbursable Amount' | translate}} </span>
+                            <span class="text-right cls-listalign">
+                                <span class="cls-font-bold mr-0">(-)</span>
+                                <span class="cls-curr"> {{gridlistData.totalValue.currencyType}} </span>
+                                <span class="cls-final-amount">{{gridlistData.totalValue.nonReimbursableAmount | amount}} </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- expense details end -->
+            <!-- Final amount detail start -->
+            <div class="cls-total-amount pl-2">
+                <span class="cls-amount-title pl-2">
+                    <ng-container *ngIf="gridlistData.status === 'Settled'">
+                        {{'Total Reimbursed Amount' | translate}}
+                    </ng-container> 
+                    <ng-container *ngIf="gridlistData.status !== 'Settled'">
+                        {{'Total Reimbursable amount' | translate}}
+                    </ng-container>  
+                </span>
+                <span class="text-right cls-txtalign">
+                    <span class="cls-curr"> {{gridlistData.totalValue.currencyType}}</span>
+                    <span class="cls-amount-value">
+                        {{gridlistData.totalValue.reimbursableAmount | amount}}
+                    </span>
+                </span>
+            </div>
+            <!-- Final amount detail end-->
+        </div>
+    </div>
+    <!-- mobile view -->
+    <div class="row cls-card-container d-block d-sm-none row">
+        <!-- types of mode starts -->
+        <div class="cls-inner-container cls-grid cls-{{data.id}}" *ngFor="let data of gridlistData?.categoryList; let i = index;">
+            <span class="cls-morecount" *ngIf="data.modeCount >1"></span>
+            <div class="cls-travel-bar">
+                <div class="row cls-inner-bar">
+                    <span class="cls-bg" [ngStyle]="{'background':data.color}"></span>
+                    <div class="col-sm-1 cls-mobexpand">
+                        <span class="cls-open-icon" (click)="toggleBar(data.modetype,data.id,'edit',data.modeCount,$event)">
+                            <em class="icon-17-expand"></em>
+                        </span>
+                    </div>
+                    <div class="col-sm-5 cls-mode-title cls-mob-mode text-capitalize">{{data.modetype | translate}}</div>
+                    <div class="col-sm-5 cls-amount-bar text-right cls-mob-amount">
+                        <span class="cls-currency-type">{{data.currencyType}}</span>
+                        <!-- <span class="cls-currency-type">INR</span> -->
+                        <span class="cls-mode-amount">{{data.amount | amount}}</span>
+                        <span class="cls-policy-wave cls-hover-tooltip ml-2" *ngIf="data.policyDetect === 'Y'">
+                            <em class="icon-46-policy"></em>
+                            <span class="cls-tool">{{'Policy Violated' | translate}}  : {{data.list[0].policyName}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="cls-imberse-row mt-1" *ngIf="data.modeCount === 1">
+                    <span class="cls-{{gridlistData.categoryList[i].list[0].reimbursable}}">{{gridlistData.categoryList[i].list[0].reimbursable | translate}}</span>
+                    <span class="cls-border-right"></span>
+                    <span class="">{{gridlistData.categoryList[i].list[0].date | date: "dd, MMM y"}}</span>
+                </div>
+                <div class="cls-imberse-row mt-2" *ngIf="data.modeCount >1">
+                    <ng-container *ngFor="let mode of gridlistData.categoryList[i].list;let m = index">
+                        <span *ngIf="m <= 3" class="cls-moreinfo" [ngClass]="{'ml-2' : m!==0 , 'cls-violated' : mode.policyName}">{{data.modetype  | slice:0:1 }} - {{m+1}}
+                            <em class="icon-16-info"></em>
+                            <span class="cls-hovertip">
+                                <span class="cls-{{mode.reimbursable}}">{{mode.reimbursable}}</span>
+                                <span class="cls-border-right"></span>
+                                <span class="">{{mode.date | date: "dd, MMM y"}}</span>
+                                <span class="d-block">{{mode.currencyType}} {{mode.amount | amount}}</span>
+                                <span class="d-block" *ngIf="mode.policyName">{{'Policy Violated' | translate}}  :  {{mode.policyName}}</span>
+                            </span>
+                        </span>
+                    </ng-container>
+                    <!-- <span class="">{{data.date | date: "dd, MMM y"}}</span> -->
+                    <span class="cls-moreInfo cls-more{{i}}"  (click)="openCategory(i)">More</span>
+                    <em class="icon-32-reject cls-close{{i}} d-none" (click)="removeCategory(i)"></em>
+                    <span class="cls-remaining cls-close{{i}} d-none pb-1" >
+                        <span class="cls-maxhgt">
+                          <ng-container *ngFor="let mode of gridlistData.categoryList[i].list;let m = index">
+                            <span *ngIf="m > 3" class="cls-moreinfo" [ngClass]="{'ml-2' : m!==0 , 'cls-violated' : mode.policyName}">{{data.modetype  | slice:0:1 }} - {{m+1}}
+                                <em class="icon-16-info"></em>
+                                <span class="cls-hovertip">
+                                    <span class="cls-{{mode.reimbursable}}">{{mode.reimbursable}}</span>
+                                    <span class="cls-border-right"></span>
+                                    <span class="">{{mode.date | date: "dd, MMM y"}}</span>
+                                    <span class="d-block">{{mode.currencyType}} {{mode.amount | amount}}</span>
+                                    <span class="d-block" *ngIf="mode.policyName">{{'Policy Violated' | translate}}  :  {{mode.policyName}}</span>
+                                </span>
+                            </span>
+                          </ng-container>
+                        </span>                           
+                      </span>
+                </div>
+                <div class="row cls-icon-bar">
+                    <div class="col-sm-6 cls-expense-bar">
+                        <span class="cls-attachment-section"> <em class="icon-2-attach"></em> {{data.attachmentCount}}</span>
+                        <span class="cls-border-right"></span>
+                        <span class="cls-expense-count">{{data.modeCount}} {{'Expense' | translate}}</span>
+                    </div>
+                    <div class="col-sm-6 cls-icon-section text-right pr-1">
+                        <!-- <span class="cls-edit-icon">AA</span> -->
+                        <span class="cls-edit-icon cls-hover-tooltip" [ngClass]="{'cls-opacityedit' : gridlistData.edited === false}" (click)="toggleBar(data.modetype,data.id,'edit',data.modeCount,$event)">
+                            <em class="icon-14-edit"></em>
+                            <span class="cls-tool">{{'Click To Edit' | translate}}</span>
+                        </span>
+                        <span class="cls-history-icon cls-hover-tooltip" (click)="history(data.categoryId,$event)">
+                            <em class="icon-9-history"></em>
+                            <span class="cls-tool">{{'Click To View History' | translate}}</span>
+                        </span>
+                        <span class="cls-delete-icon cls-hover-tooltip" [ngClass]="{'cls-opacityedit' : gridlistData.edited === false}" (click)="delete(data.modetype,data.id,$event)">
+                            <em class="icon-5-delete"></em>
+                            <span class="cls-tool">{{'Click To Delete' | translate}}</span>
+                        </span>
+                        <ng-container *ngIf="data.modetype != 'Mileage' && data.view != 'mobile'">
+                            <span class="cls-add-icon cls-hover-tooltip" [ngClass]="{'cls-opacityedit' : gridlistData.edited === false}" (click)="toggleBar(data.modetype,data.id,'add',data.modeCount,$event)">
+                                <em class="icon-11-plus"></em>
+                                <span class="cls-tool">{{'Click To Add' | translate}}</span>
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- total amount box starts -->
+         <!-- total amount box starts -->
+         <div class="cls-inner-container cls-responsetotal" *ngIf="gridlistData?.totalValue">
+                <div class="cls-amount-details">
+                    <div class="cls-inner-total-amount">
+                        <div class="cls-info-box text-right">
+                            <em class="icon-16-info cls-info-icon"></em>
+                            <span class="cls-overlay">
+                                {{'To do advance adjustment,click on advance amount checkbox' | translate}}
+                            </span>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="cls-expense">
+                            <span class="cls-total"> {{'Total Expense Amount' | translate}} </span>
+                            <span class="text-right cls-totalamt">
+                                <span class="cls-expense-inr">  {{gridlistData.totalValue.currencyType}} </span>
+                                <span class="cls-final-amount">{{gridlistData.totalValue.totalExpenseAmount | amount}}</span>
+                            </span>
+                        </div>
+                        <div class="cls-expense" *ngIf="gridlistData.totalValue.advanceAmount !== ''">
+                            <span class="cls-total"> {{'Advance Amount' | translate}} </span>
+                            <span class="text-right cls-totalamt">
+                                <span class="cls-font-bold">(-)</span>
+                                <span class="cls-expense-inr">  {{gridlistData.totalValue.currencyType}} </span>
+                                <span class="cls-final-amount">{{gridlistData.totalValue.advanceAmount | amount}}</span>
+                            </span>
+                        </div>
+                        <div class="cls-expense">
+                            <span class="cls-total">{{'Non-Reimbursable Amount' | translate}} </span>                            
+                            <span class="text-right cls-totalamt">
+                                <span class="cls-font-bold">(-)</span>
+                                <span class="cls-expense-inr">  {{gridlistData.totalValue.currencyType}} </span>
+                                <span class="cls-final-amount">{{gridlistData.totalValue.nonReimbursableAmount | amount}}  </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="cls-total-amount">
+                        <span class="cls-total"> 
+                            <ng-container *ngIf="gridlistData.status === 'Settled'">
+                                {{'Total Reimbursed Amount' | translate}}
+                            </ng-container> 
+                            <ng-container *ngIf="gridlistData.status !== 'Settled'">
+                                {{'Total Reimbursable amount' | translate}}
+                            </ng-container>  
+                        </span>
+                        <span class="text-right  cls-totalamt">
+                            <span class="cls-expense-cur ml-0">  {{gridlistData.totalValue.currencyType}} </span>
+                            <span class="cls-final-amount"> {{gridlistData.totalValue.reimbursableAmount | amount}}</span>
+                        </span>
+                    </div>
+                </div>
+         </div>
+         <!-- total amount box starts -->
+    </div> 
+</ng-container>
+<ng-container *ngIf="gridview === 'depth'">
+    <div class="cls-list-head mb-2">
+        <ng-container *ngFor="let val of depthViewData?.reportContentList?.headers">
+            <div class="cls-list-data" *ngIf="val === ''">
+                <a class="cls-expand-list" (click)="openAllToggle()">
+                    <em [ngClass]="{'icon-17-expand': !activeExpand,'icon-18-collapse': activeExpand}"></em>
+                </a>
+            </div>
+            <ng-container *ngIf="val != ''">
+                <div class="cls-list-data">{{val}}</div>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div class="cls-inner-container">
+        <ng-container *ngFor="let val of depthViewData?.reportContentList?.data; let index = index">
+            <div class="cls-boxshadow" id="fn-boxshadow{{index}}">
+                <div class="cls-inner-list-head" id="fn-inner-list-head{{index}}">
+                    <div class="cls-inner-list-data" *ngFor="let inner of val?.listIndex">
+                        <ng-container *ngIf="inner.type === 'expand'">
+                            <a class="cls-expand collapsed" data-toggle="collapse" (click)="openToggle(index)" href="#expandBox{{index}}" role="button" aria-expanded="false" aria-controls="expandBox">
+                            </a>
+                        </ng-container>
+                        <ng-container *ngIf="inner.type === 'date'">
+                            {{inner.value}}
+                        </ng-container>
+                        <ng-container *ngIf="inner.type === 'raw'">
+                            <span class="cls-{{inner.value}}">
+                                {{inner.value}}
+                               <!--  <ng-container *ngIf="inner.value ==='Allowance'">
+                                   - {{inner.AllowanceName}}
+                                </ng-container> -->
+                            </span>
+                            <span *ngIf="inner.sync === 'Y'" class="cls-sync"></span>
+                        </ng-container>
+                        <ng-container *ngIf="inner.type === 'attach'">
+                            <a class="cls-attach" (click)="openReceipt(index)">
+                                <em class="icon-2-attach"></em> {{inner.count}}
+                            </a>
+                        </ng-container>
+                        <ng-container *ngIf="inner.type === 'Amount'">
+                            <span class="cls-policy-wave cls-hover-tooltip mr-1" *ngIf="inner.policyDetect === 'Y'">
+                                <em class="icon-46-policy"></em>
+                                <span class="cls-tool">{{'Policy Violated' | translate}}</span>
+                            </span>
+                            {{inner.currency}} {{inner.value | amount}}
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="collapse" id="expandBox{{index}}">
+                    <div class="card card-body">
+                        <div class="cls-collapse-box">
+                            <span class="cls-collapse-list" *ngFor="let expand of val?.expandData">
+                                    {{expand.head}}
+                                    <span class="d-block">
+                                        <ng-container *ngIf="expand.type === 'date'">
+                                            {{expand.value}}
+                                        </ng-container>
+                                        <ng-container *ngIf="expand.value === ''">
+                                            --
+                                        </ng-container>
+                                        <ng-container *ngIf="expand.type === 'raw'">
+                                            {{expand.value}}
+                                        </ng-container>
+                                        <ng-container *ngIf="expand.type === 'Amount'">
+                                            {{expand.currency}} {{expand.value | amount}}
+                                        </ng-container>  
+                                    </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="cls-toal-amount-container">
+        <div class="row cls-total-row mt-2">
+            <div class="col-md-8 cls-semi-text">{{'Total Expense Amount' | translate}}</div>
+            <div class="col-md-4 cls-bold text-right">{{depthViewData?.viewReportDetails?.totalValue?.currencyType}} {{depthViewData?.viewReportDetails?.totalValue?.totalExpenseAmount | amount}}</div>
+        </div>
+        <div class="row cls-total-row">
+            <div class="col-md-8 cls-semi-text">{{'Advance Amount' | translate}}</div>
+            <div class="col-md-4 cls-bold text-right"> <span class="cls-minus">(-)</span> {{depthViewData?.viewReportDetails?.totalValue?.currencyType}} {{depthViewData?.viewReportDetails?.totalValue?.advanceAmount | amount}}</div>
+        </div>
+        <div class="row cls-total-row">
+            <div class="col-md-8 cls-semi-text">{{'Non-Reimbursable Amount' | translate}}</div>
+            <div class="col-md-4 cls-bold text-right"><span class="cls-minus">(-)</span> {{depthViewData?.viewReportDetails?.totalValue?.currencyType}} {{depthViewData?.viewReportDetails?.totalValue?.nonReimbursableAmount | amount}}</div>
+        </div>
+        <div class="row cls-total-row cls-bg">
+            <div class="col-md-8 cls-semi-text">
+                <ng-container *ngIf="gridlistData.status === 'Settled'">
+                    {{'Total Reimbursed Amount' | translate}}
+                </ng-container> 
+                <ng-container *ngIf="gridlistData.status !== 'Settled'">
+                    {{'Total Reimbursable amount' | translate}}
+                </ng-container>  
+             </div>
+            <div class="col-md-4 cls-bold text-right"> {{depthViewData?.viewReportDetails?.totalValue?.currencyType}} {{depthViewData?.viewReportDetails?.totalValue?.reimbursableAmount | amount}}</div>
+        </div>
+    </div>
+</ng-container>
+<!-- list view ends -->
+<!-- popup starts -->
+<div class="cls-history-container" *ngIf="receiptContainer">
+    <span id="fn-background" class="cls-background" (click)="closeModal()"></span>
+    <div class="cls-main-popup" [ngClass]="toClose ? 'close-ani' : ''">
+        <div class="cls-popup">
+            <div class="cls-header">
+                <span class="cls-title text-left">
+                    {{'Uploaded Receipt' | translate}}
+                </span>
+                <span class="cls-top-close text-center" (click)="closeModal()">
+                    <em class="icon-32-reject"></em>
+                </span> 
+            </div>
+            <div class="cls-history-data">
+                <ng-container *ngIf="imageArray.length > 0">
+                    <span class="cls-receipt-list cls-zoom" *ngFor="let img of imageArray">
+                        <ng-container *ngIf="img.type !== 'application/pdf'">
+                            <img src="{{img.path}}.{{img.type}}" alt="Receipt{{img.name}}">
+                        </ng-container>
+                        <span class="cls-pdf" *ngIf="img.type === 'application/pdf'">
+                            <span>{{img.name}}</span>
+                        </span>
+                    </span>
+                </ng-container>
+                <div class="cls-nodata-found text-center" *ngIf="imageArray.length === 0">
+                    <img src="../../../../assets/images/NoDataAvailableinvault.svg" alt="">
+                    <span>{{'No Recipt Available' | translate}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="cls-btn text-right">
+            <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="closeModal()"><span>{{'Ok' | translate}}</span></button>
+        </div>
+    </div>
+</div> 
+<!-- popup ends -->
+<app-alert *ngIf="alertShow" [userInput]="alertContent" (choosedVal)="alertAction($event)"></app-alert>
+<app-reporthistory *ngIf="historyFlag" (closePopup)="historyClose($event)" [historyInput]="historyInput"></app-reporthistory>

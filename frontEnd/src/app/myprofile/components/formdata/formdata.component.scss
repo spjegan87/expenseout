@@ -1,0 +1,84 @@
+@import './../../../../assets/scss/variable.scss';
+.cls-form-bar{
+    .cls-head-title{
+        display: inline-block;
+        font: 20px "ProximaSemiBold";
+        margin: 10px 0 15px 0;  
+    }
+    .cls-maxwidth{
+        max-width: 10%;
+    }
+    .cls-mobile-bar{
+        width: 25%;
+        .cls-select{
+            padding: 0 5px;
+            border-top-right-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+        }
+    }
+    .cls-border{
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+    }
+    .cls-other-details{
+        .cls-sub-title{
+            display: inline-block;
+            margin: 10px 0;
+            font: 15px "ProximaSemiBold";
+        }
+    }
+}
+.cls-email{
+    &.cls-error{
+        border: 1px solid $ERROR;
+    }
+}
+.cls-ipdisable{
+    input{
+        pointer-events: none;
+    }
+}
+.cls-info-text{
+    em{
+        color: $PRIMARYCOLOR;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+    .cls-click{
+        color: $PRIMARYCOLOR;
+        cursor: pointer;
+    }
+}
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-form-bar{
+        .cls-maxwidth{
+            max-width: 50%;
+        }
+    }
+}
+@media (min-width: 767px) and (max-width: 1024px){
+    .cls-form-bar{
+        .col-sm-2,.col-sm-3{
+            flex:0 0 40%;
+            max-width: 40%;
+        }
+        .cls-maxwidth{
+            max-width: 22%;
+        }
+        .cls-emailtab{
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+      } 
+}
+@media only screen and (max-width: 480px) {
+    .cls-form-bar{
+        .cls-maxwidth{
+            max-width: 50%;
+        }
+        .cls-btn-primary {
+            font-size: 12px;
+            padding: 7px 15px;
+          }
+    }
+}

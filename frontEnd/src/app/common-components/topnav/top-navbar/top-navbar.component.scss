@@ -1,0 +1,251 @@
+@import "../../../../assets/scss/all";
+@import "../../../shared-module/components/list-loader/list-loader.component.scss";
+.cls-customtab {
+    border: none;
+    overflow-x: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    overflow-y: hidden;
+    .cls-menu {
+        margin-right: 25px;
+        letter-spacing: 0.5px;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        font: 14px "ProximaRegular";
+        padding: 13px;
+        opacity: 0.5;
+        height: 87%;
+        position: relative;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        text-decoration: none !important;
+        color: #000;
+        outline: none;
+        cursor: pointer;
+        z-index: 1;
+        .cls-expense-count {
+            display: inline-block;
+            background: #4a4f55;
+            padding: 0px 5px;
+            border-radius: 12px;
+            color: #fff;
+            font: 12px "ProximaSemiBold";
+            margin-left: 5px;
+        }
+        .cls-shape,
+        .cls-shape1 {
+            position: absolute;
+            width: 35px;
+            background: #f2f5f8;
+        }
+        .cls-shape {
+            height: 35px;
+            border-radius: 0 0px 0px 42px;
+            right: -34px;
+            top: 7px;
+            transform: rotate( 2deg);
+            z-index: 2;
+            border-left: 1px solid #ccc;
+        }
+        .cls-shape1 {
+            height: 30px;
+            right: -30px;
+            top: 12px;
+            z-index: 1;
+            border-radius: 0 2px 0px 0;
+        }
+        &.active {
+            border: none !important;
+            font: 14px "ProximaSemiBold";
+            background-color: #fff;
+            color: $PRIMARYCOLOR;
+            height: 100%;
+            opacity: unset !important;
+            .cls-shape {
+                border-left: none !important;
+            }
+            .cls-shape1 {
+                background: #fff;
+                border: none !important;
+                top: 13px !important;
+            }
+            .cls-expense-count {
+                background: $BTNGRADIENT; //linear-gradient( 90deg, #135c93, #0b76c6);
+            }
+        }
+        &.cls-line {
+            height: 100%;
+        }
+        .cls-new {
+            font-size: 12px;
+        }
+    }
+}
+
+.nav-tabs {
+    border: none;
+    overflow-x: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    overflow-y: hidden;
+    .nav-item {
+        margin-right: 15px;
+        z-index: 1;
+        .nav-link.active {
+            border: none !important;
+            font: 14px "ProximaSemiBold";
+            color: $PRIMARYCOLOR;
+            height: 100%;
+            opacity: unset !important;
+            .cls-expense-count {
+                background: $BTNGRADIENT;
+            }
+            .cls-shape {
+                border-left: none !important;
+            }
+            .cls-shape1 {
+                background: $WHITE;
+                border: none !important;
+                top: 13px !important;
+            }
+        }
+        .nav-link {
+            letter-spacing: 0.5px;
+            border: 1px solid $BDRLIGHT;
+            border-bottom: none;
+            font: 14px "ProximaRegular";
+            padding: 13px;
+            opacity: 0.5;
+            height: 87%;
+            position: relative;
+            .cls-shape {
+                position: absolute;
+                width: 35px;
+                height: 35px;
+                // border: 1px solid #f2f5f8;
+                border-radius: 0 0px 0px 42px;
+                right: -34px;
+                top: 6px;
+                background: $MAINBG;
+                transform: rotate(2deg);
+                z-index: 2;
+                border-left: 1px solid $BDRLIGHT;
+            }
+            .cls-shape1 {
+                position: absolute;
+                width: 35px;
+                height: 30px;
+                background: $MAINBG;
+                right: -30px;
+                top: 12px;
+                z-index: 1;
+                border-radius: 0 2px 0px 0;
+            }
+            &:hover {
+                opacity: unset;
+            }
+        }
+    }
+    .cls-line {
+        height: 100%;
+    }
+    .nav-item.active {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        // background: #fff;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .cls-customtab  {
+        padding: 0 5px;
+        border: none !important;
+        position: fixed;
+        top: 55px;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        z-index: 999;
+        background: linear-gradient(to right, #135C93, #0B76C6);
+        .cls-menu{
+            // width: 25%;
+            text-align: center;
+            color: $WHITE !important;
+            font: 14px "ProximaRegular";
+            display: inline-block;
+            vertical-align: -15px;
+            .cls-shape,
+            .cls-shape1 {
+                display: none;
+            }
+            .cls-expense-count {
+                display: inline-block;
+                background: #4a4f55 !important;
+                padding: 0px 5px;
+                border-radius: 12px;
+                color: $WHITE;
+                font: 12px "ProximaSemiBold";
+                margin-left: 5px;
+            }
+            &.active {
+                background: unset !important;
+                border-bottom: 0px solid $WHITE !important;
+                border: 1px solid $WHITE !important;
+            }
+        }
+    }
+}
+@media (min-width: 481px) and (max-width: 766px) {
+    .cls-customtab  {
+        padding: 0 5px;
+        border: none !important;
+        position: fixed;
+        top: 55px;
+        left: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        z-index: 999;
+        background: linear-gradient(to right, #135C93, #0B76C6);
+        .cls-menu{
+            // width: 25%;
+            text-align: center;
+            color: $WHITE !important;
+            font: 14px "ProximaRegular";
+            display: inline-block;
+            vertical-align: -15px;
+            .cls-shape,
+            .cls-shape1 {
+                display: none;
+            }
+            .cls-expense-count {
+                display: inline-block;
+                background: #4a4f55 !important;
+                padding: 0px 5px;
+                border-radius: 12px;
+                color: $WHITE;
+                font: 12px "ProximaSemiBold";
+                margin-left: 5px;
+            }
+            &.active {
+                background: unset !important;
+                border-bottom: 0px solid $WHITE !important;
+                border: 1px solid $WHITE !important;
+            }
+        }
+    }
+}

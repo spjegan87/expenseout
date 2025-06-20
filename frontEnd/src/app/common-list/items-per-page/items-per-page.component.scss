@@ -1,0 +1,19 @@
+@import "../../../assets/scss/all";
+.cls-item-perpage {
+    .cls-label {
+        display: flex;
+        align-items: center;
+        .cls-custom-select {
+            margin: 0px 5px;
+            width: 70px;
+        }
+    }
+}
+
+@media screen and (min-width:$mobile-min) and (max-width:$mobile-max) {
+    .cls-item-perpage {
+        .cls-custom-select {
+            width: 25%;
+        }
+    }
+}

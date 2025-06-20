@@ -1,0 +1,43 @@
+/************************************************************************************
+CSS Description : donut chart
+Author          : Padma Priya CK
+Powered by       : Infiniti software solutions
+*************************************************************************************/
+.cls-chart {
+    width: 430px;
+    // margin: 35px auto;
+    // margin: 0px auto;
+    padding: 10px;
+  }
+  @media only screen and (max-width: 480px) {
+    .cls-chart {
+      width: 100%;
+      .apexcharts-canvas{
+        svg{
+          width: 100% !important;
+        }
+      }
+    }
+  }
+  
+@media (min-width: 481px) and (max-width: 766px){
+  .cls-chart {
+    width: 100%;
+    .apexcharts-canvas{
+      svg{
+        width: 100% !important;
+      }
+    }
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px){
+  .cls-chart {
+    width: 100%;
+    
+    // .apexcharts-canvas{
+    //   svg{
+    //     width: 100% !important;
+    //   }
+    // }
+  }
+}

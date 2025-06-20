@@ -1,0 +1,52 @@
+@import "../../../../assets/scss/variable.scss";
+// network page font
+.cls-network{
+  svg{
+    margin-top: 30px;
+}
+ .cls-content{
+    width:34%;
+    margin:0px auto;
+    .cls-title{
+      color: $BLACK;
+      font: 28px "ProximaBold";
+      margin-bottom: 20px;
+    }
+    .head{
+        color: $BLACK;
+        font:16px "ProximaLight";
+    }
+    .cls-try{
+      font: 16px "ProximaLight";
+      padding-left: 20px;
+      color: #999;
+      position: relative;
+        &:before{
+            content: "\e926";
+            transform: rotate(90deg);
+            font-family: "icomoon";
+            color: #999;
+            top: 10px;
+            margin-right: 8px;
+            font-size: 13px;
+            position: absolute;
+            left: 1px;
+            vertical-align: middle;
+        }
+    }
+  }
+  .cls-custombtn{
+    background: $BTNGRADIENT;
+    color:#fff;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .cls-network{
+    svg{
+      width: 80%;
+    }
+  }
+  .cls-content{
+    width: 75% !important;
+  }
+}

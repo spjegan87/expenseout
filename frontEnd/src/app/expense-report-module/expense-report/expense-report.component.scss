@@ -1,0 +1,72 @@
+/************************************************************************************
+CSS Description : Report list
+Author          : Padma Priya,Naveen.s
+Powered by      : Infiniti software solutions
+*************************************************************************************/
+@import'./../../../assets/scss/variable.scss';
+.cls-main-container{
+    background:$MAINBG;
+    margin: -50px -30px -55px -30px;
+    padding:20px 20px 20px 35px;
+    min-height: 91vh;
+    .cls-main-title{
+        font: 20px "ProximaSemiBold";
+        margin: 15px 0;
+        display: inline-block;
+    }
+    .cls-dropdown-button{
+        .dropdown-menu{
+            left: 2px !important;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            .dropdown-item{
+                padding: .25rem .75rem !important;
+            }
+        }
+    }
+}
+.cls-view{
+    background:$BTNGRADIENT; 
+    color:$WHITE !important;
+    padding: 5px 12px !important;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+    margin-top: -40px;
+    .icon-11-plus{
+        vertical-align: -1px;
+    }
+    &.cls-link{
+        background:none; 
+        color:$PRIMARYCOLOR;
+        .icon-11-plus{
+            display:none
+        }
+    }
+}
+@media only screen and (max-width: 480px) {
+    .cls-main-container{
+        // padding: 50px 20px 20px 20px;
+        padding: 0px;
+        margin: 0px -30px -55px -30px;
+        .cls-view,.cls-mbl-breadcrumb,.cls-main-title{
+            display: none !important;
+        }
+    }
+}
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-main-container{
+        // padding: 50px 20px 20px 20px;
+        padding: 0px;
+        margin: 0px -30px -55px -30px;
+        .cls-view,.cls-mbl-breadcrumb,.cls-main-title{
+            display: none !important;
+        }
+    }
+}
+@media (min-width: 767px) and (max-width: 1024px){
+    .cls-view{
+        display: none !important;
+    }
+}

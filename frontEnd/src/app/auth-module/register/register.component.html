@@ -1,0 +1,450 @@
+<!-- <div class="cls-landpage row cls-mobile-landpage" >
+  <div class="col-sm-6 p-0">
+    <div class="cls-left">
+      <div class="cls-center cls-ani-left">
+        <h1 class="cls-txt">
+          Make your Expense Management an easy, Transparent and a happy process
+        </h1>
+        <div class="row cls-imagebck">
+          <div class="col-sm-6 cls-ani-1">
+            <img
+              src="../../../assets/images/menu/Vault.svg"
+              class="cls-vault"
+              alt="Capture Receipts"
+            />
+            Capture Receipts
+          </div>
+          <div class="col-sm-6 cls-ani-1">
+            <img
+              src="../../../assets/images/menu/Expenses.svg"
+              alt="Report Your Expense"
+            />
+            Report Your Expense
+          </div>
+          <div class="col-sm-6 cls-ani-2">
+            <em class="icon-19-successfully d-block"> </em>
+            Approve in Real Time
+          </div>
+          <div class="col-sm-6 cls-ani-2">
+            <img
+              src="../../../assets/images/menu/Settlements.svg"
+              alt="Settlement by Finance"
+            />
+            Settlement by Finance
+          </div>
+          <div class="col-sm-6 cls-ani-3">
+            <img
+              src="../../../assets/images/SaveTime.svg"
+              alt="Save Time & Money"
+              class="cls-save"
+            />
+            Save Time & Money
+          </div>
+          <div class="col-sm-6 cls-ani-3">
+            <img
+              src="../../../assets/images/Great-user.svg"
+              alt="Great User Experience"
+            />
+            Great User Experience
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 cls-right cls-ani-right p=0">
+    <div class="cls-center cls-ani-right">
+      <div id="logo" class="cls-register">
+        <img class="logo"src="../../../assets/images/expenseout_logo.svg"
+          alt="image" />
+        <h2 class="cls-hello">Hello, Register Here</h2>
+        <form class="row g-3" [formGroup]="registerForm">
+          <div class="col-md-5">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="email"  class="form-control w-100" id="firstName" formControlName="firstName"  placeholder="Enter First Name" [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.firstName.invalid}"
+            />
+          </div>
+
+          <div class="col-md-5"> 
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control w-100"  id="lastName"  formControlName="lastName"  placeholder="Enter Last Name" [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.lastName.invalid}" />
+          </div>
+          <div class="col-sm-12 form-group col -md-10">
+            <label for="inputEmail" class="form-label">Work E-mail</label>
+            <input type="email" class="form-control cls-input-width"  id="inputEmail"  formControlName="inputEmail"  placeholder="Enter Work E-mail"  [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.inputEmail.invalid}"/>
+          </div>
+          <div class="col-sm-12 form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="text" class="form-control cls-input-width" id="password"  formControlName="password"
+              placeholder="Enter Password"  [ngClass]="{'cls-border-error': submitted && registerForm.controls.password.invalid}"/>
+              <span id="toggle" (click)="toggle()">
+                <em class="icon-44-view"></em>
+              </span>
+          </div>
+     
+          <div class="col-sm-12 form-group">
+            <label for="companyName" class="form-label">Company Name</label>
+            <input  type="text"  class="form-control cls-input-width"  id="companyName"  formControlName="companyName"  [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.companyName.invalid}" placeholder="Enter Company Name">
+          </div>
+          <div class="col-md-5 cls-search-select cls-ckemp">
+            <label for="noOfEmployee" class="form-label">No Of Employee</label>
+            <em class="icon-3-dropdownarrow"></em>
+              <input class="form-control cls-input-dropdown" type="text"           
+                  formControlName="noOfEmployee" name="noOfEmployee" id="noOfEmployee"
+                  data-toggle="dropdown"
+                  (click)="searchDropdown('fn-noOfEmployee-input')"
+                  placeholder="Choose Employee"
+                  autocomplete="off"  [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.noOfEmployee.invalid}"  readonly>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <input type="text" class="cls-select-input"
+                      placeholder="{{'Search'}}..."
+                      id="fn-noOfEmployee-input" autocomplete="off"
+                      (keyup)="filterFunction('fn-noOfEmployee-input','fn-noOfEmployee-ul')">
+                  <ul id="fn-noOfEmployee-ul" class="live-search-list">
+                      <li  id="sec1" (click)="setFilterValue('noOfEmployee','1')">
+                        <a> 1  </a>
+                      </li>
+                      <li  id="sec2" (click)="setFilterValue('noOfEmployee','2')">
+                        <a> 2  </a>
+                      </li>
+                      <li  id="sec3" (click)="setFilterValue('noOfEmployee','3')">
+                        <a> 3  </a>
+                      </li>
+                      <li  id="se4" (click)="setFilterValue('noOfEmployee','4')">
+                        <a> 4  </a>
+                      </li>
+                      <li  id="sec5" (click)="setFilterValue('noOfEmployee','5')">
+                        <a> 5 </a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+
+          <div class="col-md-5 right-select cls-emp">
+            <label for="currency" class="form-label">Currency</label>
+              <em class="icon-3-dropdownarrow"></em>
+              <input class="form-control cls-input-dropdown" type="text"                 
+                  formControlName="currency" name="currency" id="currency"
+                  data-toggle="dropdown"
+                  (click)="searchDropdown('fn-currency-input')"
+                  placeholder="Choose Currency"
+                  autocomplete="off" [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.currency.invalid}" readonly>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <input type="text" class="cls-select-input"
+                      placeholder="{{'Search'}}.."
+                      id="fn-currency-input" autocomplete="off"
+                      (keyup)="filterFunction('fn-currency-input','fn-currency-ul')">
+                  <ul id="fn-currency-ul" class="live-search-list">
+                      <li *ngFor="let currency of currencyData"   id="sec{{currency.currency_code}}"
+										(click)="setFilterValue('currency',currency.currency_name)">
+                        <a>
+                          {{currency.currency_name}}({{currency.currency_code}})
+                        </a>
+                      </li>
+                  </ul>
+               </div>         
+          </div>
+         
+          <div class="col-md-5 cls-search-select cls-coun">
+            <label for="country" class="form-label">Country</label>
+            <em class="icon-3-dropdownarrow"></em>
+              <input class="form-control cls-input-dropdown" type="text"           
+                  formControlName="country" name="country" id="country"
+                  data-toggle="dropdown"
+                  (click)="searchDropdown('fn-country-input')"
+                  placeholder="Choose Country"
+                  autocomplete="off"  [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.country.invalid}"  readonly>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <input type="text" class="cls-select-input"
+                      placeholder="{{'Search'}}..."
+                      id="fn-country-input" autocomplete="off"
+                      (keyup)="filterFunction('fn-country-input','fn-country-ul')">
+                  <ul id="fn-country-ul" class="live-search-list">
+                      <li *ngFor="let country of countryType" id="sec{{country.code}}"
+                      (click)="setFilterValue('country',country.name)">
+                        <a>
+                            {{country.name}} - {{country.code}}
+                        </a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col-md-5 cls-search-select">
+            <label for="language" class="form-label">Language</label>
+            <em class="icon-3-dropdownarrow"></em>
+              <input class="form-control cls-input-dropdown" type="text"           
+                  formControlName="language" name="language" id="language"
+                  data-toggle="dropdown"
+                  (click)="searchDropdown('fn-language-input')"
+                  placeholder="Choose Language"
+                  autocomplete="off"  [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.language.invalid}"  readonly>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <input type="text" class="cls-select-input"
+                      placeholder="{{'Search'}}..."
+                      id="fn-language-input" autocomplete="off"
+                      (keyup)="filterFunction('fn-language-input','fn-language-ul')">
+                  <ul id="fn-language-ul" class="live-search-list">
+                      <li  id="secEnglish" (click)="setFilterValue('language','English')">
+                        <a> English  </a>
+                      </li>
+                      <li  id="secTM" (click)="setFilterValue('language','தமிழ்')">
+                        <a> தமிழ்  </a>
+                      </li>
+                      <li  id="securu" (click)="setFilterValue('language','中文')">
+                        <a> 中文  </a>
+                      </li>
+                      <li  id="sechi" (click)="setFilterValue('language','हिन्दी')">
+                        <a> हिन्दी  </a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+
+          <div class="col-md-6 cls-cpacha">
+            <img [src]="captchaPath" class="captchaimage"  alt="refresh captcha"/>
+            <a href="javascript:;"  title="refresh capcha" (click)="refreshcapcha()" >
+              <em class="icon-61-refresh cls-refresh">
+              </em>
+            </a>
+          </div>
+        <div class="col-md-6 right-select">
+            <label class="form-label">Captcha</label>
+            <input  type="text"  class="form-control cls-captcha-input"  formControlName="captcha"   placeholder="Enter Captcha"  [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.captcha.invalid}"/>
+          </div>
+          <div class="custom-control custom-checkbox cls-checkbox pt-2">
+            <input  type="checkbox"  class="custom-control-input" id="customCheck1"formControlName="terms"
+            />
+            <label class="custom-control-label" for="customCheck1"
+              >I Accept the
+              <a href="#" class="cls-terms-conditions text-primary"
+                >Terms and Conditions</a > of ExpenseOut</label
+            >
+           
+          </div>
+          <div class="col-sm-12 form-group pt-2">           
+            <button type="button" (click)="createAccount()" class="btn btn-primary cls-btn-custom" >
+              <span class="m-auto">Create Account</span>
+            </button>
+          </div>
+        </form>
+        <span>Already have account? Click here to
+          <a  href="javascript:;" routerLink="/66a36e77fd002579809717841f998f4d21cd5913/2736fab291f04e69b62d490c3c09361f5b82461a" title="Back To Login" class="text-primary">Log in</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="cls-landpage row cls-mobile-landpage">
+  <div class="col-sm-7 p-0">
+    <div class="cls-left ">
+      <div class="cls-center cls-ani-left">
+        <h1 class="cls-txt">
+          Make your Expense Management an easy, Transparent and a happy process
+        </h1>
+        <div class="row cls-imagebck">
+          <div class="col-sm-6 cls-ani-1">
+            <img src="../../../assets/images/menu/Vault.svg" class="cls-vault" alt="Capture Receipts">
+            <span class="cls-left-text">Capture Receipts</span>
+          </div>
+          <div class="col-sm-6 cls-ani-1">
+            <img src="../../../assets/images/menu/Expenses.svg" alt="Report Your Expense">
+            <span class="cls-left-text">Report Your Expense</span>
+          </div>
+          <div class="col-sm-6 cls-ani-2">
+            <em class="icon-19-successfully d-block"></em>
+            <!-- <img src="../../../assets/images/menu/Approvals.svg" alt="Approve in Real Time"> -->
+            <span class="cls-left-text">Approve in Real Time</span>
+          </div>
+          <div class="col-sm-6 cls-ani-2">
+            <img src="../../../assets/images/menu/Settlements.svg" alt="Settlement by Finance">
+            <span class="cls-left-text">Settlement by Finance</span>
+          </div>
+          <div class="col-sm-6 cls-ani-3">
+            <img src="../../../assets/images/SaveTime.svg" alt="Save Time & Money" class="cls-save">
+            <span class="cls-left-text">Save Time & Money</span>
+          </div>
+          <div class="col-sm-6 cls-ani-3">
+            <img src="../../../assets/images/Great-user.svg" alt="Great User Experience">
+            <span class="cls-left-text">Great User Experience</span>
+          </div>
+        </div>
+      </div>
+      <!-- <span class="cls-skew"></span> -->
+    </div>
+  </div>
+  <div class="col-sm-5 cls-right cls-ani-right">
+    <div class="cls-center">
+      <div class="cls-bg" *ngIf="!isSuccess">
+        <div id="logo">
+          <span class="cls-logo"></span>
+          <!-- <img class="logo-light" src="../../../assets/images/expenseout_logo.svg" alt="image"> -->
+          <h2 class="cls-hello">
+            Start your 30-days free trial
+          </h2>
+        </div>
+        <form class="row g-3 cls-main-cont" [formGroup]="registerForm">
+          <div class="col-md-6 form-group mb-2">
+            <label for="firstName" class="form-label">First Name <span class="cls-mandatory">*</span></label>
+            <input type="email" class="form-control cls-reg-maxwidth" id="firstName" formControlName="firstName"
+              (keypress)="stringValidation($event,'name')" placeholder="Enter First Name" autocomplete="off"
+              onpaste="return false"
+              [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.firstName.invalid}" />
+          </div>
+          <div class="col-md-6 form-group mb-2">
+            <label for="lastName" class="form-label">Last Name </label>
+            <input type="text" class="form-control cls-reg-maxwidth" id="lastName" formControlName="lastName"
+              (keypress)="stringValidation($event,'name')" placeholder="Enter Last Name" autocomplete="off"
+              onpaste="return false"
+              [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.lastName.invalid}" />
+          </div>
+          <div class="col-sm-12 form-group mb-2">
+            <label for="inputEmail" class="form-label">Work E-mail <span class="cls-mandatory">*</span></label>
+            <input type="email" class="form-control cls-input-width" id="inputEmail" formControlName="email"
+              placeholder="Enter Work E-mail" autocomplete="off" onpaste="return false"
+              [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.email.invalid}" />
+          </div>
+          <!-- <div class="col-sm-5 cls-margin-right form-group cls-pass">
+            <label for="password" class="form-label">Password <span class="cls-mandatory">*</span></label>
+            <input type="password" class="form-control cls-input-width cls-password" id="password"
+            formControlName="password" placeholder="Enter Password" autocomplete="off"
+            onpaste="return false" [ngClass]="{'cls-border-error': submitted && registerForm.controls.password.invalid}" />
+            <em (click)="passwordview()" class="icon-43-view-off"></em>
+          </div>
+          <div class="col-sm-5 form-group">
+            <label for="confirmPassword" class="form-label">Confirm Password <span class="cls-mandatory">*</span></label>
+            <input type="password" class="form-control cls-input-width" id="confirmPassword"
+            formControlName="confirmPassword" placeholder="Enter Confirm Password" (keyup)="confirmPass()"
+            [ngClass]="{'cls-border-error' : error}" autocomplete="off"
+            onpaste="return false"  [ngClass]="{'cls-border-error': submitted && registerForm.controls.confirmPassword.invalid}" />
+          </div> -->
+          <div class="col-sm-12 form-group mb-2">
+            <label for="companyName" class="form-label">Company Name <span class="cls-mandatory">*</span></label>
+            <input type="text" class="form-control cls-input-width" id="companyName" formControlName="companyName"
+              [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.companyName.invalid}"
+              autocomplete="off" (keypress)="stringValidation($event,'company')" onpaste="return false"
+              placeholder="Enter Company Name">
+          </div>
+          <div class="col-sm-12 form-group mb-2">
+            <label for="phone" class="form-label">Phone Number <span class="cls-mandatory">*</span></label>
+            <input type="tel" class="form-control cls-input-width" id="phone" formControlName="phone"
+              [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.phone.invalid}" autocomplete="off"
+              (keypress)="stringValidation($event,'phone')" maxlength="10" onpaste="return false"
+              placeholder="Enter Phone Number">
+          </div>
+          <div class="col-md-6 form-group cls-search-select mb-2">
+            <label for="noOfEmployee" class="form-label">No Of Employee <span class="cls-mandatory">*</span></label>
+            <div class="cls-dropdown-container">
+              <em class="icon-3-dropdownarrow"></em>
+              <input class="form-control cls-input-dropdown cls-reg-maxwidth" type="text" formControlName="noOfEmployee"
+                name="noOfEmployee" id="noOfEmployee" data-toggle="dropdown"
+                (click)="searchDropdown('fn-noOfEmployee-input')" placeholder="Choose Employee" autocomplete="off"
+                [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.noOfEmployee.invalid}" readonly>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.."
+                  onpaste="return false" id="fn-noOfEmployee-input" autocomplete="off"
+                  (keyup)="filterFunction('fn-noOfEmployee-input','fn-noOfEmployee-ul')">
+                <ul id="fn-noOfEmployee-ul" class="live-search-list">
+                  <li (click)="setFilterValue('noOfEmployee','select')">
+                    <a>select</a>
+                  </li>
+                  <li id="sec1" (click)="setFilterValue('noOfEmployee','Under 5')">
+                    <a> Under 5 </a>
+                  </li>
+                  <li id="sec2" (click)="setFilterValue('noOfEmployee','6 to 25')">
+                    <a> 6 to 25 </a>
+                  </li>
+                  <li id="sec3" (click)="setFilterValue('noOfEmployee','26 to 50')">
+                    <a> 26 to 50 </a>
+                  </li>
+                  <li id="se4" (click)="setFilterValue('noOfEmployee','51 to 100')">
+                    <a> 51 to 100 </a>
+                  </li>
+                  <li id="sec5" (click)="setFilterValue('noOfEmployee','101 to 500')">
+                    <a> 101 to 500 </a>
+                  </li>
+                  <li id="sec5" (click)="setFilterValue('noOfEmployee','501 to 1000')">
+                    <a> 501 to 1000 </a>
+                  </li>
+                  <li id="sec5" (click)="setFilterValue('noOfEmployee','more than 1000')">
+                    <a> more than 1000 </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 form-group cls-search-select mb-2">
+            <label for="country" class="form-label">Country <span class="cls-mandatory">*</span></label>
+            <div class="cls-dropdown-container">
+              <em class="icon-3-dropdownarrow"></em>
+              <input class="form-control cls-input-dropdown cls-reg-maxwidth" type="text" formControlName="country"
+                name="country" id="country" data-toggle="dropdown" (click)="searchDropdown('fn-country-input')"
+                placeholder="Choose Country" autocomplete="off"
+                [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.country.invalid}" readonly>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <input type="text" class="cls-dropdown-input" placeholder="{{'Search'}}..." id="fn-country-input"
+                  onpaste="return false" autocomplete="off"
+                  (keyup)="filterFunction('fn-country-input','fn-country-ul')">
+                <ul id="fn-country-ul" class="live-search-list">
+                  <li (click)="setFilterValue('country','select')">
+                    <a>select</a>
+                  </li>
+                  <li *ngFor="let country of countryType" id="sec{{country.code}}"
+                    (click)="setFilterValue('country',country.name)">
+                    <a>
+                      {{country.name}} - {{country.code}}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 cls-captcha mt-3 mb-2">
+            <img [src]="captchaPath" class="captchaimage " alt="refresh captcha" />
+            <a href="javascript:;" title="refresh capcha" (click)="refreshcapcha()">
+              <em class="icon-61-refresh cls-refresh"></em>
+            </a>
+          </div>
+          <div class="col-md-6 form-group mb-2">
+            <label class="form-label">Captcha <span class="cls-mandatory">*</span></label>
+            <input type="text" class="form-control cls-captcha-input cls-reg-maxwidth" formControlName="captcha"
+              placeholder="Enter Captcha" autocomplete="off" onpaste="return false"
+              [ngClass]="{ 'cls-border-error': submitted && registerForm.controls.captcha.invalid}" />
+          </div>
+          <div class="col-md-12 form-group pt-2 mb-2">
+            <label class="form-label"></label>
+            <span class="cls-checkbox mr-2">
+              <em [ngClass]="checkStatus === 'N'?'icon-40-checkbox-empty':'icon-41-checkbox-fill'"
+                (click)="changeStatus()"></em>
+            </span>
+            <span class="cls-mob-font">
+              I accept the <a href="javascript:;" (click)="openTerms('terms')"
+                class="cls-terms-conditions text-primary">Terms and Conditions</a> of ExpenseOut
+            </span>
+          </div>
+          <div class="col-sm-12 form-group pt-2">
+            <button type="button" (click)="createAccount()" class="btn cls-btn-primary cls-custom-btn">
+              <span class="m-auto">Create Account</span>
+            </button>
+          </div>
+        </form>
+        <div class="cls-mob-font text-center">Already have account? Click here to
+          <a href="javascript:;"
+            routerLink="/66a36e77fd002579809717841f998f4d21cd5913/2736fab291f04e69b62d490c3c09361f5b82461a"
+            title="Back To Login" class="cls-signin text-primary">Sign In</a>
+        </div>
+      </div>
+      <div class="cls-success-box text-center" *ngIf="isSuccess">
+        <div class="cls-success-width">
+          <span id="bodymovin" class="lotty-body"></span>
+        </div>
+        <span class="d-block cls-text-success">Success!</span>
+        <span class="d-block cls-thank-text">Thank you for signing up with ExpenseOut.</span>
+        <span class="d-block mb-2 cls-dec">Password set up link has been sent to your registered email id and the link
+          will be valid for one day</span>
+        <!-- <button type="button" (click)="openTerms('login')" class="btn cls-btn-primary cls-custom-btn">
+          <span class="m-auto">Verify Account</span>
+        </button> -->
+      </div>
+    </div>
+  </div>
+</div>

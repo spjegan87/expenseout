@@ -1,0 +1,65 @@
+<!-- Author: Naveen -->
+<div class="cls-history-container">
+    <span id="fn-background" class="cls-background" (click)="closeModal(false)"></span>
+    <div class="cls-main-popup" [ngClass]="toClose ? 'close-ani' : ''">
+        <span class="dblock d-sm-none cls-mbl-line"></span>
+        <span class="d-block d-sm-none cls-selectfilter">
+            {{'Select Advance Adjustment ' | translate}}
+        </span>
+        <div class="cls-popup">
+            <div class="cls-header">
+                <span class="cls-title text-left">
+                    <img  class="" src="../../../assets/images/menu/Advances.svg" alt="{{'Advance Adjustment' | translate}}">{{'Select Advance Adjustment' | translate}}
+                </span>
+                <span class="cls-top-close text-center" (click)="closeModal(false)">
+                    <em class="icon-32-reject"></em>
+                </span> 
+            </div>
+            <div class="cls-history-data">
+                <div class="cls-head-row">
+                    <div class="cls-check" [ngClass]="{'cls-disable': ReportData.edit === false}">
+                        <em [ngClass]="iconOn === 'N'?'icon-40-checkbox-empty':'icon-41-checkbox-fill'" (click)="selectAll()"></em>
+                    </div>
+                    <div class="cls-head-data" *ngFor="let item of tableData.content.headers;let i = index">
+                       {{item}}
+                    </div>
+                    <!-- <div class="cls-amount">Total Amount</div> -->
+                </div>
+                <div class="cls-inner-row" [ngClass]="{'fn-border': last}" *ngFor="let val of tableData.content.data;let j = index ;let last = last;">
+                    <ng-container *ngFor="let item of val;let n= index">
+                        <div class="cls-check" [ngClass]="{'cls-disable': ReportData.edit === false}" *ngIf="item.type === 'checkBox'">
+                            <em [ngClass]="item.status === 'N'?'icon-40-checkbox-empty':'icon-41-checkbox-fill'" (click)="addAmount(item.value,j,n)"></em>
+                        </div>
+                        <div class="cls-reportid"  *ngIf="item.type === 'raw'">
+                          <ng-container *ngIf="item.ReportId">
+                              {{item.ReportId}}
+                          </ng-container>
+                          <ng-container *ngIf="item.Purpose">
+                            <a href="javascript:;" title="{{item.Purpose}}">
+                              {{item.Purpose}}
+                            </a>
+                          </ng-container>
+                        </div>
+                        <div class="cls-created" *ngIf="item.type === 'Date'">
+                            <span>{{item.CreatedOn | date: "dd-MMM-y | h:mm a"}}</span>
+                        </div>
+                        <div class="cls-amount" *ngIf="item.type === 'Amount'">
+                            <span class="cls-currency">{{item.currency}}</span>
+                            <span>{{item.TotalAmount | number}}</span>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="cls-btn row m-0">
+            <div class="col-sm-6 text-left">
+                <span class="">{{'Total Selected' | translate}} ({{sampleCount}}) - </span>
+                <span class="cls-currency">INR {{totalAmount | number}}</span>
+            </div>
+            <div class="col-sm-6 text-right">
+                <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="closeModal(false)"><span>{{'Cancel' | translate}}</span></button>
+                <button type="button" [ngClass]="{'d-none': ReportData.edit === false}" class="btn cls-btn-primary cls-custom-btn" (click)="createAdvance(false,ReportData.report_Id)">{{'Confirm' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div> 

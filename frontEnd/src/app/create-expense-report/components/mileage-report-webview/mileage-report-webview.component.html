@@ -1,0 +1,147 @@
+<div class="cls-field mb-3">
+    <!-- Expence Details starts -->
+    <div class="cls-main">
+        <span class="cls-container-close text-center" (click)="formClose()">
+            <em class="icon-32-reject"></em>
+        </span>
+        <span class="cls-bg" [ngStyle]="{'background':'rgb(140, 61, 250)'}"></span>
+        <div>
+            <!-- Title -->
+            <span class="cls-mode-text">{{'Mileage' | translate}}</span>
+            <span class="float-right cls-error">{{'Incomplete' | translate}}</span>
+            <div class="cls-clonefield row m-0">
+                <div class="form-group radio-group col-sm-6 mt-3 mb-2 px-0">
+                    <label for="reimbursable cls-radio-on" class="cls-radio  mr-3">
+                        <input type="radio" value="Y" id="reimburse" name="reimbursable" checked>
+                        <!-- formControlName="reimbursable" -->
+                        <em aria-hidden="true" class="icon-7-radio-on"></em>
+                        <!-- *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'Y'" -->
+                        <!-- <em aria-hidden="true" class="icon-6-radio-off"
+                                    *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'N'"></em> -->
+                        {{'Reimbursable' | translate}}
+                    </label>
+                    <label for="Nonreimbursable" class="cls-radio mr-3">
+                        <input type="radio" value="N" id="non-reimbursable" name="reimbursable" disabled>
+                        <!-- formControlName="reimbursable" -->
+                        <!-- <em aria-hidden="true" class="icon-7-radio-on"
+                                    *ngIf="category.get(dataVal.id)['controls'][i]['controls']['reimbursable'].value === 'N'"></em> -->
+                        <em aria-hidden="true" class="icon-6-radio-off"></em>
+                        {{'Non Reimbursable' | translate}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-2">
+                <span class="cls-title">Expense Date</span>
+                <span class="cls-value">{{resultdate}}</span>
+            </div>
+            <div class="col-md-2">
+                <span class="cls-title">Vehicle Type</span>
+                <span class="cls-value">{{ mileageDetails?.VehicleType != undefined ? mileageDetails?.VehicleType != "" ? mileageDetails?.VehicleType : "-":"-"}}</span>
+            </div>
+            <div class="col-md-2">
+                <span class="cls-title">Mileage Rate
+                </span>
+                <span class="cls-subvalue mr-1" *ngIf="mileageDetails?.currency">{{mileageDetails?.currency}}</span>
+                <span class="cls-value">{{mileageDetails?.mileageRate != undefined ? mileageDetails?.mileageRate != "" ? mileageDetails?.mileageRate : "-" :"-"}} <span *ngIf="mileageDetails?.mileageRate"> Per Km</span></span>
+            </div>
+            <div class="col-md-2">
+                <span class="cls-title">Odometer Start & End</span>
+                <span class="cls-odometer-value" *ngIf="mileageDetails?.odometerStart && mileageDetails?.odometerEnd">{{mileageDetails?.odometerStart}} -
+                    {{mileageDetails?.odometerEnd}}<span class="cls-value"> = {{result}} Kms</span>
+                </span>
+                    <span class="cls-odometer-value" *ngIf="!mileageDetails?.odometerStart || !mileageDetails?.odometerEnd"><span class="cls-value">{{"-"}}</span></span>
+            </div>
+            <div class="col-md-2">
+                <span class="cls-title">Total Distance Travelled </span>
+                <span class="cls-value">{{mileageDetails?.distance}}</span>
+            </div>
+            <div class="col-md-2">
+                <span class="cls-title">Eligible Mileage</span>
+                <span class="cls-subvalue mr-1">{{mileageDetails?.currency}}</span><span
+                    class="cls-value">{{totalAmount}}</span>
+            </div>
+            <div class="col-md-2 mt-3">
+                <span class="cls-title">Odometer Start Image</span>
+                <div class="cls-view-image" (click)="previewOdometerImage('odometerStartImage')">
+                    <img src="{{mileageDetails.odometerStartImage}}" alt="odometer start image" class="cls-odometer-image" title="click to perview the odometer start image">
+                </div>
+            </div>
+            <div class="col-md-2 mt-3">
+                <span class="cls-title">Odometer End Image</span>
+                <div class="cls-view-image" (click)="previewOdometerImage('odometerEndImage')">
+                    <img src="{{mileageDetails.odometerEndImage}}" alt="odometer end image" class="cls-odometer-image" title="click to perview the odometer end image">
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="widgetData?.morningShift?.length > 0">
+            <!-- <span class="cls-widget-shift-title">Morning Shift</span> -->
+            <!-- <img src="{{mileageDetails.odometerStartImage}}" alt="odometer start image" class="cls-odometer-image"> -->
+            <div class="cls-location-widget">
+                <span class="cls-overlap-text">Morning Shift</span>
+                <div class="cls-widget-step">
+                    <div class="steps">
+                        <span class="cls-widget-location"
+                            [ngClass]="{'cls-start-location':f,'cls-stops':!f && !l,'cls-end-location':l}"
+                            *ngFor="let widget of widgetData?.morningShift;let i=index;let f=first;let l=last">
+                            <span class="cls-content" *ngIf="f">Starting Point</span>
+                            <span class="cls-content" *ngIf="!f && !l">Stop {{i}}</span>
+                            <span class="cls-stop-circle cls-tooltip" *ngIf="!f && !l">
+                                <span class="cls-location-name">
+                                    <span class="cls-hovertext">
+                                        <!-- <em class="icon-59-pin cls-location-icon mr-1"></em> -->
+                                        {{widget?.locations}}
+                                    </span>
+                                </span>
+                            </span>
+                            <span class="cls-content" *ngIf="l">Ending point</span>
+                            <span class="cls-location-name" *ngIf="((f || l) && widget?.locations != '')">
+                                <em class="icon-59-pin cls-location-icon mr-1"></em>{{widget?.locations}}
+                            </span>
+                        </span>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="widgetData?.eveningShift?.length > 0">
+            <!-- <span class="cls-widget-shift-title">Evening Shift</span> -->
+            <div class="cls-location-widget mb-4">
+                <span class="cls-overlap-text">Evening Shift</span>
+                <div class="cls-widget-step">
+                    <div class="steps">
+                        <span class="cls-widget-location cls-tooltip"
+                            [ngClass]="{'cls-start-location':f,'cls-stops':!f && !l,'cls-end-location':l}"
+                            *ngFor="let widget of widgetData?.eveningShift;let i=index;let f=first;let l=last">
+                            <span class="cls-content" *ngIf="f">Starting Point</span>
+                            <span class="cls-content" *ngIf="!f && !l">Stop {{i}}</span>
+                            <span class="cls-stop-circle cls-tooltip" *ngIf="!f && !l">
+                                <span class="cls-location-name">
+                                    <span class="cls-hovertext">
+                                        <!-- <em class="icon-59-pin cls-location-icon mr-1"></em> -->
+                                        {{widget?.locations}}
+                                    </span>
+                                </span>
+                            </span>
+                            <span class="cls-content" *ngIf="l">Ending point</span>
+                            <span class="cls-location-name" *ngIf="((f || l) && widget?.locations != '')">
+                                <em class="icon-59-pin cls-location-icon mr-1"></em>{{widget?.locations}}
+                            </span>
+                            <!-- <span class="cls-location-name" *ngIf="!f && !l">
+                                <span class="cls-hovertext">
+                                    <em class="icon-59-pin cls-location-icon mr-1"></em>
+                                    {{widget?.locations}}
+                                </span>
+                            </span> -->
+                        </span>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<ng-container *ngIf="showModal">
+    <app-imagepreview [ImageUrl]="imageUrl" (choosedVal)="closePreview($event)"></app-imagepreview>
+</ng-container>

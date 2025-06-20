@@ -1,0 +1,45 @@
+@import "../../../assets/scss/all";
+.cls-showcount {
+    display: flex;
+    align-items: center;
+}
+
+.pagination {
+    margin: 2px 0;
+    white-space: nowrap;
+    justify-content: flex-end;
+    .cls-pagination-item {
+        .page-link {
+            &:focus {
+                box-shadow: none;
+            }
+        }
+        &.active {
+            .page-link {
+                background: $PRIMARYCOLOR; //#0081ff;
+                border-color: transparent;
+                color: #fff;
+            }
+        }
+        &.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        &.cls-first,
+        &.cls-last,
+        &.cls-prev,
+        &.cls-next {
+            display: inline-block !important;
+        }
+    }
+}
+
+@media screen and (min-width:$mobile-min) and (max-width:$mobile-max) {
+    .cls-showcount,
+    .pagination {
+        justify-content: center;
+    }
+    .pagination {
+        margin: 13px 0;
+    }
+}

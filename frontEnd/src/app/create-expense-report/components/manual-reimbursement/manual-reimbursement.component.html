@@ -1,0 +1,92 @@
+<!-- Author name : naveen -->
+<form [formGroup]="manualForm" class="cls-history-container">
+    <span id="fn-background" class="cls-background" (click)="confirmAction(false)"></span>
+    <div class="cls-main-popup" [ngClass]="toClose ? 'close-ani' : ''">
+        <span class="dblock d-sm-none cls-mbl-line"></span>
+        <span class="d-block d-sm-none cls-selectfilter">
+            {{'Manual Reimbursement' | translate}}
+        </span>
+        <div class="cls-popup">
+            <div class="cls-header">
+                <span class="cls-title text-left">{{'Manual Reimbursement' | translate}}</span>
+                <span class="cls-top-close text-center" (click)="confirmAction(false)">
+                    <em class="icon-32-reject"></em>
+                </span> 
+            </div>
+            <div class="cls-history-data">
+                <div class="cls-manual-container row mb-3">
+                    <div class="cls-text col-md-6">{{'Reimbursement Amount' | translate}}</div>
+                    <div class="cls-amount col-md-7">INR {{manualInput | number}}</div>
+                </div>
+                <div class="cls-action-container row">
+                    <div class="cls-text col-md-6">{{'Balance Amount Received ?' | translate}} <span class="cls-mandatory">*</span></div>
+                    <div class="cls-action col-md-7 form-group radio-group mb-2">
+                        <label for="radioAction" class="cls-radio mr-3" >
+                            <input  formControlName="radioAction" type="radio" value="yes" id="radioYes" name="radioAction">
+                            <em aria-hidden="true" class="icon-6-radio-off"></em>
+                            {{'Yes' | translate}}
+                            <span class="cls-radio-text">,User Returned The Balance Amount</span>
+                        </label>
+                        <label for="radioAction"  class="cls-radio mr-3">
+                            <input  formControlName="radioAction" type="radio" value="no" id="radioNo" name="radioAction">
+                            <em aria-hidden="true" class="icon-6-radio-off"></em>
+                            {{'No' | translate}}
+                            <span class="cls-radio-text">, Can Use The Balance Amount On Further Expense Reports</span>
+                        </label>
+                    </div>
+                </div>
+                <span class="d-none" [ngClass]="{'cls-error':(submitted && manualForm.controls.radioAction.errors)}">Please select any one</span>
+                <div class="d-none"  [ngClass]="{'d-block': manualForm.controls.radioAction.value === 'yes'}">
+                    <div class="row">
+                        <div  class="form-group col-sm-5 cls-date">
+                            <label  for="amount">{{'Received On' | translate}} <span class="cls-mandatory">*</span></label>
+                            <input  type="text" (focus)="chooseDate('receivedOn')" [value]="manualForm.controls.receivedOn?.value  | date: 'dd, MMM y'" class="cls-input datepicker" id="receivedOn" formControlName="receivedOn" name="receivedOn"  placeholder="{{'Select Received On Date' | translate}}" 
+                            autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-border-error':(submitted && manualForm.controls.receivedOn?.errors)}">
+                            <em class="fa fa-calendar-o cls-date-icon" ></em>
+                        </div>
+                        <div class="cls-search-select form-group col-sm-5">
+                            <label  for="modeOfPayment">{{'Mode of Payment' | translate}}</label>
+                            <div class="cls-dropdown-container">
+                                <em class="icon-3-dropdownarrow"></em>
+                                <input class="form-control" type="text"  formControlName="modeOfPayment" name="modeOfPayment" id="modeOfPayment"
+                                data-toggle="dropdown"  placeholder="select" (click)="searchDropdown('modeOfPayment')"
+                                autocomplete="off" readonly>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                                    id='fn-modeOfPayment-input' autocomplete="off" (keyup)="filterFunction('fn-'+'modeOfPayment'+'-input','fn-'+'modeOfPayment'+'-ul')">
+                                    <ul id="fn-modeOfPayment-ul" class="live-search-list">
+                                        <li (click)="setFilterValue('modeOfPayment','select')">
+                                            <a>select</a>
+                                        </li>
+                                        <li *ngFor="let pay of field" id="pay.id" (click)="setFilterValue('modeOfPayment',pay.value)">
+                                            <a>{{pay.value | translate}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-5">
+                            <label  for="voucherNumber">{{'Voucher Number' | translate}}</label>
+                            <input  class="cls-input datepicker" type="number"  min ="1" onkeydown="return event.keyCode !== 69" 
+                            oninput="this.value = Math.abs(this.value)"  formControlName="voucherNumber" name="voucherNumber"  id="voucherNumber" placeholder="{{'voucher number' | translate}}" 
+                            autocomplete="off" class="cls-custom-input form-control">
+                        </div>
+                        <div class="form-group col-sm-5">
+                            <label  for="remarks">{{'Remarks' | translate}}</label>
+                            <input class="cls-input" type="text"  formControlName="remarks" name="remarks"  id="remarks" placeholder="{{'Remark' | translate}}" autocomplete="off" class="cls-custom-input form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cls-btn row m-0">
+            <div class="col-sm-12 text-right">
+                <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="confirmAction(false)"><span>{{'Cancel' | translate}}</span></button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="confirmManual()">{{'Settled' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</form> 
+<app-alert *ngIf="confirmation" [userInput]="confirmationContent" (choosedVal)="confirmAction($event)"></app-alert>

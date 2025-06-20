@@ -1,0 +1,360 @@
+// Desc : User,Approver,Finance scss
+// Author : Naveen.S
+// Date : 23-sept-2020
+@import'../../../assets/scss/all';
+
+// dashboard container starts
+.cls-user-dashboard{
+    .cls-card-container{
+        .cls-chart-title{
+            font: 20px "ProximaSemiBold";
+            display: inline-block;
+            em{
+                vertical-align: middle;
+                margin-left: 5px;
+                font-size: 13px; 
+            }
+        }
+        .cls-card-box{
+            max-width: 34%;
+            .cls-box-1{
+                display: inline-block;
+                padding: 15px;
+                cursor: pointer;
+                &.cls-cursor{
+                    cursor: pointer;
+                }
+                border: 1px solid #eceaea;
+                width: 47%;
+                margin-top: 20px;  
+                height: 180px;     
+                border-radius: 10px; 
+                background: $WHITE;
+                position: relative;
+                .cls-icon-box{
+                    display: table;
+                    width: 30px;
+                    height:30px;
+                    // padding: 2px 0 0 1px;
+                    text-align: center;
+                    border-radius: 100%;
+                    em{
+                        vertical-align: -webkit-baseline-middle;
+                        font: 18px "ProximaBold";
+                    }
+                }
+                .cls-sub-text,.cls-report-count,.cls-amount{
+                    display: table;
+                    width: 100%;
+                    margin-top: 5px;
+                }
+                .cls-bottom{
+                    position: absolute;
+                    bottom: 10px;
+                    .cls-report-count{
+                        color: #50cea2;
+                        // margin-top: 42px;
+                        font: 15px 'ProximaRegular';
+                    }
+                    .cls-amount{
+                        font: 20px 'ProximaBold';
+                        margin-top: 10px;
+                        em{
+                            color: #50cea2;
+                            transform: rotate(90deg);
+                            font-size: 16px;
+                            margin-left: 15px;
+                            // font-weight: 800;
+                        }
+                    }
+                }
+                &:hover{
+                    box-shadow: 0 10px 15px 4px #d6d6d6;
+                }
+            }
+            .cls-box-1:nth-of-type(odd) {
+                margin-right: 20px;
+            }
+        }
+        .cls-create-bar{
+            display: inline-block;
+            // border: 2px dashed $BDRLIGHT;    
+            margin-top: 20px; 
+            width: 100%;
+            height: 180px;
+            border-radius: 5px; 
+            padding: 10px 0 0 0 ;
+            position: relative;
+            overflow: hidden;
+            .cls-dotted-line{
+                display: block;
+                position: absolute;
+                &:nth-child(1){
+                    top: 0;
+                    left: 0;
+                    height: 200%;
+                    width: 0;
+                    border-left: 2px dashed $BDRLIGHT;
+                }
+                &:nth-child(2){
+                    top: 0;
+                    right: 0;
+                    height: 200%;
+                    width: 0;
+                    border-left: 2px dashed $BDRLIGHT;
+                }
+                &:nth-child(3){
+                    top: 0;
+                    width: 600%;
+                    height: 1%;
+                    border-top: 2px dashed $BDRLIGHT;
+                }
+                &:nth-child(4){
+                    bottom: 0;
+                    width: 600%;
+                    height: 1%;
+                    border-top: 2px dashed $BDRLIGHT;
+                }
+            }
+            .cls-img-container,.cls-create-btn{
+                width: 60%;
+                display: inline-block;
+            }
+            .cls-img-container{
+                background: url(../../../assets/images/CreateExpenseReport.svg) no-repeat  15% 83%;
+                height: 100%;
+                background-size: 58%;
+            }
+            .cls-create-btn{
+                width: 40%;
+                height: 100%;
+                position: relative;
+                .cls-plus-icon{
+                    position: absolute;
+                    cursor: pointer;
+                    background:$BTNGRADIENT; 
+                    color:$WHITE;
+                    padding: 8px 15px !important;
+                    outline: none;
+                    top: 37%;
+                    left: 10%;
+                    font: 14px "ProximaSemiBold";
+                    em{
+                        vertical-align: middle;
+                        font-size: 15px;
+                        margin-right: 5px;
+                    }
+                }
+                .dropdown-menu{
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                    .dropdown-item{
+                        padding: .25rem 1rem !important;
+                    }
+                }
+            }
+            &:hover{
+                .cls-dotted-line{
+                    &:nth-child(1){
+                        animation: lineleft 5s linear infinite;
+                    }
+                    &:nth-child(2){
+                        animation: lineright 5s linear infinite;
+                    }
+                    &:nth-child(3){
+                        animation: linetop 10s linear infinite;
+                    }
+                    &:nth-child(4){
+                        animation: linebtm 10s linear infinite;
+                    }
+                }
+            }
+        }
+        .cls-chart-box{
+            max-width: 66%;
+            .cls-chart-bar{
+                display: inline-block;
+                padding: 10px;
+                border: 1px solid #eceaea;
+                background: $WHITE;
+                height: 387px;
+                padding: 10px;
+                width: 100%;
+                margin-top: 25px;
+                border-radius: 10px; 
+                &:hover{
+                    box-shadow: 0 5px 20px 4px #d6d6d6;
+                }
+                .cls-nodata{
+                    display: inline-block;
+                    width: 100%;
+                    height: 240px;
+                    background: url(./../../../assets/images/NoDataFoundEmpty.svg) no-repeat 52% 100%;
+                }
+                .cls-nodata-text{
+                    font: 16px 'ProximaSemibold';
+                }
+            }
+        }
+    }
+}
+.cls-loadchart{
+    margin-top: 100px;
+    img{
+        width: 10%;
+    }
+}
+// tab starts
+.nav-tabs{
+    position: relative;
+    &.cls-border{
+        border-bottom: 4px solid #e1e8ef;
+    }
+    li {
+        display: inline-block ;
+        position: relative;
+        text-transform: capitalize;
+        margin-bottom: 0px !important;
+        &.nav-item {
+        .nav-link {
+            img{
+                width: 20px;
+                height: 20px;
+                filter: grayscale(100%);
+            }
+            &.active{
+                font: 16px 'ProximaRegular';
+                font-weight: 600;
+                border: none;
+                background: #e1e8ef;
+            img{
+                filter: unset;
+            }
+            }
+            border-top-left-radius: 0 !important;
+            border-top-right-radius: 0 !important;
+            border: none !important;
+            letter-spacing: 0.3px;
+            font: 16px 'ProximaRegular';
+            color:$BLACK;
+        //   margin: 0 5px 0 0;
+            &:hover{
+                border: none;
+                background: #e1e8ef;
+                font-weight: 600;
+            }
+        }
+        }
+        a {
+        &.active {
+            &:after {
+            content: "";
+            width: 100%;
+            position: absolute;
+            height: 11%;
+            background: $WIDGET;
+            bottom: -4px;
+            left: 0;
+            }
+        }
+        }
+    }
+}
+// tab ends
+// dashboard container ends
+@media only screen and (max-width: 480px) {
+    .cls-user-dashboard{
+        .cls-card-container{
+            .cls-chart-title{
+                font: 17px "ProximaSemiBold";
+            }
+            .cls-card-box,.cls-chart-box{
+                max-width: unset;
+                .cls-box-1{
+                    width: 100%;
+                    height: 170px;
+                }
+                .cls-create-bar{
+                    display: none;
+                }
+            }
+        }
+    }
+}
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-user-dashboard{
+        .cls-card-container{
+            .cls-chart-title{
+                font: 17px "ProximaSemiBold";
+            }
+            .cls-card-box,.cls-chart-box{
+                max-width: unset;
+                .cls-box-1{
+                    width: 47%;
+                    height: 170px;
+                    .cls-sub-text{
+                        line-height: 16px;
+                        font-size: 13px;
+                    }
+                }
+                .cls-create-bar{
+                    display: none;
+                }
+            }
+        }
+    }
+}
+@media (min-width: 767px) and (max-width: 1024px){
+    .cls-user-dashboard{
+        .cls-card-container {
+            .cls-card-box{
+                .cls-box-1{
+                    width: 100%;
+                    .cls-sub-text{
+                        line-height: 16px;
+                        font-size: 16px;
+                    }
+                }
+            } 
+            .cls-create-bar {
+                .cls-img-container{
+                    width:60%;
+                    background: url(../../../assets/images/CreateExpenseReport.svg) no-repeat 45% 94%;
+                    background-size: 210px;
+                }
+                .cls-create-btn{
+                    width: 40%;
+                    .cls-dropdown-button{
+                        .cls-plus-icon{
+                            font: 12px "ProximaSemiBold";
+                            padding: 8px !important;
+                            left: 0;
+                            em{
+                                display: none;
+                            }
+                        }
+                    }
+                    .dropdown-menu{
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    } 
+}
+
+@media screen and (min-width:$mobile-min) and (max-width:$mobile-max){
+    .nav-tabs{
+        .nav-item{
+            .nav-link{
+                letter-spacing: 0px !important; 
+                font: 13px "ProximaRegular" !important;
+                padding: 8px 14px;
+                &.active{
+                    font: 14px "ProximaRegular" !important;
+                    font-weight: 600 !important;
+                }
+            }
+        }
+    }
+}

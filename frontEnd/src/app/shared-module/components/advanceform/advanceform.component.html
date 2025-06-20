@@ -1,0 +1,74 @@
+<form [formGroup]="report" class="cls-advance-report-container" [ngClass]="{'cls-disable' : editResponseForm['report'] && !editResponseForm['report'][0]?.edited}">
+    <span id="fn-mbl-background" class="cls-mbl-background" (click)="closeMobileModal()"></span>
+    <div class="row align-items-end cls-mbl-container mb-3">
+        <span class="cls-mbl-line d-none"></span>
+        <span class="cls-mbl-title d-none">{{'Create Your Advance Requests' | translate}}</span>
+        <ng-container *ngFor="let data of fieldJson">
+            <div class="{{data.class}}">
+                <ng-container *ngIf="data.type === 'currency'">
+                    <label for="currency" class="cls-currency">{{'Currency' | translate}}<em class="icon-16-info ml-1"></em><span class="cls-mandatory">*</span></label>
+                    <span class="cls-hovertip" *ngIf="report.controls['currencyAmount'].value">
+                        <ng-container *ngIf="exchangeRateVal.asOnDate">
+                            As on {{exchangeRateVal.asOnDate | date: "d-MMM-y"}}<br/>
+                        </ng-container>
+                        1 {{report.controls['currency'].value}} = {{report.controls['exchangeRate'].value}} INR<br/>
+                        <input type="hidden" formControlName="currencyAmount">
+                        <input type="hidden" formControlName="exchangeRate">
+                        <span class="cls-exchangerate">{{'Amount in' | translate}} INR : {{report.controls['currencyAmount'].value}}</span>
+                    </span>
+                    <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text" formControlName="currency" name="currency" id="currency" data-toggle="dropdown" (click)="searchDropdown('fn-currency-input')" placeholder="{{'Select Currency' | translate}}" autocomplete="off" readonly [ngClass]="{'cls-border-error':(submitted && validation.currency.errors)}">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-currency-input" autocomplete="off" (keyup)="filterFunction('fn-currency-input','fn-currency-ul')">
+                            <ul id="fn-currency-ul" class="live-search-list">
+                                <li (click)="setFilterValue('currency','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let cur of currency" id="cur.currency_code" (click)="setFilterValue('currency',cur.currency_code)">
+                                    <a>{{cur.currency_name}} ({{cur.currency_code}})</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="data.type != 'currency'">
+                    <label for="{{data.id}}">{{ data.name | translate}} <span class="cls-mandatory">*</span></label>
+                    <ng-container *ngIf="data.type === 'number'">
+                        <input type="{{data.type}}" onkeydown="return event.keyCode !== 69" oninput="this.value = Math.abs(this.value)" formControlName="{{data.id}}" (keyup)="amountCalculate(data.id)" name="{{data.id}}" id="{{data.id}}" placeholder="{{ data.placeholder | translate}}"
+                            autocomplete="off" class="cls-custom-input form-control " [ngClass]="{'cls-border-error':(submitted && validation[data.id].errors)}">
+                    </ng-container>
+                    <ng-container *ngIf="data.type === 'text'">
+                        <input class="form-control" type="{{data.type}}" formControlName="{{data.id}}" (keypress)="stringValidation($event)" name="{{data.id}}" id="{{data.id}}" placeholder="{{ data.placeholder | translate}}" autocomplete="off" [ngClass]="{'cls-border-error':(submitted && validation[data.id].errors)}">
+                    </ng-container>
+                    <ng-container *ngIf="data.type === 'select'">
+                        <select formControlName="data.id" id="data.id" [ngClass]="{'cls-border-error':(submitted && validation[data.id].errors) }" name="data.id" class="form-control cls-select">
+                            <ng-container *ngFor="let opt of data.option">
+                              <option value="opt.id" >{{opt.name}}</option>
+                            </ng-container>
+                        </select>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </ng-container>
+        <div class="col-sm-12 form-group cls-mbl-btn mt-3">
+            <button type="button" class="btn cls-btn-secondary  cls-custom-btn" *ngIf="editResponseForm['report'] != undefined" (click)="closeAlert()"><span>{{'Close' | translate}}</span></button>
+            <ng-container *ngIf="tabIndexVal === true  && editResponseForm['path'] !== 'approver' && editResponseForm['path'] !== 'finance' || editResponseForm['report'] != undefined">
+                <button type="button" class="btn cls-btn-primary cls-custom-btn cls-btnservicecall" *ngIf="editResponseForm[0]?.status_name === 'Created' || editResponseForm[0]?.status_name === 'Callback' || editResponseForm[0]?.status_name === 'ApprovalSendback' || editResponseForm[0]?.status_name === 'SettlementSendback' || editResponseForm['report'] != undefined"
+                    (click)="advanceReport('update')">{{'Update' | translate}}
+                </button>
+                <ng-container *ngIf="editResponseForm['report'] == undefined">
+                    <button type="button" class="btn cls-btn-secondary cls-custom-btn cls-btnservicecall" (click)="advanceReport('save')">
+                        <span>
+                        {{'Save' | translate}}
+                        </span>
+                    </button>
+                    <!-- *ngIf="editResponseForm?.length === 0" -->
+                    <!-- *ngIf="editResponseForm?.length === 0" -->
+                    <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="advanceReport('sendforapproval')">{{'Save & Send For Approval' | translate}}</button>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</form>
+<!-- <app-advancealert *ngIf="popupVal.flag" [userInput]="popupVal" (choosedVal)="popUpInfo($event)"></app-advancealert> -->

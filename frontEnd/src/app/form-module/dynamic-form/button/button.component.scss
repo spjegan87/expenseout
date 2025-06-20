@@ -1,0 +1,119 @@
+@import'./../../../../assets/scss/variable.scss';
+  // Button css
+  .cls-login-btn {
+    font-size: 16px;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+      // padding: 10px 0px 10px 26% ;
+      // width: 68% !important;
+      height: 34px !important;
+    
+    // primary button
+    &.cls-btn-login {
+      background:$BTNGRADIENT; 
+      color: $WHITE;
+      box-shadow: 0px 8px 20px 1px #ccc;
+      animation: .7s textin1 linear;
+      animation-delay: 0.6s;
+      opacity: 0;
+      animation-fill-mode: forwards;
+      &:hover {
+        // box-shadow: 0px 0px 6px rgba($color: $PRIMARYCOLOR, $alpha: 1.0);
+        outline: none;
+        box-shadow:none;
+        background:$BTNGRADIENTHOVER !important; 
+        border:0px;
+      }
+    }
+    &.cls-link{
+      background: none !important;
+      padding: 10px 0px !important;
+      display: flex;
+      justify-content: flex-end;
+      font-size: 14px;
+      animation: .7s textin1 linear;
+      animation-delay: 0.5s;
+      opacity: 0;
+      animation-fill-mode: forwards;
+      font-weight: unset;
+      span{
+        color: $BLACK;
+        font: 13px "ProximaRegular";
+        margin-right: 6px;
+      }
+      &:hover{
+        box-shadow: none;
+        outline: none;
+      }
+    }
+    &.cls-margin{
+      font: 13px "ProximaRegular";
+      font-weight: unset;
+    }
+    &.cls-start{
+      justify-content: flex-start;
+    }
+  }
+  @keyframes textin1 {
+    0% {
+        -webkit-transform: translateX(520%);
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: translateX(0%);
+        opacity: 1;
+      }
+  }
+
+  @media only screen and (max-width: 480px) {
+    .cls-login-btn{
+      width: 95% !important;
+      animation: unset !important;
+      opacity: 1 !important;
+    }
+    .cls-link{
+      position: absolute;
+      bottom: 3px;
+      right: 30px;
+      opacity: 1 !important;
+    }
+    .cls-link.cls-start{
+      position: unset;
+      bottom: unset;
+      right: unset;
+      opacity: 1 !important;
+    }
+  }
+  @media (min-width: 481px) and (max-width: 766px){
+    .cls-login-btn{
+      width: 95% !important;
+      animation: unset !important;
+      opacity: 1 !important;
+    }
+    .cls-link{
+      position: absolute;
+      bottom: 3px;
+      right: 30px;
+      opacity: 1 !important;
+    }
+    .cls-link.cls-start{
+      position: unset;
+      bottom: unset;
+      right: unset;
+      opacity: 1 !important;
+    }
+  }
+  @media (min-width: 767px) and (max-width: 1024px){
+    .cls-login-btn{
+     
+      &.cls-link{
+        width: 100% !important;
+      }
+      &.cls-start,&.cls-btn-login{
+        width: 100% !important;
+      }
+    }
+    
+  }

@@ -1,0 +1,17 @@
+@import "../../components/list-loader/list-loader.component.scss";
+@import "../../../common-components/topnav/top-navbar/top-navbar.component.scss";
+.cls-customtab {
+    .cls-topmenu {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        margin-right: 25px;
+        &.active {
+            height: auto;
+        }
+        .loader-high {
+            width: 80px;
+            margin-top: 0px;
+        }
+    }
+}

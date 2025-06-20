@@ -1,0 +1,57 @@
+$ERROR : #ff0000;
+$BLACK: #000;
+$SUCCESS: #20c997;
+$PRIMARYCOLOR:#007bff;
+$SECONDARYCOLOR:#094b80;
+$WHITE : #fff;
+$BDRLIGHT:#ccc;
+$BTNGRADIENT: linear-gradient(to right, #135C93,#0B76C6);
+$BTNGRADIENTHOVER: linear-gradient(to right, #014071,#158ee8);
+$WARNING:#D59D14;
+$MAINBG:#f2f5f8;
+$GRIDBDR:#e6e6e6;
+$ICONHVR:#eaeaea;
+$WIDGET:#005aaa;
+
+$CHECKBOXBG : #f4f4fa;
+$LIGHTTEXT: #666;
+$LIGHTGRAY:#ccc;
+$BGLIGHTER: #EDF1F6;
+$FORMTEXT: #8b8f97;
+
+// full dark theme
+// $DARKMAINBACKGROUND:#303030;
+// $DARKBACKGROUND: #1f1f1f;
+// $DARKTEXTCOLOR : #c3c3c3;
+// $DARKBORDER : #1f1f1f;
+
+//dark theme
+$DARKMAINBACKGROUND:#182139;
+$DARKBACKGROUND: #313852;
+$DARKTEXTCOLOR : #c3c3c3;
+$DARKBORDER : #454c66;
+
+
+// Media query break point
+//Mobile 
+$mobile-min:320px;
+$mobile-max:480px;
+
+//normal tablet
+$table-min:481px;
+$table-max:767px;
+
+//tablet landscape
+$tablet-land-min:768px;
+$tablet-land-max:1024px;
+
+//ipad and large tablet
+$lg-tablet-min:768px;
+$lg-tablet-max:1024px;
+
+//desktop 
+$desktop-min:1025px;
+$desktop-max:1280px;
+
+//large device
+$large-device:1281px;

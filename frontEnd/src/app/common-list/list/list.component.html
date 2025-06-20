@@ -1,0 +1,239 @@
+<!-- Name : Meenakshi Sundaram .R
+    Date : 25-06-2021
+    Desc : List Compoennt -->
+<!-- List starts -->
+<div class="cls-list-container" *ngIf="!deviceFlag">
+    <!-- List header starts -->
+    <div class="cls-list-header">
+        <div class="cls-list-item">
+            <div class="cls-list-row" [ngClass]="{'cls-list-border':listData?.list_body?.length == 0,'cls-settings-list-header':listData?.default_Parms?.multiple_list}">
+                <ng-container *ngIf="listData?.list_body?.length > 0">
+                    <!-- expand icon -->
+                    <span class="cls-expand-icon" id="expandAll" (click)="expandAllList()" *ngIf="subHeader.length > 0">
+                    <em [ngClass]="expandAllIcon ? 'icon-63-expand-all' : 'icon-64-expand'"></em>
+                    </span>
+                    <!--Checkbox-->
+                    <!-- <span class="cls-check-box-pos" *ngIf="enableCheckbox" (click)="checkAll()">
+                    <em [ngClass]="{'icon-40-checkbox-empty':checkAllData == 'No', 'icon-40-checkbox-fill':checkAllData == 'Yes'}"></em>
+                </span> -->
+                </ng-container>
+                <!-- Header name -->
+                <div class="cls-head-data cls-first-data {{head.class}}" *ngFor="let head of mainHeader;let first = first" [ngClass]="{'cls-first-data':first}">
+                    {{ head.name }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- List header ends -->
+    <!-- List body starts -->
+    <div class="cls-list-body">
+        <div class="cls-list-item" *ngFor="let body of listData['default_data'];let dataIndex = index">
+            <!-- expand icon -->
+            <span (click)="expandList(dataIndex)" class="cls-expand-icon" id="expand{{dataIndex}}" *ngIf="subHeader.length > 0">
+                <em class="icon-17-expand" id="expandclose{{dataIndex}}"></em>
+            </span>
+            <!-- List Main header -->
+            <div class="cls-list-row" (click)="viewAction(listData['default_data'][dataIndex],$event)">
+                <ng-container *ngFor="let head of mainHeader;let first = first">
+                    <div class="cls-head-data cls-first-data {{head.class}}" [ngClass]="{'cls-first-data':first}" *ngIf="head.template != 'action' && head?.format != 'link' && head?.format != 'user_info' && head?.condition != 'category'">
+                        <!-- List body -->
+                        <span class="cls-body-cell {{body[head['statusClass']]}} {{head?.status_class}}" *ngIf="!head['condition'] && !head['currency'] && head?.format != 'date'" title="{{ body[head['template']] }}">
+                     {{ body[head['template']] != null ? (body[head['template']] != "" ? body[head['template']] : 'N/A') : 'N/A' }}
+                        </span>
+                        <span class="cls-body-cell {{body[head['statusClass']]}} {{head?.status_class}}" *ngIf="!head['condition'] && !head['currency'] && head?.format == 'date'" title="{{ body[head['template']] }}">
+                            {{ body[head['template']] | date: "dd, MMM y | hh:mm a" }}
+                               </span>
+                        <span class="cls-body-cell {{body[head['statusClass']]}} {{head?.status_class}}" *ngIf="!head['condition'] && head['currency'] && head?.format != 'date'" title="{{ body[head['template']] }}">
+                            <span *ngIf="head['currency']" class="cls-currency">
+                                {{body[head['currency']]}}</span> {{ body[head['template']] != null ? (body[head['template']] != "" ? body[head['template']] : '0') : '0' }}
+                        </span>
+                        <!-- Toggle switch -->
+                        <ng-container *ngIf="head['condition'] == 'switch'">
+                            <label class="cls-switches" (click)="changeToggle(dataIndex, body[head['template']],head?.module_name,head?.action_name,listData['default_data'][dataIndex],$event)">
+                                <input type="checkbox" name="true" value="{{ body[head['template']] }}" [attr.checked] = "body[head['template']] === 'Y'" >
+                                <em class="cls-switch-circle cls-round" [ngClass]="{'fn-switch-active': body[head['template']] === 'Y'}"></em>
+                            </label>
+                        </ng-container>
+                    </div>
+                    <!-- List mail trigger -->
+                    <div class="cls-head-data {{head.class}}" *ngIf="head.template != 'action' && head?.format == 'link' && head?.format != 'user_info' && head?.condition != 'category'">
+                        <a href="javascript:;" class="cls-a-hover cls-body-cell" (click)="showPopUp(head,listData['default_data'][dataIndex],$event)" title="{{body[head['template']]}}">
+                            {{ body[head['template']] != null ? (body[head['template']] != "" ? body[head['template']] : 'N/A') : 'N/A' }}
+                        </a>
+                    </div>
+                    <!-- Settings module profile group tab Mapped user -->
+                    <div class="cls-head-data {{head.class}}" *ngIf="head.template != 'action' && head?.format != 'link' && head?.format == 'user_info' && head?.condition != 'category'">
+                        <a href="javascript:;" data-toggle="tooltip" class="cls-hover-tooltip" [ngClass]="{'cls-user-details' : body[head['hoverData']] && body[head['hoverData']].length > 0}">
+                            {{ body[head['template']] != null ? (body[head['template']] != "" ? body[head['template']] : '-') : '-' }}
+                            <ng-container *ngIf="body[head['hoverData']] && body[head['hoverData']].length > 0">
+                                <em class="icon-16-info cls-user-info"></em>
+                                <span class="cls-tool cls-user-info-toolpopup">
+                                    <span class="cls-user-info-name" *ngFor="let info of body[head['hoverData']]"> 
+                                        {{ info.name }}
+                                    </span>
+                                </span>
+                            </ng-container>
+                        </a>
+                    </div>
+                    <!-- Settings module policy tab mapped user -->
+                    <div class="cls-head-data {{head.class}}" *ngIf="head.template != 'action' && head?.format != 'link' && head?.format != 'user_info' && head?.condition == 'category'">
+                        <ng-container *ngIf="body[head['template']].length >= 1">
+                            <ng-container *ngIf="body[head['template']].length <= 3">
+                                <ng-container *ngFor="let data of body[head['template']];let i = index">
+                                    <span class="cls-catdet">
+                                        {{data?.name}}
+                                        <em class="icon-16-info cls-cat-info"></em>
+                                        <ng-container *ngIf="body[head['hoverData']] && body[head['hoverData']].length > 0">
+                                            <!-- <em class="icon-16-info cls-user-info"></em> -->
+                                            <span class="cls-tool">
+                                                <ng-container *ngFor="let info of body[head['hoverData']]"> 
+                                                    Amount : INR {{info?.currencyAmount | number}} <br>
+                                                    Receipt : {{info?.receipt}}
+                                                </ng-container>
+                                    </span>
+                                </ng-container>
+                                </span>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="body[head['template']].length > 3">
+                            <ng-container *ngFor="let data of body[head['template']];let i = index">
+                                <span class="cls-catdet" *ngIf="i === 0 || i === 1">
+                                                    {{ data.name}} 
+                                                    <em class="icon-16-info cls-cat-info"></em>
+                                            <!-- <ng-container *ngIf="body[head['hoverData']] && body[head['hoverData']].length > 0"> -->
+                                                    <span class="cls-tool">
+                                                        <ng-container *ngFor="let info of body[head['hoverData']];let i = index"> 
+                                                           <ng-container *ngIf="i === 0 || i === 1">
+                                                            Amount : INR {{info?.currencyAmount | number}} <br>
+                                                            Receipt : {{info?.receipt}}
+                                                            </ng-container>
+                                                        </ng-container>
+                                                            
+                                </span>
+                                <!-- </ng-container> -->
+                                </span>
+                            </ng-container>
+                            <span class="cls-moreInfo cls-more{{dataIndex}}" (click)="openCategory(dataIndex)">More</span>
+                            <em class="icon-32-reject cls-close{{dataIndex}} d-none" (click)="removeCategory(dataIndex)"></em>
+                            <span class="cls-remaining cls-close{{dataIndex}} d-none pb-1">
+                                    <span class="cls-maxhgt">
+                                        <ng-container *ngFor="let data of body[head['template']];let ind = index">
+                                            <span  class="cls-catdet" *ngIf="ind >= 2">{{ data.name}}
+                                                <em class="icon-16-info"></em>
+                                                <span class="cls-tool">
+                                                    Amount : INR {{data.amount | number}} <br>
+                                                    Receipt : {{data.receipt}}
+                                                </span>
+                            </span>
+                        </ng-container>
+                        </span>
+                        </span>
+                </ng-container>
+                </ng-container>
+                <ng-container *ngIf="body[head['template']].length === 0">
+                    All
+                </ng-container>
+                </div>
+                <!-- Action icon -->
+                <div class="cls-icons cls-head-data {{head.class}}" *ngIf="head.template == 'action' && head?.format != 'link'">
+                    <ng-container *ngFor="let icon of head.icons">
+                        <a href="javascript:;" data-toggle="tooltip" class="cls-hover-tooltip mr-2 {{icon.class}}" *ngIf="icon['condition'] != 'switch' && (body[icon['status']] != undefined && body[icon['status']])" [ngClass]="{'cls-disable':body?.disable}" (click)="action(icon,listData['default_data'][dataIndex],$event,dataIndex+1)">
+                            <em class="cls-list-icon {{ icon.icon_class }}"></em>
+                            <span class="cls-tool">{{ icon.title }}</span>
+                        </a>
+                        <a href="javascript:;" data-toggle="tooltip" class="cls-hover-tooltip mr-2 {{icon.class}}" *ngIf="icon['condition'] != 'switch' && icon['status'] == undefined" [ngClass]="{'cls-disable':body?.disable}" (click)="action(icon,listData['default_data'][dataIndex],$event,dataIndex+1)">
+                            <em class="cls-list-icon {{ icon.icon_class }}"></em>
+                            <span class="cls-tool">{{ icon.title }}</span>
+                        </a>
+                        <ng-container *ngIf="icon['condition'] == 'switch'">
+                            <label class="cls-switches cls-icon-switch mr-2"  (click)="changeToggle(dataIndex,listData['default_data'][dataIndex]['action']['status'] ,icon?.module_name,icon?.action_name,listData['default_data'][dataIndex],$event)">
+                                <input type="checkbox" name="true" value="{{ listData['default_data'][dataIndex]['action']['status'] }}" [attr.checked]="listData['default_data'][dataIndex]['status']  === 'Y'">
+                                <em class="cls-switch-circle cls-round" [ngClass]="{'fn-card-switch-active':listData['default_data'][dataIndex]['action']['status']  === 'Y'}"></em>
+                            </label>
+                        </ng-container>
+                    </ng-container>
+                </div>
+                </ng-container>
+            </div>
+            <!-- List Sub header -->
+            <div class="cls-list-row cls-sublist d-none" id="expandContainer{{dataIndex}}" *ngIf="subHeader.length > 0">
+                <div class="cls-sub-header">
+                    <div class="cls-sub-header-cell {{head.class}}" *ngFor="let head of subHeader">
+                        <span class="cls-sub-header-name"> {{head.name}} </span>
+                        <span class="cls-sub-value" *ngIf="head?.format != 'date'">{{body[head['template']]}} </span>
+                        <span class="cls-sub-value" *ngIf="head?.format == 'date'">
+                            {{ body[head['template']] | date: "dd, MMM y | hh:mm a" }}
+                             </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- List body ends -->
+    <!-- No data found -->
+    <div class="cls-nodata" *ngIf="listData?.list_body?.length == 0">
+        No data available in table
+    </div>
+</div>
+<!-- List ends -->
+<!-- alert  -->
+<app-alert *ngIf="confirmation" [userInput]="confirmationContent" (choosedVal)="confirmAction($event)"></app-alert>
+
+<!-- history -->
+<app-reporthistory *ngIf="historyFlag" (closePopup)="historyClose($event)" [historyInput]="historyInput">
+</app-reporthistory>
+
+<!-- Mail Popup -->
+<app-user-info *ngIf="userInfoPopup" [userInput]="popupVal" (choosedVal)="popUpInfo($event)"></app-user-info>
+<!-- Advance form alert -->
+<app-advancealert *ngIf="popupVal['flag']" [userInput]="advanceContent" [advanceId]="advanceId" [type]="advanceType" (choosedVal)="popUpInfo($event)"></app-advancealert>
+<div class="cls-settlediv">
+    <app-settleform *ngIf="settleform" [amount]="listData.list_body[0].action" (settleFormVal)="settleReport($event)">
+    </app-settleform>
+</div>
+<!-- Mobile View -->
+<!-- {{deviceFlag}} -->
+
+<div class="row" *ngIf="deviceFlag">
+    <div class="col-sm-12 p-0">
+        <div class="cls-mobile-list-container" *ngFor="let body of listData['default_data'];let dataIndex=index">
+            <ng-container *ngFor="let head of mainHeader;let first=first">
+                <span class="cls-body-cell {{head?.mobile_class}}" *ngIf="head.template != 'action' && head?.mobile_view && !head?.mobileStatus && first && !head['currency'] && head?.format != 'date'">
+                    <span class="cls-header">{{head?.name}} : </span> {{body[head['template']]}}
+                </span>
+                <span class="cls-body-cell {{head?.mobile_class}}" *ngIf="head.template != 'action' && head?.mobile_view && !head?.mobileStatus && !first && head?.format != 'link' && !head['currency'] && head?.format != 'date'">
+                    {{body[head['template']]}}
+                </span>
+                <span class="cls-body-cell {{head?.mobile_class}}" *ngIf="head.template != 'action' && head?.mobile_view && !head?.mobileStatus && !first && head?.format != 'link' && !head['currency'] && head?.format == 'date'">
+                    {{ body[head['template']] | date: "dd, MMM y | hh:mm a" }}
+                </span>
+                <span class="cls-body-cell {{head?.mobile_class}} {{head?.status_class}} {{body[head['statusClass']]}}" *ngIf="head.template != 'action' && head?.mobile_view && head?.mobileStatus && !first && head?.format != 'link' && !head['currency'] && head?.format != 'date'">
+                    {{body[head['template']]}}
+                </span>
+                <span class="cls-body-cell {{head?.mobile_class}}" *ngIf="head.template != 'action' && head?.mobile_view && !head?.mobileStatus && !first && head?.format != 'link' && head['currency'] && head?.format != 'date'" title="{{ body[head['template']] }}">
+                    <span *ngIf="head['currency']" class="cls-currency">
+                        {{body[head['currency']]}}</span> {{ body[head['template']] != null ? (body[head['template']] != "" ? body[head['template']] : '0') : '0' }}
+                </span>
+                <!-- List mail trigger -->
+                <span class="cls-body-cell {{head?.mobile_class}}" *ngIf="head.template != 'action' && head?.mobile_view && head?.format == 'link' && !head?.mobileStatus && !first && head?.format != 'user_info' && !head['currency']">
+                    <a href="javascript:;" class="cls-a-hover" (click)="showPopUp(head,listData['default_data'][dataIndex],$event)" title="{{body[head['template']]}}">
+                        {{ body[head['template']] != null ? (body[head['template']] != "" ? body[head['template']] : 'N/A') : 'N/A' }}
+                    </a>
+                </span>
+                <!-- Action icon -->
+                <div class="cls-icons" *ngIf="head.template == 'action' && head?.mobile_view && head?.format != 'link' && !head?.mobileStatus">
+                    <ng-container *ngFor="let icon of head.icons">
+                        <a href="javascript:;" data-toggle="tooltip" class="cls-hover-tooltip mr-2 {{icon.class}}" *ngIf="icon['condition'] != 'switch' && (body[icon['status']] != undefined && body[icon['status']])" [ngClass]="{'cls-disable':body?.disable}" (click)="action(icon,listData['default_data'][dataIndex],$event,dataIndex+1)">
+                            <em class="cls-list-icon {{ icon.icon_class }}"></em>
+                            <span class="cls-tool">{{ icon.title }}</span>
+                        </a>
+                        <a href="javascript:;" data-toggle="tooltip" class="cls-hover-tooltip mr-2 {{icon.class}}" *ngIf="icon['condition'] != 'switch' && icon['status'] == undefined" [ngClass]="{'cls-disable':body?.disable}" (click)="action(icon,listData['default_data'][dataIndex],$event,dataIndex+1)">
+                            <em class="cls-list-icon {{ icon.icon_class }}"></em>
+                            <span class="cls-tool">{{ icon.title }}</span>
+                        </a>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

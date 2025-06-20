@@ -1,0 +1,173 @@
+/************************************************************************************
+CSS Description :master data add new
+Author          : Padma Priya CK,Naveen
+Powered by       : Infiniti software solutions
+*************************************************************************************/
+@import '../../../shared-module/components/alert/alert.component.scss';
+@import '../../../../assets/scss/variable.scss';
+.cls-statuslabel{
+    font-size: 15px;
+}
+.cls-popup{
+    .cls-footer{
+        padding: 10px 20px;
+    }
+}
+.cls-title{
+    font: 18px 'ProximaSemiBold' !important;
+    color: $BLACK;
+    border-bottom: 1px solid $BDRLIGHT;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: block;
+    text-transform: capitalize;
+}
+.cls-switches{ 
+    position: relative;
+    display: inline-block;
+    width: 35px;
+    height: 15px;
+    margin:4px 25px;
+    vertical-align: text-bottom;
+    input { 
+        opacity: 0;
+    }
+    .cls-switch-circle {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0px;
+        right: 0;
+        bottom: 0;
+        background-color:#ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        
+    }
+    .cls-switch-circle:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 19px;
+        left: 0px;
+        bottom: 1px;
+        background-color: $WHITE;
+        // box-shadow:1px 1px 6px #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    .fn-switch-active{
+        background-color:#84bcf9;
+        box-shadow: 0 0 1px #ccc !important;
+        &::before{
+            -webkit-transform: translateX(19px);
+            -ms-transform: translateX(19px);
+            transform: translateX(19px);
+            background-color: $PRIMARYCOLOR;
+            // box-shadow:1px 1px 6px $PRIMARYCOLOR;
+        }
+    }
+    /* Rounded sliders */
+    .cls-switch-circle.cls-round {
+        border-radius: 34px;
+        box-shadow: 0px 0px 2px #95989c;
+    }
+    .cls-switch-circle.cls-round:before {
+        border-radius: 50%;
+    }
+ } 
+ @media (min-width: 481px) and (max-width: 766px){
+    .cls-popup{
+        width: 100% !important;
+        background: $WHITE !important;
+        top: unset !important;
+        bottom: 0;
+        left: 0 !important;background: unset;
+        right: unset !important;
+        position: fixed !important;
+        z-index: 1000;
+        width: 100%;
+        border-radius: 30px 30px 5px 5px;
+        padding: 25px 20px 15px 20px;
+        animation: 0.4s slidein linear;
+        .cls-top-close{
+            display: none;
+        }
+        .cls-footer{
+            background: unset;
+        }
+        .cls-mbl-line{
+            display: inline-block;
+            height: 5px;
+            width: 35px;
+            background: #ccc;
+            border-radius: 10px;
+            position: absolute;
+            left: 45%;
+            top: 13px;
+          }
+          .cls-selectfilter{
+            font: 18px 'ProximaSemiBold';
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .cls-alert-icon{
+            .cls-btns{
+                .cls-title{
+                    display: none;
+                }
+            }
+        }
+    }
+    .close-ani{
+        animation: 0.4s slideout linear !important;
+    }
+ }
+ @media (min-width: 767px) and (max-width: 1024px){}
+ @media only screen and (max-width: 480px) {
+    .cls-popup{
+        width: 100% !important;
+        background: $WHITE !important;
+        top: unset !important;
+        bottom: 0;
+        left: 0 !important;background: unset;
+        right: unset !important;
+        position: fixed !important;
+        z-index: 1000;
+        width: 100%;
+        border-radius: 30px 30px 5px 5px;
+        padding: 25px 20px 15px 20px;
+        animation: 0.4s slidein linear;
+        .cls-top-close{
+            display: none;
+        }
+        .cls-footer{
+            background: unset;
+        }
+        .cls-mbl-line{
+            display: inline-block;
+            height: 5px;
+            width: 35px;
+            background: #ccc;
+            border-radius: 10px;
+            position: absolute;
+            left: 45%;
+            top: 13px;
+          }
+          .cls-selectfilter{
+            font: 18px 'ProximaSemiBold';
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .cls-alert-icon{
+            .cls-btns{
+                .cls-title{
+                    display: none;
+                }
+            }
+        }
+    }
+    .close-ani{
+        animation: 0.4s slideout linear !important;
+    }
+}

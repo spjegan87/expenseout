@@ -1,0 +1,50 @@
+/************************************************************************************
+CSS Description :city group
+Author          : Naveen
+Created Date    : 19 Jan 2021
+Powered by       : Infiniti software solutions
+************************************/
+@import '../create-policy/create-policy.component.scss';
+.cls-infoclaimtype{
+    padding: 5px 0px 0px;
+    font-size: 13px;
+    display: block;
+    position: relative;
+    em{
+        font-size: 10px;
+        margin-right: 5px;
+    }
+    .cls-hovertip{
+        display: none;
+        background: $BLACK;
+        color:$WHITE;
+        position: absolute;
+        z-index: 1;
+        width: max-content;
+        left: 15px;
+        top: 28px;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 12px;
+        &:after{
+          content: "";
+          position: absolute;
+          border-top: 10px solid rgba(0, 0, 0, 0.8);
+          border-right: 10px solid transparent;
+          border-left: 10px solid transparent;
+          position: absolute;
+          left: 9px;
+        transform: rotate(180deg);
+        top: -7px;
+        }
+        span{
+          color:$WHITE;
+          font-size: 12px;
+        }
+      }
+      &:hover{
+        .cls-hovertip{
+          display: inline-block;
+        }
+      }
+}

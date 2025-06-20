@@ -1,0 +1,92 @@
+<div class="card">
+    <div class="card-body">
+        <div class="cls-pageitem-row">
+            <label class="cls-label">Show
+            <select name="showpage" id="showpage"
+                class="cls-seldatatable custom-select custom-select-sm form-control cls-select form-control-sm">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>entries
+        </label>
+            <label class="cls-label">Search: 
+            <input type="search" class="form-control form-control-sm cls-ipdatatable cls-select" placeholder="Search Records" aria-controls="advanceReport0">
+        </label>
+        </div>
+        <table id="data-table" class="table">
+            <thead>
+                <tr>
+                    <td *ngFor="let star of counter(7)" class="border-0">
+                        <span class="cls-line loader loader-high"></span>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let star of counter(5)">
+                    <td>
+                        <div class="cls-inner-loader">
+                            <span class="cls-circle loader"></span>
+                            <span class="cls-line1 loader-sm loader"></span>
+                            <span class="cls-line loader-xs loader"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cls-box-loader">
+                            <span class="cls-line loader-high loader"></span>
+                            <span class="cls-box loader"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="cls-line1 d-block loader-sm loader"></span>
+                        <span class="cls-line loader loader-xs"></span>
+                    </td>
+                    <td>
+                        <div class="cls-box-loader">
+                            <span class="cls-line loader loader-high"></span>
+                            <span class="cls-box loader"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="cls-line1 d-block loader-sm loader"></span>
+                        <span class="cls-line loader loader-lg"></span>
+                    </td>
+                    <td>
+                        <span class="cls-line1 d-block loader-sm loader"></span>
+                        <span class="cls-line loader loader-lg"></span>
+                    </td>
+                    <td>
+                        <div class="cls-round">
+                            <span class="cls-circle loader"></span>
+                            <span class="cls-circle1 loader"></span>
+                            <span class="cls-circle2 loader"></span>
+                            <span class="cls-circle1 loader"></span>
+                            <span class="cls-circle loader"></span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-sm-12 col-md-3 cls-total-pages">
+                Showing 1 to 5 of 5 entries
+            </div>
+            <div class="col-sm-12 col-md-4 offset-2">
+                <ul class="pagination">
+                    <li class="previous disabled"><a href="#" class="page-link">Previous</a></li>
+                    <li class="active"><a href="#" class="page-link">1</a></li>
+                    <li class="next disabled" id=""><a href="#" class="page-link">Next</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-12 col-md-3 text-right">
+                <!-- <div class="cls-jump-page" > -->
+                <label class="cls-label cls-gotopage-label" for="jumptopage"> Go to Page                
+                <input class="cls-input cls-select" name="jumptopage" id="jumptopage">
+            </label>
+                <button type="button" name="" id="" class="cls-gopage"> Go
+                <em class="icon-3-dropdownarrow"></em> 
+            </button>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>

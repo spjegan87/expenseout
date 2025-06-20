@@ -1,0 +1,39 @@
+<!-- Desc : Advance Approval Details
+Author :naveen.s
+Date : 05-jan-2021 -->
+<div class="cls-Approval-bar">
+    <span class="cls-head-title">{{'Advance Approval Details' | translate}}</span>
+    <div class="row mb-2">
+        <div  class="form-group col-sm-4" [ngClass]="{'cls-noneditable' : empDetResponse?.update === false || profileType.type === 'myprofile'}" *ngFor='let in of counter(dropdownArray?.advanceApproverCount); let i = index;'>
+            <label  for="advance{{i}}">{{'Approver Level' | translate}} {{i+1}} <span *ngIf="i === 0" class="mandatory">*</span></label>
+            <select class="cls-approval-select cls-select form-control "  placeholder="All" multiple="multiple" id="advance{{i}}">
+                <option *ngFor="let data of dropdownArray?.advanceApprover" value="{{data.email}}">{{data.email}}</option>
+            </select>
+        </div>
+        <!-- <div  class="form-group col-sm-4">
+            <label  for="advance1">{{'Approver Level' | translate}} 1 <span class="mandatory">*</span></label>
+            <select class="cls-select form-control "  placeholder="All" multiple="multiple" id="advance0">
+                <option *ngFor="let data of dropdownArray?.advanceApprover" value="{{data.email}}">{{data.email}}</option>
+            </select>
+        </div>
+        <div class="form-group col-sm-4">
+            <label  for="advance2">{{'Approver Level' | translate}} 2 </label>
+            <select class="cls-select form-control "  placeholder="All" multiple="multiple" id="advance1">
+                <option *ngFor="let data of dropdownArray?.advanceApprover" value="{{data.email}}">{{data.email}}</option>
+            </select>
+        </div>
+        <div  class="form-group col-sm-4">
+            <label  for="advance3">{{'Approver Level' | translate}} 3</label>
+            <select class="cls-select form-control "  placeholder="All" multiple="multiple" id="advance2">
+                <option *ngFor="let data of dropdownArray?.advanceApprover" value="{{data.email}}">{{data.email}}</option>
+            </select>
+        </div> -->
+    </div>
+    <div class="my-3">
+        <div [ngClass]="{'d-none' : empDetResponse?.update === false || profileType.type === 'myprofile'}">
+            <button class="btn  cls-custom-btn cls-btn-secondary" type="button" (click)="backtoList()"><span>{{'Cancel' | translate}}</span></button>
+            <button class="btn  cls-custom-btn cls-btn-primary" type="button" *ngIf="formType === 'new'" (click)="advanceApproval('new')">{{'Next' | translate}}</button>
+            <button class="btn  cls-custom-btn cls-btn-primary" type="button" *ngIf="formType != 'new'" (click)="advanceApproval('update')">{{'Update' | translate}}</button>
+        </div>
+    </div>
+ </div>

@@ -1,0 +1,255 @@
+/* padding mixin 
+* parameter : (example : 2px 12px 0px);
+
+* Example => @include padding(5px,5px,5px,1px);
+*/
+@mixin padding($top,$right,$bottom,$left) {
+        padding-top:$top;
+        padding-right: $right;
+        padding-bottom:$bottom;
+        padding-left: $left;
+}
+
+/* margin mixin
+* parameter : (example : 2px 12px 0px)
+* Example => @include margin(5px.5px,5px,1px);
+*/
+@mixin margin($top,$right,$bottom,$left) {
+        margin-top:$top;
+        margin-right: $right;
+        margin-bottom:$bottom;
+        margin-left: $left;
+}
+
+/* Box mixin
+* parameter : (example : width,height,background-color)
+* Example => @include box(5px,5px,#ff0);
+*/
+@mixin box($width, $height, $background) {
+        width: $width;
+        height: $height;
+        background-color: $background;
+}
+
+/* Calculate REM
+* parameter size in number
+*/
+@function calculateRem($size) {
+        $remSize: $size / 16;
+        @return $remSize * 1rem;
+}
+
+/* font size mixin
+* parameter :(example : font-size(14))
+* Example => @include font-size(24);
+*/
+@mixin font-size($size) {
+        font-size: $size+px;
+        font-size: calculateRem($size);
+        }
+
+/* animation mixins */
+@mixin keyframes($animation-name) {
+        @-webkit-keyframes #{$animation-name} {
+                @content;
+        }
+        @-moz-keyframes #{$animation-name} {
+                @content;
+        }  
+        @-ms-keyframes #{$animation-name} {
+                @content;
+        }
+        @-o-keyframes #{$animation-name} {
+                @content;
+        }  
+        @keyframes #{$animation-name} {
+                @content;
+        }
+        }
+
+
+/* animations parameter default animation parameter
+* Parameters =>
+animation-name: as specified
+animation-duration: as specified
+animation-timing-function: as specified
+animation-delay: as specified
+animation-direction: as specified
+animation-iteration-count: as specified
+animation-fill-mode: as specified
+animation-play-state: as specified
+
+
+* Example => @include animation('fade-out 5s 3');
+
+*/
+@mixin animation($str) {
+        -webkit-animation: #{$str};
+        -moz-animation: #{$str};
+        -ms-animation: #{$str};
+        -o-animation: #{$str};
+        animation: #{$str};      
+        }
+
+
+/* background gradient mixin 
+* parameter : (example : background-gradient(#fff,#fcfcfc,'vertical'))
+* Example => @include background-gradient(#fff,#fcfcfc,'vertical');
+*/
+@mixin background-gradient($start-color, $end-color, $orientation) { 
+        background: $start-color;
+        
+        @if $orientation == 'vertical' {
+                background: -webkit-linear-gradient(top, $start-color, $end-color);
+                background: linear-gradient(to bottom, $start-color, $end-color);
+        } @else if $orientation == 'horizontal' {
+                background: -webkit-linear-gradient(left, $start-color, $end-color);
+                background: linear-gradient(to right, $start-color, $end-color);
+        } @else {
+                background: -webkit-radial-gradient(center, ellipse cover, $start-color, $end-color);
+                background: radial-gradient(ellipse at center, $start-color, $end-color);
+        }
+        }
+
+
+/* opacity mixin
+* parameter : (.4)
+* Example => @include opacity(.4);
+*/      
+@mixin opacity($opacity) {
+        opacity: $opacity;
+        $opacity-ie: $opacity * 100;
+        filter: alpha(opacity = $opacity-ie); //IE8
+        }
+
+
+
+/* Media query 
+Example => @include screen('tablet') {
+            width: 90%;
+           }
+Example => @include screen('desktop') {
+           width: 85%;
+           }
+*/
+@mixin screen($size) {
+        $desktop: "(min-width: 1024px)";
+        $tablet: "(min-width: 768px) and (max-width: 1023px)";
+        $mobile: "(max-width: 767px)";
+        @if $size == desktop {
+          @media only screen and #{$desktop} {
+            @content;
+          }
+        }
+        @else if $size == tablet {
+          @media only screen and #{$tablet} {
+            @content;
+          }
+        }
+        @else if $size == mobile {
+          @media only screen and #{$mobile} {
+            @content;
+          }
+        }
+        @else {
+          @media only screen and #{$size} {
+            @content;
+          }
+        }
+      }
+
+/* Center the element 
+* parameter :( example : center('both') )
+* Example => @include center('vertical');
+*/
+
+@mixin center($position) {
+        position: absolute;
+      
+        @if $position == 'vertical' {
+          top: 50%;
+          -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+        }
+      
+        @else if $position == 'horizontal' {
+          left: 50%;
+          -webkit-transform: translateX(-50%);
+          -ms-transform: translateX(-50%);
+          transform: translate(-50%);
+        }
+      
+        @else if $position == 'both' {
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+      
+      }
+
+
+/* Fade mixin
+* parameter : ( exapmle: fade(hide))
+* Example => @include fade(hide);
+*/
+@mixin fade($type) {
+
+        @if $type == 'hide' {
+                visibility: hidden;
+                opacity: 0;
+                transition: visibility 1s, opacity 1s;
+        }
+
+        @else if $type == 'show' {
+                visibility: visible;
+                opacity: 1;
+                transition: visibility 1s, opacity 1s;
+        }
+
+}
+
+
+/* Absolute position mixin 
+* parameter : abs-position(10px,auto,auto,auto);
+* Example => include abs-position(10px,10px,auto,auto);
+*/
+@mixin abs-position ($top,$right,$bottom,$left) {
+        position: absolute; 
+        top: $top;
+        right: $right;
+        bottom: $bottom;
+        left: $left;
+}
+/* Fixed position mixin 
+* parameter : fix-position(10px,auto,auto,auto);
+* Example => include fix-position(10px,10px,auto,auto);
+*/
+@mixin fix-position ($top,$right,$bottom,$left) {
+        position: fixed; 
+        top: $top;
+        right: $right;
+        bottom: $bottom;
+        left: $left;
+}
+
+
+/* text overfolw
+* parameter : (example : text-shorten(120px));
+* Example => @include text-shorten();
+*/
+@mixin text-shorten($truncation-boundary){
+        max-width: $truncation-boundary;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+}
+
+@mixin border-radius($top,$right,$bottom,$left){
+        border-top-right-radius: $top;
+        border-bottom-right-radius: $right;
+        border-bottom-left-radius: $bottom;
+        border-top-left-radius: $left;
+}

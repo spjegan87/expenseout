@@ -1,0 +1,118 @@
+<div class="cls-table cls-mobsort" [ngClass]="{'cls-emptydata' : tableData?.data?.length === 0 || tableData === ''}">
+    <ng-container *ngIf="upload.uploadFlag">
+        <span class="cls-uploadtxt" (click)="bulkUpload()">
+            <em data-feather="upload-cloud">
+            </em>{{'Upload CSV'| translate}}
+        </span>
+    </ng-container>
+
+    <select class="p-2 pull-right cls-select cls-custom-input mr-3" *ngIf="tableData?.data?.length !== 0" id="sortBy" (change)="sorting()">
+        <option>Sort By</option>
+        <ng-container *ngFor="let tabheader of tableData.headers;let headerIndex = index">
+            <option *ngIf="tabheader !== 'Action' && tabheader !== ''">{{tabheader}}</option>
+        </ng-container>
+    </select>
+    <div class="clearfix"></div>
+    <table id="data-table" class="table table-lg table-hover">
+        <thead>
+            <tr>
+                <th *ngFor="let tableHeader of tableData.headers">
+                    {{tableHeader | translate}}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="tableData?.data?.length !== 0">
+                <tr class="row{{i}} cls-rowshow" *ngFor="let tableItems of tableData?.data;let i = index">
+                    <ng-container *ngFor="let tableData of tableItems">
+                        <td *ngIf="tableData.type === 'expand'" class="details-control" id="detail-btn" (click)="changeDetail(i)" orderable="false"></td>
+                        <td *ngIf="tableData.type !== 'expand'">
+                            <ng-container *ngIf="tableData.type === 'highlight'">
+                                <span class="badge" [ngStyle]="{'background': tableData.color}">
+                                    {{tableData.value | translate}}
+                                </span>
+                            </ng-container>
+                            <div class="cls-status" *ngIf="tableData.type === 'status'">
+                                <label class="cls-switches" (click)="actionPerform(tableData.value,tableData.action)">
+                                  <ng-container *ngIf="tableData.value['status'] === 'Y'">
+                                    <input type="checkbox" name="true" value="true" checked>
+                                  </ng-container>
+                                  <ng-container *ngIf="tableData.value['status'] === 'N'">
+                                    <input type="checkbox" name="false" value= "false">
+                                  </ng-container>
+                                  <em class="cls-switch-circle cls-round" [ngClass]="{'fn-switch-active': tableData.value['status'] === 'Y'}"></em>
+                                </label>
+                            </div>
+                            <ng-container *ngIf="tableData.type === 'raw'">
+                                {{tableData.value}}
+                            </ng-container>
+                            <ng-container *ngIf="tableData.type === 'click'">
+                                <ng-container *ngIf="tableData.value !== ''">
+                                    <a class="cls-a-hover" href="javascript:;" (click)="showPopUp(tableData.popUp)" title="{{'Click to view details' | translate}}">{{tableData.value}}</a>
+                                </ng-container>
+                                <ng-container *ngIf="tableData.value === ''">
+                                    --
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="tableData.type === 'date'">
+                                {{ tableData.value | date: "dd-MMM-YYYY | hh:mm a" }}
+                            </ng-container>
+                            <ng-container *ngIf="tableData.type === 'Amount'">
+                                {{tableData.currency}} {{tableData.value | amount }}
+                            </ng-container>
+                            <ng-container *ngIf="tableData.length > 0">
+                                <ng-container *ngFor="let tableActions of tableData">
+                                    <ng-container *ngIf="!tableActions.expand">
+                                        <span class="d-inline-block">
+                                            <a href="javascript:;" 
+                                                (click)="actionPerform(tableActions.value,tableActions.action)"
+                                                class="text-{{tableActions.color}} cls-hover-tooltip mr-2" data-toggle="tooltip">
+                                                <em class="cls-list-icon ti-{{tableActions.icon}} {{tableActions.icon}}"></em>
+                                                <span class="cls-tool">{{ 'Click To '+ tableActions.tooltip  | translate}}</span>
+                                        </a>
+                                        </span>
+                                    </ng-container>
+                                    <div class="cls-hide cls-divexpand" id="hide{{i}}" *ngIf="tableActions.expand">
+                                        <ng-container *ngFor="let expdata of tableActions.expand">
+                                            <span class="cls-fntexpdata">
+                                                {{expdata.head}}
+                                                <span class="d-block cls-fntcolor">
+
+                                                    <ng-container *ngIf="expdata.value !== ''">
+                                                        <ng-container *ngIf="expdata.type === 'date'">
+                                                        {{ expdata.value | date: "dd-MMM-y | h:mm a"}} 
+                                                        <!-- {{ expdata.value | date: "dd-MMM-y"}}  |
+                                                            {{ expdata.value  | date: "h:mm a"}} -->
+                                                        </ng-container>
+                                                        <ng-container *ngIf="expdata.type !== 'date'"> 
+                                                            {{expdata.value}}
+                                                        </ng-container>
+                                                    </ng-container> 
+                                                    
+                                                    <ng-container *ngIf="expdata.value === ''">
+                                                        --
+                                                    </ng-container>
+                                                </span>
+                                            </span>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                    </ng-container>
+
+                </tr>
+            </ng-container>
+            <tr *ngIf="tableData?.data?.length === 0" title="{{'No Records Found' | translate}}">
+                <td [colSpan]="tableData.headers.length" class="dataTables_empty">
+                    {{'No Records Found' | translate}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<app-alert *ngIf="confirmation" [userInput]="confirmationContent" (choosedVal)="confirmAction($event)"></app-alert>
+<app-bulk-upload *ngIf="uploadFlag" (uploadFlag)="closeUpload($event)" [upload]="upload"></app-bulk-upload>
+<ng-container *ngIf="popupVal['flag'] === true">
+    <app-user-info *ngIf="popupVal?.module === 'userSettings'" [userInput]="popupVal?.value" (choosedVal)="popUpInfo($event)"></app-user-info>
+</ng-container>

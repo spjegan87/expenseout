@@ -1,0 +1,55 @@
+<form [formGroup]="createForm" class="cls-alert-container">
+    <!-- background  -->
+    <span id="fn-background" class="cls-background"></span>
+    <!-- alert-container -->
+    <div class="cls-popup" [ngClass]="toClose ? 'close-ani' : ''">
+        <span class="dblock d-sm-none cls-mbl-line"></span>
+        <span class="d-block d-sm-none cls-selectfilter">
+        <ng-container *ngIf="typeCreate['actionType'] === 'new'">
+          {{'Add' | translate}} {{'New' | translate}} {{typeCreate['label'] | translate}}
+        </ng-container> 
+        <ng-container *ngIf="typeCreate['actionType'] === 'edit'">
+         {{'Edit' | translate}} {{typeCreate['label'] | translate}}
+        </ng-container>
+      </span>
+        <span class="cls-top-close" title="Click To Close" (click)="closeModal(false)">
+        <em class="icon-32-reject"></em>
+      </span>
+        <!-- Alert body -->
+        <div class="cls-content cls-alert-icon mt-1">
+            <!-- Button Design -->
+            <div class="cls-btns mt-3 mb-5 px-4">
+                <ng-container>
+                    <!-- <span  class="d-block cls-feathericon" data-feather="feather-info"></span> -->
+                    <span class="white-text text-left cls-title">
+              <ng-container *ngIf="typeCreate['actionType'] === 'new'">
+                {{'Add' | translate}} {{'New' | translate}} {{typeCreate['label']}}
+              </ng-container> 
+              <ng-container *ngIf="typeCreate['actionType'] === 'edit'">
+               {{'Edit' | translate}} {{editLabel | translate}}
+              </ng-container> 
+            </span>
+                    <div class="row">
+                        <div class="form-group col-sm-6 cls-date text-left">
+                            <label for="name">{{'Name' | translate}} <span class="cls-mandatory">*</span></label>
+                            <input type="text" (keyup)="codeValSet()" class="cls-input datepicker" id="name" (keypress)="validatespecialChar($event)" formControlName="name" name="name" placeholder="{{'Name' | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                                [ngClass]="{'cls-border-error':(submitted && validation.name.errors)}">
+                        </div>
+                        <!-- <div  class="form-group col-sm-6 cls-date text-left">
+                    <label  for="code">{{'Code' | translate}} </label>
+                    <input  type="text" class="cls-input datepicker" id="code"  formControlName="code" name="code"  placeholder="{{'Code' | translate}}" 
+                    autocomplete="off" readonly class="cls-custom-input form-control">
+                </div> -->
+                    </div>
+                    <div class="mt-3 text-right cls-footer">
+                        <!-- <ng-container *ngFor="let action of userInput.button; last as last"> -->
+                        <button type="button" class="btn cls-custom-btn cls-btn-secondary" (click)="closeModal(false)"><span>{{'Cancel' | translate}}</span></button>
+                        <button type="button" *ngIf="typeCreate['actionType'] === 'new'" class="btn cls-custom-btn cls-btn-primary" (click)="closeModal(true)">{{'Create' | translate}}</button>
+                        <button type="button" *ngIf="typeCreate['actionType'] === 'edit'" class="btn cls-custom-btn cls-btn-primary" (click)="closeModal(true)">{{'Update' | translate}}</button>
+                        <!-- </ng-container> -->
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,13 @@
+<!--Breadcrumb starts-->
+<div class="page-navigation ml-0">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb p-0">
+        <li class="breadcrumb-item" *ngFor="let data of activeBreadcrumb">
+          <a href="javascript:;" title="{{data.name | translate}}" routerLink="/{{data.home}}/{{data.routerLink}}"
+            [ngClass]="data.active == 'Y' ? 'active' : ''" [appFontSize]="data.name | translate">
+            {{data.name | translate}}</a>
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <!--Breadcrumb ends-->

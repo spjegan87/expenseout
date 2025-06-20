@@ -1,0 +1,111 @@
+<!-- <p>create-allowance-creation works!</p> -->
+<!-- Desc : create profile
+Author : Naveen.s,Padma Priya
+Date : 04-Jan-2021 -->
+<a href="javascript:;" title="{{'Back To List' | translate}}" class="cls-back cls-a-hover mb-2" (click)="redirectList()"><em class="ti-arrow-left"></em> {{'Back To List' | translate}}</a>
+<form [formGroup]="allowanceForm">
+    <!-- main container starts -->
+    <div class="cls-policy-container">
+        <!-- page 1 starts -->
+        <div class="cls-first-container">
+            <div class="cls-main-dotted">
+                <span class="cls-strip">{{'Select Criterias' | translate}}</span>
+                <div class="cls-policy-first">
+                    <div class="row w-100 m-0">
+                        <div class="form-group radio-group mt-3 mb-2 pl-3">
+                            <label for="hourlyBasis" class="cls-radio  mr-3" [ngClass]="{'cls-radio-on' : allowanceForm['controls']['claimType'].value === 'hours'}">
+                                <input  formControlName="claimType" type="radio" value="hours" id="hourlyBasis" name="claimType">
+                                <em aria-hidden="true" class="icon-7-radio-on" *ngIf="allowanceForm['controls']['claimType'].value === 'hours'"></em>
+                                <em aria-hidden="true" class="icon-6-radio-off" *ngIf="allowanceForm['controls']['claimType'].value === 'days'"></em>
+                                {{'Hourly Basis' | translate}}
+                            </label>
+                            <label for="daysBasis" class="cls-radio mr-3" [ngClass]="{'cls-radio-on' : allowanceForm['controls']['claimType'].value === 'days'}">
+                                <input  formControlName="claimType" type="radio" value="days" id="daysBasis" name="claimType" checked="checked">
+                                <em aria-hidden="true" class="icon-7-radio-on" *ngIf="allowanceForm['controls']['claimType'].value === 'days'"></em>
+                                <em aria-hidden="true" class="icon-6-radio-off" *ngIf="allowanceForm['controls']['claimType'].value === 'hours'"></em>
+                                {{'Days Basis' | translate}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row w-100 m-0">
+                        <div class="form-group col-sm-4">
+                            <label for="allowanceName">{{'Allowance Name' | translate}}
+                                 <span class="cls-mandatory">*</span>
+                            </label>
+                            <input type="text" formControlName="allowanceName" (keypress)="stringValidation($event)" name="allowanceName" id="allowanceName" placeholder="{{'Enter Allowance Name' | translate}}" autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-error' : (submitted && validation.allowanceName.errors)}">
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="description">{{'Description' | translate}}
+                            </label>
+                            <input type="text" formControlName="description" (keypress)="stringValidation($event)" name="description" id="description" placeholder="{{'Enter Allowance Description' | translate}}" autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-error' : (submitted && validation.description.errors)}">
+                        </div>
+                        <div class="form-group col-sm-3 cls-search-select">
+                            <label for="currency">{{'Currency' | translate}}
+                                 <span class="cls-mandatory">*</span>
+                            </label>
+                            <input type="text" formControlName="currency" readonly name="currency" id="currency" placeholder="{{'Enter Currency' | translate}}" autocomplete="off" class="cls-custom-input form-control" [ngClass]="{'cls-error' : (submitted && validation.currency.errors)}">
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label for="amount">{{'Amount' | translate}}
+                                 <!-- <span class="cls-mandatory">*</span> -->
+                            </label>
+                            <!-- (keyup)="amountCalculate()" -->
+                            <input type="number" formControlName="amount" name="amount" id="amount" placeholder="{{'Enter Amount' | translate}}" [ngClass]="{'cls-error' : (submitted && validation.amount.errors)}" min="1" onkeydown="return event.keyCode !== 69" 
+                                autocomplete="off" class="cls-custom-input form-control">
+                        </div>
+                    </div>
+                    <div class="row w-100 m-0">
+                        <div class="form-group col-sm-12 cls-search-select">
+                            <label for="profileGroup" class="d-block">{{'Profile Group' | translate}}
+                                 <!-- <span class="cls-mandatory">*</span> -->
+                            </label>
+                            <select formControlName="choosedProfile" class="col-sm-8  profileselect cls-profilegroup form-control " placeholder="All" multiple="multiple" id="profileGroup">
+                                <option *ngFor="let data of profileGroupList" value="{{data.name}}">{{data.name}}</option>
+                            </select>
+                            <!-- <input  type="text" formControlName="profileGroup" name="profileGroup" id="profileGroup" placeholder="{{'Enter Profile Group' | translate}}" autocomplete="off" class="cls-custom-input form-control"> -->
+                        </div>
+                        <!-- allowance create city group starts-->
+                        <div class="cls-clone-field col-sm-12" *ngIf="choosedCriteria.length >= 1">
+                            <ng-container *ngFor="let data of choosedCriteria; let last = last;">
+                                <ng-container *ngIf="allowanceForm.controls[data]">
+                                    <div class="row w-100 m-0 {{data}}" formGroupName="{{data}}">
+                                        <div class="form-group col-sm-3 pr-0">
+                                            <span class="cls-label cls-center-label">{{  data | translate}} <span class="cls-mandatory">*</span> : </span>
+                                        </div>
+                                        <div class="form-group col-sm-3 cls-amountmob">
+                                            <span class="cls-input-label">{{'Override Amount' | translate}}</span>
+                                            <input type="number" formControlName="amount" min="1" onkeydown="return event.keyCode !== 69" name="amount" id="amount" placeholder="{{'Enter Amount' | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                                                [ngClass]="{'cls-error':(submitted && validation[data]['controls'].amount.errors)}">
+                                            <!-- [ngClass]="{'cls-error':(submitted && validation[data].controls.amount.errors)}"  -->
+                                        </div>
+                                        <div class="col-sm-6 text-left">
+                                            <span class="cls-override cls-a-hover" (click)="openOverride(data)">{{'Override with City Groups' | translate}}</span>
+                                            <ng-container *ngIf="overrideCityVal[data]">
+                                                <span class="cls-override-value" *ngFor="let item of overrideCityVal[data]">
+                                                    <span class="cls-text cls-hover-tooltip">{{item?.cityGroupName}}
+                                                        <em class="icon-16-info"></em>
+                                                        <span class="cls-tool">{{'Amount' | translate}} - {{item?.cityAmount}}</span>
+                                                </span>
+                                                </span>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <span *ngIf="!last" class="cls-line mb-2"></span>
+                            </ng-container>
+                        </div>
+                        <!-- allowance create city group ends-->
+                    </div>
+                </div>
+            </div>
+            <div class="cls-button-box">
+                <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="redirectList()"><span>{{'Cancel' | translate}}</span></button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="createAllowance('create')" *ngIf="(editResponse | json) == '{}'">{{'Create' | translate}}</button>
+                <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="createAllowance('update')" *ngIf="(editResponse | json) != '{}'">{{'Update' | translate}}</button>
+            </div>
+        </div>
+        <!-- page 1 ends -->
+    </div>
+    <!-- main container ends -->
+</form>
+<app-override-amount *ngIf="overrideAmount" [userInput]="overrideAlertVal" (choosedVal)="overrideVal($event)"></app-override-amount>

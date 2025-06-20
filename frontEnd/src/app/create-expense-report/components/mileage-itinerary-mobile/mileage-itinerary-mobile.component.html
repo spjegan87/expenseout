@@ -1,0 +1,84 @@
+<ng-container *ngIf="mileageItinerary !=undefined">
+   
+    <div class="cls-main">
+        <div class="cls-nonedit row">
+            <div class="col-sm-6 cls-halfblock" *ngFor="let item of mileageItinerary?.tripdetails">
+                <label class="cls-label">
+                    {{item?.label}}
+                    <span class="cls-data">
+                        <span *ngIf="item?.subvalue">{{item?.subvalue}}</span>
+                        {{item?.value ? item?.value :'-' }}
+                        <span class="cls-others" *ngIf="item?.others"> - {{item?.others}}</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <!-- Location Details starts -->
+<div class="cls-main">
+	<div class="cls-locationiti">
+		<div class="cls-headbar">
+			<span class="cls-sub-text">{{'Total Locations' | translate}}</span>
+			*
+			<a href="javascript:;" class="cls-editopt" (click)="edit()" title="Click to edit"
+				[ngClass]="{'d-none':saveFlag?.edited == false}">
+				<em class="icon-14-edit pr-2"></em>Edit
+			</a>
+
+		</div>
+		<span class="cls-half">
+			First Half
+		</span>
+		<span class="cls-half cls-half-sec" *ngIf="mileageItinerary?.locationDetails?.secondHalf?.length > 0">
+			Second Half
+		</span>
+		<ul class="cls-localty">
+			<ng-container *ngIf="mileageItinerary?.locationDetails?.FirstHalf">
+				<li class="cls-locationpined cls-firsthalf" [ngClass]="{'cls-final': last}"
+					*ngFor="let item of mileageItinerary?.locationDetails?.FirstHalf;let last = last">
+					<span class="loc-name">{{item}}</span>
+				</li>
+			</ng-container>
+			<ng-container *ngIf="mileageItinerary?.locationDetails?.secondHalf">
+				<li class="cls-locationpined cls-secondhalf" [ngClass]="{'cls-final': last}"
+					*ngFor="let item of mileageItinerary?.locationDetails?.secondHalf;let last = last">
+					<span class="loc-name">{{item}}</span>
+				</li>
+			</ng-container>
+		</ul>
+        <div class="odometer-images">
+            <div class="preview-image">
+                <img src="{{mileageItinerary.odometerStartImage}}" alt="Odometer Start Image">
+            </div>
+            <div class="preview-image">
+                <img src="{{mileageItinerary.odometerEndImage}}" alt="Odometer End Image">
+            </div>
+        </div>
+	</div>
+</div>
+<!-- Calculated mileage starts -->
+<div class="cls-main pb-0">
+	<div class="cls-headbar">
+		<span class="cls-sub-text">{{'Calculated Mileage' | translate}}</span>
+	</div>
+	<div class="cls-nonedit row">
+		<div class="col-sm-6 cls-halfblock cls-total">
+			<label class="cls-label">
+				{{'Total Distance Travelled' | translate}}
+				<span class="cls-data">
+					{{totalDistance}} {{totalKm}}
+				</span>
+			</label>
+		</div>
+		<div class="col-sm-6 cls-halfblock cls-mileagede">
+			<label class="cls-label">
+				{{'Eligible Mileage' | translate}}
+				<span class="cls-data">
+					<span>{{itinearyInfo.currency}} </span>
+					{{totalAmount}}
+				</span>
+			</label>
+		</div>
+	</div>
+</div>
+</ng-container>

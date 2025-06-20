@@ -1,0 +1,80 @@
+<!-- <form [formGroup]="addRuleForm" class="cls-alert-container"> -->
+  <div class="cls-alert-container">
+  <!-- background  -->
+  <span id="fn-background" class="cls-background"></span>
+  <!-- alert-container -->
+  <div class="cls-popup" [ngClass]="toClose ? 'close-ani' : ''">
+    <span class="dblock d-sm-none cls-mbl-line"></span>
+    <span class="d-block d-sm-none cls-selectfilter">
+      {{'Add rule for auto approval and rejection ' | translate}}
+    </span>
+    <span class="cls-top-close" title="Click To Close" (click)="buttonAction(false)"><em
+        class="icon-32-reject"></em></span>
+    <!-- Alert body -->
+    <div class="cls-content cls-alert-icon mt-1">
+      <span class="text-left white-text cls-header">
+        {{'Add Rule' | translate}}
+      </span>
+      <div class="cls-btns mt-3 mb-5 px-4">
+        <div class="d-flex flex-column text-left">
+          <div class="pb-3">
+            <label class="cls-header pb-0 mb-0">Approval</label>
+            <div class="d-flex align-items-center pb-1">
+              <input type="checkbox" id="autoApprove" name="autoApprove" value="autoApprove">
+              <label class="pl-1 mb-0" for="autoApprove">Auto approve when expense amount within the policy limit</label>
+            </div>
+          </div>
+          <div>
+            <label class="cls-header pb-0 mb-0"> Block and Reject</label>
+            <div class="d-flex align-items-center pb-1">
+              <input type="radio" id="autoReject" name="rejection" value="autoReject">
+              <label class="pl-1 mb-0" for="autoReject">Auto reject when expense amount exceeds the policy limit</label>
+            </div>
+            <div class="d-flex align-items-center pb-1">
+              <input type="radio" id="autoBlock" name="rejection" value="autoBlock">
+              <label class="pl-1 mb-0"for="autoBlock">Block when expense exceeds the policy limit</label>
+            </div>
+            <div class="d-flex align-items-center pb-1">
+              <input type="radio" id="none" name="rejection" value="none" checked>
+              <label class="pl-1 mb-0" for="none">Let the approver to decide</label>
+            </div>
+          </div>
+        </div>
+        <ng-container>
+          <!-- <div class="row">
+            <div class="form-group col-sm-10 text-left">
+              <label class="d-block" for="addRule">{{'Select Rule' | translate}}<span class="mandatory">*</span></label>
+              <select class="cls-select form-control " placeholder="All" multiple="multiple" id="addRule">
+                <option value="approval">Approval</option>
+                <option value="block">Block</option>
+              </select>
+            </div>
+          </div> -->
+          <!-- <ng-container *ngIf="choosedCriteria.length >= 1">
+            <div class="mb-2" *ngFor="let data of choosedCriteria; let index = index; let last = last;"
+              formGroupName="{{data.name}}">
+              <label for="currency">{{data.name}}<span class="cls-mandatory"></span></label>
+              <div class="input-group">
+                <div class="form-group col-sm-10 text-left">
+                  <label class="d-block" for="addRuleApproval">{{'Select Rule' | translate}}<span
+                      class="mandatory">*</span></label>
+                  <select class="cls-select form-control " placeholder="All" multiple="multiple" id="addRule">
+                    <option value="autoApproval">Auto Approval</option>
+                    <option value="autoReject">Auto Reject</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </ng-container> -->
+          <div class="mt-3 text-right cls-footer">
+            <button type="button" class="btn cls-custom-btn cls-btn-secondary"
+              (click)="buttonAction(false)"><span>{{'Cancel' | translate}}</span></button>
+            <button type="button" class="btn cls-custom-btn cls-btn-primary" (click)="buttonAction(true)">{{'Save' |
+              translate}}</button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </form> -->

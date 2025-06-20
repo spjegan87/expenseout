@@ -1,0 +1,238 @@
+@import '../../../../assets/scss/variable.scss';
+.cls-settle-container{
+    .cls-disable{
+        pointer-events: none;
+        opacity: 0.4;
+    }
+    input,select{
+        font-size: 12px;
+        height: 32px;
+        border-radius: 5px;
+      }
+      label{
+        .cls-mandatory{
+          color:$ERROR;
+        }
+      }
+      background: $WHITE;
+      padding:20px;
+      position: absolute;
+      z-index: 1;
+      width: 470px;
+      right: 30px;
+      box-shadow: -1px 1px 7px 0px $BDRLIGHT;
+      border-radius: 8px;
+      bottom: 62px;
+    .cls-top-close{
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: $ERROR;
+        display: inline-block;
+        right: -7px;
+        z-index: 1;
+        top: -9px;
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 1px 0px 0px 0px;
+        border: 1px solid $WHITE;
+        em{
+          font-size: 9px;
+          vertical-align: text-top;
+          font-weight: 600;
+          color: $WHITE;
+        }
+        &:hover{
+            box-shadow:0 2px 10px 0  rgba(0, 0, 0, 0.1);
+            transform: scale(1.1);
+          }
+    }
+      .cls-mbl-settleform{
+        // background: $WHITE;
+        // padding:20px;
+        // position: absolute;
+        // z-index: 1;
+        // width: 470px;
+        // right: 30px;
+        // box-shadow: -1px 1px 7px 0px $BDRLIGHT;
+        // border-radius: 8px;
+        // top: -234px;
+    .cls-date{
+        .cls-date-icon{
+            color: #918d8d;
+            opacity: 0.7;
+            position: absolute;
+            right: 25px;
+            bottom: 9px;
+            font-size:14px;
+        }
+    }
+    .cls-amount-box{
+        .cls-amount-title{
+            font: 15px "ProximaRegular";
+            margin-right: 10px;
+        }
+        .cls-amount{
+            position: relative;
+            font: 15px "ProximaSemiBold";
+            input{
+                color:$BLACK;
+                opacity: 1;
+                width: 18% !important;
+                margin-left: 14px;
+            }
+            em{
+                right: 15px;
+                top: 0px;
+                cursor: pointer;
+                position: absolute;
+                z-index: 1;
+            }
+        }
+    }
+    &::after{
+        content: '';
+        width: 15px;
+        height: 15px;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        position: absolute;
+        border-right: 1px solid rgba(179, 179, 179, 0.2);
+        border-bottom: 1px solid rgba(173, 173, 173, 0.2);
+        bottom: -8px;
+        right: 6%;
+        background: $WHITE;
+    }
+}
+}
+@media only screen and (max-width: 480px) {
+ .cls-settle-container{
+    z-index: 12;
+    .cls-mbl-line{
+        display: inline-block !important;
+        height: 5px;
+        width: 35px;
+        background: #ccc;
+        border-radius: 10px;
+        position: absolute;
+        left: 45%;
+        top: 13px;
+      }
+      .cls-mbl-background{
+        position:fixed;
+        top:0px;
+        left:0px;
+        right:0px;
+        bottom:0px;
+        background:$BLACK;
+        opacity:.5;
+        z-index:999;
+      }
+     .cls-mbl-settleform{
+        background: $WHITE;
+        top: unset !important;
+        bottom: 0;
+        left: 0 !important;
+        right: unset !important;
+        position: fixed !important;
+        z-index: 1000;
+        width: 100%;
+        border-radius: 30px 30px 5px 5px;
+        padding: 25px 20px 15px 20px;
+        animation: 0.4s slidein linear;
+        .cls-amount-box{
+            .cls-amount{
+                input{
+                    width: 25% !important;
+                }
+                em{
+                    right: 4px;
+                }
+            }
+        }
+        .cls-mbl-btn{
+            text-align: right;
+            // margin-bottom: 64px;
+        }
+     }
+     .cls-close-ani{
+        animation: 0.4s slideout linear !important;
+      }
+    .cls-top-close{
+        display: none;
+    }
+    .cls-amount-box{
+        .cls-amount{
+            input{
+                width: 50% !important;
+                }
+            }
+        }
+    }
+}
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-settle-container{
+        z-index: 12;
+        .cls-mbl-line{
+            display: inline-block !important;
+            height: 5px;
+            width: 35px;
+            background: #ccc;
+            border-radius: 10px;
+            position: absolute;
+            left: 45%;
+            top: 13px;
+          }
+          .cls-mbl-background{
+            position:fixed;
+            top:0px;
+            left:0px;
+            right:0px;
+            bottom:0px;
+            background:$BLACK;
+            opacity:.5;
+            z-index:999;
+          }
+         .cls-mbl-settleform{
+            background: $WHITE;
+            top: unset !important;
+            bottom: 0;
+            left: 0 !important;
+            right: unset !important;
+            position: fixed !important;
+            z-index: 1000;
+            width: 100%;
+            border-radius: 30px 30px 5px 5px;
+            padding: 25px 20px 15px 20px;
+            animation: 0.4s slidein linear;
+            .cls-amount-box{
+                .cls-amount{
+                    input{
+                        width: 25% !important;
+                    }
+                    em{
+                        right: 4px;
+                    }
+                }
+            }
+            .cls-mbl-btn{
+                text-align: right;
+                // margin-bottom: 64px;
+            }
+         }
+         .cls-close-ani{
+            animation: 0.4s slideout linear !important;
+          }
+        .cls-top-close{
+            display: none;
+        }
+        .cls-amount-box{
+            .cls-amount{
+                input{
+                    width: 50% !important;
+                    }
+                }
+            }
+        }
+}
+@media (min-width: 767px) and (max-width: 1024px){}

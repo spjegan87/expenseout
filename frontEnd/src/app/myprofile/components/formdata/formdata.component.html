@@ -1,0 +1,306 @@
+<!-- Desc : Form Data
+Author : Naveen.s
+Date : 14-Sept-2020 -->
+
+<!-- form container starts -->
+<div class="cls-form-bar" >
+    <span class="cls-head-title">{{'Employee Details' | translate}}</span>
+    <span class="cls-sub-head"></span>
+    <form [formGroup]="profileForm" autocomplete="off" class="">
+       <div class="row">
+            <div  class="form-group col-sm-2"  [ngClass]="{'cls-noneditable' : empDetResponse.update === false || profileType.type === 'myprofile'}">
+                <label  for="employeeCode">{{'Employee Code' | translate}} <span class="mandatory">*</span></label>
+                <input  type="text" id="employeeCode" name="employeeCode" (keypress)="validatespecialChar($event)" formControlName="employeeCode" placeholder="{{'Enter Emp Code' | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                [ngClass]="{'cls-border-error':(submitted && validation.employeeCode.errors)}">
+            </div>
+            <div class="form-group col-sm-3 cls-search-select"  [ngClass]="{'cls-noneditable' : empDetResponse.update === false || profileType.type === 'myprofile'}">
+                <label  for="groupId">{{'Role' | translate}} <span class="mandatory">*</span></label>
+                <!-- <select  formControlName="groupId" id="groupId" name="groupId" class="form-control cls-select">
+                    <option value="">Select</option>
+                    <option value="{{data.value}}" *ngFor="let data of dropdownArray?.role">{{data.name}}</option>
+                </select> -->
+                <div class="cls-dropdown-container">
+                    <em class="icon-3-dropdownarrow"></em>
+                    <input class="form-control" type="text"  formControlName="groupId" name="groupId" id="groupId"
+                    data-toggle="dropdown" (click)="searchDropdown('fn-groupId-input')" placeholder="{{ 'Select Role' | translate}}"
+                    autocomplete="off" readonly [ngClass]="{'cls-border-error':(submitted && validation.groupId.errors)}">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                        id="fn-groupId-input" autocomplete="off" (keyup)="filterFunction('fn-groupId-input','fn-groupId-ul')">
+                        <ul id="fn-groupId-ul" class="live-search-list">
+                            <li (click)="setFilterValue('groupId','select')">
+                                <a>select</a>
+                            </li>
+                            <li *ngFor="let data of dropdownArray?.groupId" id="data.value" (click)="setFilterValue('groupId',data.name)">
+                                <!-- <a>{{data.name | translate}}</a> -->
+                                <a>{{data.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+       </div>
+       <div class="row">
+            <div  class="form-group cls-maxwidth col-sm-2">
+                <label  for="title">{{'Title' | translate}} <span class="mandatory">*</span></label>
+                <select  formControlName="title" id="title" formControlName="title" name="title"  class="form-control cls-select">
+                    <option value="Mr.">Mr</option>
+                    <option value="Ms.">Ms</option>
+                    <option value="Mrs.">Mrs</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-3">
+                <label  for="firstName">{{'First Name' | translate}} <span class="mandatory">*</span></label>
+                <input  type="text" id="firstName" name="firstName" (keypress)="stringValidation($event)" formControlName="firstName" placeholder="{{'Enter First Name' | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                [ngClass]="{'cls-border-error':(submitted && validation.firstName.errors)}">
+            </div>            
+            <!-- <div class="form-group col-sm-3">
+                <label  for="middleName">{{'Middle Name' | translate}}</label>
+                <input  type="text" id="middleName" name="middleName" formControlName="middleName" placeholder="Enter Middle Name" autocomplete="off" class="cls-custom-input form-control">
+            </div> -->
+
+            <div class="form-group col-sm-3">
+                <label  for="lastName">{{'Last Name ' | translate}} <span class="mandatory">*</span></label>
+                <input  type="text" id="lastName" name="lastName" (keypress)="stringValidation($event)" formControlName="lastName" placeholder="{{'Enter Last Name' | translate}}" autocomplete="off" class="cls-custom-input form-control"
+                [ngClass]="{'cls-border-error':(submitted && validation.lastName.errors)}">
+            </div>
+       </div>
+        <div class="row">
+            <div class="form-group col-sm-4 cls-emailtab"  [ngClass]="{'cls-noneditable' : empDetResponse.update === false || profileType.type === 'myprofile'}">
+                <label  for="email">{{'Email' | translate}} <span class="mandatory">*</span></label>
+                <input  type="email" id="email" name="email" (keypress)="removeClass()" formControlName="email"  placeholder="{{'Enter Email' | translate}}" autocomplete="off" class="cls-custom-input form-control cls-email"
+                [ngClass]="{'cls-border-error':(submitted && validation.email.errors)}">
+            </div>
+            <div class="form-group col-sm-3 cls-emailtab">
+                <label  for="email">{{'Mobile' | translate}} <span class="mandatory">*</span></label>
+                <div class="input-group">
+                    <span class="input-group-btn cls-mobile-bar">
+                        <select  formControlName="mobileCode" id="mobileCode" name="mobileCode"  class="form-control cls-select">
+                            <option value="+91">+91</option>
+                            <option value="+51">+51</option>
+                        </select>
+                    </span>
+                    <input type="number" (keypress)="inputValidate($event,'numbersonly')" onKeyPress="if(this.value.length==15) return false;"  name="mobile" maxlength="15" minlength="10" formControlName="mobile" class="form-control cls-border" placeholder="{{'Enter Mobile Number' | translate}}"
+                    [ngClass]="{'cls-border-error':(submitted && validation.mobile.errors)}" />
+                </div>
+            </div>
+            <div  class="form-group col-sm-3 cls-search-select" [ngClass]="{'cls-noneditable' : empDetResponse.update === false || profileType.type === 'myprofile'}">
+                <label for="country">{{'Country' | translate}} <span class="mandatory">*</span></label>
+                <select formControlName="country" id="country" [ngClass]="{'cls-border-error':(submitted && validation.country.errors)}" name="country"  class="form-control cls-select">
+                    <option value=""> Select Country</option>
+                    <option value="India">India</option>
+                    <option value="Russia">Russia</option>
+                </select>
+            </div>
+        </div>
+        <!-- other details starts -->
+        <div class="cls-other-details" [ngClass]="{'cls-noneditable' : empDetResponse.update === false || profileType.type === 'myprofile'}">
+            <span class="cls-sub-title">{{'Other Details' | translate}}</span>
+            <div class="row">
+                <div  class="form-group col-sm-3 cls-search-select">
+                    <ng-container *ngIf="profileGroupList?.length > 0">
+                        <label  for="profileGroupName" class="d-block">{{'Profile Group' | translate}}</label>   
+                        <div class="cls-dropdown-container">
+                            <em class="icon-3-dropdownarrow"></em>
+                            <input type="hidden" formControlName="profileGroupId">
+                            <input class="form-control" type="text"  formControlName="profileGroupName" name="profileGroupName" id="profileGroupName"
+                            autocomplete="off" readonly  data-toggle="dropdown" (click)="searchDropdown('fn-profileGroupName-input')"  placeholder="{{'Select Profile Group' | translate}}" [ngClass]="{'cls-border-error':(submitted && validation.profileGroupName.errors)}">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-profileGroupName-input" autocomplete="off" (keyup)="filterFunction('fn-profileGroupName-input','fn-profileGroupName-ul')">
+                                <ul id="fn-profileGroupName-ul" class="live-search-list">
+                                    <li (click)="setFilterValue('profileGroupName','select')">
+                                        <a>select</a>
+                                    </li>
+                                    <li *ngFor="let data of profileGroupList" id="data.id" (click)="setFilterValue('profileGroupName',data.name,data.id)">
+                                        <a>{{data.name}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ng-container>   
+                    <ng-container *ngIf="profileGroupList?.length === 0">
+                        <label for="nodata">{{'Profile Group' | translate}}</label>
+                        <div class="cls-info-text mb-2"> {{'No Data' | translate}} - 
+                            <span class="cls-click cls-a-hover" (click)="openMasterdata('profile')">{{'Add Profile Group' | translate}}</span>
+                        </div>
+                    </ng-container>                          
+                    <!-- <select class="cls-custom-input form-control" formControlName="profileGroup" placeholder="All"  id="profileGroupId">
+                        <option value="">Select</option>
+                        <option *ngFor="let data of profileGroupList" value="{{data.id}}">{{data.name}}</option>
+                    </select> -->
+                    <!-- <input  type="text" formControlName="profileGroup" name="profileGroup" id="profileGroup" placeholder="{{'Enter Profile Group' | translate}}" autocomplete="off" class="cls-custom-input form-control"> -->
+                </div>
+                <div class="form-group col-sm-3 cls-search-select" *ngIf="dropdownArray?.designationCode?.length >= 1">
+                    <ng-container *ngIf="dropdownArray?.designationCode?.length > 0">
+                        <label  for="designationCode">{{'Designation' | translate}} <span class="mandatory">*</span></label>
+                        <!-- <select  formControlName="designationCode" id="designationCode" name="designationCode" class="form-control cls-select">
+                            <option value="">Select</option>
+                            <option value="{{data.value}}" *ngFor="let data of dropdownArray?.designationCode">{{data.name}}</option>
+                        </select> -->
+                        <div class="cls-dropdown-container">
+                            <em class="icon-3-dropdownarrow"></em>
+                            <input class="form-control" type="text"  formControlName="designationCode" name="designationCode" id="designationCode" placeholder="{{'Select Designation' | translate}}"
+                            autocomplete="off" readonly  data-toggle="dropdown" (click)="searchDropdown('fn-designationCode-input')"  [ngClass]="{'cls-border-error':(submitted && validation.designationCode.errors)}">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                                id="fn-designationCode-input" autocomplete="off" (keyup)="filterFunction('fn-designationCode-input','fn-designationCode-ul')">
+                                <ul id="fn-designationCode-ul" class="live-search-list">
+                                    <li (click)="setFilterValue('designationCode','select')">
+                                        <a>select</a>
+                                    </li>
+                                    <li *ngFor="let data of dropdownArray?.designationCode" id="data.value" (click)="setFilterValue('designationCode',data.name)">
+                                        <a>{{data.name | translate}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="dropdownArray?.designationCode?.length === 0">
+                        <label for="nodata">{{'Designation' | translate}} <span class="mandatory">*</span></label>
+                        <div class="cls-info-text mb-2"> {{'No Data' | translate}} - 
+                            <span class="cls-click cls-a-hover" (click)="openMasterdata('designation')">{{'Add Designation' | translate}}</span>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="form-group col-sm-3 cls-search-select"  *ngIf="dropdownArray?.departmentCode?.length >= 1">
+                    <label  for="departmentCode">{{'Department' | translate}}</label>
+                    <!-- <select  formControlName="departmentCode" id="departmentCode" name="departmentCode" class="form-control cls-select">
+                        <option value="">Select</option>
+                        <option value="{{data.value}}" *ngFor="let data of dropdownArray?.departmentCode">{{data.name}}</option>
+                    </select> -->
+                    <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="departmentCode" name="departmentCode" id="departmentCode"
+                        autocomplete="off" readonly  data-toggle="dropdown" (click)="searchDropdown('fn-departmentCode-input')"  placeholder="{{'Select Department' | translate}}" [ngClass]="{'cls-border-error':(submitted && validation.departmentCode.errors)}">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." id="fn-departmentCode-input" autocomplete="off" (keyup)="filterFunction('fn-departmentCode-input','fn-departmentCode-ul')">
+                            <ul id="fn-departmentCode-ul" class="live-search-list">
+                                <li (click)="setFilterValue('departmentCode','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let data of dropdownArray?.departmentCode" id="data.value" (click)="setFilterValue('departmentCode',data.name)">
+                                    <a>{{data.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-3 cls-search-select"  *ngIf="dropdownArray?.branchCode?.length >= 1">
+                    <label  for="branchCode">{{'Branch' | translate}} <span class="mandatory">*</span></label>
+                    <!-- <select  formControlName="branchCode" id="branchCode" name="branchCode" class="form-control cls-select">
+                        <option value="">Select</option>
+                        <option value="{{data.value}}" *ngFor="let data of dropdownArray?.branchCode">{{data.name}}</option>
+                   </select> -->
+                   <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="branchCode" name="branchCode" id="branchCode"
+                        data-toggle="dropdown" (click)="searchDropdown('fn-branchCode-input')" placeholder="{{'Select Branch' | translate}}"
+                        autocomplete="off" readonly [ngClass]="{'cls-border-error':(submitted && validation.branchCode.errors)}">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                            id="fn-branchCode-input" autocomplete="off" (keyup)="filterFunction('fn-branchCode-input','fn-branchCode-ul')">
+                            <ul id="fn-branchCode-ul" class="live-search-list">
+                                <li (click)="setFilterValue('branchCode','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let data of dropdownArray?.branchCode" id="data.value" (click)="setFilterValue('branchCode',data.name)">
+                                    <a>{{data.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-3 cls-search-select" *ngIf="dropdownArray?.gradeCode?.length >= 1">
+                    <label  for="gradeCode">{{'Grade' | translate}} 
+                        <!-- <span class="mandatory">*</span> -->
+                    </label>
+                    <!-- <select  formControlName="gradeCode" id="gradeCode" name="gradeCode" class="form-control cls-select">
+                        <option value="">Select</option>
+                        <option value="{{data.value}}" *ngFor="let data of dropdownArray?.gradeCode">{{data.name}}</option>
+                   </select> -->
+                   <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="gradeCode" name="gradeCode" id="gradeCode"
+                        data-toggle="dropdown" (click)="searchDropdown('fn-gradeCode-input')" placeholder="{{'Select Grade' | translate}}"
+                        autocomplete="off" readonly [ngClass]="{'cls-border-error':(submitted && validation.gradeCode.errors)}">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                            id="fn-gradeCode-input" autocomplete="off" (keyup)="filterFunction('fn-gradeCode-input','fn-gradeCode-ul')">
+                            <ul id="fn-gradeCode-ul" class="live-search-list">
+                                <li (click)="setFilterValue('gradeCode','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let data of dropdownArray?.gradeCode" id="data.value" (click)="setFilterValue('gradeCode',data.name)">
+                                    <a>{{data.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-3 cls-search-select" *ngIf="dropdownArray?.profitCenterCode?.length >= 1">
+                    <label  for="profitCenterCode">{{'Profit Center' | translate}} 
+                        <!-- <span class="mandatory">*</span> -->
+                    </label>
+                    <!-- <select  formControlName="profitCenterCode" id="profitCenterCode" name="profitCenterCode" class="form-control cls-select">
+                        <option value="">Select</option>
+                        <option value="{{data.value}}" *ngFor="let data of dropdownArray?.profitCenterCode">{{data.name}}</option>
+                   </select> -->
+                   <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="profitCenterCode" name="profitCenterCode" id="profitCenterCode"
+                        data-toggle="dropdown" (click)="searchDropdown('fn-profitCenterCode-input')" placeholder="{{'Select Profit Center' | translate}}"
+                        autocomplete="off" readonly [ngClass]="{'cls-border-error':(submitted && validation.profitCenterCode.errors)}">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                            id="fn-profitCenterCode-input" autocomplete="off" (keyup)="filterFunction('fn-profitCenterCode-input','fn-profitCenterCode-ul')">
+                            <ul id="fn-profitCenterCode-ul" class="live-search-list">
+                                <li (click)="setFilterValue('profitCenterCode','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let data of dropdownArray?.profitCenterCode" id="data.value" (click)="setFilterValue('profitCenterCode',data.name)">
+                                    <a>{{data.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-3 cls-search-select" *ngIf="dropdownArray?.costCenterCode?.length >= 1">
+                    <label  for="costCenterCode">{{'Cost Center' | translate}} 
+                        <!-- <span class="mandatory">*</span> -->
+                    </label>
+                    <!-- <select  formControlName="costCenterCode" id="costCenterCode" name="costCenterCode" class="form-control cls-select">
+                        <option value="">Select</option>
+                        <option value="{{data.value}}" *ngFor="let data of dropdownArray?.costCenterCode">{{data.name}}</option>
+                   </select> -->
+                   <div class="cls-dropdown-container">
+                        <em class="icon-3-dropdownarrow"></em>
+                        <input class="form-control" type="text"  formControlName="costCenterCode" name="costCenterCode" id="costCenterCode"
+                        data-toggle="dropdown" (click)="searchDropdown('fn-costCenterCode-input')" placeholder="{{'Select Cost Center'| translate}}"
+                        autocomplete="off" readonly [ngClass]="{'cls-border-error':(submitted && validation.costCenterCode.errors)}">
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" class="cls-dropdown-input" placeholder="{{'Search' | translate}}.." 
+                            id="fn-costCenterCode-input" autocomplete="off" (keyup)="filterFunction('fn-costCenterCode-input','fn-costCenterCode-ul')">
+                            <ul id="fn-costCenterCode-ul" class="live-search-list">
+                                <li (click)="setFilterValue('costCenterCode','select')">
+                                    <a>select</a>
+                                </li>
+                                <li *ngFor="let data of dropdownArray?.costCenterCode" id="data.value" (click)="setFilterValue('costCenterCode',data.name)">
+                                    <a>{{data.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- other details ends -->
+        <div class="my-3">
+            <button class="btn  cls-custom-btn cls-btn-secondary" type="button"  *ngIf="formType !== 'myprofile' && formType !== 'new'" (click)="backtoList()"><span>{{'Back to List' | translate}}</span></button>
+            <button class="btn  cls-custom-btn cls-btn-primary" type="button"  *ngIf="formType === 'new'" (click)="addApprover('next')">{{'Next' | translate}}</button>
+            <button class="btn  cls-custom-btn cls-btn-primary" type="button"  *ngIf="formType !== 'new'" (click)="addApprover('update')">{{'Update' | translate}}</button>
+        </div>
+    </form>
+ </div>
+<!-- form container ends -->

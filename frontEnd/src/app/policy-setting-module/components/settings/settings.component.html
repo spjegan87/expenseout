@@ -1,0 +1,75 @@
+<!-- Desc : settings
+Author : Naveen.s, Padma Priya
+Date : 11-Sept-2020 -->
+
+<!-- main container starts -->
+<div class="cls-master-container">
+    <!-- <span class="d-flex justify-content-between"> -->
+    <h1 class="cls-main-title">{{'Settings' | translate}}</h1>
+    <ng-container *ngFor="let data of tabData;let index = index">
+        <!-- <ng-container *ngIf="(data.id !== 'policy' || (!createPolicy && data.id === 'policy')) && (settingsList['allowance']=== false && settingsList['profilegroup'] === false  && settingsList['city'] === false)"> -->
+        <span class="cls-cat-btn" *ngIf="clickedIndex == index"> 
+                <!-- *ngIf="data.dataVal?.data?.length > 0" -->
+          <button href="javascript:;" class="cls-btn-primary cls-custom-btn cls-list-btn cls-list{{index}}" id="{{data.id}}" (click)="addNew(data.id,data.tableId,data.moduleName,data.actionName)">
+            <em class="icon-11-plus mr-1"></em>{{ data.title | translate}}
+          </button>
+        </span>
+        <!-- </ng-container> -->
+        <!-- mobile add button starts-->
+        <span class="cls-mbl-add d-none" (click)="addNew(data.id,data.tableId,data.moduleName,data.actionName)"><em class="icon-32-reject"></em></span>
+        <!-- mobile add button end -->
+    </ng-container>
+    <div class="clearfix"></div>
+
+    <!-- </span> -->
+
+    <div class="row cls-master-data">
+        <div class="cls-master-type d-inline-block">
+            <div class="cls-profile-type">
+                <!-- <ul role="tablist" class="nav nav-tabs cls-customtab">
+                    <li class="nav-item border-0">
+                        <a data-toggle="tab" href="#category" title="{{'Category' | translate}}" (click)="listService('catsettings',0)" class="nav-link active">{{'Category' | translate}} </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a data-toggle="tab" href="#profileGroupId" (click)="listService('profileGroupTable',1)" title="{{'Profile Group' | translate}}" class="nav-link">{{'Profile Group' | translate}} </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a data-toggle="tab" href="#policy" title="{{'Policy Creation' | translate}}" (click)="listService('policysettings',2)" class="nav-link">{{'Policy' | translate}} </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a data-toggle="tab" href="#allowance" (click)="listService('allowanceTable',3)" title="{{'Allowance Creation' | translate}}" class="nav-link">{{'Allowance Creation' | translate}} </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a data-toggle="tab" href="#city" (click)="listService('cityTable',4)" title="{{'City Classification' | translate}}" class="nav-link">{{'City Classification' | translate}} </a>
+                    </li>
+                </ul> -->
+                <app-side-tab [tabData]="tabData" [type]="tabType" (emitTab)="tabEvent($event)"></app-side-tab>
+            </div>
+        </div>
+        <div class="cls-editprofile d-inline-block">
+            <app-list-loader *ngIf="loader"></app-list-loader>
+            <app-list-index *ngIf="!loader" [listData]="listData" [listUpdate]="ListActionUpdate" [tabValue]="tabValue" [listModule]="listModule" [tabData]="tabData"></app-list-index>
+        </div>
+    </div>
+    <!-- main container ends -->
+    <!-- create category new -->
+    <!-- <app-createcategory *ngIf="createNew" (choosedVal)="closeAlert($event)" [editcategoryVal]="editcategoryVal"></app-createcategory> -->
+    <app-alert *ngIf="confirmation" [userInput]="confirmationContent" (choosedVal)="confirmAction($event)"></app-alert>
+    <!-- policy creation -->
+    <!-- mobile header starts-->
+    <div class="cls-mobile-header d-none">
+        <span class="cls-mobile-title">
+            <em class="icon-39-arrow" (click)="redirectHome()"></em>
+            {{'Settings' | translate}}
+        </span>
+        <span class="cls-mobile-icon-section">
+            <span (click)="triggerAction('theme')">
+            <em class="icon-37-theme"></em>
+        </span>
+        <span (click)="triggerAction('notify')">
+            <em data-feather="bell" ></em>
+        </span>
+        </span>
+    </div>
+    <!-- mobile header ends-->
+</div>

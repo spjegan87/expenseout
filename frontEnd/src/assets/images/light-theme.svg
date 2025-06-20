@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="94" height="70" viewBox="0 0 94 70">
+  <g id="Group_42216" data-name="Group 42216" transform="translate(-1042 -275)">
+    <g id="Rectangle_666" data-name="Rectangle 666" transform="translate(1042 275)" fill="none" stroke="#bbc2d1" stroke-width="1">
+      <rect width="94" height="70" rx="8" stroke="none"/>
+      <rect x="0.5" y="0.5" width="93" height="69" rx="7.5" fill="none"/>
+    </g>
+    <path id="Rectangle_667" data-name="Rectangle 667" d="M7,0H85a7,7,0,0,1,7,7v7a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V7A7,7,0,0,1,7,0Z" transform="translate(1043 276)" fill="#ced1d8" opacity="0.674"/>
+    <g id="Group_42200" data-name="Group 42200" transform="translate(-135)">
+      <circle id="Ellipse_2021" data-name="Ellipse 2021" cx="8.5" cy="8.5" r="8.5" transform="translate(1186 301)" fill="#f2f2f2"/>
+      <rect id="Rectangle_663" data-name="Rectangle 663" width="52" height="3" transform="translate(1209 301)" fill="#f2f2f2"/>
+      <rect id="Rectangle_664" data-name="Rectangle 664" width="45" height="3" transform="translate(1209 308)" fill="#f2f2f2"/>
+      <rect id="Rectangle_665" data-name="Rectangle 665" width="27" height="3" transform="translate(1209 316)" fill="#f2f2f2"/>
+    </g>
+  </g>
+</svg>

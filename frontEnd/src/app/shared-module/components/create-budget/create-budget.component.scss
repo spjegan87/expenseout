@@ -1,0 +1,123 @@
+// Desc : create budget scss
+// Author : Logesh
+// Date : 06-Jan-2022 
+@import "../../components/create-policy/create-policy.component.scss";
+@import '../../../../assets/scss/all';
+.hidden {
+    display: none;
+}
+.cls-back{
+    margin-top: 20px;
+}
+.cls-sellall {
+    font-size: 15px;
+    color: #666;
+    input {
+        vertical-align: middle;
+        margin: 0 8px;
+    }
+}
+.cls-budget-container{
+    .form-group{
+        align-items: baseline;
+    }
+    input,select{
+        font-size: 13px;
+    }
+    .cls-mandatory {
+        color: $ERROR;
+    }
+    .cls-error {
+        border-color: $ERROR;
+    }
+    .cls-label,
+    .cls-input-label {
+        display: inline-block;
+        vertical-align: -webkit-baseline-middle;
+        font-size: 14px;
+        color: $BLACK;
+        font-weight: 400;
+    }
+    .cls-input-label {
+        font-size: 12px;
+    }
+    .cls-widget {
+        width: 80%;
+        margin: 0 0 20px 10%;
+    }
+    .cls-center-align{
+        align-items: center;
+    }
+
+    .cls-budget-form{
+        .cls-date {
+            position: relative;
+            max-width: 25%;
+            min-width: 25%;
+            .cls-date-icon {
+                position: absolute;
+                right: 22px;
+                top: 39px;
+                color: $BDRLIGHT;
+            }
+        }
+        .cls-info-text {
+            em {
+                vertical-align: middle;
+            }
+            font-size: 12px;
+            color:#969595;
+        }
+        .cls-budget-alert{
+            display: flex;
+            align-items: center;
+        }
+        
+    }
+    .cls-main-dotted {
+        border: 1px dashed $BDRLIGHT;
+        border-radius: 5px;
+        position: relative;
+        padding: 25px 10px;
+        background: $MAINBG;
+        margin: 20px 10px;
+        &.cls-bdrred {
+            border: 1px dashed $ERROR;
+        }
+        .cls-strip {
+            display: inline-block;
+            background: $BTNGRADIENT;
+            color: $WHITE;
+            border-radius: 20px;
+            position: absolute;
+            top: -13px;
+            left: 20px;
+            width: 120px;
+            text-align: center;
+            font: 13px 'ProximaRegular';
+            padding: 5px;
+        }
+        option{
+            padding: 10px 0px;
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .cls-date {
+        max-width: 100% !important;
+    }
+    .cls-budget-container{
+        position: relative;
+        padding: 1em;
+        width: 98%;
+        border-radius: 6px;
+        box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+        background: #fff;      
+    }
+}
+@media (min-width: 481px) and (max-width: 766px) {
+    .cls-date {
+        max-width: 100% !important;
+    }
+}

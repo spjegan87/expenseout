@@ -1,0 +1,28 @@
+@import '../alert/alert.component.scss';
+@import '../../../../assets/scss/variable.scss';
+.cls-popup{
+    width: 50%;
+    top: 18%;
+    .cls-content{
+        text-align: left;
+        .cls-head{
+            border-bottom: 1px solid $BDRLIGHT;
+            font: 17px "ProximaSemibold";
+            color: $BLACK;
+            display: block;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            text-align: left;
+        }
+    }
+} 
+@media only screen and (max-width: 480px){
+    .cls-alert-container{
+        .cls-popup{
+            .cls-content{
+                height: 300px;
+                overflow-y: auto;
+            }
+        }
+    }
+}

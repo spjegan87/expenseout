@@ -1,0 +1,38 @@
+<ng-container *ngIf="!noInternet">
+   <!-- <app-accessibility-header></app-accessibility-header> -->
+   <app-header [home]='home' [currentRouter] = "urlState" [routerPath]="route" [userInfo]="userName"></app-header>
+   <router-outlet (activate)="changeOfRoutes()"></router-outlet>
+   <a class="cls-top" (click)="movetoTop()" href="javascript:;" title="{{'Scroll To Top' | translate}}">
+      <em class="icon-39-arrow"></em>
+   </a>
+   <app-alert *ngIf="showAlert" [userInput]="alertContent" (choosedVal)="alertInfo($event)"></app-alert>
+</ng-container>
+<app-network-error *ngIf="noInternet"></app-network-error>
+<!-- begin::preloader-->
+<div class="cls-header" *ngIf="loader === ''">
+   <div class="preloader">
+      <span class="cls-loader-background"></span>
+       <span class="cls-bckdrop">
+          <span class="cls-loader-bg">
+            <span class="cls-inner-loader"></span>
+            <span class="cls-loader-text">{{loaderText}}...</span>
+          </span>
+       </span>
+   </div>   
+</div>  
+<!-- end::preloader -->
+
+<!-- enable below for notification starts -->
+   <!-- <div class="cls-notif">
+      <em class="icon-16-info mr-2"></em><span id="cls-pushnotify"></span>
+   </div> -->
+   <div class="cls-app-notify"></div>
+<!-- notification ends -->
+
+<!-- enable below for cookie -->
+<!-- <div  class="cls-cookie" *ngIf="home === true && cookieShow === 'true'">
+   This website uses cookies to improve the user experience. By browsing you authorize its installation in accordance with the 
+   <a  href="javascript:;" title="Cookie Policy" class="cls-link">Cookie Policy</a>
+   <button  class="btn  cls-custom-btn cls-btn-primary" (click)="acceptCookie()">Accept</button>
+</div> -->
+<!-- cookie ends -->

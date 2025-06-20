@@ -1,0 +1,544 @@
+@import '../../../../assets/scss/variable.scss';
+.cls-fileupload {
+    position: absolute;
+    width: 30em;
+    right: 10px;
+    z-index: 11;
+    top: 5em;
+    box-shadow:0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    padding: 22px;
+    background: $WHITE;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 13px;
+    border-bottom: 3px solid $PRIMARYCOLOR;
+    // .icon-66-csv {
+    //   font-size: 22px;
+    //   vertical-align: middle;
+    // }
+    .cls-choose{
+      position: absolute;
+      top: 27%;
+      right: 30%;
+    }
+    .cls-close{
+        color: $ERROR;
+        font-size: 12px;
+        float:right;
+    }
+    &:before{
+      content: '';
+    width: 15px !important;
+    height: 15px !important;
+    transform: rotate(225deg);
+    position: absolute;
+    border-right: 1px solid rgba(179, 179, 179, 0.2);
+    border-bottom: 1px solid rgba(173, 173, 173, 0.2);
+    top: -8px !important;
+    right: 20% !important;
+    left: unset !important;
+    background: $WHITE;
+    }
+  
+    a {
+      color: $PRIMARYCOLOR;
+    }
+  
+    .cls-upload {
+      width: 100%;
+      display: inline-block;
+      height: 296px;
+      background: $WHITE;
+      position: relative;
+      overflow: hidden;
+  
+      .cls-format {
+        display: block;
+        text-align: right;
+        font-size: 12px;
+        padding: 13px;
+      }
+  
+      img {
+        width: 72%;
+      height: 67%;
+      margin-top: 0%;
+      margin-bottom: 6%;
+      position: absolute;
+      top: 17%;
+      left: 17%;
+      background: $WHITE;
+      padding: 15px;
+      border-radius: 10px;
+      }
+  
+      .cls-file {
+        position: absolute;
+        top: 43%;
+        left: 36%;  
+        font-size: 12px;
+        color: $PRIMARYCOLOR;
+  
+        .icon-1-add {
+          border-radius: 100%;
+          color: $PRIMARYCOLOR;
+          font-size: 21px;
+        }
+      }
+  
+      .custom-file-input {
+        // opacity: 0;
+        // width: 100%;
+        // height: 83%;
+        // color: transparent;
+        cursor: pointer;
+        margin-top: 20%;
+      }
+  
+      .cls-rotate {
+        display: block;
+        position: absolute;
+  
+        &:nth-child(1),
+        &:nth-child(2) {
+          height: 200%;
+          width: 0%;
+          border-left: 2px dashed #cfcfcf;
+        }
+  
+        &:nth-child(1) {
+          left: 0;
+        }
+  
+        &:nth-child(2) {
+          right: 0;
+        }
+  
+        &:nth-child(3),
+        &:nth-child(4) {
+          width: 600%;
+          height: 1%;
+          border-top: 2px dashed #cfcfcf;
+        }
+  
+        &:nth-child(3) {
+          top: 0;
+        }
+  
+        &:nth-child(4) {
+          bottom: 0;
+          border-top: 2px dashed #cfcfcf;
+        }
+      }
+  
+      &:hover {
+        .cls-rotate {
+          border-color: #cfcfcf;
+  
+          &:nth-child(1) {
+            -webkit-animation: mymovetop 8s linear infinite;
+            /* Safari 4.0 - 8.0 */
+            animation: mymovetop 8s linear infinite;
+          }
+  
+          &:nth-child(2) {
+            -webkit-animation: mymovebtm 8s linear infinite;
+            /* Safari 4.0 - 8.0 */
+            animation: mymovebtm 8s linear infinite;
+          }
+  
+          &:nth-child(3) {
+            -webkit-animation: mymoveleft 8s linear infinite;
+            /* Safari 4.0 - 8.0 */
+            animation: mymoveleft 8s linear infinite;
+          }
+  
+          &:nth-child(4) {
+            -webkit-animation: mymovergt 8s linear infinite;
+            /* Safari 4.0 - 8.0 */
+            animation: mymovergt 8s linear infinite;
+          }
+        }
+      }
+    }
+  
+    @-webkit-keyframes mymovetop {
+      from {
+        top: 0%;
+      }
+  
+      to {
+        top: -50%;
+      }
+    }
+  
+    @keyframes mymovetop {
+      from {
+        top: 0%;
+      }
+  
+      to {
+        top: -50%;
+      }
+    }
+  
+    @-webkit-keyframes mymovebtm {
+      from {
+        top: -50%;
+      }
+  
+      to {
+        top: 0%;
+      }
+    }
+  
+    @keyframes mymovebtm {
+      from {
+        top: -50%;
+      }
+  
+      to {
+        top: 0%;
+      }
+    }
+  
+    @-webkit-keyframes mymoveleft {
+      from {
+        left: -50%;
+      }
+  
+      to {
+        left: 0%;
+      }
+    }
+  
+    @keyframes mymoveleft {
+      from {
+        left: -50%;
+      }
+  
+      to {
+        left: 0%;
+      }
+    }
+  
+    @-webkit-keyframes mymovergt {
+      from {
+        right: -50%;
+      }
+  
+      to {
+        right: 0%;
+      }
+    }
+  
+    @keyframes mymovergt {
+      from {
+        right: -50%;
+      }
+  
+      to {
+        right: 0%;
+      }
+    }
+  
+    /******* progress bar starts ********/
+    .progress-success {
+      position: absolute;
+      top: 11%;
+      left: 8%;
+      background: $WHITE;
+      height: 63%;
+      z-index: 11;
+      padding: 6px 40px;
+      width: 85%;
+      margin-top: 5%;
+  
+      .cls-reupload {
+        button {
+          color: $WHITE;
+        }
+  
+        input {
+          position: absolute;
+          top: 0;
+          left: 0;
+          cursor: pointer;
+        }
+      }
+  
+      .success-msg {
+  
+        // margin-top:-5%;
+        .progress-file {
+          padding-left: 0px;
+          color: $BLACK;
+        }
+  
+        &.cls-danger {
+          color: $ERROR;
+        }
+  
+        &.cls-Sucess {
+          color: $SUCCESS;
+        }
+      }
+    }
+  
+    .upload-success {
+      padding: 8% 15% 0% 15%;
+      text-align: center;
+      font-size: 4.375em;
+  
+      .cls-icon {
+        border-radius: 60px;
+        font-size: 32px;
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        pointer-events: none;
+        &:before {
+          font-family: "icomoon" !important;
+        }
+      }
+  
+      &.cls-danger {
+        .cls-icon {
+          font-size: 18px;
+          background: #ffe2e2;
+          color: $ERROR;
+          position: relative;
+          cursor:pointer;
+          pointer-events:auto;
+          &:before {
+            content: "\e91f";
+            position: absolute;
+            top: 23%;
+            left: 31%;
+          }
+        }
+      }
+  
+      &.cls-success {
+        margin-top: 4%;
+  
+        .cls-icon {
+          color: $SUCCESS;
+          position: relative;
+          display: block;
+          left: 32%;
+          margin-bottom: 20%;
+          font-size: 57px;
+      
+  
+          &:before {
+           content: "\e912";
+            position: absolute;
+            top: 18%;
+            left: 25%;
+          }
+        }
+      }
+    }
+  
+    .progras-status {
+      position: absolute;
+      top: 17%;
+      width: 86%;
+      height: 67%;
+      left: 7%;
+      background: $WHITE;
+      z-index: 4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  
+      .cls-iconstatus {
+        // width: 42px;
+        padding: 5px 7px;
+        border-radius: 100%;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ecf4fe;
+        color: $PRIMARYCOLOR;
+        margin-left: 20px !important;
+        svg{
+          width: 24px;
+          height: 24px;
+        }
+        em {
+          font-size: 22px;
+          vertical-align: middle;
+        }
+      }
+      .icon-32-reject{
+        font-size: 10px;
+        &.cls-uploadagain{
+          margin: -11px 0px -1px -17px;
+          background: #eaeaea;
+        }
+        padding: 8px;
+        border-radius: 25px;
+        cursor: pointer;
+      }
+      .progress-range {
+        display: inline-block;
+        font-size: 0.875em;
+        color: $BLACK;
+        margin-bottom: 5px;
+      }
+  
+      .upload-status {
+        width: 80%;
+        padding-left: 20px;
+      }
+  
+      .progress {
+        height: 5px;
+        width: 90%;
+        position: relative;
+  
+        .progressbar {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          bottom: 0px;
+          background: $ERROR;
+        }
+  
+        &.on {
+          .progressbar {
+            animation: movebar 1s linear forwards;
+          }
+        }
+      }
+    }
+  
+    /** animation starts */
+    @keyframes movebar {
+      0% {
+        width: 0%;
+        background: $ERROR;
+      }
+  
+      100% {
+        width: 100%;
+        background:$PRIMARYCOLOR;
+      }
+    }
+  
+    /***** animation ends *****/
+    /**** progress bar ends *****/
+    .custom-file-input {
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    
+    .cls-fileupload{
+      width: 100%;
+      .progress-success{
+        top: 18%;
+        left: 8%;
+        height: 52%;
+        .upload-success{
+          margin: 0;
+          padding: 0;
+          .progress-file{
+            margin: 6px !important;
+          }
+          .cls-icon{
+            font-size: 30px;
+            left: 40%;
+            margin: 0;
+          }
+        }
+      }
+      .progras-status{
+        top: 28%;
+        width: 78%;
+        height: 51%;
+        left: 8%;
+        .progress{
+          width: 83%;
+        }
+      }
+      .cls-upload{
+          height: unset;
+          .custom-file-input{
+              margin-top:0;
+          }
+      }
+      .cls-choose{
+          top: 10%;
+          right: 32%;
+          font-size: 12px;
+          padding: 5px;
+      }
+    }
+    .cls-dragmob{
+      margin: 0px 0 10px !important;
+    }
+  }
+  @media (min-width: 481px) and (max-width: 766px){
+    .cls-fileupload{
+      width: 100%;
+      .progress-success{
+        top: 18%;
+        left: 8%;
+        height: 52%;
+        .upload-success{
+          margin: 0;
+          padding: 0;
+          .progress-file{
+            margin: 6px !important;
+          }
+          .cls-icon{
+            font-size: 30px;
+            left: 40%;
+            margin: 0;
+          }
+        }
+      }
+      .progras-status{
+        top: 28%;
+        width: 78%;
+        height: 51%;
+        left: 8%;
+        .progress{
+          width: 83%;
+        }
+      }
+      .cls-upload{
+          height: unset;
+          .custom-file-input{
+              margin-top:0;
+          }
+      }
+      .cls-choose{
+          top: 10%;
+          right: 36%;
+          font-size: 12px;
+          padding: 5px;
+      }
+    }
+    .cls-dragmob{
+      margin: 0px 0 10px !important;
+    }
+  }
+  @media (min-width: 767px) and (max-width: 1024px){
+    .cls-fileupload{
+      .cls-choose{
+        top: 18%;
+        right: 35%;
+      }
+      .cls-upload {
+        .custom-file-input{
+          margin-top: 16%;
+        }
+      }
+    } 
+  }

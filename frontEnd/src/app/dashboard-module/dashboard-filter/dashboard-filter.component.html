@@ -1,0 +1,39 @@
+<!-- Desc : filter 
+Author : Naveen.s
+Date : 25-July-2020 -->
+<!-- filter starts -->
+<!-- <span class="cls-mbl-background"></span> -->
+<form [formGroup]="dashboardFilter" class="row cls-filter-container mb-3">
+    <span id="fn-mbl-background" class="cls-mbl-background" (click)="closeModal()"></span>
+    <div class="cls-mbl-filter">
+        <span class="cls-filter-icon d-none">
+            <span class="cls-icon"></span>
+        </span>
+        <span class="dblock d-none cls-mbl-line"></span>
+        <span class="d-none cls-selectfilter">
+            {{'Select Filter' | translate}}
+        </span>
+        <div  class="form-group col-sm-2 cls-res-timeperiod">
+            <div class="daterange cls-filter-box" id="daterange">
+            <label>{{ "Time Period" | translate }} </label>
+            <input type="text" formControlName="dateInterval" name="daterange" class="customfilterrange cls-custom-input form-control" placeholder="{{'Select Time Period' | translate}}" readonly />
+            <input type="hidden" formControlName="fromDate" />
+            <input type="hidden" formControlName="toDate" />
+            </div>
+        </div>
+        <div  class="form-group col-sm-2" *ngIf="userType === 'Finance'">
+            <label  for="department">{{'Department' | translate}}</label>
+            <!-- <input  type="text" formControlName="department" name="department" id="department" placeholder="{{'Enter Department' | translate}}" autocomplete="off" class="cls-custom-input form-control "> -->
+            <select  formControlName="department" type="select" class="form-control cls-custom-input cls-select">
+                <option value="" [appFontSize]="'Select Department' | translate">{{'Select Department'| translate}}</option>
+                <option value="{{data.value}}" *ngFor="let data of departmentCode">
+                    {{data.name}}
+                </option>
+            </select>
+        </div>
+        <div  class="form-group col-sm-4 mb-1 cls-mobsubmit">
+            <button class="btn cls-filter-btn cls-btnservicecall" (click)="applyFilter()">{{'Apply' | translate}}</button>
+            <a  class="cls-reset-btn" [ngClass]="(dashboardFilter.controls['dateInterval'].value !== 'This Month' && dashboardFilter.controls['dateInterval'].value !== ''  &&  dashboardFilter.controls['dateInterval'].value !== null) || dashboardFilter.controls['department'].value !== '' ? '' : 'cls-disable' " (click)="resetFilter()" >{{'Reset' | translate}}</a>
+        </div>     
+    </div>
+</form>

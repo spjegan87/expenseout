@@ -1,0 +1,226 @@
+@import '../../../assets/scss/variable.scss';
+.cls-head{
+    font-size: 20px;
+    font-weight: 600;
+    // margin-bottom: 20px;
+    display: inline-block;
+    text-transform: capitalize;
+    color:$BLACK;
+}
+input{
+    font-size: 14px;
+}
+.icon-3-checkbox-on{
+    color: $PRIMARYCOLOR;
+}
+.cls-mandatory{
+    color: $ERROR;
+}
+.cls-heading{
+    display: block;
+    font: 20px "ProximaSemiBold";
+    text-transform: capitalize;
+}
+.cls-back{
+    color: $PRIMARYCOLOR;
+    cursor: pointer;
+    position: relative;
+    em{
+      transform: rotate(-135deg);
+      display: inline-block;
+      font-size: 10px;
+      position: absolute;
+      top: 5px;
+      left: -37%;
+      transition: 0.5s;
+    }
+    &:hover{
+        border-bottom: 1px solid $PRIMARYCOLOR;
+        em{
+            left: -45%;
+        }
+    }
+}
+.cls-bg{
+    background: $WHITE;
+    padding: 15px;
+    border-radius: 5px;
+    .cls-inner-head{
+        display: inline-block;
+        color: $BLACK;
+        font-weight: 600;
+        font-size: 14px;
+        margin: 5px 0; 
+    }
+    .cls-email-box{
+        width: 20%;
+        position: relative;
+        // .cls-add{
+        //     top: 20px;
+        //     position: absolute;
+        //     right: -50px;
+        //     cursor: pointer;
+        // }
+        .cls-add{
+            border-radius: 50px;
+            color: $PRIMARYCOLOR;
+            // width: 25%;
+            border: 1px solid $PRIMARYCOLOR;
+            background: $WHITE;
+            padding: 2px 4px;
+            top: 30px;
+            position: absolute;
+            right: -80px;
+            cursor: pointer;
+            width: 60px;
+            em{
+                color: $PRIMARYCOLOR;
+                margin-right: 2px;
+                vertical-align: middle;
+            }
+            &:hover{
+              background: $PRIMARYCOLOR;
+              transition: 1s;
+              color: $WHITE;
+              em{
+                color: $WHITE;
+              }
+            }
+          }
+    }
+    .cls-email-container{
+        border: 2px dashed $LIGHTGRAY;
+        padding: 10px;
+        border-radius: 5px;
+        .cls-email-span{
+            display: inline-block;
+            background: #edf0fa;
+            color:$PRIMARYCOLOR;
+            padding: 4px 10px;
+            border-radius: 5px;
+            margin: 10px;
+            em{
+                font-size: 11px;
+                color: $ERROR;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+        }
+    }
+    .cls-header{
+        font-size: 16px;
+        margin: 10px 0px;
+        display: inline-block;
+    }
+    .cls-email{
+        width: 60em;
+        margin-top: -20px;
+    }
+    .cls-daterange{
+        margin-top: 30px;
+        .cls-title{
+            font-size: 16px;
+            font-weight: bold;
+            color:$BLACK;
+        }
+        .cls-background{
+            background: $CHECKBOXBG;
+            padding: 20px;
+            border-radius: 5px;
+            .cls-label{
+                font-size: 16px;
+                display: inline-block;
+                padding: 10px 15px 10px;
+                color:$BLACK;
+                cursor: pointer;
+                .icon-3-checkbox-on{
+                    color: $PRIMARYCOLOR;
+                }
+            }
+            .cls-icon{
+                margin-right: 10px;
+                background: $WHITE;
+            }
+        }
+        .cls-date{
+            position: relative;
+            .cls-date-icon{
+              position: absolute;
+              right: 22px;
+              top: 60%;
+              color: $PRIMARYCOLOR;
+              cursor: pointer;
+            }
+          }
+    }
+    .cls-days{
+        .cls-label{
+            display: inline-grid;
+            font-size: 14px;
+            color: $LIGHTTEXT;
+            margin-bottom: 20px;
+            &.cls-custom-label{
+                margin-left: 30px;
+            }
+            .cls-value{
+                font-size: 16px;
+            }
+        }
+    }
+    .cls-codition-title{
+        font-size: 16px;
+        font-weight: bold;
+        color:$BLACK;
+        display: inline-block;
+    }
+    .cls-condition-box{
+        // border: 2px dashed #ccc;
+        background:$CHECKBOXBG;
+        padding: 10px;
+        border-radius: 5px;
+        .cls-inner-head{
+            display: block;
+            text-transform: capitalize;
+        }
+        .cls-date{
+            display: inline-block;
+            color: $BLACK;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .cls-check{
+            margin-left: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            color: $PRIMARYCOLOR;
+            cursor: pointer;
+        }
+    }
+    .cls-custom-btn{
+        text-align: center;
+        // margin: 60px 0px;
+        .cls-submit{
+            background: $PRIMARYCOLOR;
+            color: $WHITE;
+            padding: 5px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 5px;
+            // height: 30px;
+            box-shadow: unset;
+            transition: 0.4s;
+            &:hover{
+                // box-shadow: 0px 4px 10px 1px $BGLIGHTER
+                box-shadow: inset 8.5em 0 0 0 $WHITE;
+                color: $PRIMARYCOLOR;
+            }
+        }
+    }
+    .cls-title{
+        font-size: 16px;
+        font-weight: 500;
+        color: $BLACK;
+        margin-bottom: 15px;
+        display: block;
+    }
+}

@@ -1,0 +1,39 @@
+<div class="cls-main-container">
+    <h1 class="cls-main-title mt-4">{{'Expense Report' | translate}}</h1>
+    <div class="cls-bottom-container">
+        <span id="fn-mbl-background" class="cls-mbl-background" (click)="closeMobile()"></span>
+        <span class="cls-overlay-tool"></span>
+        <span class="cls-over-position">
+			  <span class="cls-mbl-tool-filter" (click)="showFilter()">
+					<img src="../../../assets/images/filter.svg" alt="filter">
+			  </span>
+        <!-- <span class="cls-tool-create" (click)="createReport()">
+					<em class="icon-32-reject"></em>
+			  </span> -->
+        </span>
+    </div>
+    <span class="cls-mbl-tool-button" (click)="openMobileTool()">
+		 <em class="icon-15-list"></em>
+	</span>
+    <!-- (userBasedType)="userBasedCount($event)" -->
+    <ng-container *ngIf="topNavData.length > 0">
+        <app-tab [topNavLoader]="topNavLoader" [moduleName]="'adminReportExpense'" [filterDetails]="filterDetails" [actionName]="'adminViewReportList'" [topNavData]="topNavData" (requestData)="getRequestData($event)"></app-tab>
+    </ng-container>
+    <!-- <app-tab [moduleName]="'adminReportExpense'" [additinalFilters]="additinalFilters" [actionName]="'adminViewReportList'"></app-tab> -->
+    <!-- mobile header starts-->
+    <div class="cls-mobile-header d-none">
+        <span class="cls-mobile-title">
+			  <em class="icon-39-arrow" (click)="redirectHome()"></em>
+			  {{' Expense Report' | translate}}
+		 </span>
+        <span class="cls-mobile-icon-section">
+			  <span (click)="triggerAction('theme')">
+					<em class="icon-37-theme"></em>
+			  </span>
+        <span (click)="triggerAction('notify')">
+					<em data-feather="bell" ></em>
+			  </span>
+        </span>
+    </div>
+    <!-- mobile header ends-->
+</div>

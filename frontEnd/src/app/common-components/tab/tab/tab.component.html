@@ -1,0 +1,380 @@
+<!-- filter starts -->
+<!-- <app-filter [currentPage]="currentPath" [additinalfields]="additinalFilters" (filterVal)="applyFilter($event)" *ngIf="additinalFilters"></app-filter> -->
+<app-common-filter [filterData]="filterDetails" [moduleName]="module_name" (filterVal)="applyFilter($event)" (filterResponse)="getResponse($event)"></app-common-filter>
+<!-- filter ends -->
+<!-- Top Navbar -->
+<app-top-navbar #topNav [tabData]="topNavDataNew" [tabCount]="listData?.tab_count" (emitTab)="getTabEvent($event)" [loader]="topNavLoader"></app-top-navbar>
+<!-- Advance Form Starts -->
+<div class="cls-formtab" *ngIf="id == 'create_advance'">
+    <div class="cls-table cls-mobadvance">
+        <span class="cls-report-title mb-3">{{'Create Advane Report' | translate}}</span>
+        <app-advanceform [editResponseForm]="[]" (createForm)="advanceRequest($event)" (sendForApproval)="getSendForApprovalResposne($event)"></app-advanceform>
+    </div>
+</div>
+<!-- Advance Form Ends -->
+<ng-container *ngIf="id == 'create_advance'">
+    <app-list-index [ngClass]="{'d-none':id == 'create_advance'}"></app-list-index>
+</ng-container>
+<!-- List Index -->
+<ng-container *ngIf="id != 'create_advance'">
+    <!-- (tabStatusEvent)="getTabStatusEvent($event)" (userBasedCount)="userBasedCountUpdate($event)" -->
+    <app-list-index [listData]="listData" [filterValue]="filter" [listUpdate]="listModule" [listModule]="listModule" (emitCategory)="getCategoryDetails($event)" [userBased]="userStatus" 
+        (userBasedListRequest)="getUserBasedRequestData($event)" (backEvent)="redirectList($event)" [backAction]="backAction"></app-list-index>
+</ng-container>
+
+<!-- <div class="cls-tab-container cls-tabcomponent" *ngIf="!loader">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item cls-responsive-tab" [ngClass]="{ 'active': i == activeTab , 'cls-line' : i == 0 ,'cls-mobadvance' : item.heading === 'Create Advance Request' }" *ngFor="let item of tabData;let i = index;" (click)="toggletab(i,item.id)">
+            <a class="nav-link" id="{{item.id}}-tab" [ngClass]="{ 'active': i == activeTab }" data-toggle="tab" href="#{{item.id}}" role="tab" aria-controls="home" aria-selected="true" [appFontSize]="item.heading | translate">
+                <em class="cls-new icon-11-plus" *ngIf="item.heading === 'Create Advance Request'"></em> {{item.heading | translate}}
+                <span class="cls-expense-count">{{item.count}}</span>
+                <span class="cls-shape"></span>
+                <span class="cls-shape1"></span>
+            </a>
+        </li>
+    </ul>
+    <app-top-navbar [tabData]="topNavData"></app-top-navbar>
+     <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade" *ngFor="let item of tabData;let i = index;" [ngClass]="{ 'show active': i == activeTab }" id="{{item.id}}" role="tabpanel" aria-labelledby="home-tab">
+            <div class="form-group radio-group cls-radiopt mb-3" *ngIf="i === 0  && currentPath !== 'advance' && currentPath !== 'user'">
+                <span class="cls-radio mr-3" [ngClass]="{'cls-radio-on' :user.status === 'Y'}" (click)="clickusertype(j,item.id,i)" *ngFor="let user of RadioButton;let j =index">
+                    <input type="radio" value="{{user.status}}" id="{{user.name}}{{i}}" name="{{user.name}}{{i}}">
+                    <em [ngClass]="user.status=='Y'?'icon-7-radio-on':'icon-6-radio-off'" id="usertype{{i}}"></em>
+                    {{user.name | translate}}
+                </span>
+                <a href="javascript:;" class="cls-back" *ngIf="backToBack" (click)="backTo()"> <em class="ti-arrow-left"> </em>Back To Employee Wise List</a>
+            </div>
+            <div class="cls-table cls-mobadvance" *ngIf="item.id === 'CreateAdvance'">
+                <span class="cls-report-title mb-3" *ngIf="create === 'Create Advance Report' && i=== 0">{{'Create Your
+                    Advance Request' | translate}}</span>
+                <app-advanceform *ngIf="create === 'Create Advance Report' && i=== 0" [editResponseForm]="[]" (createForm)="advanceRequest($event)"></app-advanceform>
+            </div>
+            <div class="cls-table" *ngIf="item.id !== 'CreateAdvance'" [ngClass]="{'cls-emptydata' : item.value.data?.length === 0 || item.value === ''}">
+                <select class="p-2 pull-right cls-select cls-custom-input" id="status" *ngIf="(create === 'Create Advance request' || create === 'Create Expense Report') && i=== 0" (change)="showList(i,'value','status')">
+                    <option>All</option>
+                    <option value="Created">Created</option>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Callback">Callback</option>
+                    <option value="Approval Sendback">Approval Sendback</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Approval Rejected">Approval Rejected</option>
+                    <option value="Settlement Rejected">Settlement Rejected </option>
+                    <option value="Settlement Sendback">Settlement Sendback</option>
+                    <option value="Settled">Settled</option>
+                </select>
+                <ng-container *ngIf="item.heading === 'Settled Advance'">
+                    <select class="p-2 pull-right cls-select cls-custom-input mr-3" id="reported" *ngIf="i=== 3" (change)="showList(i,'mapped_status','reported')">
+                        <option>All</option>
+                        <option value="Reported">Reported</option>
+                        <option value="Un Reported">Un Reported</option>
+                    </select>
+                </ng-container>
+                <ng-container *ngIf="item.value !==''">
+                    <select class="p-2 pull-right cls-select cls-custom-input mr-3" *ngIf="item?.value?.data?.length >= 1" id="sortBy" (change)="sorting(i)">
+                        <option>Sort By</option>
+                        <ng-container
+                            *ngFor="let tabheader of item.value.headers;let headerIndex = index;let last = last">
+                            <option *ngIf="last !== true">{{tabheader}}</option>
+                        </ng-container>
+                    </select>
+                </ng-container>
+                <div class="cls-maintable">
+                    <table id='{{moduleName}}{{i}}' class="table table-lg table-hover cls-mobileview" *ngIf="!loader">
+                        <thead *ngIf="item.value !==''" class="cls-header">
+                            <tr>
+                                <ng-container *ngIf="!deviceFlag">
+                                    <th *ngFor="let tabheader of item.value.headers" (click)="closeForm(false)">{{tabheader | translate}}
+                                    </th>
+                                </ng-container>
+                                <th *ngIf="deviceFlag"></th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="item.value !==''">
+                            <ng-container *ngIf="item?.value?.data?.length >= 1">
+                                <ng-container *ngFor="let tabvalue of item?.value?.data[0]; let x = index;">
+                                    <tr class="cls-row{{x+1}} cls-valuerow" (click)="viewAction(x+1,i+1,tabvalue,$event)">
+                                        <ng-container *ngIf="!deviceFlag">
+                                            <td class="cls-desktop" *ngFor="let tab of tabvalue;let n= index; let last = last" [ngClass]="{'cls-tdhover' : tab.name ==='desc', 'cls-action-bar' : last == true}" title="{{tab.value}}">
+                                                <ng-container *ngIf="tab.type === 'raw'">
+                                                    <ng-container *ngIf="tab.value !== ''">
+                                                        {{tab.value}}
+                                                        <span class="cls-policy-wave cls-hover-tooltip ml-1" *ngIf="tab.policyViolated === 'Y'">
+                                                            <em class="icon-46-policy"></em>
+                                                            <span class="cls-tool">{{'Policy Violated' | translate}}</span>
+                                                        </span>
+                                                        <span class="cls-sync" *ngIf="tab.syncedReport === 'Y'"></span>
+                                                    </ng-container>
+                                                   
+                                                    <ng-container *ngIf="tab.value === ''">
+                                                        --
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="tab.type === 'click'">
+                                                    <ng-container *ngIf="tab.value !== ''">
+                                                        <a class="cls-a-hover" href="javascript:;" (click)="showPopUp(tab.popUp,$event)" title="{{'Click to view details' | translate}}">{{tab.value}}</a>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="tab.value === ''">
+                                                        --
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="tab.type === 'highlight'">
+                                                    <span class="badge" [ngStyle]="{'color': tab.color , 'background':tab.bgColor}">
+                                                        {{tab.value}}
+                                                    </span>
+                                                    <span *ngIf="tab.mapped_status && i === 3" class="cls-mapped">
+                                                        {{tab.mapped_status}}
+                                                    </span>
+                                                </ng-container>
+                                                <ng-container *ngIf="tab.type === 'Date'">
+                                                    <ng-container *ngIf="tab.value !== '0000-00-00 00:00:00'">
+                                                        {{ tab.value | date: "dd-MMM-YYYY | hh:mm a"}}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="tab.value === '0000-00-00 00:00:00'">
+                                                        --
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="tab.type === 'Amount'">
+                                                    <ng-container *ngIf="tab.value !== ''">
+                                                        {{tab.currency}} {{tab.value | amount }}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="tab.value === ''">
+                                                        --
+                                                    </ng-container>
+                                                </ng-container>
+                                                <div *ngIf="tab.length > 0">
+                                                    <ng-container *ngFor="let tableActions of tab">
+                                                        <a href="javascript:;" (click)="viewReport(tableActions.value,tableActions.action,x+1,i+1,tableActions.actionName,tableActions.module,$event)" class="cls-hover-tooltip text-{{tableActions.color}} mr-2" data-toggle="tooltip">
+                                                            <em class="cls-list-icon ti-{{tableActions.icon}} {{tableActions.icon}}"></em>
+                                                            <span class="cls-tool">{{ 'Click To '+ tableActions.tooltip |
+                                                                translate}}</span>
+                                                        </a>
+                                                    </ng-container>
+                                                </div>
+                                                <div *ngIf="tab.length === 0">
+                                                    --
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <td class="cls-mobileval" *ngIf="deviceFlag">
+                                            <ng-container *ngFor="let tab of tabvalue;let n= index">
+
+                                                <ng-container *ngIf="tab.type === 'raw'">
+                                                    <ng-container *ngIf="tab.value !== ''">
+                                                        <span class="cls-parlell cls-md-iblock cls-{{tab?.mType}}"> 
+                                                            <span *ngIf="tab?.label" class="cls-label-mob"> {{tab?.label}}:</span> {{tab.value }}
+                                                        <span class="cls-policy-wave cls-hover-tooltip ml-1" *ngIf="tab.policyViolated === 'Y'">
+                                                                <em class="icon-46-policy"></em>
+                                                                <span class="cls-tool">{{'Policy Violated' | translate}}</span>
+                                                        </span>
+                                                        <span class="cls-sync" *ngIf="tab.syncedReport === 'Y'"></span>
+                                                        </span>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="tab.type === 'click'">
+                                                    <ng-container *ngIf="tab.value !== '' && n != 0 ">
+                                                        <span *ngIf="tab?.label" class="cls-label-mob"> {{tab?.label}} : </span>
+                                                        <a class="cls-a-hover cls-md-iblock cls-{{tab?.mType}}" href="javascript:;" (click)="showPopUp(tab.popUp,$event)" title="{{'Click to view details' | translate}}"> {{ tab.value}}</a>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="tab.value !== '' && n == 0 ">
+                                                        <span class="cls-parlell cls-md-iblock cls-{{tab?.mType}}">
+                                                            <span *ngIf="tab?.label" class="cls-label-mob"> {{tab?.label}} : </span>
+                                                        <a class="cls-a-hover cls-md-iblock" href="javascript:;" (click)="showPopUp(tab.popUp,$event)" title="{{'Click to view details' | translate}}"> {{ tab.value}}</a>
+                                                        </span>
+
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="tab.type === 'highlight'">
+                                                    <span class="badge cls-md-iblock cls-{{tab?.mType}}" [ngStyle]="{'color': tab.color , 'background':tab.bgColor}">
+                                                        {{tab.value}}
+                                                    </span>
+                                                    <span *ngIf="tab.mapped_status && i === 3" class="cls-mapped">
+                                                        {{tab.mapped_status}}
+                                                    </span>
+                                                </ng-container>
+                                                <ng-container *ngIf="tab.type === 'Date'">
+                                                    <ng-container *ngIf="tab.value !== '0000-00-00 00:00:00'">
+                                                        <span class="cls-maintext cls-md-iblock cls-{{tab?.mType}}">   
+                                                           {{ tab.value | date: "dd-MMM-YYYY | hh:mm a"}}
+                                                        </span>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="tab.value === '0000-00-00 00:00:00'">
+                                                        --
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="tab.type === 'Amount'">
+                                                    <ng-container *ngIf="tab.value !== ''">
+                                                        <span class="cls-{{tab?.mType}} cls-md-iblock">
+                                                            {{tab.currency}} {{tab.value | amount }}
+                                                        </span>
+                                                    </ng-container>
+                                                </ng-container>
+                                                <div class="cls-md-iblock cls-acions" *ngIf="tab.length > 0">
+                                                    <ng-container *ngFor="let tableActions of tab">
+                                                        <a href="javascript:;" (click)="viewReport(tableActions.value,tableActions.action,x+1,i+1,tableActions.actionName,tableActions.module,$event)" class="cls-hover-tooltip text-{{tableActions.color}} mr-2" data-toggle="tooltip">
+                                                            <em class="cls-list-icon ti-{{tableActions.icon}} {{tableActions.icon}}"></em>
+                                                       
+                                                        </a>
+                                                    </ng-container>
+                                                </div>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- loader starts -->
+<!-- <ng-container *ngIf="loader">
+    <div class="cls-tab-container cls-list-loader">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item cls-responsive-tab" [ngClass]="{ 'active': i == activeTab , 'cls-line' : i == 0 }" *ngFor="let item of tabData;let i = index;" (click)="toggletab(i,item.id)">
+                <a class="nav-link" id="{{item.id}}-tab" [ngClass]="{ 'active': i == activeTab }" data-toggle="tab" href="#{{item.id}}" role="tab" aria-controls="home" aria-selected="true" [appFontSize]="item.heading | translate">
+                    <em class="cls-new icon-11-plus" *ngIf="item.heading === 'Create Advance Request'"></em> {{item.heading | translate}}
+                    <span class="cls-expense-count">{{item.count}}</span>
+                    <span class="cls-shape"></span>
+                    <span class="cls-shape1"></span>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="cls-list-loader fade tab-pane active show">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 cls-hide-mob">
+                        <div class="dataTables_length" id="advanceReport0_length">
+                            <label>
+                                Show
+                                <select name="advanceReport0_length" aria-controls="advanceReport0"
+                                    class="cls-seldatatable custom-select custom-select-sm form-control form-control-sm">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                entries
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div id="data-table_filter" class="dataTables_filter float-right">
+                            <label>Search: </label>
+                            <input type="search" class="form-control form-control-sm cls-ipdatatable" placeholder="Search Records" aria-controls="advanceReport0">
+
+                        </div>
+                    </div>
+                </div>
+                <table id="data-table" class="table">
+                    <thead>
+                        <tr>
+                            <td *ngFor="let star of counter(7)" class="border-0">
+                                <span class="cls-line loader loader-high"></span>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let star of counter(2)">
+                            <td>
+                                <div class="cls-inner-loader">
+                                    <span class="cls-circle loader"></span>
+                                    <span class="cls-line1 loader-sm loader"></span>
+                                    <span class="cls-line loader-xs loader"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="cls-box-loader">
+                                    <span class="cls-line loader-high loader"></span>
+                                    <span class="cls-box loader"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="cls-line1 d-block loader-sm loader"></span>
+                                <span class="cls-line loader loader-xs"></span>
+                            </td>
+                            <td>
+                                <div class="cls-box-loader">
+                                    <span class="cls-line loader loader-high"></span>
+                                    <span class="cls-box loader"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="cls-line1 d-block loader-sm loader"></span>
+                                <span class="cls-line loader loader-lg"></span>
+                            </td>
+                            <td>
+                                <span class="cls-line1 d-block loader-sm loader"></span>
+                                <span class="cls-line loader loader-lg"></span>
+                            </td>
+                            <td>
+                                <div class="cls-round">
+                                    <span class="cls-circle loader"></span>
+                                    <span class="cls-circle1 loader"></span>
+                                    <span class="cls-circle2 loader"></span>
+                                    <span class="cls-circle1 loader"></span>
+                                    <span class="cls-circle loader"></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info" id="advanceReport2_info" role="status" aria-live="polite">Showing 1 to 3 of 3 entries</div>
+                    </div>
+                    <div class="col-sm-12 col-md-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="advanceReport2_paginate">
+                            <ul class="pagination float-right">
+                                <li class="paginate_button page-item previous disabled" id="advanceReport2_previous"><a href="#" aria-controls="advanceReport2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
+                                <li class="paginate_button page-item active"><a href="#" aria-controls="advanceReport2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
+                                <li class="paginate_button page-item next disabled" id="advanceReport2_next"><a href="#" aria-controls="advanceReport2" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ng-container> -->
+
+<!-- loader ends -->
+<!-- <ng-container *ngIf="showFormFlag === true">
+    <div class="cls-mob-advform cls-advform">
+        <app-advanceform [editResponseForm]="advanceFormVal" (createForm)="advanceRequest($event)" (closeForm)="closeForm($event)"></app-advanceform>
+    </div>
+</ng-container> -->
+
+<!-- <ng-container *ngIf="showFormFlag === true">
+    <div class="d-md-none cls-advance-box">
+        <span class="cls-resp-background" id="fn-background" (click)="closeForm(false)"></span>
+        <div class="cls-inner-adv">
+            <span class="cls-mbl-line"></span>
+            <span class="cls-adv-close" (click)="closeadvForm(false)">
+                <em class="icon-32-reject"></em>
+            </span>
+            <span class="cls-report-title mb-2">{{ 'Advance Request' | translate }}</span>
+            <app-advanceform [editResponseForm]="advanceFormVal" (createForm)="advanceRequest($event)" (closeForm)="closeForm($event)"></app-advanceform>
+        </div>
+    </div>
+</ng-container> -->
+<app-alert *ngIf="confirmation" [userInput]="confirmationContent" (choosedVal)="confirmAction($event)"></app-alert>
+<!-- Advance form alert -->
+<app-advancealert *ngIf="submitAdvance" [userInput]="advanceContent" [type]="advanceType" [approvalStatus]="sendForApprovalStatus" (choosedVal)="popUpInfo($event)"></app-advancealert>
+
+<!-- <div class="cls-settlediv">
+    <app-settleform *ngIf="settleform" [amount]="listbuttonActionVal.request" (settleFormVal)="settleReport($event)">
+    </app-settleform>
+</div> -->
+<!-- <ng-container *ngIf="popupVal['flag'] === true">
+    <app-advancealert *ngIf="popupVal?.module === 'advanceReport'" [userInput]="popupVal?.value" (choosedVal)="popUpInfo($event)"></app-advancealert>
+    <app-user-info *ngIf="popupVal?.module === 'userSettings'" [userInput]="popupVal?.value" (choosedVal)="popUpInfo($event)"></app-user-info>
+</ng-container> -->
+<!-- <app-advancealert *ngIf="submitAdvance?.flag" [userInput]="submitAdvance?.value" (choosedVal)="advanceSubmit($event)">
+</app-advancealert> -->
+<!-- <app-history *ngIf="historyFlag" (closePopup)="historyClose($event)" [historyInput]="historyInput"></app-history> -->
+<!-- <app-reporthistory *ngIf="historyFlag" (closePopup)="historyClose($event)" [historyInput]="historyInput">
+</app-reporthistory> -->

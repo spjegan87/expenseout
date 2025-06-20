@@ -1,0 +1,162 @@
+@import '../mileage-report-mobile/mileage-report-mobile.component.scss';
+.cls-main{
+	padding: 16px;
+}
+.cls-main + .cls-main{
+	border-top: 2px dashed #ccc;
+}
+.cls-nonedit{
+	margin: 0;
+	.cls-halfblock{
+		width: 50%;
+		display: inline-block;
+		margin-bottom: 10px;
+		padding-left: 0;
+		&.cls-total{
+			width: 60%;
+		}
+		&.cls-mileagede{
+			width: 40%;
+		}
+	}
+	.cls-label{
+		color: #000;
+    	font: 14px 'ProximaSemiBold';
+		.cls-data{
+			display: block;
+			font: 16px "ProximaBold";
+			color: #000;
+			margin-top: 8px;
+			span{
+				font: 13px "ProximaRegular";
+			}
+		}
+		.cls-others{
+			word-break: break-word;
+		}
+	}
+}
+.cls-headbar{
+	margin-bottom: 10px;
+	.cls-sub-text{
+		font-size: 17px;
+    	font-weight: 600;
+		 color: #000;
+	}
+	.cls-editopt{
+		float: right;
+		display: flow-root;
+		font-size: 14px;
+		color: #007bff;
+		font-weight: 600;
+	}
+
+}
+.cls-half{
+    font-size: 15px;
+    font-family: 'ProximaSemiBold';
+    margin-right: 20px;
+	&:before{
+		content: "";
+		width: 9px;
+		height: 9px;
+		background: #0B76C6;
+		display: inline-block;
+		vertical-align: 1px;
+		border-radius: 25px;
+		margin-right: 5px;
+  }
+  &.cls-half-sec:before{
+			background: #ffa500;
+  }
+}
+.cls-localty{
+	margin: 20px 0 0;
+	.cls-locationpined{
+		position: relative;
+		padding: 8px 0 8px 5px;
+		margin-left: 23px;
+		border-bottom: 1px solid #ccc;
+		margin-top: 15px;
+		font-size: 14px;
+		font-weight: 600;
+		&:before{
+			content: "";
+			position: absolute;
+			width: 9px;
+			height: 9px;
+			background: #0B76C6;
+			border-radius: 25px;
+			box-shadow: 0 0 9px 0 #0b76c6;
+			left: -20px;
+			top: 14px;
+			border: 1px solid #fff;
+		}
+		&:after{
+			content: '';
+			position: absolute;
+			background: #ccc;
+			width: 10px;
+			width: 5px;
+			height: 5px;
+			left: -18px;
+			border-radius: 25px;
+			top: 36px;
+			box-shadow: 0 16px 0px 0px #ccc;
+		}
+		&.cls-firsthalf{
+			&.cls-final{
+				&:before{
+					background: unset;
+					border:1px solid #0B76C6;
+					width: 12px;
+					height: 12px;
+					box-shadow:unset;
+				}
+			}
+		}
+		&.cls-secondhalf{
+			&:before{
+				background: #ffa500;
+				box-shadow: 0 0 9px 0 #ffa500;
+			}
+			&.cls-final{
+				&:before{
+					background: unset;
+					border:1px solid #ffa500;
+					width: 12px;
+					height: 12px;
+					box-shadow:unset;
+				}
+			}
+		}
+		&:last-child{
+			&:after{
+				content: none;
+			}
+		}
+		.loc-name{
+			height: 20px;
+			display: inline-block;
+			overflow: hidden;
+			width: 93%;
+			text-overflow: ellipsis;
+			white-space: break-spaces;
+		}
+
+	}
+}
+.odometer-images{
+	display: flex;
+	justify-content: space-between;
+	margin:10px;
+	.preview-image{
+		max-width: 39%;
+		height: 90px;
+		display: inline-block;
+		img{
+			height:100px;
+			width: 100%;
+		}
+	}
+}

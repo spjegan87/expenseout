@@ -1,0 +1,26 @@
+@import "../../../../assets/scss/variable.scss";
+//  unauthorisation-error 
+.cls-unauthorisation{  
+  div{
+    font:14px "ProximaLight";
+  }
+  .cls-title{
+    color:$BLACK;
+    font: 30px "ProximaBold";
+  }
+}
+.cls-session{
+  margin-top: 100px;
+}
+.cls-custombtn{
+  background: $BTNGRADIENT;
+  color:#fff;
+}
+@media only screen and (max-width: 480px){
+  .cls-session{
+    width: 90%;
+  }
+  .cls-param{
+    padding: 0px 18px;
+  }
+}

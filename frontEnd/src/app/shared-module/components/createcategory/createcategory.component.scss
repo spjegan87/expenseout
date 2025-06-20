@@ -1,0 +1,157 @@
+/************************************************************************************
+CSS Description : Create category
+Author          : Padma Priya
+*************************************************************************************/
+@import '../../../shared-module/components/alert/alert.component.scss';
+@import '../../../../assets/scss/variable.scss';
+.cls-statuslabel{
+    font-size: 15px;
+}
+.cls-disable{
+    pointer-events: none;
+}
+.cls-header{
+    font: 18px 'ProximaSemiBold' !important;
+    color:$BLACK;
+    border-bottom: 1px solid $BDRLIGHT;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: block;
+    text-transform: capitalize;
+}
+.cls-footer{
+    padding: 10px !important;
+}
+.cls-popup{
+    .cls-content{
+        .cls-colorinput{
+            input[type="color"] {
+                -webkit-appearance: none;
+                width: 13px !important;
+                border: 0px;
+                height: 15px !important;
+                padding-top: 3px;
+                margin: 3px 0px 0px 6px;
+            }
+            input[type="color"]::-webkit-color-swatch-wrapper {
+                padding: 0;
+            }
+            input[type="color"]::-webkit-color-swatch {
+                border: none;
+            }
+            img{
+                width: 20px;
+                margin: 10px;
+            }
+            .cls-inputbox{
+                border: 1px solid #ccc;
+                background: #efefef;
+                border-radius:4px;
+                display:inline-block;
+                width: 95px;
+                cursor: pointer;
+            }
+            span{
+                &.cls-colorpicker{
+                    margin: 7px 4px;
+                    font: 14px 'ProximaSemibold' !important;
+                }
+            }
+        }
+    } 
+} 
+@media (min-width: 481px) and (max-width: 766px){
+    .cls-popup{
+        width: 100% !important;
+        background: $WHITE !important;
+        top: unset !important;
+        bottom: 0;
+        left: -8 !important;background: unset;
+        right: unset !important;
+        position: fixed !important;
+        z-index: 1000;
+        width: 100%;
+        border-radius: 30px 30px 5px 5px;
+        padding: 25px 20px 15px 20px;
+        animation: 0.4s slidein linear;
+        .cls-top-close{
+            display: none;
+        }
+        .cls-footer{
+            background: unset;
+        }
+        .cls-mbl-line{
+            display: inline-block;
+            height: 5px;
+            width: 35px;
+            background: #ccc;
+            border-radius: 10px;
+            position: absolute;
+            left: 45%;
+            top: 13px;
+          }
+          .cls-selectfilter{
+            font: 18px 'ProximaSemiBold';
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .cls-alert-icon{
+            .cls-btns{
+                .cls-header{
+                    display: none;
+                }
+            }
+        }
+    }
+    .close-ani{
+        animation: 0.4s slideout linear !important;
+    }
+}
+@media (min-width: 767px) and (max-width: 1024px){}
+@media only screen and (max-width: 480px) {
+    .cls-popup{
+        width: 100% !important;
+        background: $WHITE !important;
+        top: unset !important;
+        bottom: 0;
+        left: 0 !important;background: unset;
+        right: unset !important;
+        position: fixed !important;
+        z-index: 1000;
+        width: 100%;
+        border-radius: 30px 30px 5px 5px;
+        padding: 25px 20px 15px 20px;
+        animation: 0.4s slidein linear;
+        .cls-top-close{
+            display: none;
+        }
+        .cls-footer{
+            background: unset;
+        }
+        .cls-mbl-line{
+            display: inline-block;
+            height: 5px;
+            width: 35px;
+            background: #ccc;
+            border-radius: 10px;
+            position: absolute;
+            left: 45%;
+            top: 13px;
+          }
+          .cls-selectfilter{
+            font: 18px 'ProximaSemiBold';
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .cls-alert-icon{
+            .cls-btns{
+                .cls-header{
+                    display: none;
+                }
+            }
+        }
+    }
+    .close-ani{
+        animation: 0.4s slideout linear !important;
+    }
+}

@@ -1,0 +1,61 @@
+<div class="cls-main-container">
+    <!-- breadcrumb starts -->
+    <!-- <div class="cls-mbl-breadcrumb">
+        <app-breadcrumb [activeBreadcrumb]="breadcrumb"></app-breadcrumb>
+    </div> -->
+    <!-- breadcrumb ends -->
+    <h1 class="cls-main-title mt-4">{{'Expense Report' | translate}}</h1>
+    <!-- <a href="javascript:;" class="cls-view p-2 pull-right mt-4" (click)="createReport()">
+        <em class="icon-11-plus mr-1"></em> 
+        {{ 'Create Expense Report' | translate}}
+    </a> -->
+    <div class="cls-dropdown-button">
+        <span href="javascript:;" class="cls-btn-primary cls-custom-btn dropdown-toggle cls-view p-2 pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <em class="icon-11-plus mr-1"></em>{{ 'Create Expense Report' | translate}}
+        </span>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="javascript:;" (click)="createReport()">{{'Create Manually' | translate}}</a>
+            <a class="dropdown-item" href="javascript:;" (click)="openVault()">{{'Create with Receipt Scanner' | translate}}</a>
+        </div>
+    </div>
+    <!-- <span class="cls-mbl-add d-none" (click)="createReport()"><em class="icon-32-reject"></em></span>
+    <span class="cls-mbl-filter-icon d-none" (click)="showFilter()">
+        <img src="../../../assets/images/filterwhitecolor.svg" alt="filter">
+    </span> -->
+    <div class="cls-bottom-container">
+        <span id="fn-mbl-background" class="cls-mbl-background" (click)="closeMobile()"></span>
+        <span class="cls-overlay-tool"></span>
+        <span class="cls-over-position">
+            <span class="cls-mbl-tool-filter" (click)="showFilter()">
+                <img src="../../../assets/images/filter.svg" alt="filter">
+            </span>
+        <span class="cls-tool-create" (click)="createReport()">
+                <em class="icon-32-reject"></em>
+            </span>
+        </span>
+    </div>
+    <span class="cls-mbl-tool-button" (click)="openMobileTool()">
+        <em class="icon-15-list"></em>
+    </span>
+    <ng-container *ngIf="topNavData.length > 0">
+        <app-tab [moduleName]="'reportExpense'" [filterDetails]="filterDetails" [actionName]="'reportTabs'" [reportId]="reportId" [create]="'Create Expense Report'" [topNavData]="topNavData"></app-tab>
+    </ng-container>
+    <!-- <app-tab [moduleName]="'reportExpense'" [reportId]="reportId" [actionName]="'reportTabs'"  [create]="'Create Expense Report'"></app-tab> -->
+    <!-- mobile header starts-->
+    <div class="cls-mobile-header d-none">
+        <span class="cls-mobile-title">
+            <em class="icon-39-arrow" (click)="redirectHome()"></em>
+            {{' Expense Report' | translate}}
+        </span>
+        <span class="cls-mobile-icon-section">
+            <span (click)="triggerAction('theme')">
+                <em class="icon-37-theme"></em>
+            </span>
+        <span (click)="triggerAction('notify')">
+                <em data-feather="bell" ></em>
+            </span>
+        </span>
+    </div>
+    <!-- mobile header ends-->
+</div>
+<!-- <app-alert *ngIf="confirmation" [userInput]="confirmationContent" (choosedVal)="confirmAction($event)"></app-alert> -->

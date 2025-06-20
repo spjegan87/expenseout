@@ -1,0 +1,43 @@
+<a href="javascript:;" title="{{'Back To List' | translate}}" class="cls-back cls-a-hover mb-2" (click)="redirectList()"><em class="ti-arrow-left"></em> {{'Back To List' | translate}}</a>
+<form class="cls-city-container " [formGroup]="cityForm">
+    <div  formArrayName="cityGroup">
+        <ng-container *ngFor="let data of cityForm.get('cityGroup')['controls'];let i=index;let l= last">
+            <div class="row w-100" formGroupName="{{i}}">
+                <div class="form-group col-sm-3">
+                    <label for="groupName">{{'Group Name' | translate}}
+                            <span class="cls-mandatory">*</span>
+                    </label>
+                    <input type="text" (focusout)="checkExist()" formControlName="groupName" name="groupName" id="groupName" placeholder="{{'Enter City Group Name' | translate}}" autocomplete="off" class="cls-custom-input form-control">
+                </div>
+                <div class="form-group col-sm-8  cls-search-select">
+                    <label for="cityGroupDetails">{{'City Name' | translate}}
+                        <span class="cls-mandatory">*</span>
+                    </label>
+                    <input class="cls-input" type="text" (keypress)="stringValidation($event)" formControlName="cityGroupDetails" id="cityGroupDetails{{i}}" name="cityGroupDetails" id="cityGroupDetails{{i}}" (keyup)="citySearch('cityGroupDetails',i)" placeholder="{{'Enter City Group Details' | translate}}"
+                        autocomplete="off" class="cityGroupDetails cls-custom-input form-control">
+                    <div class="cls-drop cls-drop{{i}} d-none" *ngIf="dropDownLocation[i].length >=1">
+                        <span *ngFor="let data of dropDownLocation[i]" (click)="selectCity(data.description,i)">{{data.description}}</span>
+                    </div>
+                </div>
+                <div class="form-group col-sm-12" *ngIf="cityGroupSelected[i].length >=1">
+                    <span class="cls-selcity">{{'Selected Cities' | translate}}</span>
+                    <div class="cls-position">
+                        <span class="cls-relative" *ngFor="let city of cityGroupSelected[i]">
+                            <span  class="cls-citysel">{{ city }}
+                            </span>
+                        <span class="cls-top-count" (click)="removeSelected(city,i)">
+                                <em class="icon-32-reject"></em>
+                            </span>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="cls-button-box">
+        <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="redirectList()"><span>{{'Cancel' | translate}}</span></button>
+        <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="cityGroupCreate('insertCityGroup')" *ngIf="editResponse['cityDetails'] === undefined">{{'Save' | translate}}</button>
+        <button type="button" class="btn cls-btn-primary cls-custom-btn" (click)="cityGroupCreate('updateCityGroup')" *ngIf="editResponse['cityDetails'] !== undefined">{{'Update' | translate}}</button>
+    </div>
+</form>

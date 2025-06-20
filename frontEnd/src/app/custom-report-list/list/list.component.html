@@ -1,0 +1,79 @@
+<!-- *************************************************
+
+ * Component Name-------  list
+ * HTML & CSS -------------- Naveen.s
+ * Created date -------------- 26-Feb-2021
+ * Powered by --------------- Infiniti software solutions
+
+************************************************* -->
+<div class="list-container">
+    <div class="cls-list">
+        <div class="cls-list-row cls-list-row-head">
+            <div class="cls-list-data cls-head" *ngFor="let header of headerList">
+                {{header.headerName}}
+            </div>
+            <div class="cls-list-data cls-head">
+                Action
+            </div>
+        </div>
+    </div>
+    <div class="cls-list-item" *ngFor="let list of listData.value;let i= index;let last = last">
+        <div class="cls-list-row" [ngClass]="{'cls-last-border': last}">
+            <!-- <div class="cls-list-inner-data cls-list-body" title="{{list[header['template']]}}"
+            *ngFor="let header of listData?.value.list_header" [ngClass]="{'cls-schedule': list.scheduleStatus == 'Y','cls-notschedule': list.scheduleStatus == 'N','cls-status': header['template'] == 'status' }">{{ list[header['template']] }} 
+            </div> -->
+            <div *ngIf="list.savedReportName" class="cls-list-body">
+                {{list.savedReportName}}
+            </div>
+            <div *ngIf="list.scheduleStatus" class="cls-list-body cls-status" [ngClass]="{'cls-schedule': list.scheduleStatus == 'Y','cls-notschedule': list.scheduleStatus == 'N'}">
+                <ng-container *ngIf="list.scheduleStatus === 'Y'">
+                    Scheduled
+                </ng-container>
+                <ng-container *ngIf="list.scheduleStatus === 'N'">
+                    Not Scheduled
+                </ng-container>
+            </div>
+            <div *ngIf="list.scheduleStatus" class="cls-list-body">
+                <ng-container *ngFor="let item of list.reportAdditionalInfo.scheduleInfo.frequencyDaysOfWeek; let last = last">
+                    <ng-container *ngFor="let val of daysList">
+                        <ng-container *ngIf="val.id === item">
+                            {{val.name}}
+                            <span *ngIf="!last">,</span>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!list.reportAdditionalInfo.scheduleInfo.frequencyDaysOfWeek">
+                   N/A
+                </ng-container>
+            </div>
+            <div *ngIf="list.scheduleStatus" class="cls-list-body">
+                <ng-container *ngIf="list.reportAdditionalInfo.scheduleInfo.frequencyStartDate">
+                   {{list.reportAdditionalInfo.scheduleInfo.frequencyStartDate | date: "dd-MMM-yyyy" }} to {{list.reportAdditionalInfo.scheduleInfo.frequencyEndDate | date: "dd-MMM-yyyy" }}
+                </ng-container>
+                <ng-container *ngIf="!list.reportAdditionalInfo.scheduleInfo.frequencyStartDate">
+                    N/A
+                 </ng-container>
+            </div>
+            <div class="cls-list-data">
+                <a href="javascript:;" class="cls-schedule-icon cls-hover-tooltip" [ngClass]="{'cls-disable': list.scheduleStatus ==='Y'}" (click)="openSchedule()">
+                    <em class="cls-list-icon icon-9-history"></em>
+                    <span class="cls-tool">Click To Schedule</span>
+                </a>
+                <a href="javascript:;" class="cls-edit-icon cls-hover-tooltip" (click)="openSchedule()">
+                    <em class="cls-list-icon icon-14-edit"></em>
+                    <span class="cls-tool">Click To Edit</span>
+                </a>
+                <a href="javascript:;" class="cls-delete-icon cls-hover-tooltip">
+                    <em class="cls-list-icon icon-5-delete"></em>
+                    <span class="cls-tool">Click To Delete</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- No Data found start -->
+<div class="cls-no-data-found" *ngIf="listData?.value?.length == 0">
+    <img src="../../../assets/images/NoDataFoundEmpty.svg" title="No Data found" alt="No Data found" class="no-record-found-img">
+    <span class="no-data-found"> No Data Found !</span>
+</div>
+<!-- No Data found end -->

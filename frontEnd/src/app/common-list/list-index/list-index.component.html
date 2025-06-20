@@ -1,0 +1,98 @@
+<!-- Name : Meenakshi Sundaram .R
+    Date : 25-06-2021
+    Desc : List Index Compoennt -->
+<div class="card" [ngClass]="{'cls-settings-table-container':list?.default_Parms?.multiple_list}" *ngIf="!loader">
+    <div class="card-body">
+        <!-- Category -->
+        <app-category [backToBack]="backAction" [category]="list?.category" (selectedCategory)="selectCategory($event)" (backActionEvent)="getBackAction($event)" *ngIf="pagination && list?.default_data?.length > 0"></app-category>
+        <div class="cls-list-container" [ngClass]="{'cls-settings-table':list?.default_Parms?.multiple_list}">
+            <span class="cls-inner-title" *ngIf="list?.default_Parms?.multiple_list && list?.table_name">{{list?.table_name}}</span>
+            <!-- Master data Add Title -->
+            <!-- CSV upload -->
+            <span class="cls-uploadtxt" *ngIf="upload && upload['uploadFlag']" (click)="bulkUpload('')">
+                <em data-feather="upload-cloud">
+                </em>Upload CSV
+            </span>
+            <ng-container *ngIf="list?.table_title">
+                <ng-container *ngFor="let val of tabData;let index=index">
+                    <!-- CSV upload -->
+                    <ng-container *ngIf="list?.upload && tabIndex == index">
+                        <span class="cls-uploadtxt" *ngIf="list?.upload || upload['uploadFlag']" (click)="bulkUpload(val.id)">
+                            <em data-feather="upload-cloud">
+                            </em>Upload CSV
+                        </span> 
+                    </ng-container>
+                    <span class="cls-add-list float-right" id="{{val.id}}" *ngIf="tabIndex == index" (click)="addNew(val.moduleName, val.newcreate, val.id, val.actionName, val.name, index)">
+                        <em class="icon-11-plus mr-1"></em>
+                        <a href="javascript:;" class="mr-3 cls-a-hover" title="Click To {{val?.title}}">{{val?.title}}</a>    
+                    </span>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="((!editStatus && !createNew) || list?.table_id === 'category' || masterModule === 'profileMasterData')">
+                <!-- <ng-container *ngIf="!loader"> -->
+                <div class="row">
+                    <div class="col-sm-2">
+                        <!-- Items Per page -->
+                        <app-items-per-page *ngIf="pagination && list?.default_data?.length > 0" [defaultItem]="list['default_Parms']['itemsPerPage']" (selectedItemPerPage)="selectedItem($event)">
+                        </app-items-per-page>
+                    </div>
+                    <!-- Search & Sort -->
+                    <div class="col-sm-6 offset-4 cls-mobile-view-search">
+                        <div class="cls-search-field">
+                            <app-search [listSearch]="list" (searchValue)="searchData($event)"></app-search>
+                            <app-sort [listSort]="list" (sortValue)="sortData($event)"></app-sort>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- List data -->
+                <app-list [listData]="list" [listModule]="listUpdate" (actionType)="getActionType($event)" (editResponse)="getEditResponse($event)" [tabValue]="tabValue" (emitListStatus)="getlistActionStatus($event)" [userBasedList]="userBased" (emitUserBasedList)="getUserBasedListAction($event)" (loadTabData)="loadTabEvent($event)"
+                    [deviceFlag]="deviceFlag"></app-list>
+                <ng-container *ngIf="(pagination && list?.default_data?.length > 0) && (list['default_Parms']['itemsPerPage'] != 0) ">
+                    <div class="row my-3">
+                        <!-- Pagination -->
+                        <div class="col-sm-9">
+                            <app-pagination [pages]="list['noofPages']" [pageItem]="list['itemsPerPage']" [totalRecords]="list['totalListItems']" [defaultData]="list['default_list']" [currentPage]="list['currentPage']" (currentPageVal)="getCurrentPage($event)">
+                            </app-pagination>
+                        </div>
+                        <!-- Jump to page component -->
+                        <div class="col-sm-3">
+                            <app-jump-page [noOfPage]="list['noofPages']" [currentPage]="list['currentPage']" (jumpToPage)="getCurrentPage($event)">
+                            </app-jump-page>
+                        </div>
+                    </div>
+                </ng-container>
+                <!-- </ng-container> -->
+            </ng-container>
+        </div>
+        <!-- Create Profile Group -->
+        <!-- <app-create-profile-group *ngIf="list?.editResponse && list?.editResponse['profilegroup'] != undefined && list?.editResponse['profilegroup']['profilegroup']" [editResponse]="list?.editResponse['profilegroup']" (createdGroup)="backtoList($event)"></app-create-profile-group> -->
+        <app-create-profile-group *ngIf="(list?.table_id === 'profilegroup' && createNew) || (list?.table_id === 'profilegroup' && editStatus)" [editResponse]="editResponseData" (createdGroup)="backtoList($event)" (emitListStatus)="getlistActionStatus($event)"></app-create-profile-group>
+
+        <!-- Create Policy  -->
+        <app-create-policy *ngIf="(list?.table_id === 'policy' && createNew) || (list?.table_id === 'policy' && editStatus)" [actionType]="type" (policyFormClose)="backtoList($event)" [editPolicyVal]="editResponseData" (emitListStatus)="getlistActionStatus($event)"></app-create-policy>
+        <!-- City Group -->
+        <app-citygroup *ngIf="(list?.table_id === 'city' && createNew) || (list?.table_id === 'city' && editStatus)" [editResponse]="editResponseData" (cityGroup)="backtoList($event)" (emitListStatus)="getlistActionStatus($event)"></app-citygroup>
+        <!-- Create Allowance Creation -->
+        <app-create-allowance-creation *ngIf="(list?.table_id === 'allowance' && createNew) || (list?.table_id === 'allowance' && editStatus)" [editResponse]="editResponseData" (createdAllowance)="backtoList($event)" (emitListStatus)="getlistActionStatus($event)"></app-create-allowance-creation>
+        <!-- Create Budget  -->
+        <app-create-budget *ngIf="(list?.table_id === 'budget_list' && createNew) || (list?.table_id === 'budget_list' && editStatus)" (budgetFormClose)="backtoList($event)" [editBudgetVal]="editResponseData" (emitListStatus)="getlistActionStatus($event)"></app-create-budget>
+        <!-- Advance form -->
+        <app-advanceform *ngIf="list?.table_id === 'new_advance' && editStatus" [editResponseForm]="editResponseData" (createForm)="advanceRequest($event)" (closeForm)="backtoList($event)" (emitFormValue)="getFormValue($event)" (emitListStatus)="getlistActionStatus($event)"></app-advanceform>
+        <!-- create advance policy  -->
+        <app-create-advance-policy *ngIf="(list?.table_id === 'advancePolicy' && createNew) || (list?.table_id === 'advancePolicy' && editStatus)" [actionType]="type" [editResponse]="editResponseData" (advancePolicyFormClose)="backtoList($event)" (emitListStatus)="getlistActionStatus($event)"></app-create-advance-policy>
+        <!-- create advance policy  -->
+    </div>
+</div>
+<ng-container *ngIf="loader">
+    <app-list-loader></app-list-loader>
+</ng-container>
+<!-- Create category -->
+<!-- {{listUpdate | json}} -->
+<app-createcategory *ngIf="(list?.table_id === 'category' && createNew) || (list?.table_id === 'category' && editStatus)" (choosedVal)="backtoList($event)" [editcategoryVal]="editResponseData" (emitListStatus)="getlistActionStatus($event)"></app-createcategory>
+
+<!-- Create New Master data -->
+<app-addnew *ngIf="((masterModule == 'profileMasterData') && (listUpdate['id'] === list?.table_id && createNew || listUpdate['id'] === list?.table_id && editStatus))" [typeCreate]="editResponseData" (choosedVal)="backtoList($event)" (emitListStatus)="getlistActionStatus($event)"></app-addnew>
+<!-- *ngIf="data?.moduleName == 'profileMasterData' && data?.id === list?.table_id && list?.editResponse && list?.editResponse[list?.table_id] != undefined && list?.editResponse[list?.table_id][list?.table_id]" -->
+<!-- Upload CSV -->
+<app-bulk-upload *ngIf="uploadFlag" (uploadFlag)="closeUpload($event)" [upload]="upload"></app-bulk-upload>

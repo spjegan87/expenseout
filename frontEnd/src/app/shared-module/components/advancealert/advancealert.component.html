@@ -1,0 +1,32 @@
+<div class="cls-alert-container cls-advanceconfirm" *ngIf="userInput != undefined">
+    <!-- background  -->
+    <span id="fn-background" class="cls-background" (click)="closeModal(false)"></span>
+    <!-- alert-container -->
+    <div class="cls-popup" [ngClass]="toClose ? 'close-ani' : ''">
+        <span class="cls-top-close" (click)="closeModal(false)">
+        <em class="icon-32-reject"></em>
+      </span>
+        <!-- Alert body -->
+        <div class="cls-content cls-alert-icon mt-1">
+            <!-- Button Design -->
+            <div class="cls-btns mt-3 mb-5 px-4">
+                <ng-container>
+                    <span class="cls-head">
+              {{'Employee Cash Advance Request Form' | translate}}
+            </span>
+                    <div [innerHTML]="userInput"></div>
+                    <div class="mt-3 text-right cls-footer">
+                        <button type="button" class="btn cls-custom-btn cls-btn-secondary mr-3" (click)="closeModal(false)">
+                <span >Cancel</span>
+            </button>
+                        <ng-container *ngIf="type">
+                            <button type="button" class="btn cls-custom-btn cls-btn-primary mr-0" (click)="closeModal(true)">
+                <span >Confirm</span>
+              </button>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

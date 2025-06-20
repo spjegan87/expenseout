@@ -1,0 +1,353 @@
+// Desc : create policy scss
+// Author : Naveen.s
+// Date : 05-Nov-2020 
+@import '../../../../assets/scss/all';
+.hidden {
+    display: none;
+}
+
+//   .cls-back{
+//     float: right;
+//     font-size: 13px;
+//     color: $PRIMARYCOLOR;
+//   }
+.cls-policy-container {
+    input,
+    select {
+        font-size: 13px;
+    }
+    .cls-mandatory {
+        color: $ERROR;
+    }
+    .cls-error {
+        border-color: $ERROR;
+    }
+    .cls-label,
+    .cls-input-label {
+        display: inline-block;
+        vertical-align: -webkit-baseline-middle;
+        font-size: 14px;
+        color: $BLACK;
+        font-weight: 400;
+    }
+    .cls-input-label {
+        font-size: 12px;
+    }
+    .cls-widget {
+        width: 80%;
+        margin: 0 0 20px 10%;
+    }
+    .cls-policy-form {
+        .cls-date {
+            position: relative;
+            max-width: 25%;
+            min-width: 25%;
+            .cls-date-icon {
+                position: absolute;
+                right: 22px;
+                top: 39px;
+                color: $BDRLIGHT;
+            }
+        }
+    }
+    .cls-already {
+        font-size: 13px;
+        color: $ERROR;
+        margin-top: 30px;
+        letter-spacing: 0.7px;
+        a {
+            border-bottom: 1px solid $PRIMARYCOLOR;
+        }
+    }
+    .cls-first-container,
+    .cls-second-container,
+    .cls-third-container {
+        .cls-main-dotted {
+            border: 1px dashed $BDRLIGHT;
+            border-radius: 5px;
+            position: relative;
+            padding: 25px 10px;
+            background: $MAINBG;
+            margin-top: 20px;
+            &.cls-bdrred {
+                border: 1px dashed $ERROR;
+            }
+            .cls-strip {
+                display: inline-block;
+                background: $BTNGRADIENT;
+                color: $WHITE;
+                border-radius: 20px;
+                position: absolute;
+                top: -13px;
+                left: 20px;
+                width: 120px;
+                text-align: center;
+                font: 13px 'ProximaRegular';
+                padding: 5px;
+            }
+            // .cls-policy-first{
+            // }
+            .cls-category-map {
+                .cls-switches {
+                    vertical-align: bottom;
+                }
+                .cls-amount-hotel {
+                    display: flex;
+                    padding: 5px 0;
+                    cursor: pointer;
+                    em {
+                        color: #007bff;
+                    }
+                    span {
+                        font: 12px 'ProximaRegular';
+                        margin-left: 3px;
+                    }
+                }
+            }
+            .cls-line {
+                border-bottom: 1px dashed $BDRLIGHT;
+                display: inline-block;
+                width: 100%;
+                height: 1px;
+            }
+            .cls-override {
+                color: $PRIMARYCOLOR;
+                display: block;
+                font-size: 13px;
+                cursor: pointer;
+                margin: 10px 0 5px 0;
+                width: 150px;
+            }
+            .cls-override-value {
+                display: inline-block;
+                background: $WHITE;
+                min-width: 100px;
+                height: 20px;
+                border-radius: 20px;
+                border: 1px solid $BDRLIGHT;
+                font-size: 13px;
+                padding: 0px 5px;
+                min-width: auto;
+                height: 20px;
+                cursor: pointer;
+                margin-right: 5px;
+                em {
+                    color: $BLACK;
+                    float: right;
+                    font-size: 9px;
+                    margin-top: 5px;
+                    margin-left: 5px;
+                    cursor: pointer;
+                }
+                .cls-text {
+                    color: $PRIMARYCOLOR;
+                    font-size: 12px;
+                    display: inline-block;
+                }
+                .cls-hover-tooltip {
+                    .cls-tool {
+                        left: -6px;
+                        top: 26px;
+                    }
+                }
+            }
+            .cls-center-label {
+                vertical-align: -30px;
+            }
+            .cls-info-text {
+                em {
+                    vertical-align: middle;
+                }
+                display: inline-block;
+                font-size: 12px;
+                color:#969595;
+            }
+            .cls-radio {
+                font: 13px "ProximaRegular";
+                vertical-align: sub;
+            }
+            .cls-currency-bar {
+                width: 25%;
+                .cls-dropdown-container {
+                    position: relative;
+                    em {
+                        position: absolute;
+                        font-size: 8px;
+                        color: #999;
+                        right: 6px;
+                        top: 12px;
+                    }
+                    .dropdown-menu {
+                        width: 160px !important;
+                    }
+                    li {
+                        padding: 7px 6px 0px 10px;
+                        cursor: pointer;
+                    }
+                }
+                .cls-select {
+                    padding: 0 5px;
+                    border-top-right-radius: 0 !important;
+                    border-bottom-right-radius: 0 !important;
+                }
+            }
+            .cls-border {
+                border-top-left-radius: 0 !important;
+                border-bottom-left-radius: 0 !important;
+            }
+            .cls-radio-on {
+                em {
+                    color: $PRIMARYCOLOR;
+                }
+            }
+            .cls-milage-box {
+                position: relative;
+                .cls-mile-width {
+                    max-width: 13%;
+                }
+                .cls-add-close-container {
+                    position: absolute;
+                    right: -8px;
+                    top: -3px;
+                    .cls-add,
+                    .cls-close {
+                        border-radius: 50px;
+                        color: $PRIMARYCOLOR;
+                        // width: 25%;
+                        border: 1px solid $PRIMARYCOLOR;
+                        background: $WHITE;
+                        padding: 5px;
+                        span {
+                            padding: 0 0 0 5px;
+                        }
+                        &:hover {
+                            background: $PRIMARYCOLOR;
+                            transition: 1s;
+                            color: $WHITE;
+                            em {
+                                color: $WHITE;
+                            }
+                        }
+                    }
+                    .cls-close {
+                        color: $ERROR;
+                        border: 1px solid $ERROR;
+                        em {
+                            color: $ERROR;
+                        }
+                        span {
+                            padding: 0 0 0 5px;
+                        }
+                        &:hover {
+                            background: $ERROR;
+                            transition: 1s;
+                            color: $WHITE;
+                            em {
+                                color: $WHITE;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .cls-button-box {
+            margin-top: 20px;
+        }
+    }
+}
+
+input[type="radio"] {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 480px) {
+    .cls-policy-container{
+        .cls-widget{
+            width: 100%;
+            margin: 0 0 20px 8%;
+        }
+    }
+    .cls-fntexpdata {
+        font: 13px 'ProximaRegular';
+        width: 50%;
+        padding: 10px 0px;
+    }
+    .cls-divexpand {
+        width: 100%;
+    }
+    .cls-policy-container {
+        position: relative;
+        padding: 1em;
+        width: 98%;
+        border-radius: 6px;
+        box-shadow: 1px 1px 15px rgb(0 0 0 / 20%);
+        background: #fff;      
+        .cls-third-container {
+            .cls-main-dotted {
+                .cls-milage-box {
+                    .cls-mile-width {
+                        max-width: unset;
+                        margin-top: 25px;
+                    }
+                }
+            }
+        }
+        .cls-policy-form {
+            .cls-date {
+                max-width: 100% !important;
+            }
+        }
+    }
+}
+
+@media (min-width: 481px) and (max-width: 766px) {
+    .cls-fntexpdata {
+        font: 13px 'ProximaRegular';
+        width: 50%;
+        padding: 10px 0px;
+    }
+    .cls-divexpand {
+        width: 100%;
+    }
+    .cls-policy-container {
+        .cls-third-container {
+            .cls-main-dotted {
+                .cls-milage-box {
+                    .cls-mile-width {
+                        max-width: unset;
+                    }
+                }
+            }
+        }
+        .cls-policy-form {
+            .cls-date {
+                max-width: 100% !important;
+            }
+        }
+    }
+}
+
+@media (min-width: 767px) and (max-width: 1024px) {
+    .cls-policy-container {
+        .cls-third-container {
+            .cls-main-dotted {
+                .cls-currency-bar {
+                    width: 37%;
+                }
+            }
+        }
+        .cls-amountmob {
+            flex: 0 0 42%;
+            max-width: 42%;
+        }
+        .cls-receiptmobile {
+            flex: 0 0 30%;
+            max-width: 30%;
+        }
+        .cls-mile-width,
+        .cls-mobwidth {
+            max-width: 30% !important;
+            flex: 0 0 30%;
+        }
+    }
+}

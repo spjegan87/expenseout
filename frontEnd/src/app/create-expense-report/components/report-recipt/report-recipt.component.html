@@ -1,0 +1,75 @@
+<!-- Author name : naveen -->
+<div class="cls-history-container">
+    <span id="fn-background" class="cls-background"></span>
+    <div class="cls-main-popup" [ngClass]="toClose ? 'close-ani' : ''">
+        <div class="cls-popup">
+            <div class="cls-header">
+                <span class="cls-title text-left">
+                    <ng-container *ngIf="reciptType === 'unsaved'">
+                        {{'Select Receipt' | translate}}
+                    </ng-container>
+                    <ng-container *ngIf="reciptType === 'saved'">
+                        {{'Select Expense From Vault' | translate}}
+                    </ng-container>
+                </span>
+                <span class="cls-top-close text-center" (click)="closeModal(false)">
+                    <em class="icon-32-reject"></em>
+                </span> 
+            </div>
+            <div class="cls-history-data">
+                <ng-container *ngIf="reciptType === 'unsaved'">
+                    <span class="cls-receipt-list" *ngFor="let val of reportReciptList.data.unExpensedReceipts;let i = index">
+                        <span class="cls-recipt-icon" (click)="selectCheckBox(i)"><em  [ngClass]="val.checked === 'N'?'icon-40-checkbox-empty':'icon-41-checkbox-fill'"></em></span>
+                        <img *ngIf="val.receipt_type !== 'application/pdf'" src="{{val.receipt_path}}.{{val.receipt_type}}" alt="{{val.receipt_name}}">
+                        <span class="cls-pdf" *ngIf="val.receipt_type === 'application/pdf'"></span>
+                    </span>
+                    <div class="cls-nodata-found text-center" *ngIf="reportReciptList?.data?.unExpensedReceipts?.length === 0">
+                        <img src="../../../../assets/images/NoDataAvailableinvault.svg" alt="">
+                        <span>{{'No Data Available' | translate}}</span>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="reciptType === 'saved'">
+                    <span *ngFor="let val of reportReciptList.data.mappedReceipts;let i = index" class="cls-saved-image"  [ngClass]="{'p-0' : val.receipt_type === 'application/pdf'}">
+                        <span class="cls-recipt-icon" (click)="selectSavedCheckBox(i)"><em [ngClass]="val.checked === 'N'?'icon-40-checkbox-empty':'icon-41-checkbox-fill'"></em></span>
+                        <img class="cls-image" *ngIf="val.receipt_type !== 'application/pdf'" src="{{val.receipt_path}}.{{val.receipt_type}}" alt="Receipt{{i}}">
+                        <span class="cls-pdf" *ngIf="val.receipt_type === 'application/pdf'">
+                        <span> {{val.receipt_name}}</span>
+                        </span>
+                        <span class="cls-bg" [ngClass]="{'cls-policyviolatebg' : val?.details?.policyDetect === 'Y'}">
+                            <span class="cls-flight-text">
+                                <span>{{val?.details?.category | translate}}</span>
+                                <span>{{val?.details?.expenseDate | date: "dd-MMM-y" }}</span>
+                            </span>
+                            <span class="cls-hover-amount">
+                                <span>{{val?.details?.currency}}</span>
+                                <span>{{val?.details?.amount | number}}</span>
+                                <span class="cls-policy-wave cls-hover-tooltip" *ngIf="val?.details?.policyDetect === 'Y'">
+                                    <em class="icon-46-policy"></em>
+                                    <span class="cls-tool">{{'Policy Violated' | translate}}
+                                        <ng-container *ngIf="val?.details?.policyName !== '' || val?.details?.policyName !== null">
+                                            : {{val?.details?.policyName}}
+                                        </ng-container>
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                        <span class="cls-bottom-icon">
+                            <span>
+                                {{'Expense Saved' | translate}}
+                            </span>
+                        </span>
+                    </span>
+                    <div class="cls-nodata-found text-center" *ngIf="reportReciptList?.data?.mappedReceipts?.length === 0">
+                        <img src="../../../../assets/images/NoDataAvailableinvault.svg" alt="NoDataAvailableinvault.svg">
+                        <span>{{'No Data Available' | translate}}</span>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="cls-btn text-right">
+            <button type="button" class="btn cls-btn-secondary cls-custom-btn" (click)="closeModal(false)"><span>{{'Cancel' | translate}}</span></button>
+            <button *ngIf="reciptType === 'unsaved'" type="button" class="btn cls-btn-primary cls-custom-btn" (click)="createRecipt('unsaved')">{{'Confirm' | translate}}</button>
+            <button *ngIf="reciptType === 'saved'" type="button" class="btn cls-btn-primary cls-custom-btn" (click)="createRecipt('saved')">{{'Confirm' | translate}}</button>
+        </div>
+    </div>
+</div> 

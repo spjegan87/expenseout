@@ -1,0 +1,31 @@
+<!-- BEGIN: Sidebar Group -->
+<div class="sidebar-group" *ngIf="home">
+  <!-- BEGIN: User Menu -->
+  <div class="sidebar" id="user-menu">
+    <div
+      class="py-4 text-center"
+      data-backround-image="../../assets/media/image/image1.jpg"
+    >
+      <span class="cls-first">{{ userName.USER_NAME.charAt(0) }}</span>
+      <h5
+        class="d-flex align-items-center justify-content-center cls-capitalize"
+      >
+        {{ userName.USER_NAME }}
+      </h5>
+    </div>
+    <div class="card mb-0 card-body shadow-none">
+      <div class="mb-4">
+        <div class="list-group list-group-flush">
+          <a
+            href="javascript:;"
+            class="list-group-item p-l-r-0 text-danger"
+            data-sidebar-target="#settings"
+            (click)="logOut()"
+            >Sign Out!</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END: Sidebar Group -->

@@ -1,0 +1,44 @@
+.checkbox{
+    display: flex;
+    align-items: center;
+    animation: .7s textin1 linear;
+    animation-delay: .5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+    label{
+        margin-bottom: 0px;
+        font-size:13px;
+        color: #858484;
+    }
+    input{
+        width: 13px;
+        margin: 0px 6px 0px 0px;
+    }
+}
+@keyframes textin1 {
+    0% {
+        -webkit-transform: translateX(520%);
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: translateX(0%);
+        opacity: 1;
+      }
+  }
+  @media only screen and (max-width: 480px) {
+    .checkbox{
+        animation: unset !important;
+        opacity: 1 !important;
+    }
+  }
+  @media (min-width: 481px) and (max-width: 766px){
+    .checkbox{
+        animation: unset !important;
+        opacity: 1 !important;
+    }
+  }
+  @media (min-width: 767px) and (max-width: 1024px){
+    // .checkbox{
+    //   display: none;
+    // }
+  }

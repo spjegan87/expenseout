@@ -1,0 +1,100 @@
+/************************************************************************************
+CSS Description : travel expense statement
+Author          : Naveen.s
+Powered by      : Infiniti software solutions
+*************************************************************************************/
+@import './../../../../assets/scss/variable.scss';
+.cls-main-cont{
+    background: $MAINBG;
+}
+.cls-main-title{
+    font: 24px "ProximaRegular";
+    color: $BLACK;
+}
+.cls-bold-text{
+    font: 16px "ProximaBold" !important;
+    color: $BLACK !important;
+}
+.cls-width{
+    font: 16px 'ProximaRegular';
+    color: $BLACK;
+    display: inline-block;
+    vertical-align: top;
+    text-transform: capitalize;
+    margin-bottom: 15px;
+}
+.cls-title{
+    font: 20px "ProximaSemiBold";
+    color: #182b41;
+    display: inline-block;
+    padding: 20px 0;
+}
+.cls-border,.cls-last-border{
+    border-bottom:1px dashed #ccc ;
+}
+.cls-last-border{
+    border-bottom: 0;
+}
+.cls-box-text{
+    font: 16px 'ProximaRegular';
+    color: #656774;
+    text-align: left;
+}
+.cls-currency{
+    font: 13px 'ProximaRegular';
+    color: #656774;
+    font-style: italic;
+}
+.cls-name{
+    font: 16px 'ProximaRegular';
+    color: $BLACK;
+}
+.cls-colon{
+    font: 18px 'ProximaSemiBold';
+    color: $BLACK;
+}
+.cls-line{
+    display: inline-block;
+    border-right: 2px dashed #ccc;
+    width: 1px;
+    height: 15px;
+    margin: 0 15px;
+    padding: 10px 0;
+}
+.cls-travel-box{
+    background: #182b41;
+    color: $WHITE;
+}
+.cls-travel-in{
+    padding:15px; 
+    font: 18px 'ProximaRegular';
+    border-bottom:1px solid #ccc;
+}
+.cls-span-text{
+    font: 16px 'ProximaRegular';
+    color: $BLACK;
+}
+.cls-semibold-text{
+    font: 16px 'ProximaSemiBold';
+}
+.cls-color{
+    color: $WHITE;
+}
+.cls-dashed-border{
+    padding:15px; 
+    border-bottom:1px dashed #ccc;
+}
+.cls-full-border{
+    border: 1px solid #ccc;
+}
+.cls-border-right{
+    border-right: 1px solid #ccc;
+}
+.cls-red-color{
+    color: $ERROR;
+}
+@media print {
+    div {
+      break-inside: avoid;
+    }
+}

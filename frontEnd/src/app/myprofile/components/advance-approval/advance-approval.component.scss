@@ -1,0 +1,31 @@
+.cls-Approval-bar{
+    .cls-head-title{
+        display: inline-block;
+        font: 20px "ProximaSemiBold";
+        margin: 10px 0 15px 0;
+    }
+    .cls-sub-title{
+        display: inline-block;
+        margin-bottom: 15px;
+        font: 15px "ProximaSemiBold";
+    }
+    .cls-line{
+        display: inline-block;
+        border-bottom: 1px dashed #ccc; 
+        width: 100%;
+    }
+    &.cls-ipdisable{
+        input,.select2{
+            pointer-events: none;
+        }
+    }
+}
+@media (min-width: 767px) and (max-width: 1024px){
+    .cls-Approval-bar{
+        .col-sm-4 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }    
+}
+
